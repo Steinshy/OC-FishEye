@@ -61,7 +61,6 @@
             <h1>Mimi Keel</h1>
             <p>London, <span>UK</span></p>
             <p>Voir le beau dans le quotidien</p>
-            <span>400€/jour</span>
           </div>
           <div class="section_button">
             <button class="contact_button">Contactez-moi</button>
@@ -74,12 +73,12 @@
         <div class="section_header">
           <h2>Trier par</h2>
           <div class="header_buttons">
-            <button class="media_sort_button" aria-haspopup="listbox" aria-expanded="false"
-              aria-controls="sort-dropdown">
+            <button class="media_sort_button" id="media_sort_button" aria-haspopup="listbox" aria-expanded="false"
+              aria-controls="sort_dropdown">
               Popularité
               <span aria-hidden="true" class="dropdown_arrow">&#9662;</span>
             </button>
-            <ul class="media_sort_dropdown" id="sort-dropdown" role="listbox" tabindex="-1" hidden>
+            <ul class="media_sort_dropdown" id="sort_dropdown" role="listbox" tabindex="-1" hidden>
               <li role="option" aria-selected="true">Popularité</li>
               <li role="option">Date</li>
               <li role="option">Titre</li>
@@ -91,8 +90,10 @@
             <div class="item_image">
               <img id="95234343" src="assets/photographers/mimi/jpg/Animals_Rainbow.jpg" alt="Mimi Keel" loading="lazy">
             </div>
-            <h3>Animals_Rainbow</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Animals_Rainbow</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
@@ -100,8 +101,10 @@
               <img id="623534343" src="assets/photographers/mimi/jpg/Travel_Lonesome.jpg" alt="Mimi Keel"
                 loading="lazy">
             </div>
-            <h3>Travel_Lonesome</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Travel_Lonesome</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
@@ -109,8 +112,10 @@
               <img id="2534342" src="assets/photographers/mimi/jpg/Event_SeasideWedding.jpg" alt="Mimi Keel"
                 loading="lazy">
             </div>
-            <h3>Event_SeasideWedding</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Event_SeasideWedding</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
@@ -118,8 +123,10 @@
               <img id="398847109" src="assets/photographers/mimi/jpg/Portrait_Background.jpg" alt="Mimi Keel"
                 loading="lazy">
             </div>
-            <h3>Portrait_Background</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Portrait_Background</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
@@ -127,8 +134,10 @@
               <img id="23523434" src="assets/photographers/mimi/jpg/Event_BenevidesWedding.jpg" alt="Mimi Keel"
                 loading="lazy">
             </div>
-            <h3>Event_BenevidesWedding</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Event_BenevidesWedding</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
@@ -136,8 +145,10 @@
               <img id="2525345343" src="assets/photographers/mimi/jpg/Portrait_Wednesday.jpg" alt="Mimi Keel"
                 loading="lazy">
             </div>
-            <h3>Portrait_Wednesday</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Portrait_Wednesday</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
@@ -145,16 +156,20 @@
               <img id="625025343" src="assets/photographers/mimi/jpg/Travel_HillsideColor.jpg" alt="Mimi Keel"
                 loading="lazy">
             </div>
-            <h3>Travel_HillsideColor</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Travel_HillsideColor</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
             <div class="item_image">
               <img id="2523434634" src="assets/photographers/mimi/jpg/Portrait_Nora.jpg" alt="Mimi Keel" loading="lazy">
             </div>
-            <h3>Portrait_Nora</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Portrait_Nora</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
@@ -162,21 +177,27 @@
               <img id="65235234" src="assets/photographers/mimi/jpg/Event_PintoWedding.jpg" alt="Mimi Keel"
                 loading="lazy">
             </div>
-            <h3>Event_PintoWedding</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Event_PintoWedding</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
 
           <div class="media_item">
             <div class="item_image">
-              <img id="52343416" src="assets/photographers/mimi/video/Animals_Wild_Horses_in_the_mountains.mp4"
+              <video id="52343416" src="assets/photographers/mimi/video/Animals_Wild_Horses_in_the_mountains.mp4"
                 alt="Mimi Keel" loading="lazy">
             </div>
-            <h3>Animals_Wild_Horses_in_the_mountains</h3>
-            <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            <div class="item_content">
+              <h3>Animals_Wild_Horses_in_the_mountains</h3>
+              <p>100 likes<i class="fa-solid fa-heart"></i></p>
+            </div>
           </div>
         </div>
       </section>
     </main>
   </body>
+
+  <script src="assets/js/photographer.js"></script>
 
 </html>
