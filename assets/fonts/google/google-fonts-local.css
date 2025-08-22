@@ -1,0 +1,26 @@
+/* Google Fonts - Local Version */
+/* Roboto Font Family */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./Roboto-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(./Roboto-Bold.ttf) format("truetype");
+}
+
+/* Shrikhand Font Family */
+@font-face {
+  font-family: "Shrikhand";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./Shrikhand-Regular.ttf) format("truetype");
+}
