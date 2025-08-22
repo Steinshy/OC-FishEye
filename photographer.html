@@ -37,6 +37,7 @@
     <!-- Internal Resources -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/photographer.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/modal.css">
 
     <!-- Font Awesome - Local -->
     <link rel="stylesheet" href="assets/fonts/fontawesome/all-local.css">
@@ -62,8 +63,9 @@
             <p>London, <span>UK</span></p>
             <p>Voir le beau dans le quotidien</p>
           </div>
+
           <div class="section_button">
-            <button class="contact_button">Contactez-moi</button>
+            <button class="contact_button" id="contact_button">Contactez-moi</button>
           </div>
           <img class="profile_picture" src="assets/photographers/mimi/jpg/MimiKeel.jpg" alt="Mimi Keel" loading="lazy">
         </div>
@@ -196,8 +198,40 @@
         </div>
       </section>
     </main>
+
+    <!-- Contact Modal -->
+    <div class="modal_container" id="modal_container" hidden>
+      <div class="modal_content" id="modal_content">
+        <div class="modal_header">
+          <h2>Contactez-moi</h2>
+          <button class="modal_close" id="modal_close" aria-label="Fermer le modal">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+        <form class="contact_form" id="contact_form">
+          <div class="form_group">
+            <label for="first_name">Prénom</label>
+            <input type="text" id="first_name" name="first_name" required>
+          </div>
+          <div class="form_group">
+            <label for="last_name">Nom</label>
+            <input type="text" id="last_name" name="last_name" required>
+          </div>
+          <div class="form_group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form_group">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit_button">Envoyer</button>
+        </form>
+      </div>
+    </div>
   </body>
 
+  <script src="assets/js/script.js"></script>
   <script src="assets/js/photographer.js"></script>
 
 </html>
