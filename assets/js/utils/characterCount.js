@@ -1,28 +1,30 @@
 const messageElements = {
   message: document.getElementById("message"),
   characterCount: document.getElementById("character_count"),
+  min: document.getElementById("min"),
+  max: document.getElementById("max"),
+  error: document.getElementById("message_error"),
   defaultLength: 0,
   maxLength: 500,
+  currentLength: 0,
 };
 
 const updateCharacterCount = () => {
-  const currentLength =
-    messageElements.message.value.length || messageElements.defaultLength;
-
   // Update count display
-  const countElement = messageElements.characterCount.querySelector(".count");
-  if (countElement) {
-    countElement.textContent = currentLength;
-  }
+
+  messageElements.currentLength = messageElements.message.value.length;
+  messageElements.min.textContent = messageElements.currentLength.toString();
 
   // Update warning classes
-  messageElements.characterCount.classList.remove("warning", "danger");
-  const usagePercent = currentLength / messageElements.maxLength;
+  messageElements.characterCount.classList.remove("danger");
+  messageElements.error.classList.remove("danger");
+  const usagePercent =
+    messageElements.currentLength / messageElements.maxLength;
 
   if (usagePercent >= 0.9) {
     messageElements.characterCount.classList.add("danger");
-  } else if (usagePercent >= 0.75) {
-    messageElements.characterCount.classList.add("warning");
+    messageElements.max.classList.add("danger");
+    messageElements.error.classList.add("danger");
   }
 };
 

@@ -31,7 +31,7 @@
   margin: 0 auto;
   box-shadow: var(--shadow-default);
   border-radius: var(--radius-lg);
-  max-height: 90%;
+  max-height: 90vh;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -75,7 +75,6 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: transform var(--transition-fast);
 }
 
 .modal_close:hover {
@@ -84,7 +83,7 @@
 
 .modal_close i {
   font-size: 1.8rem;
-  color: var(--color-black);
+  color: var(--color-white);
 }
 
 /* Contact Form Modal Styles */
@@ -94,6 +93,10 @@
   padding: 2rem;
   width: 100%;
   align-items: flex-start;
+  overflow-y: auto;
+  max-height: calc(90vh - 100px);
+  flex: 1;
+  min-height: 0;
 }
 
 .form_group {
@@ -135,34 +138,7 @@
   color: #999;
 }
 
-/* Character count styles */
-.character_count {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: #ccc;
-  margin-top: 0.25rem;
-}
-
-.character_count .count {
-  font-weight: 600;
-  color: white;
-}
-
-.character_count .max {
-  color: #999;
-}
-
-.character_count.warning .count {
-  color: #ffa500;
-}
-
-.character_count.danger .count {
-  color: #ff4444;
-}
-
+/* Submit button styles */
 .submit_button {
   padding: 1rem 2rem;
   background: linear-gradient(0deg, #901c1c 0%, #901c1c 100%);
@@ -193,14 +169,54 @@
   color: var(--color-error);
 }
 
-.form_group[data-error-visible="true"] .error_form {
-  display: block;
+.message_error_container .error_form {
+  margin-top: 0;
+  text-align: left;
+  min-width: 0;
+  flex: 1;
+  margin-right: 0.5rem;
 }
 
-.form_group[data-error-visible="true"] input {
+input[data-error-visible="true"],
+textarea[data-error-visible="true"] {
   border: 2px solid var(--color-error);
 }
 
-.form_group[data-success-visible="true"] input {
-  border: 2px solid var(--color-success);
+input[data-error-visible="true"] + .error_form,
+textarea[data-error-visible="true"]
+  + .message_container
+  .message_error_container
+  .error_form {
+  display: block;
+}
+
+.message_error_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+/* Character count styles */
+.message_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 0.5rem;
+  min-height: 1.2rem;
+}
+
+.character_count {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
 }

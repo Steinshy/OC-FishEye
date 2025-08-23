@@ -29,6 +29,7 @@ function handleContactModal() {
   }
 
   document.addEventListener("keydown", handleModalClose);
+  document.addEventListener("click", handleModalClose);
 }
 
 function handleModalClose(e) {

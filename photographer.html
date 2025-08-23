@@ -244,13 +244,19 @@
           <div class="form_group">
             <label for="message">Votre message</label>
             <textarea id="message" name="message" rows="5"></textarea>
-            <div class="character_count" id="character_count">
-              <span class="count">0</span>
-              <span class="max">/ 500</span>
+
+            <div class="message_container">
+              <div class="message_error_container" aria-live="polite">
+                <span id="message_error" class="error_form" aria-live="polite" data-error-visible="false">
+                  Veuillez entrer un message entre 0 et 500 caractères.
+                </span>
+              </div>
+
+              <div class="character_count" id="character_count" aria-live="polite">
+                <span class="min" id="min">0</span><span class="max" id="max">/ 500</span>
+              </div>
             </div>
-            <span id="message_error" class="error_form" aria-live="polite" data-error-visible="false">
-              Veuillez entrer un message entre 0 et 500 caractères.
-            </span>
+
           </div>
           <button type="submit" class="submit_button">Envoyer</button>
         </form>
@@ -261,6 +267,7 @@
   <script src="assets/js/utils/sortDropdown.js"></script>
   <script src="assets/js/utils/resetForm.js"></script>
   <script src="assets/js/utils/contactForm.js"></script>
+  <script src="assets/js/utils/realTimeValidation.js"></script>
   <script src="assets/js/utils/submitHandler.js"></script>
   <script src="assets/js/utils/characterCount.js"></script>
   <script src="assets/js/script.js"></script>

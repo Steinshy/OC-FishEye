@@ -13,6 +13,9 @@ const resetFormFields = () => {
 
   // Reset character count display
   resetCharacterCount();
+
+  // Clear all error visibility attributes
+  resetErrorVisibility();
 };
 
 // Reset character count display
@@ -27,6 +30,34 @@ const resetCharacterCount = () => {
     // Remove warning classes
     resetFormElements.characterCount?.classList.remove("warning", "danger");
   }
+};
+
+// Clear all error visibility attributes from form elements and error spans
+const resetErrorVisibility = () => {
+  const formFields = ["first_name", "last_name", "email", "message"];
+
+  // Reset form field data-error-visible attributes
+  formFields.forEach((fieldName) => {
+    const field = document.getElementById(fieldName);
+    if (field) {
+      field.setAttribute("data-error-visible", "false");
+    }
+  });
+
+  // Reset error span data-error-visible attributes
+  const errorSpans = [
+    "first_name_error",
+    "last_name_error",
+    "email_error",
+    "message_error",
+  ];
+
+  errorSpans.forEach((errorId) => {
+    const errorSpan = document.getElementById(errorId);
+    if (errorSpan) {
+      errorSpan.setAttribute("data-error-visible", "false");
+    }
+  });
 };
 
 // Clear URL parameters
@@ -64,6 +95,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     resetFormFields,
     resetCharacterCount,
+    resetErrorVisibility,
     resetURL,
     closeModal,
     resetModalAndURL,
@@ -72,6 +104,7 @@ if (typeof module !== "undefined" && module.exports) {
 } else {
   window.resetFormFields = resetFormFields;
   window.resetCharacterCount = resetCharacterCount;
+  window.resetErrorVisibility = resetErrorVisibility;
   window.resetURL = resetURL;
   window.closeModal = closeModal;
   window.resetModalAndURL = resetModalAndURL;
