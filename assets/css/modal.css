@@ -181,3 +181,26 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
+/* =========================
+    Modal Error Form
+   ========================= */
+.form_group .error_form {
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-light);
+  display: none;
+  margin-top: var(--space-sm);
+  color: var(--color-error);
+}
+
+.form_group[data-error-visible="true"] .error_form {
+  display: block;
+}
+
+.form_group[data-error-visible="true"] input {
+  border: 2px solid var(--color-error);
+}
+
+.form_group[data-success-visible="true"] input {
+  border: 2px solid var(--color-success);
+}
