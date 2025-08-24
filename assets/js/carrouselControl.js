@@ -12,7 +12,6 @@ function initializeCarrouselControl() {
   ];
   let currentSlide = radios.findIndex((radio) => radio.checked);
 
-  // If no radio is checked, default to first slide
   if (currentSlide === -1) {
     currentSlide = 0;
     radios[0].checked = true;
@@ -33,20 +32,17 @@ function initializeCarrouselControl() {
     goToSlide(currentSlide - 1);
   }
 
-  // Add click handlers for main slides
   slides.forEach((slide, index) => {
     slide.addEventListener("click", () => {
       goToSlide(index);
     });
   });
 
-  // Add click handlers for preview thumbnails
   previews.forEach((preview, index) => {
     preview.addEventListener("click", () => {
       goToSlide(index);
     });
 
-    // Add keyboard support for accessibility
     preview.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -54,13 +50,11 @@ function initializeCarrouselControl() {
       }
     });
 
-    // Make preview focusable for keyboard navigation
     preview.setAttribute("tabindex", "0");
     preview.setAttribute("role", "button");
     preview.setAttribute("aria-label", `Go to slide ${index + 1}`);
   });
 
-  // Add event listeners for arrow controls
   if (prev) {
     prev.addEventListener("click", previousSlide);
     prev.addEventListener("keydown", (e) => {
@@ -81,7 +75,6 @@ function initializeCarrouselControl() {
     });
   }
 
-  // Add keyboard navigation for the whole carousel
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
       e.preventDefault();

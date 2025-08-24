@@ -186,7 +186,27 @@ input[data-error-visible="true"] + .error_form,
 textarea[data-error-visible="true"]
   + .message_container
   .message_error_container
-  .error_form {
+  .error_form,
+.error_form[data-error-visible="true"] {
+  display: block;
+}
+
+/* Global error message styles */
+.global_error {
+  text-align: center;
+  font-weight: var(--font-weight-medium, 500);
+  padding: 0.75rem;
+  background-color: rgba(220, 53, 69, 0.1);
+  border: 1px solid var(--color-error);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.global_error[data-error-visible="true"] {
+  display: block;
+}
+
+.error_form[data-error-visible="true"] {
   display: block;
 }
 
@@ -219,4 +239,13 @@ textarea[data-error-visible="true"]
   margin-top: 0;
   flex-shrink: 0;
   white-space: nowrap;
+}
+
+/* Character count states */
+.character_count.warning {
+  color: var(--color-warning);
+}
+
+.character_count.danger {
+  color: var(--color-error);
 }

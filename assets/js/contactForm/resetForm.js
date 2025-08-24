@@ -1,42 +1,43 @@
-const resetFormElements = {
-  contactForm: document.getElementById("contact_form"),
-  contactModal: document.getElementById("modal_container"),
-  message: document.getElementById("message"),
-  characterCount: document.getElementById("character_count"),
-};
+let resetFormElements = {};
 
-// Reset form fields and character count
+function initializeResetFormElements() {
+  resetFormElements = {
+    contactForm: document.getElementById("contact_form"),
+    contactModal: document.getElementById("modal_container"),
+    message: document.getElementById("message"),
+    characterCount: document.getElementById("character_count"),
+  };
+}
+
 const resetFormFields = () => {
-  if (resetFormElements.contactForm) {
-    resetFormElements.contactForm.reset();
-  }
-
-  // Reset character count display
+  resetFormElements.contactForm?.reset();
   resetCharacterCount();
-
-  // Clear all error visibility attributes
   resetErrorVisibility();
 };
 
-// Reset character count display
 const resetCharacterCount = () => {
   if (resetFormElements.message) {
-    const countElement =
-      resetFormElements.characterCount?.querySelector(".count");
-    if (countElement) {
-      countElement.textContent = "0";
+    const minElement = document.getElementById("min");
+    const maxElement = document.getElementById("max");
+    const errorElement = document.getElementById("message_error");
+
+    if (minElement) {
+      minElement.textContent = "0";
     }
 
-    // Remove warning classes
     resetFormElements.characterCount?.classList.remove("warning", "danger");
+    if (maxElement) {
+      maxElement.classList.remove("danger");
+    }
+    if (errorElement) {
+      errorElement.classList.remove("danger");
+    }
   }
 };
 
-// Clear all error visibility attributes from form elements and error spans
 const resetErrorVisibility = () => {
   const formFields = ["first_name", "last_name", "email", "message"];
 
-  // Reset form field data-error-visible attributes
   formFields.forEach((fieldName) => {
     const field = document.getElementById(fieldName);
     if (field) {
@@ -44,7 +45,6 @@ const resetErrorVisibility = () => {
     }
   });
 
-  // Reset error span data-error-visible attributes
   const errorSpans = [
     "first_name_error",
     "last_name_error",
@@ -60,32 +60,32 @@ const resetErrorVisibility = () => {
   });
 };
 
-// Clear URL parameters
 const resetURL = () => {
-  // Clear URL parameters without page reload
   if (window.history && window.history.replaceState) {
     const url = new URL(window.location);
-    url.search = ""; // Clear all query parameters
+    url.search = "";
     window.history.replaceState({}, document.title, url.toString());
   }
 };
 
-// Close modal
 const closeModal = () => {
   if (resetFormElements.contactModal) {
     resetFormElements.contactModal.classList.remove("show");
   }
 };
 
-// Complete reset: form, character count, URL, and close modal
 const resetModalAndURL = () => {
   resetFormFields();
   resetURL();
   closeModal();
 };
 
-// Reset form and character count (without closing modal)
 const resetFormOnly = () => {
   resetFormFields();
   resetURL();
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  initializeResetFormElements();
+  resetFormOnly();
+});

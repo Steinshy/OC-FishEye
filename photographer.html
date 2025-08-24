@@ -258,18 +258,37 @@
             </div>
 
           </div>
+
+          <!-- Global error message -->
+          <div class="form_group">
+            <span id="form_global_error" class="error_form global_error" aria-live="polite" data-error-visible="false">
+              Veuillez remplir tous les champs du formulaire.
+            </span>
+          </div>
           <button type="submit" class="submit_button">Envoyer</button>
         </form>
       </div>
     </div>
   </body>
 
-  <script src="assets/js/utils/sortDropdown.js"></script>
-  <script src="assets/js/utils/resetForm.js"></script>
-  <script src="assets/js/utils/contactForm.js"></script>
-  <script src="assets/js/utils/realTimeValidation.js"></script>
-  <script src="assets/js/utils/submitHandler.js"></script>
-  <script src="assets/js/utils/characterCount.js"></script>
+
+  <!-- Main Script -->
   <script src="assets/js/script.js"></script>
+
+  <!-- Main => Utils -->
+  <script src="assets/js/errorHandler.js"></script>
+  <script src="assets/js/validators.js"></script>
+  <script src="assets/js/sortDropdown.js"></script>
+
+  <!-- Contact Form -->
+  <script src="assets/js/contactForm/contactForm.js"></script>
+  <script src="assets/js/contactForm/handleFormSubmit.js"></script>
+  <script src="assets/js/contactForm/resetForm.js"></script>
+  <script src="assets/js/contactForm/submitHandler.js"></script>
+
+  <!-- Contact Form => Utils -->
+  <script src="assets/js/contactForm/utils/characterCount.js"></script>
+  <script src="assets/js/contactForm/utils/fieldKeys.js"></script>
+  <script src="assets/js/contactForm/utils/realTimeValidation.js"></script>
 
 </html>

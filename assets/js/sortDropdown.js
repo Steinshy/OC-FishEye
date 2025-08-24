@@ -1,7 +1,11 @@
-const elements = {
-  mediaSortButton: document.getElementById("media_sort_button"),
-  mediaSortDropdown: document.getElementById("sort_dropdown"),
-};
+let elements = {};
+
+function initializeSortElements() {
+  elements = {
+    mediaSortButton: document.getElementById("media_sort_button"),
+    mediaSortDropdown: document.getElementById("sort_dropdown"),
+  };
+}
 
 const openSortDropdown = () => {
   elements.mediaSortDropdown.classList.add("show");
@@ -33,7 +37,11 @@ const handleSortDropdown = (e) => {
 };
 
 const createSortDropdown = () => {
-  elements.mediaSortButton.addEventListener("click", handleSortDropdown);
-  document.addEventListener("keydown", handleDropdownClose);
-  document.addEventListener("click", handleDropdownClose);
+  initializeSortElements();
+
+  if (elements.mediaSortButton) {
+    elements.mediaSortButton.addEventListener("click", handleSortDropdown);
+    document.addEventListener("keydown", handleDropdownClose);
+    document.addEventListener("click", handleDropdownClose);
+  }
 };
