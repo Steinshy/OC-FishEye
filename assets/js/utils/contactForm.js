@@ -43,12 +43,3 @@ function handleModalClose(e) {
     closeContactModal();
   }
 }
-
-// Export for both Node.js and browser environments
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { openContactModal, closeContactModal, handleContactModal };
-} else {
-  window.openContactModal = openContactModal;
-  window.closeContactModal = closeContactModal;
-  window.handleContactModal = handleContactModal;
-}

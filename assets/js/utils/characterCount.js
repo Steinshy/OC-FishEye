@@ -40,15 +40,3 @@ const destroyCharacterCount = () => {
     messageElements.message.removeEventListener(event, updateCharacterCount);
   });
 };
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = {
-    updateCharacterCount,
-    initCharacterCount,
-    destroyCharacterCount,
-  };
-} else {
-  window.updateCharacterCount = updateCharacterCount;
-  window.initCharacterCount = initCharacterCount;
-  window.destroyCharacterCount = destroyCharacterCount;
-}

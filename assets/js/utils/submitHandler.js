@@ -94,15 +94,3 @@ const initializeSubmitHandler = () => {
     submitElements.submitButton.addEventListener("click", handleFormSubmit);
   }
 };
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = {
-    handleFormSubmit,
-    validateFormOnSubmit,
-    initializeSubmitHandler,
-  };
-} else {
-  window.handleFormSubmit = handleFormSubmit;
-  window.validateFormOnSubmit = validateFormOnSubmit;
-  window.initializeSubmitHandler = initializeSubmitHandler;
-}

@@ -43,15 +43,3 @@ const initializeRealTimeValidation = () => {
     );
   }
 };
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = {
-    handleRealTimeValidation,
-    initializeRealTimeValidation,
-    formElements,
-  };
-} else {
-  window.handleRealTimeValidation = handleRealTimeValidation;
-  window.initializeRealTimeValidation = initializeRealTimeValidation;
-  window.formElements = formElements;
-}

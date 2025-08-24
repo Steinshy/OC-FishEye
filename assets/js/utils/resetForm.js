@@ -89,24 +89,3 @@ const resetFormOnly = () => {
   resetFormFields();
   resetURL();
 };
-
-// Export for both Node.js and browser environments
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = {
-    resetFormFields,
-    resetCharacterCount,
-    resetErrorVisibility,
-    resetURL,
-    closeModal,
-    resetModalAndURL,
-    resetFormOnly,
-  };
-} else {
-  window.resetFormFields = resetFormFields;
-  window.resetCharacterCount = resetCharacterCount;
-  window.resetErrorVisibility = resetErrorVisibility;
-  window.resetURL = resetURL;
-  window.closeModal = closeModal;
-  window.resetModalAndURL = resetModalAndURL;
-  window.resetFormOnly = resetFormOnly;
-}

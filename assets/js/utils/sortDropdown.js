@@ -37,11 +37,3 @@ const createSortDropdown = () => {
   document.addEventListener("keydown", handleDropdownClose);
   document.addEventListener("click", handleDropdownClose);
 };
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = {
-    createSortDropdown,
-  };
-} else {
-  window.createSortDropdown = createSortDropdown;
-}
