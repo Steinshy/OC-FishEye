@@ -11,41 +11,37 @@ function initializeErrorElements() {
 }
 
 function ensureInitialized() {
-  if (!globalErrorElements || Object.keys(globalErrorElements).length === 0) {
+  if (!globalErrorElements?.firstName) {
     initializeErrorElements();
   }
 }
 
-function showError(targetKey, message) {
+function toggleError(targetKey, shouldShow, message) {
   ensureInitialized();
-  const el = globalErrorElements[targetKey];
-  if (el) {
-    el.setAttribute("data-error-visible", "true");
-    if (typeof message === "string" && message) {
-      el.textContent = message;
+
+  const errorElement = globalErrorElements[targetKey];
+  if (errorElement) {
+    errorElement.setAttribute(
+      "data-error-visible",
+      shouldShow ? "true" : "false"
+    );
+    if (message) {
+      errorElement.textContent = message;
     }
   }
 }
 
-function hideError(targetKey) {
-  ensureInitialized();
-  const el = globalErrorElements[targetKey];
-  if (el) {
-    el.setAttribute("data-error-visible", "false");
-  }
+function setError(targetKey, shouldShow, message = "") {
+  toggleError(targetKey, shouldShow, message);
 }
 
-function setError(targetKey, shouldShow, message) {
-  if (shouldShow) {
-    showError(targetKey, message);
-  } else {
-    hideError(targetKey);
-  }
+function hideError(targetKey) {
+  toggleError(targetKey, false);
 }
 
 window.ErrorHandler = {
   initializeErrorElements,
-  showError,
-  hideError,
+  toggleError,
   setError,
+  hideError,
 };

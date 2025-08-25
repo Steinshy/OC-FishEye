@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  initializeResetFormElements();
   createSortDropdown();
   handleContactModal();
+  initCharacterCount();
   initializeRealTimeValidation();
   initializeSubmitHandler();
-  initCharacterCount();
+  mediaGallery.init();
 });

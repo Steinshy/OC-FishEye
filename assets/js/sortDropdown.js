@@ -1,30 +1,30 @@
-let elements = {};
+let dropdownElements = {};
 
 function initializeSortElements() {
-  elements = {
+  dropdownElements = {
     mediaSortButton: document.getElementById("media_sort_button"),
     mediaSortDropdown: document.getElementById("sort_dropdown"),
   };
 }
 
 const openSortDropdown = () => {
-  elements.mediaSortDropdown.classList.add("show");
-  elements.mediaSortDropdown.hidden = false;
-  elements.mediaSortButton.setAttribute("aria-expanded", "true");
+  dropdownElements.mediaSortDropdown.classList.add("show");
+  dropdownElements.mediaSortDropdown.hidden = false;
+  dropdownElements.mediaSortButton.setAttribute("aria-expanded", "true");
 };
 
 const closeDropdown = () => {
-  elements.mediaSortDropdown.classList.remove("show");
-  elements.mediaSortDropdown.hidden = true;
-  elements.mediaSortButton.setAttribute("aria-expanded", "false");
+  dropdownElements.mediaSortDropdown.classList.remove("show");
+  dropdownElements.mediaSortDropdown.hidden = true;
+  dropdownElements.mediaSortButton.setAttribute("aria-expanded", "false");
 };
 
 const handleDropdownClose = (e) => {
   if (
     (e.type === "keydown" && e.key === "Escape") ||
     (e.type === "click" &&
-      !elements.mediaSortDropdown.contains(e.target) &&
-      e.target !== elements.mediaSortButton)
+      !dropdownElements.mediaSortDropdown.contains(e.target) &&
+      e.target !== dropdownElements.mediaSortButton)
   ) {
     closeDropdown();
   }
@@ -32,16 +32,35 @@ const handleDropdownClose = (e) => {
 
 const handleSortDropdown = (e) => {
   e.stopPropagation();
-  const isExpanded = elements.mediaSortButton.getAttribute("aria-expanded");
+  const isExpanded =
+    dropdownElements.mediaSortButton.getAttribute("aria-expanded");
   isExpanded === "true" ? closeDropdown() : openSortDropdown();
 };
 
 const createSortDropdown = () => {
   initializeSortElements();
 
-  if (elements.mediaSortButton) {
-    elements.mediaSortButton.addEventListener("click", handleSortDropdown);
+  if (dropdownElements.mediaSortButton) {
+    dropdownElements.mediaSortButton.addEventListener(
+      "click",
+      handleSortDropdown
+    );
     document.addEventListener("keydown", handleDropdownClose);
     document.addEventListener("click", handleDropdownClose);
+  }
+  if (dropdownElements.mediaSortDropdown) {
+    dropdownElements.mediaSortDropdown.addEventListener("click", (e) => {
+      if (e.target && e.target.matches("li[role='option']")) {
+        const selected = e.target.textContent.trim();
+        dropdownElements.mediaSortButton.textContent = selected;
+        dropdownElements.mediaSortDropdown
+          .querySelectorAll("li")
+          .forEach((li) => li.setAttribute("aria-selected", li === e.target));
+        if (window.MediaGallery?.sortMedia) {
+          window.MediaGallery.sortMedia(selected);
+        }
+        closeDropdown();
+      }
+    });
   }
 };

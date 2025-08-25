@@ -22,16 +22,12 @@ const setCharacterCountState = (isWarning, isDanger) => {
 };
 
 const updateCharacterCount = () => {
-  if (message && characterCount) {
-    const currentLength = message.value.length;
-    const isDanger = currentLength >= maxLength;
-    const isWarning = !isDanger && currentLength >= maxLength * 0.9;
-
-    currentLength = min.textContent;
-    characterCount.textContent = `${currentLength}/${maxLength}`;
-
-    setCharacterCountState(isWarning, isDanger);
-  }
+  const currentLength = message.value.length;
+  min.textContent = currentLength;
+  setCharacterCountState(
+    currentLength >= maxLength * 0.9 && currentLength < maxLength,
+    currentLength >= maxLength
+  );
 };
 
 const initCharacterCount = () => {

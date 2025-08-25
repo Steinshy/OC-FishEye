@@ -1,4 +1,3 @@
-// Helper function to convert camelCase to snake_case
 function toSnakeField(fieldKey) {
   if (fieldKey === "firstName") return "first_name";
   if (fieldKey === "lastName") return "last_name";
@@ -9,7 +8,6 @@ function handleFormSubmit(e) {
   const formData = new FormData(e.target);
   const formObject = Object.fromEntries(formData);
 
-  // Get elements from the correct collections
   const contactForm = document.getElementById("contact_form");
   const submitButton = document.querySelector(".submit_button");
   const contactModal = document.getElementById("modal_container");
@@ -27,7 +25,6 @@ function handleFormSubmit(e) {
     return;
   }
 
-  // Clear all previous errors first
   Object.keys(errorElements).forEach((field) => {
     if (errorElements[field] && field !== "global") {
       errorElements[field].setAttribute("data-error-visible", "false");
@@ -35,9 +32,7 @@ function handleFormSubmit(e) {
     }
   });
 
-  // Validate form first
   if (!validateForm(formObject)) {
-    // Only show errors for invalid fields
     Object.keys(errorElements).forEach((field) => {
       if (errorElements[field] && field !== "global") {
         const snakeField = toSnakeField(field);

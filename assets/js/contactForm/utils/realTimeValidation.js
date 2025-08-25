@@ -9,85 +9,52 @@ function initializeFormElements() {
   };
 }
 
+const fieldNameToErrorKey = {
+  first_name: "firstName",
+  last_name: "lastName",
+  email: "email",
+  message: "message",
+};
+
 const handleRealTimeValidation = (element, fieldName) => {
-  const value = element.value.trim();
-  const valid = window.Validators
-    ? window.Validators.validateField(fieldName, value)
-    : (() => {
-        if (fieldName === "first_name" || fieldName === "last_name") {
-          return value.length >= 2;
-        } else if (fieldName === "email") {
-          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-        } else if (fieldName === "message") {
-          return value !== "" && value.length <= 500;
-        }
-        return true;
-      })();
+  const fieldValue = element.value.trim();
 
-  const shouldShow = fieldName !== "message" && Boolean(value && !valid);
+  const isValid = window.Validators
+    ? window.Validators.validateField(fieldName, fieldValue)
+    : true;
 
-  element.setAttribute("data-error-visible", shouldShow ? "true" : "false");
+  const shouldShowError = Boolean(fieldValue && !isValid);
 
-  const key = window.FieldKeys
-    ? window.FieldKeys.toErrorKey(fieldName)
-    : fieldName;
-  if (
-    window.ErrorHandler &&
-    typeof window.ErrorHandler.setError === "function"
-  ) {
-    if (fieldName !== "message") {
-      window.ErrorHandler.setError(key, shouldShow);
-    } else {
-      if (value !== "" && value.length <= 500) {
-        window.ErrorHandler.setError("message", false);
-      }
-    }
+  element.setAttribute(
+    "data-error-visible",
+    shouldShowError ? "true" : "false"
+  );
+
+  if (window.ErrorHandler) {
+    const errorKey = fieldNameToErrorKey[fieldName] || fieldName;
+    window.ErrorHandler.setError(errorKey, shouldShowError);
   }
 
-  if (areAllContactFieldsValid()) {
-    if (
-      window.ErrorHandler &&
-      typeof window.ErrorHandler.hideError === "function"
-    ) {
-      window.ErrorHandler.hideError("global");
-    } else {
-      const globalError = document.getElementById("form_global_error");
-      if (globalError) {
-        globalError.setAttribute("data-error-visible", "false");
+  if (window.Validators) {
+    const values = {
+      first_name: formElements.firstName?.value?.trim() || "",
+      last_name: formElements.lastName?.value?.trim() || "",
+      email: formElements.email?.value?.trim() || "",
+      message: formElements.message?.value?.trim() || "",
+    };
+
+    if (window.Validators.areAllFieldsValid(values)) {
+      if (window.ErrorHandler) {
+        window.ErrorHandler.hideError("global");
+      } else {
+        const globalError = document.getElementById("form_global_error");
+        if (globalError) {
+          globalError.setAttribute("data-error-visible", "false");
+        }
       }
     }
   }
 };
-
-function areAllContactFieldsValid() {
-  if (!formElements || Object.keys(formElements).length === 0) {
-    initializeFormElements();
-  }
-
-  const getTrimmedValue = (el) => (el && el.value ? el.value.trim() : "");
-
-  const values = {
-    first_name: getTrimmedValue(formElements.firstName),
-    last_name: getTrimmedValue(formElements.lastName),
-    email: getTrimmedValue(formElements.email),
-    message: getTrimmedValue(formElements.message),
-  };
-
-  if (
-    window.Validators &&
-    typeof window.Validators.areAllFieldsValid === "function"
-  ) {
-    return window.Validators.areAllFieldsValid(values);
-  }
-
-  return (
-    values.first_name.length >= 2 &&
-    values.last_name.length >= 2 &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email) &&
-    values.message.length > 0 &&
-    values.message.length <= 500
-  );
-}
 
 const initializeRealTimeValidation = () => {
   initializeFormElements();
@@ -112,4 +79,9 @@ const initializeRealTimeValidation = () => {
       handleRealTimeValidation(formElements.message, "message")
     );
   }
+};
+
+window.RealTimeValidation = {
+  initializeRealTimeValidation,
+  handleRealTimeValidation,
 };
