@@ -1,0 +1,66 @@
+name: Lint and Format
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+permissions:
+  checks: write
+  contents: write
+
+jobs:
+  lint-and-format:
+    name: Lint and Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      # Install dependencies
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      # Run ESLint
+      - name: Run ESLint
+        run: npm run lint
+
+      # Check Prettier formatting
+      - name: Check Prettier formatting
+        run: npm run format:check
+
+      # Optional: Auto-fix ESLint issues and format code
+      - name: Auto-fix ESLint issues
+        run: npm run lint:fix
+        continue-on-error: true
+
+      - name: Format code with Prettier
+        run: npm run format
+        continue-on-error: true
+
+      # Commit changes if any formatting was applied
+      - name: Commit changes
+        if: always()
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add -A
+            git commit -m "style: auto-fix linting and formatting issues" || true
+            git push || true
+          fi
+        continue-on-error: true
