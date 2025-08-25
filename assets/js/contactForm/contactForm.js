@@ -25,6 +25,7 @@ function handleContactModal() {
   contactButton?.addEventListener("click", () =>
     setContactModalVisibility(true)
   );
+
   contactModalClose?.addEventListener("click", () =>
     setContactModalVisibility(false)
   );
@@ -34,10 +35,10 @@ function handleContactModal() {
 }
 
 function handleModalClose(e) {
-  const modal = contactElements.contactModal;
+  const { contactModal } = contactElements;
   if (
-    (e.type === "click" && e.target === modal) ||
-    (e.key === "Escape" && modal.classList.contains("show"))
+    (e.type === "click" && e.target === contactModal) ||
+    (e.key === "Escape" && contactModal.classList.contains("show"))
   ) {
     setContactModalVisibility(false);
   }

@@ -1,51 +1,52 @@
-let messageElements = {};
-
-function initializeMessageElements() {
-  messageElements = {
-    message: document.getElementById("message"),
+const getMessageElements = () => {
+  const message = document.getElementById("message");
+  return {
+    message,
     characterCount: document.getElementById("character_count"),
     min: document.getElementById("min"),
     max: document.getElementById("max"),
     error: document.getElementById("message_error"),
-    defaultLength: 0,
     maxLength: 500,
-    currentLength: 0,
+    defaultLength: 0,
   };
-}
+};
+
+const { message, characterCount, min, max, maxLength, error } =
+  getMessageElements();
 
 const setCharacterCountState = (isWarning, isDanger) => {
-  messageElements.characterCount.classList.toggle("warning", isWarning);
-  messageElements.characterCount.classList.toggle("danger", isDanger);
-  messageElements.max.classList.toggle("danger", isDanger);
-  messageElements.error.classList.toggle("danger", isDanger);
+  characterCount.classList.toggle("warning", isWarning);
+  characterCount.classList.toggle("danger", isDanger);
+  max.classList.toggle("danger", isDanger);
+  error.classList.toggle("danger", isDanger);
 };
 
 const updateCharacterCount = () => {
-  messageElements.currentLength = messageElements.message.value.length;
-  messageElements.min.textContent = messageElements.currentLength.toString();
+  if (message && characterCount) {
+    const currentLength = message.value.length;
+    const isDanger = currentLength >= maxLength;
+    const isWarning = !isDanger && currentLength >= maxLength * 0.9;
 
-  const ratio = messageElements.currentLength / messageElements.maxLength;
-  const isWarning = ratio >= 0.9 && ratio < 1;
-  const isDanger = ratio >= 1;
+    currentLength = min.textContent;
+    characterCount.textContent = `${currentLength}/${maxLength}`;
 
-  setCharacterCountState(isWarning, isDanger);
+    setCharacterCountState(isWarning, isDanger);
+  }
 };
 
 const initCharacterCount = () => {
-  initializeMessageElements();
-
-  if (messageElements.message && messageElements.characterCount) {
+  if (message && characterCount) {
     ["input", "keyup", "paste"].forEach((event) => {
-      messageElements.message.addEventListener(event, updateCharacterCount);
+      message.addEventListener(event, updateCharacterCount);
     });
     updateCharacterCount();
   }
 };
 
 const destroyCharacterCount = () => {
-  if (messageElements.message) {
+  if (message) {
     ["input", "keyup", "paste"].forEach((event) => {
-      messageElements.message.removeEventListener(event, updateCharacterCount);
+      message.removeEventListener(event, updateCharacterCount);
     });
   }
 };

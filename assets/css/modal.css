@@ -158,6 +158,18 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.submit_button.success {
+  background: linear-gradient(0deg, #279e7a 0%, #279e7a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 158, 122, 0.3);
+}
+
+.submit_button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* =========================
     Modal Error Form
    ========================= */

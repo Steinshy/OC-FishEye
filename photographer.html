@@ -93,7 +93,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="95234343" src="assets/photographers/mimi/jpg/Animals_Rainbow.jpg" alt="Mimi Keel" loading="lazy">
+              <img id="95234343" src="assets/photographers/mimi/jpg/Animals_Rainbow.jpg"
+                alt="Rainbow colored animals photography by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Animals_Rainbow</h3>
@@ -103,8 +104,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="623534343" src="assets/photographers/mimi/jpg/Travel_Lonesome.jpg" alt="Mimi Keel"
-                loading="lazy">
+              <img id="623534343" src="assets/photographers/mimi/jpg/Travel_Lonesome.jpg"
+                alt="Lonesome travel landscape photography by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Travel_Lonesome</h3>
@@ -114,8 +115,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="2534342" src="assets/photographers/mimi/jpg/Event_SeasideWedding.jpg" alt="Mimi Keel"
-                loading="lazy">
+              <img id="2534342" src="assets/photographers/mimi/jpg/Event_SeasideWedding.jpg"
+                alt="Seaside wedding event photography by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Event_SeasideWedding</h3>
@@ -125,8 +126,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="398847109" src="assets/photographers/mimi/jpg/Portrait_Background.jpg" alt="Mimi Keel"
-                loading="lazy">
+              <img id="398847109" src="assets/photographers/mimi/jpg/Portrait_Background.jpg"
+                alt="Portrait with artistic background by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Portrait_Background</h3>
@@ -136,8 +137,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="23523434" src="assets/photographers/mimi/jpg/Event_BenevidesWedding.jpg" alt="Mimi Keel"
-                loading="lazy">
+              <img id="23523434" src="assets/photographers/mimi/jpg/Event_BenevidesWedding.jpg"
+                alt="Benevides wedding event photography by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Event_BenevidesWedding</h3>
@@ -147,8 +148,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="2525345343" src="assets/photographers/mimi/jpg/Portrait_Wednesday.jpg" alt="Mimi Keel"
-                loading="lazy">
+              <img id="2525345343" src="assets/photographers/mimi/jpg/Portrait_Wednesday.jpg"
+                alt="Portrait of Wednesday by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Portrait_Wednesday</h3>
@@ -158,8 +159,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="625025343" src="assets/photographers/mimi/jpg/Travel_HillsideColor.jpg" alt="Mimi Keel"
-                loading="lazy">
+              <img id="625025343" src="assets/photographers/mimi/jpg/Travel_HillsideColor.jpg"
+                alt="Colorful hillside travel photography by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Travel_HillsideColor</h3>
@@ -169,7 +170,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="2523434634" src="assets/photographers/mimi/jpg/Portrait_Nora.jpg" alt="Mimi Keel" loading="lazy">
+              <img id="2523434634" src="assets/photographers/mimi/jpg/Portrait_Nora.jpg"
+                alt="Portrait of Nora by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Portrait_Nora</h3>
@@ -179,8 +181,8 @@
 
           <div class="media_card">
             <div class="card_image">
-              <img id="65235234" src="assets/photographers/mimi/jpg/Event_PintoWedding.jpg" alt="Mimi Keel"
-                loading="lazy">
+              <img id="65235234" src="assets/photographers/mimi/jpg/Event_PintoWedding.jpg"
+                alt="Pinto wedding event photography by Mimi Keel" loading="lazy">
             </div>
             <div class="card_content">
               <h3>Event_PintoWedding</h3>
@@ -189,7 +191,7 @@
           </div>
         </div>
 
-        <div class="card_video">
+        <div class="media_card">
           <div class="media_video">
             <video id="52343416" src="assets/photographers/mimi/video/Animals_Wild_Horses_in_the_mountains.mp4" controls
               preload="metadata" poster="assets/photographers/mimi/jpg/Animals_Wild_Horses_in_the_mountains.jpg">
@@ -219,7 +221,7 @@
         <form class="contact_form" id="contact_form">
           <div class="form_group">
             <label for="last_name">Nom</label>
-            <input type="text" id="last_name" name="last_name">
+            <input type="text" id="last_name" name="last_name" minlength="2" aria-describedby="last_name_error">
             <span id="last_name_error" class="error_form" aria-live="polite" data-error-visible="false">
               Veuillez entrer 2 caractères ou plus pour le champ du Nom.
             </span>
@@ -227,7 +229,7 @@
 
           <div class="form_group">
             <label for="first_name">Prénom</label>
-            <input type="text" id="first_name" name="first_name">
+            <input type="text" id="first_name" name="first_name" minlength="2" aria-describedby="first_name_error">
             <span id="first_name_error" class="error_form" aria-live="polite" data-error-visible="false">
               Veuillez entrer 2 caractères ou plus pour le champ du Prénom.
             </span>
@@ -235,7 +237,7 @@
 
           <div class="form_group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" aria-describedby="email_error">
             <span id="email_error" class="error_form" aria-live="polite" data-error-visible="false">
               Veuillez entrer une adresse email valide.
             </span>
@@ -243,7 +245,8 @@
 
           <div class="form_group">
             <label for="message">Votre message</label>
-            <textarea id="message" name="message" rows="5"></textarea>
+            <textarea id="message" name="message" rows="5" maxlength="500"
+              aria-describedby="message_error character_count"></textarea>
 
             <div class="message_container">
               <div class="message_error_container" aria-live="polite">

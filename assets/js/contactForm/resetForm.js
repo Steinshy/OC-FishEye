@@ -1,4 +1,6 @@
 let resetFormElements = {};
+let modalErrorElements = [];
+let modalFormFields = [];
 
 function initializeResetFormElements() {
   resetFormElements = {
@@ -7,6 +9,14 @@ function initializeResetFormElements() {
     message: document.getElementById("message"),
     characterCount: document.getElementById("character_count"),
   };
+  modalErrorElements = [
+    "first_name_error",
+    "last_name_error",
+    "email_error",
+    "message_error",
+  ];
+
+  modalFormFields = ["first_name", "last_name", "email", "message"];
 }
 
 const resetFormFields = () => {
@@ -36,56 +46,36 @@ const resetCharacterCount = () => {
 };
 
 const resetErrorVisibility = () => {
-  const formFields = ["first_name", "last_name", "email", "message"];
-
-  formFields.forEach((fieldName) => {
+  modalFormFields.forEach((fieldName) => {
     const field = document.getElementById(fieldName);
-    if (field) {
-      field.setAttribute("data-error-visible", "false");
-    }
+    field?.setAttribute("data-error-visible", "false");
   });
 
-  const errorSpans = [
-    "first_name_error",
-    "last_name_error",
-    "email_error",
-    "message_error",
-  ];
-
-  errorSpans.forEach((errorId) => {
+  modalErrorElements.forEach((errorId) => {
     const errorSpan = document.getElementById(errorId);
-    if (errorSpan) {
-      errorSpan.setAttribute("data-error-visible", "false");
-    }
+    errorSpan?.setAttribute("data-error-visible", "false");
   });
 };
 
 const resetURL = () => {
-  if (window.history && window.history.replaceState) {
-    const url = new URL(window.location);
+  if (window.history?.replaceState) {
+    const url = new URL(window.location.href);
     url.search = "";
     window.history.replaceState({}, document.title, url.toString());
   }
 };
 
-const closeModal = () => {
-  if (resetFormElements.contactModal) {
-    resetFormElements.contactModal.classList.remove("show");
-  }
+const resetModal = () => {
+  resetFormElements.contactModal?.classList.remove("show");
 };
 
-const resetModalAndURL = () => {
+const resetFormAndModal = ({ closeModal = true } = {}) => {
   resetFormFields();
   resetURL();
-  closeModal();
-};
-
-const resetFormOnly = () => {
-  resetFormFields();
-  resetURL();
+  closeModal && resetModal();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   initializeResetFormElements();
-  resetFormOnly();
+  resetFormAndModal();
 });
