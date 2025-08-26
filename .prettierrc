@@ -1,14 +1,19 @@
 {
   "semi": true,
-  "trailingComma": "es5",
+  "trailingComma": "none",
   "singleQuote": true,
   "printWidth": 80,
   "tabWidth": 2,
   "useTabs": false,
-  "bracketSpacing": true,
-  "arrowParens": "avoid",
+  "bracketSpacing": false,
+  "bracketSameLine": false,
+  "arrowParens": "always",
   "endOfLine": "lf",
-  "htmlWhitespaceSensitivity": "css",
+  "quoteProps": "preserve",
+  "jsxSingleQuote": true,
+  "proseWrap": "never",
+  "htmlWhitespaceSensitivity": "strict",
+  "embeddedLanguageFormatting": "off",
   "overrides": [
     {
       "files": "*.html",
@@ -20,6 +25,12 @@
       "files": "*.css",
       "options": {
         "parser": "css"
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "parser": "json"
       }
     }
   ]
