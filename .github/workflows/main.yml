@@ -2,7 +2,7 @@ name: Lint and Format
 
 on:
   push:
-    branches: [action]
+    branches: dev
 
 env:
   # Node.js 24 latest LTS version
