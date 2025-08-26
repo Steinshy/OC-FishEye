@@ -240,3 +240,72 @@ footer p {
   font-weight: var(--font-weight-light);
   text-align: center;
 }
+
+/* =========================
+    Video Loading Styles
+========================= */
+.video-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background: var(--bg-color-tertiary);
+  color: var(--txt-color-secondary);
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--bg-color-tertiary);
+  border-top: 3px solid var(--bg-color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--space-sm);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+}
+
+/* Video element enhancements */
+.media_card video {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.media_card video:hover {
+  transform: scale(1.02);
+}
+
+.media_card video:focus {
+  outline: 2px solid var(--color-info);
+  outline-offset: 2px;
+}
+
+/* Video controls enhancement */
+.media_card video::-webkit-media-controls {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: var(--radius-sm);
+}
+
+.media_card video::-webkit-media-controls-panel {
+  background-color: transparent;
+}
