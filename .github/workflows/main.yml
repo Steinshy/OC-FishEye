@@ -32,22 +32,14 @@ jobs:
         id: checks
         run: |
           echo "Running ESLint check..."
-          eslint_output=$(npm run lint 2>&1) || echo "ESLint found issues"
+          npm run lint 2>&1
           eslint_exit_code=$?
 
           echo "Running Prettier format check..."
-          prettier_output=$(npm run format:check 2>&1) || echo "Prettier found formatting issues"
+          npm run format:check 2>&1
           prettier_exit_code=$?
 
-          # Store outputs for later use
-          echo "eslint_output<<EOF" >> $GITHUB_OUTPUT
-          echo "$eslint_output" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-          echo "prettier_output<<EOF" >> $GITHUB_OUTPUT
-          echo "$prettier_output" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
+          # Store exit codes for later use
           echo "eslint_exit_code=$eslint_exit_code" >> $GITHUB_OUTPUT
           echo "prettier_exit_code=$prettier_exit_code" >> $GITHUB_OUTPUT
 
@@ -60,13 +52,13 @@ jobs:
         if: steps.checks.outputs.eslint_exit_code != '0'
         run: |
           echo "❌ ESLint found the following issues:"
-          echo "${{ steps.checks.outputs.eslint_output }}"
+          npm run lint
 
       - name: Display Prettier results
         if: steps.checks.outputs.prettier_exit_code != '0'
         run: |
           echo "❌ Prettier found the following formatting issues:"
-          echo "${{ steps.checks.outputs.prettier_output }}"
+          npm run format:check
 
       - name: Display success message
         if: steps.checks.outputs.eslint_exit_code == '0' && steps.checks.outputs.prettier_exit_code == '0'
