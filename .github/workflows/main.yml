@@ -28,8 +28,49 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
-        run: npm run lint
+      - name: Run ESLint and Prettier checks
+        id: checks
+        run: |
+          echo "Running ESLint check..."
+          eslint_output=$(npm run lint 2>&1) || echo "ESLint found issues"
+          eslint_exit_code=$?
 
-      - name: Check Prettier formatting
-        run: npm run format:check
+          echo "Running Prettier format check..."
+          prettier_output=$(npm run format:check 2>&1) || echo "Prettier found formatting issues"
+          prettier_exit_code=$?
+
+          # Store outputs for later use
+          echo "eslint_output<<EOF" >> $GITHUB_OUTPUT
+          echo "$eslint_output" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          echo "prettier_output<<EOF" >> $GITHUB_OUTPUT
+          echo "$prettier_output" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          echo "eslint_exit_code=$eslint_exit_code" >> $GITHUB_OUTPUT
+          echo "prettier_exit_code=$prettier_exit_code" >> $GITHUB_OUTPUT
+
+          # Exit with failure if any check failed
+          if [ $eslint_exit_code -ne 0 ] || [ $prettier_exit_code -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Display ESLint results
+        if: steps.checks.outputs.eslint_exit_code != '0'
+        run: |
+          echo "❌ ESLint found the following issues:"
+          echo "${{ steps.checks.outputs.eslint_output }}"
+
+      - name: Display Prettier results
+        if: steps.checks.outputs.prettier_exit_code != '0'
+        run: |
+          echo "❌ Prettier found the following formatting issues:"
+          echo "${{ steps.checks.outputs.prettier_output }}"
+
+      - name: Display success message
+        if: steps.checks.outputs.eslint_exit_code == '0' && steps.checks.outputs.prettier_exit_code == '0'
+        run: |
+          echo "✅ All checks passed successfully!"
+          echo "✅ ESLint: No issues found"
+          echo "✅ Prettier: No formatting issues found"
