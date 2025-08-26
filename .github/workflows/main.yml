@@ -9,6 +9,9 @@ env:
 
 permissions:
   contents: read
+  # Need to add these 2 for eslint-annotate-action
+  pull-requests: read
+  checks: write
 
 jobs:
   lint:
@@ -44,6 +47,20 @@ jobs:
           echo "prettier_exit_code=$prettier_exit_code" >> $GITHUB_OUTPUT
 
           # Continue regardless of check results to display all findings
+
+      - name: Save Code Linting Report JSON
+        # npm script for ESLint
+        # eslint --output-file eslint_report.json --format json src
+        # See https://eslint.org/docs/user-guide/command-line-interface#options
+        run: npm run lint:report
+        # Continue to the next step even if this fails
+        continue-on-error: true
+
+      - name: ESLint Annotate from Report JSON
+        uses: ataylorme/eslint-annotate-action@3.0.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          report-json: 'eslint_report.json'
 
       - name: Display ESLint results
         if: steps.checks.outputs.eslint_exit_code != '0'
