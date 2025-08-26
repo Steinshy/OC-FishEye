@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+*.min.js
+
+# Generated files
+.DS_Store
+*.log
+
+# Images and media
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.webp
+*.mp4
+*.avi
+*.mov
+
+# Fonts
+*.ttf
+*.woff
+*.woff2
+*.eot
+
+# Configuration files
+package-lock.json
+yarn.lock
+
+# Old project files
+helper/old_project/
+
+# Github
+.github

@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+*.min.js
+*.min.css
+
+# Generated files
+.DS_Store
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Images and media
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.webp
+*.mp4
+*.avi
+*.mov
+
+# Fonts
+*.ttf
+*.woff
+*.woff2
+*.eot
+
+# Documentation
+*.md
+*.pdf
+
+# Configuration files
+package-lock.json
+yarn.lock

@@ -1,1 +1,36 @@
 .DS_Store
+# Node dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+debug.log*
+
+# Build outputs
+dist/
+build/
+coverage/
+.next/
+.out/
+.vite/
+
+# Production
+.env
+.env.*
+
+# IDE directories
+.vscode/
+.idea/
+
+# Misc caches
+.sass-cache/
+.cache/
+.tmp/
+
+# OS files
+Thumbs.db
