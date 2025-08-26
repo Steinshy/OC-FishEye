@@ -35,12 +35,43 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
 
-      # Install dependencies
+      # Install dependencies with retry logic and error handling
       - name: Install npm dependencies
         id: setup-npm-dependencies
-        uses: chill-viking/npm-ci@latest
-        with:
-          working_directory: '${{ github.workspace }}'
+        run: |
+          echo "🔧 Installing npm dependencies..."
+
+          # Set npm registry to ensure we're using the official one
+          npm config set registry https://registry.npmjs.org/
+
+          # Clear npm cache first
+          npm cache clean --force
+
+          # Try to install with npm ci first (faster and more reliable)
+          echo "📦 Attempting npm ci installation..."
+          if npm ci --prefer-offline --no-audit; then
+            echo "✅ npm ci installation successful"
+          else
+            echo "⚠️ npm ci failed, trying npm install..."
+            
+            # Fallback to npm install if npm ci fails
+            if npm install --prefer-offline --no-audit; then
+              echo "✅ npm install successful"
+            else
+              echo "❌ npm install also failed, trying with different registry..."
+              
+              # Try with alternative registry as last resort
+              npm config set registry https://registry.npmjs.com/
+              if npm install --prefer-offline --no-audit; then
+                echo "✅ npm install with alternative registry successful"
+              else
+                echo "💥 All npm installation methods failed"
+                exit 1
+              fi
+            fi
+          fi
+
+          echo "🎉 Dependencies installed successfully!"
 
       # Prettier Format Check (using local .prettierrc and .prettierignore)
       - name: Check Prettier formatting
