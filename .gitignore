@@ -34,3 +34,5 @@ coverage/
 
 # OS files
 Thumbs.db
+.husky/
+husky/

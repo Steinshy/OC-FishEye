@@ -36,3 +36,5 @@ helper/old_project/
 
 # Github
 .github
+.husky/
+husky/
