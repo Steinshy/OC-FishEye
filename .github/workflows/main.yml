@@ -43,10 +43,7 @@ jobs:
           echo "eslint_exit_code=$eslint_exit_code" >> $GITHUB_OUTPUT
           echo "prettier_exit_code=$prettier_exit_code" >> $GITHUB_OUTPUT
 
-          # Exit with failure if any check failed
-          if [ $eslint_exit_code -ne 0 ] || [ $prettier_exit_code -ne 0 ]; then
-            exit 1
-          fi
+          # Continue regardless of check results to display all findings
 
       - name: Display ESLint results
         if: steps.checks.outputs.eslint_exit_code != '0'
