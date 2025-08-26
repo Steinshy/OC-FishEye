@@ -3,7 +3,7 @@ let dropdownElements = {};
 function initializeSortElements() {
   dropdownElements = {
     mediaSortButton: document.getElementById("media_sort_button"),
-    mediaSortDropdown: document.getElementById("sort_dropdown"),
+    mediaSortDropdown: document.getElementById("sort_dropdown")
   };
 }
 

@@ -6,7 +6,7 @@ function initializeErrorElements() {
     lastName: document.getElementById("last_name_error"),
     email: document.getElementById("email_error"),
     message: document.getElementById("message_error"),
-    global: document.getElementById("form_global_error"),
+    global: document.getElementById("form_global_error")
   };
 }
 
@@ -43,5 +43,5 @@ window.ErrorHandler = {
   initializeErrorElements,
   toggleError,
   setError,
-  hideError,
+  hideError
 };

@@ -1,7 +1,7 @@
 {
   "semi": true,
   "trailingComma": "none",
-  "singleQuote": true,
+  "singleQuote": false,
   "printWidth": 80,
   "tabWidth": 2,
   "useTabs": false,
@@ -14,24 +14,11 @@
   "proseWrap": "never",
   "htmlWhitespaceSensitivity": "strict",
   "embeddedLanguageFormatting": "off",
-  "overrides": [
-    {
-      "files": "*.html",
-      "options": {
-        "parser": "html"
-      }
-    },
-    {
-      "files": "*.css",
-      "options": {
-        "parser": "css"
-      }
-    },
-    {
-      "files": "*.json",
-      "options": {
-        "parser": "json"
-      }
-    }
-  ]
+  "overrides":
+    [
+      {"files": "*.html", "options": {"parser": "html"}},
+      {"files": "*.css", "options": {"parser": "css"}},
+      {"files": "*.json", "options": {"parser": "json"}},
+      {"files": "*.js", "options": {"parser": "babel"}}
+    ]
 }

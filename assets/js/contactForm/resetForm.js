@@ -7,13 +7,13 @@ function initializeResetFormElements() {
     contactForm: document.getElementById("contact_form"),
     contactModal: document.getElementById("modal_container"),
     message: document.getElementById("message"),
-    characterCount: document.getElementById("character_count"),
+    characterCount: document.getElementById("character_count")
   };
   modalErrorElements = [
     "first_name_error",
     "last_name_error",
     "email_error",
-    "message_error",
+    "message_error"
   ];
 
   modalFormFields = ["first_name", "last_name", "email", "message"];
@@ -69,7 +69,7 @@ const resetModal = () => {
   resetFormElements.contactModal?.classList.remove("show");
 };
 
-const resetFormAndModal = ({ closeModal = true } = {}) => {
+const resetFormAndModal = ({closeModal = true} = {}) => {
   resetFormFields();
   resetURL();
   closeModal && resetModal();

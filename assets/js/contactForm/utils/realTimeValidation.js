@@ -5,7 +5,7 @@ function initializeFormElements() {
     lastName: document.getElementById("last_name"),
     firstName: document.getElementById("first_name"),
     email: document.getElementById("email"),
-    message: document.getElementById("message"),
+    message: document.getElementById("message")
   };
 }
 
@@ -13,7 +13,7 @@ const fieldNameToErrorKey = {
   first_name: "firstName",
   last_name: "lastName",
   email: "email",
-  message: "message",
+  message: "message"
 };
 
 const handleRealTimeValidation = (element, fieldName) => {
@@ -40,7 +40,7 @@ const handleRealTimeValidation = (element, fieldName) => {
       first_name: formElements.firstName?.value?.trim() || "",
       last_name: formElements.lastName?.value?.trim() || "",
       email: formElements.email?.value?.trim() || "",
-      message: formElements.message?.value?.trim() || "",
+      message: formElements.message?.value?.trim() || ""
     };
 
     if (window.Validators.areAllFieldsValid(values)) {
@@ -83,5 +83,5 @@ const initializeRealTimeValidation = () => {
 
 window.RealTimeValidation = {
   initializeRealTimeValidation,
-  handleRealTimeValidation,
+  handleRealTimeValidation
 };

@@ -8,7 +8,7 @@ function initializeCarrouselControl() {
     document.getElementById("radio2"),
     document.getElementById("radio3"),
     document.getElementById("radio4"),
-    document.getElementById("radio5"),
+    document.getElementById("radio5")
   ];
   let currentSlide = radios.findIndex((radio) => radio.checked);
 

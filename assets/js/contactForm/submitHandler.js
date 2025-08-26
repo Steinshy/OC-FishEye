@@ -5,14 +5,14 @@ let errorElements = {};
 function initializeElements() {
   submitElements = {
     contactForm: document.getElementById("contact_form"),
-    submitButton: document.querySelector(".submit_button"),
+    submitButton: document.querySelector(".submit_button")
   };
 
   getFormElements = {
     firstName: document.getElementById("first_name"),
     lastName: document.getElementById("last_name"),
     email: document.getElementById("email"),
-    message: document.getElementById("message"),
+    message: document.getElementById("message")
   };
 
   errorElements = {
@@ -20,7 +20,7 @@ function initializeElements() {
     lastName: document.getElementById("last_name_error"),
     email: document.getElementById("email_error"),
     message: document.getElementById("message_error"),
-    global: document.getElementById("form_global_error"),
+    global: document.getElementById("form_global_error")
   };
 }
 

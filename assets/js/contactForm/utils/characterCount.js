@@ -7,11 +7,11 @@ const getMessageElements = () => {
     max: document.getElementById("max"),
     error: document.getElementById("message_error"),
     maxLength: 500,
-    defaultLength: 0,
+    defaultLength: 0
   };
 };
 
-const { message, characterCount, min, max, maxLength, error } =
+const {message, characterCount, min, max, maxLength, error} =
   getMessageElements();
 
 const setCharacterCountState = (isWarning, isDanger) => {

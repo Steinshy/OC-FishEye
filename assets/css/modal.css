@@ -194,11 +194,8 @@ textarea[data-error-visible="true"] {
   border: 2px solid var(--color-error);
 }
 
-input[data-error-visible="true"] + .error_form,
-textarea[data-error-visible="true"]
-  + .message_container
-  .message_error_container
-  .error_form,
+input[data-error-visible="true"]+.error_form,
+textarea[data-error-visible="true"]+.message_container .message_error_container .error_form,
 .error_form[data-error-visible="true"] {
   display: block;
 }

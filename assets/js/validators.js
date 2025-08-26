@@ -39,5 +39,5 @@ window.Validators = {
   isValidEmail,
   isValidMessage,
   validateField,
-  areAllFieldsValid,
+  areAllFieldsValid
 };

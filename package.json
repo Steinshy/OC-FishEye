@@ -9,8 +9,6 @@
     "lint:fix": "eslint . --ext .js --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "echo \"No tests specified yet\" && exit 0",
-    "build": "echo \"Build step would run here\" && exit 0",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "changelog": "conventional-changelog --preset angular --output-format json --release-count 0",
@@ -29,18 +27,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "husky": "^9.0.11",
     "lint-staged": "^16.1.5",
+    "yocto-queue": "^0.1.0",
     "prettier": "^3.2.5"
-  },
-  "keywords": [
-    "photography",
-    "website",
-    "html",
-    "css",
-    "javascript"
-  ],
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "yocto-queue": "^0.1.0"
   }
 }

@@ -16,7 +16,7 @@ function handleFormSubmit(e) {
     lastName: document.getElementById("last_name_error"),
     email: document.getElementById("email_error"),
     message: document.getElementById("message_error"),
-    global: document.getElementById("form_global_error"),
+    global: document.getElementById("form_global_error")
   };
 
   e.preventDefault();
