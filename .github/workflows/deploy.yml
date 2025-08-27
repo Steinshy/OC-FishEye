@@ -1,0 +1,96 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - Media
+
+env:
+  NODE_VERSION: "24"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          show-progress: true
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          echo "🔧 Installing npm dependencies..."
+          npm cache clean --force
+          echo "📦 Attempting npm ci installation..."
+          if npm ci --prefer-offline --no-audit; then
+            echo "✅ npm ci installation successful"
+          else
+            echo "⚠️ npm ci failed, trying npm install..."
+            if npm install --prefer-offline --no-audit; then
+              echo "✅ npm install successful"
+            else
+              echo "❌ npm install also failed, trying with different registry..."
+              npm config set registry https://registry.npmjs.com/
+              if npm install --prefer-offline --no-audit; then
+                echo "✅ npm install with alternative registry successful"
+              else
+                echo "💥 All npm installation methods failed"
+                exit 1
+              fi
+            fi
+          fi
+
+          echo "🎉 Dependencies installed successfully!"
+
+      # Prepare files for deployment
+      - name: Prepare deployment files
+        id: prepare-deployment-files
+        run: |
+          echo "📁 Preparing files for deployment..."
+          # Create a deployment directory
+          mkdir -p deploy
+
+          # Copy all necessary files to deploy directory
+          cp index.html deploy/
+          cp photographer.html deploy/
+          cp carrousel.html deploy/
+          cp -r assets/ deploy/
+          cp manifest.json deploy/
+
+          # List contents to verify
+          echo "📋 Files ready for deployment:"
+          find deploy/ -type f | head -20
+
+      # Deploy to GitHub Pages using the Deploy to GitHub Pages action
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: deploy # The folder to deploy
+          branch: gh-pages # The branch to deploy to
+          clean: true # Remove files from deployment branch that are no longer in the deployment folder
+          clean-exclude: |
+            .nojekyll
+            CNAME

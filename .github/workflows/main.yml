@@ -2,11 +2,11 @@ name: Lint and Format
 
 on:
   push:
-    branches: dev
+    branches: Media
 
 env:
   # Node.js 24 latest LTS version
-  NODE_VERSION: '24'
+  NODE_VERSION: "24"
 
 permissions:
   contents: read
@@ -32,8 +32,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
 
       # Install dependencies
       - name: Install npm dependencies

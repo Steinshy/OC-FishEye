@@ -110,7 +110,7 @@ function createMediaCard(media, folderName) {
 
   const mediaElement = media.image
     ? `<img src="assets/photographers/${folderName}/jpg/${media.image.jpg}" alt="${media.title}" loading="lazy">`
-    : `<video controls><source src="assets/photographers/${folderName}/video/${media.video}" type="video/mp4"></video>`;
+    : `<video controls><source src="assets/photographers/${folderName}/video/${media.video.mp4}" type="video/mp4"></video>`;
 
   card.innerHTML = `
     <div class="media_content">
