@@ -57,21 +57,12 @@ const resetErrorVisibility = () => {
   });
 };
 
-const resetURL = () => {
-  if (window.history?.replaceState) {
-    const url = new URL(window.location.href);
-    url.search = "";
-    window.history.replaceState({}, document.title, url.toString());
-  }
-};
-
 const resetModal = () => {
   resetFormElements.contactModal?.classList.remove("show");
 };
 
 const resetFormAndModal = ({closeModal = true} = {}) => {
   resetFormFields();
-  resetURL();
   closeModal && resetModal();
 };
 

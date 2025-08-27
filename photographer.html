@@ -58,18 +58,18 @@
     <main id="main_content">
       <section class="photographer_section">
         <div class="section_container">
-          <div class="section_content">
+          <div class="section_content" id="photographer_main_info">
             <!-- Photographer Name mediaGallery -->
-            <h1></h1>
+            <h1 id="info_name"></h1>
             <!-- City and country mediaGallery -->
-            <p></p>
+            <p id="info_location"></p>
             <!-- Tagline mediaGallery -->
-            <p></p>
+            <p id="info_tagline"></p>
           </div>
           <div class="contact_container">
             <button class="contact_button" id="contact_button" aria-label="Contactez-moi">Contactez-moi</button>
           </div>
-          <img class="profile_picture" alt="Profile picture" loading="lazy">
+          <img class="profile_picture" id="info_picture" alt="Profile picture" loading="lazy">
         </div>
       </section>
 
@@ -172,7 +172,8 @@
   <script src="assets/js/sortDropdown.js"></script>
 
   <!-- Media Gallery -->
-  <script src="assets/js/mediaGallery/mediaGallery.js"></script>
+  <script src="assets/js/mediaGallery/utils/getPhotographersData.js"></script>
+  <script src="assets/js/mediaGallery/render.js"></script>
 
   <!-- Contact Form -->
   <script src="assets/js/contactForm/contactForm.js"></script>
