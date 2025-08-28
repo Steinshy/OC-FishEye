@@ -78,11 +78,35 @@ jobs:
           cp photographer.html deploy/
           cp carrousel.html deploy/
           cp -r assets/ deploy/
-          cp manifest.json deploy/
 
-          # List contents to verify
+          # Check if manifest.json exists before copying
+          if [ -f "manifest.json" ]; then
+            cp manifest.json deploy/
+          elif [ -f "assets/manifest.json" ]; then
+            cp assets/manifest.json deploy/
+          else
+            echo "⚠️ manifest.json not found in root or assets directory"
+          fi
+
+          # List contents to verify (avoid broken pipe)
           echo "📋 Files ready for deployment:"
-          find deploy/ -type f | head -20
+          find deploy/ -type f | sort || echo "No files found in deploy directory"
+
+          echo "📊 Total files to deploy: $(find deploy/ -type f | wc -l)"
+
+      # Setup GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # Clean up any existing deployment artifacts
+      - name: Clean up deployment artifacts
+        run: |
+          echo "🧹 Cleaning up any existing deployment artifacts..."
+          # Remove any existing temp deployment folders
+          rm -rf github-pages-deploy-action-temp-deployment-folder
+          # Clean git worktrees if they exist
+          git worktree prune 2>/dev/null || true
+          echo "✅ Cleanup completed"
 
       # Deploy to GitHub Pages using the Deploy to GitHub Pages action
       - name: Deploy to GitHub Pages
@@ -94,3 +118,7 @@ jobs:
           clean-exclude: |
             .nojekyll
             CNAME
+          single-commit: true # Squash the deployment into a single commit
+          force: false # Don't force push to avoid conflicts
+          git-config-name: "github-actions[bot]"
+          git-config-email: "github-actions[bot]@users.noreply.github.com"
