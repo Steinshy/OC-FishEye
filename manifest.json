@@ -1,0 +1,76 @@
+{
+  "name": "FishEye - Photography Portfolio",
+  "short_name": "FishEye",
+  "description": "A professional photography portfolio showcasing stunning images from talented photographers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#901c1c",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "fr",
+  "categories": ["photography", "art", "portfolio"],
+  "icons": [
+    {
+      "src": "favicons/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicons/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicons/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "photographers/ellie/jpg/EllieRoseWilkens.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "FishEye Photography Portfolio"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Photographers",
+      "short_name": "Photographers",
+      "description": "Browse all photographers",
+      "url": "/",
+      "icons": [
+        {
+          "src": "favicons/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "favicons/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
