@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build and Deploy to GitHub Pages
+    name: Build for GitHub Pages
     runs-on: ubuntu-latest
 
     steps:
@@ -98,27 +98,22 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # Clean up any existing deployment artifacts
-      - name: Clean up deployment artifacts
-        run: |
-          echo "🧹 Cleaning up any existing deployment artifacts..."
-          # Remove any existing temp deployment folders
-          rm -rf github-pages-deploy-action-temp-deployment-folder
-          # Clean git worktrees if they exist
-          git worktree prune 2>/dev/null || true
-          echo "✅ Cleanup completed"
-
-      # Deploy to GitHub Pages using the Deploy to GitHub Pages action
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      # Upload deployment artifact
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: deploy # The folder to deploy
-          branch: gh-pages # The branch to deploy to
-          clean: true # Remove files from deployment branch that are no longer in the deployment folder
-          clean-exclude: |
-            .nojekyll
-            CNAME
-          single-commit: true # Squash the deployment into a single commit
-          force: false # Don't force push to avoid conflicts
-          git-config-name: "github-actions[bot]"
-          git-config-email: "github-actions[bot]@users.noreply.github.com"
+          path: deploy
+
+  # Deploy job
+  deploy:
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
