@@ -189,9 +189,20 @@
   margin-right: 0.5rem;
 }
 
-input[data-error-visible="true"],
-textarea[data-error-visible="true"] {
-  border: 2px solid var(--color-error);
+/* Validation states with higher specificity to override focus styles */
+/* Only apply validation borders to input fields, not textarea */
+.form_group input[data-error-visible="true"] {
+  border: 2px solid #dc3545;
+}
+
+.form_group input[data-valid="true"] {
+  border: 2px solid #28a745;
+}
+
+/* Textarea validation - no border changes, only error message display */
+.form_group textarea[data-error-visible="true"],
+.form_group textarea[data-valid="true"] {
+  /* Keep normal styling, no validation borders */
 }
 
 input[data-error-visible="true"]+.error_form,

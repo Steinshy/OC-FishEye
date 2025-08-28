@@ -24,11 +24,17 @@ const handleRealTimeValidation = (element, fieldName) => {
     : true;
 
   const shouldShowError = Boolean(fieldValue && !isValid);
+  const shouldShowValid = Boolean(fieldValue && isValid);
 
-  element.setAttribute(
-    "data-error-visible",
-    shouldShowError ? "true" : "false"
-  );
+  // Only set visual attributes for input fields, not textarea (message)
+  if (fieldName !== "message") {
+    element.setAttribute(
+      "data-error-visible",
+      shouldShowError ? "true" : "false"
+    );
+
+    element.setAttribute("data-valid", shouldShowValid ? "true" : "false");
+  }
 
   if (window.ErrorHandler) {
     const errorKey = fieldNameToErrorKey[fieldName] || fieldName;

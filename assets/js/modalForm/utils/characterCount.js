@@ -2,7 +2,7 @@ const getMessageElements = () => {
   const message = document.getElementById("message");
   return {
     message,
-    characterCount: document.getElementById("character_count"),
+    characterCount: document.getElementById("form_textarea"),
     min: document.getElementById("min"),
     max: document.getElementById("max"),
     error: document.getElementById("message_error"),
@@ -46,3 +46,8 @@ const destroyCharacterCount = () => {
     });
   }
 };
+
+// Expose functions globally
+window.initCharacterCount = initCharacterCount;
+window.updateCharacterCount = updateCharacterCount;
+window.destroyCharacterCount = destroyCharacterCount;

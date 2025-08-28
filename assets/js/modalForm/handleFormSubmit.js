@@ -11,13 +11,7 @@ function handleFormSubmit(e) {
   const contactForm = document.getElementById("contact_form");
   const submitButton = document.querySelector(".submit_button");
   const contactModal = document.getElementById("modal_container");
-  const errorElements = {
-    firstName: document.getElementById("first_name_error"),
-    lastName: document.getElementById("last_name_error"),
-    email: document.getElementById("email_error"),
-    message: document.getElementById("message_error"),
-    global: document.getElementById("form_global_error")
-  };
+  const errorElements = window.ErrorHandler.globalErrorElements;
 
   e.preventDefault();
   if (!contactForm) {
@@ -29,6 +23,15 @@ function handleFormSubmit(e) {
     if (errorElements[field] && field !== "global") {
       errorElements[field].setAttribute("data-error-visible", "false");
       setFieldError(field, false);
+
+      const snakeField = toSnakeField(field);
+      if (snakeField !== "message") {
+        const inputElement = document.getElementById(snakeField);
+        if (inputElement) {
+          inputElement.setAttribute("data-error-visible", "false");
+          inputElement.setAttribute("data-valid", "false");
+        }
+      }
     }
   });
 
@@ -42,11 +45,43 @@ function handleFormSubmit(e) {
         if (!isValid) {
           errorElements[field].setAttribute("data-error-visible", "true");
           setFieldError(field, true);
+
+          if (snakeField !== "message") {
+            const inputElement = document.getElementById(snakeField);
+            if (inputElement) {
+              inputElement.setAttribute("data-error-visible", "true");
+              inputElement.setAttribute("data-valid", "false");
+            }
+          }
+        } else if (value) {
+          if (snakeField !== "message") {
+            const inputElement = document.getElementById(snakeField);
+            if (inputElement) {
+              inputElement.setAttribute("data-error-visible", "false");
+              inputElement.setAttribute("data-valid", "true");
+            }
+          }
         }
       }
     });
     return;
   }
+
+  Object.keys(errorElements).forEach((field) => {
+    if (errorElements[field] && field !== "global") {
+      const snakeField = toSnakeField(field);
+      const value = (formObject[snakeField] || "").trim();
+      const isValid = window.Validators.validateField(snakeField, value);
+
+      if (isValid && value && snakeField !== "message") {
+        const inputElement = document.getElementById(snakeField);
+        if (inputElement) {
+          inputElement.setAttribute("data-error-visible", "false");
+          inputElement.setAttribute("data-valid", "true");
+        }
+      }
+    }
+  });
 
   try {
     if (submitButton) {
@@ -64,14 +99,21 @@ function handleFormSubmit(e) {
         if (typeof resetModalAndURL === "function") {
           resetModalAndURL();
         } else {
-          if (contactForm) {
-            contactForm.reset();
-          }
-          if (typeof resetCharacterCount === "function") {
-            resetCharacterCount();
-          }
-          if (contactModal) {
-            contactModal.classList.remove("show");
+          if (typeof window.resetFormAndModal === "function") {
+            window.resetFormAndModal();
+          } else {
+            if (contactForm) {
+              contactForm.reset();
+            }
+            if (typeof resetCharacterCount === "function") {
+              resetCharacterCount();
+            }
+            if (typeof window.resetErrorVisibility === "function") {
+              window.resetErrorVisibility();
+            }
+            if (contactModal) {
+              contactModal.classList.remove("show");
+            }
           }
         }
 

@@ -90,7 +90,7 @@
           </div>
         </div>
         <!-- Media cards mediaGallery -->
-        <div class="media_cards">
+        <div class="media_cards" id="media_cards">
         </div>
       </section>
     </main>
@@ -98,7 +98,7 @@
     <!-- Contact Modal -->
     <div class="modal_container" id="modal_container">
       <div class="modal_content" id="modal_content">
-        <div class="modal_header">
+        <div class="modal_header" id="modal_header">
           <i class="fa-solid fa-envelope"></i>
           <h2>Contactez-moi</h2>
           <button class="modal_close" id="modal_close" aria-label="Fermer le modal">
@@ -107,43 +107,43 @@
         </div>
 
         <form class="contact_form" id="contact_form">
-          <div class="form_group">
+          <div class="form_group" id="form_name">
             <label for="last_name">Nom</label>
             <input type="text" id="last_name" name="last_name" minlength="2" aria-describedby="last_name_error">
-            <span id="last_name_error" class="error_form" aria-live="polite" data-error-visible="false">
+            <span class="error_form" id="last_name_error" aria-live="polite" data-error-visible="false">
               Veuillez entrer 2 caractères ou plus pour le champ du Nom.
             </span>
           </div>
 
-          <div class="form_group">
+          <div class="form_group" id="form_first_name">
             <label for="first_name">Prénom</label>
             <input type="text" id="first_name" name="first_name" minlength="2" aria-describedby="first_name_error">
-            <span id="first_name_error" class="error_form" aria-live="polite" data-error-visible="false">
+            <span class="error_form" id="first_name_error" aria-live="polite" data-error-visible="false">
               Veuillez entrer 2 caractères ou plus pour le champ du Prénom.
             </span>
           </div>
 
-          <div class="form_group">
+          <div class="form_group" id="form_email">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" aria-describedby="email_error">
-            <span id="email_error" class="error_form" aria-live="polite" data-error-visible="false">
+            <span class="error_form" id="email_error" aria-live="polite" data-error-visible="false">
               Veuillez entrer une adresse email valide.
             </span>
           </div>
 
-          <div class="form_group">
+          <div class="form_group" id="form_message">
             <label for="message">Votre message</label>
             <textarea id="message" name="message" rows="5" maxlength="500"
               aria-describedby="message_error character_count"></textarea>
 
             <div class="message_container">
               <div class="message_error_container" aria-live="polite">
-                <span id="message_error" class="error_form" aria-live="polite" data-error-visible="false">
+                <span class="error_form" id="message_error" aria-live="polite" data-error-visible="false">
                   Veuillez entrer un message entre 0 et 500 caractères.
                 </span>
               </div>
 
-              <div class="character_count" id="character_count" aria-live="polite">
+              <div class="character_count" id="form_textarea" aria-live="polite">
                 <span class="min" id="min">0</span><span class="max" id="max">/ 500</span>
               </div>
             </div>
@@ -151,12 +151,12 @@
           </div>
 
           <!-- Global error message -->
-          <div class="form_group">
-            <span id="form_global_error" class="error_form global_error" aria-live="polite" data-error-visible="false">
+          <div class="form_group" id="form_global_error">
+            <span class="error_form global_error" id="global_error" aria-live="polite" data-error-visible="false">
               Veuillez remplir tous les champs du formulaire.
             </span>
           </div>
-          <button type="submit" class="submit_button">Envoyer</button>
+          <button class="submit_button" id="submit_button" type="submit">Envoyer</button>
         </form>
       </div>
     </div>
@@ -176,13 +176,13 @@
   <script src="assets/js/mediaGallery/render.js"></script>
 
   <!-- Contact Form -->
-  <script src="assets/js/contactForm/contactForm.js"></script>
-  <script src="assets/js/contactForm/handleFormSubmit.js"></script>
-  <script src="assets/js/contactForm/resetForm.js"></script>
-  <script src="assets/js/contactForm/submitHandler.js"></script>
+  <script src="assets/js/modalForm/contactForm.js"></script>
+  <script src="assets/js/modalForm/handleFormSubmit.js"></script>
+  <script src="assets/js/modalForm/resetForm.js"></script>
+  <script src="assets/js/modalForm/submitHandler.js"></script>
 
   <!-- Contact Form => Utils -->
-  <script src="assets/js/contactForm/utils/characterCount.js"></script>
-  <script src="assets/js/contactForm/utils/realTimeValidation.js"></script>
+  <script src="assets/js/modalForm/utils/characterCount.js"></script>
+  <script src="assets/js/modalForm/utils/realTimeValidation.js"></script>
 
 </html>

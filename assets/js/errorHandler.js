@@ -1,24 +1,14 @@
 let globalErrorElements = {};
 
-function initializeErrorElements() {
-  globalErrorElements = {
-    firstName: document.getElementById("first_name_error"),
-    lastName: document.getElementById("last_name_error"),
-    email: document.getElementById("email_error"),
-    message: document.getElementById("message_error"),
-    global: document.getElementById("form_global_error")
-  };
-}
-
-function ensureInitialized() {
-  if (!globalErrorElements?.firstName) {
-    initializeErrorElements();
-  }
-}
+globalErrorElements = {
+  firstName: document.getElementById("first_name_error"),
+  lastName: document.getElementById("last_name_error"),
+  email: document.getElementById("email_error"),
+  message: document.getElementById("message_error"),
+  global: document.getElementById("global_error")
+};
 
 function toggleError(targetKey, shouldShow, message) {
-  ensureInitialized();
-
   const errorElement = globalErrorElements[targetKey];
   if (errorElement) {
     errorElement.setAttribute(
@@ -40,8 +30,8 @@ function hideError(targetKey) {
 }
 
 window.ErrorHandler = {
-  initializeErrorElements,
   toggleError,
   setError,
-  hideError
+  hideError,
+  globalErrorElements
 };

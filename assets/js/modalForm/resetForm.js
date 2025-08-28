@@ -7,7 +7,7 @@ function initializeResetFormElements() {
     contactForm: document.getElementById("contact_form"),
     contactModal: document.getElementById("modal_container"),
     message: document.getElementById("message"),
-    characterCount: document.getElementById("character_count")
+    characterCount: document.getElementById("form_textarea")
   };
   modalErrorElements = [
     "first_name_error",
@@ -48,7 +48,12 @@ const resetCharacterCount = () => {
 const resetErrorVisibility = () => {
   modalFormFields.forEach((fieldName) => {
     const field = document.getElementById(fieldName);
-    field?.setAttribute("data-error-visible", "false");
+    if (field) {
+      if (fieldName !== "message") {
+        field.setAttribute("data-error-visible", "false");
+        field.setAttribute("data-valid", "false");
+      }
+    }
   });
 
   modalErrorElements.forEach((errorId) => {
@@ -65,6 +70,11 @@ const resetFormAndModal = ({closeModal = true} = {}) => {
   resetFormFields();
   closeModal && resetModal();
 };
+
+window.resetFormAndModal = resetFormAndModal;
+window.resetFormFields = resetFormFields;
+window.resetErrorVisibility = resetErrorVisibility;
+window.resetCharacterCount = resetCharacterCount;
 
 document.addEventListener("DOMContentLoaded", () => {
   initializeResetFormElements();
