@@ -39,11 +39,16 @@
     <link rel="stylesheet" type="text/css" href="assets/css/photographer.css">
     <link rel="stylesheet" type="text/css" href="assets/css/modal.css">
 
-    <!-- Font Awesome - Local -->
-    <link rel="stylesheet" href="assets/fonts/fontawesome/all-local.css">
+    <!-- Font Awesome - Online CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
 
-    <!-- Google Fonts - Local -->
-    <link rel="stylesheet" href="assets/fonts/google/google-fonts-local.css">
+    <!-- Google Fonts - Online CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Shrikhand&display=swap"
+      rel="stylesheet">
   </head>
 
   <body>
@@ -56,31 +61,50 @@
     </header>
 
     <main id="main_content">
+      <!-- Photographer Profile Section -->
       <section class="photographer_section">
         <div class="section_container">
+          <!-- Photographer Information Container -->
           <div class="section_content" id="photographer_main_info">
-            <!-- Photographer Name mediaGallery -->
-            <h1 id="info_name"></h1>
-            <!-- City and country mediaGallery -->
-            <p id="info_location"></p>
-            <!-- Tagline mediaGallery -->
-            <p id="info_tagline"></p>
+            <!-- Photographer Name - Populated by JavaScript from data.json -->
+            <h1 id="info_name" data-default="Nom du photographe">Nom</h1>
+            <!-- Location (City, Country) - Populated by JavaScript from data.json -->
+            <p id="info_location" data-default="Ville, Pays">Ville, Pays</p>
+            <!-- Photographer Tagline - Populated by JavaScript from data.json -->
+            <p id="info_tagline" data-default="Tagline par défaut">Tagline</p>
           </div>
+
+          <!-- Contact Button Container -->
           <div class="contact_container">
+            <!-- Contact Button - Opens modal form, aria-label updated by JavaScript -->
             <button class="contact_button" id="contact_button" aria-label="Contactez-moi">Contactez-moi</button>
           </div>
-          <img class="profile_picture" id="info_picture" alt="Profile picture" loading="lazy">
+
+          <!-- Profile Picture Container -->
+          <div class="container_img">
+            <!-- Responsive Image with Fallback -->
+            <picture>
+              <!-- Fallback image if photographer portrait fails to load -->
+              <source srcset="assets/photographers/account.png" type="image/png">
+              <!-- Main photographer portrait - src and alt updated by JavaScript -->
+              <img id="info_picture" alt="Profile picture" loading="lazy">
+            </picture>
+          </div>
         </div>
       </section>
 
+      <!-- Media Gallery Section -->
       <section class="media_section">
+        <!-- Sorting Options Container -->
         <div class="section_options">
           <h2>Trier par</h2>
           <div class="button_container">
+            <!-- Sort Dropdown Button - Controls sorting of media items -->
             <button class="options_button" id="media_sort_button" aria-haspopup="listbox" aria-expanded="false"
               aria-controls="sort_dropdown">
               Popularité
             </button>
+            <!-- Sort Options Dropdown - Hidden by default, shown on button click -->
             <ul class="options_dropdown" id="sort_dropdown" role="listbox" tabindex="-1" hidden>
               <li role="option" aria-selected="true">Popularité</li>
               <li role="option">Date</li>
@@ -89,60 +113,74 @@
             </ul>
           </div>
         </div>
-        <!-- Media cards mediaGallery -->
+
+        <!-- Media Cards Container - Populated by JavaScript from photographer's media data -->
         <div class="media_cards" id="media_cards">
+          <!-- Media cards will be dynamically inserted here by renderMediaGallery() function -->
         </div>
       </section>
     </main>
 
-    <!-- Contact Modal -->
+    <!-- Contact Modal - Hidden by default, shown when contact button is clicked -->
     <div class="modal_container" id="modal_container">
       <div class="modal_content" id="modal_content">
+        <!-- Modal Header with Close Button -->
         <div class="modal_header" id="modal_header">
           <i class="fa-solid fa-envelope"></i>
           <h2>Contactez-moi</h2>
+          <!-- Close Button - Closes modal and returns focus to contact button -->
           <button class="modal_close" id="modal_close" aria-label="Fermer le modal">
             <i class="fa-solid fa-times"></i>
           </button>
         </div>
 
+        <!-- Contact Form - Validated in real-time and on submit -->
         <form class="contact_form" id="contact_form">
+          <!-- Last Name Field -->
           <div class="form_group" id="form_name">
             <label for="last_name">Nom</label>
             <input type="text" id="last_name" name="last_name" minlength="2" aria-describedby="last_name_error">
+            <!-- Error message for last name validation -->
             <span class="error_form" id="last_name_error" aria-live="polite" data-error-visible="false">
               Veuillez entrer 2 caractères ou plus pour le champ du Nom.
             </span>
           </div>
 
+          <!-- First Name Field -->
           <div class="form_group" id="form_first_name">
             <label for="first_name">Prénom</label>
             <input type="text" id="first_name" name="first_name" minlength="2" aria-describedby="first_name_error">
+            <!-- Error message for first name validation -->
             <span class="error_form" id="first_name_error" aria-live="polite" data-error-visible="false">
               Veuillez entrer 2 caractères ou plus pour le champ du Prénom.
             </span>
           </div>
 
+          <!-- Email Field -->
           <div class="form_group" id="form_email">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" aria-describedby="email_error">
+            <!-- Error message for email validation -->
             <span class="error_form" id="email_error" aria-live="polite" data-error-visible="false">
               Veuillez entrer une adresse email valide.
             </span>
           </div>
 
+          <!-- Message Field with Character Counter -->
           <div class="form_group" id="form_message">
             <label for="message">Votre message</label>
             <textarea id="message" name="message" rows="5" maxlength="500"
               aria-describedby="message_error character_count"></textarea>
 
             <div class="message_container">
+              <!-- Message Error Container -->
               <div class="message_error_container" aria-live="polite">
                 <span class="error_form" id="message_error" aria-live="polite" data-error-visible="false">
                   Veuillez entrer un message entre 0 et 500 caractères.
                 </span>
               </div>
 
+              <!-- Character Counter - Shows current/max characters -->
               <div class="character_count" id="form_textarea" aria-live="polite">
                 <span class="min" id="min">0</span><span class="max" id="max">/ 500</span>
               </div>
@@ -150,12 +188,13 @@
 
           </div>
 
-          <!-- Global error message -->
+          <!-- Global Error Message - Shown when form submission fails -->
           <div class="form_group" id="form_global_error">
             <span class="error_form global_error" id="global_error" aria-live="polite" data-error-visible="false">
               Veuillez remplir tous les champs du formulaire.
             </span>
           </div>
+          <!-- Submit Button - Triggers form validation and submission -->
           <button class="submit_button" id="submit_button" type="submit">Envoyer</button>
         </form>
       </div>
@@ -163,25 +202,29 @@
   </body>
 
 
-  <!-- Main Script -->
+  <!-- ========================================== -->
+  <!-- JavaScript Files - Loaded in dependency order -->
+  <!-- ========================================== -->
+
+  <!-- Main Application Script - Entry point and core functionality -->
   <script src="assets/js/script.js"></script>
 
-  <!-- Main => Utils -->
+  <!-- Utility Scripts - Core utilities used by main application -->
   <script src="assets/js/errorHandler.js"></script>
   <script src="assets/js/validators.js"></script>
   <script src="assets/js/sortDropdown.js"></script>
 
-  <!-- Media Gallery -->
+  <!-- Media Gallery Scripts - Handle photographer data and media rendering -->
   <script src="assets/js/mediaGallery/utils/getPhotographersData.js"></script>
   <script src="assets/js/mediaGallery/render.js"></script>
 
-  <!-- Contact Form -->
+  <!-- Contact Form Scripts - Handle modal form functionality -->
   <script src="assets/js/modalForm/contactForm.js"></script>
   <script src="assets/js/modalForm/handleFormSubmit.js"></script>
   <script src="assets/js/modalForm/resetForm.js"></script>
   <script src="assets/js/modalForm/submitHandler.js"></script>
 
-  <!-- Contact Form => Utils -->
+  <!-- Contact Form Utility Scripts - Form validation and character counting -->
   <script src="assets/js/modalForm/utils/characterCount.js"></script>
   <script src="assets/js/modalForm/utils/realTimeValidation.js"></script>
 
