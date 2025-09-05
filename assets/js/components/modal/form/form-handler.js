@@ -1,7 +1,26 @@
+/**
+ * Photographer Page => Form Handler
+ * Todo: Import GameOn form code
+ */
+
 function toSnakeField(fieldKey) {
   if (fieldKey === "firstName") return "first_name";
   if (fieldKey === "lastName") return "last_name";
   return fieldKey;
+}
+
+function setFieldError(field, shouldShow, message = "") {
+  if (window.ErrorHandler && typeof window.ErrorHandler.setError === "function") {
+    window.ErrorHandler.setError(field, shouldShow, message);
+  } else {
+    const errorElement = document.getElementById(`${field}_error`);
+    if (errorElement) {
+      errorElement.setAttribute("data-error-visible", shouldShow ? "true" : "false");
+      if (message) {
+        errorElement.textContent = message;
+      }
+    }
+  }
 }
 
 function handleFormSubmit(e) {
@@ -11,7 +30,7 @@ function handleFormSubmit(e) {
   const contactForm = document.getElementById("contact_form");
   const submitButton = document.querySelector(".submit_button");
   const contactModal = document.getElementById("modal_container");
-  const errorElements = window.ErrorHandler.globalErrorElements;
+  const errorElements = window.ErrorHandler?.globalErrorElements || {};
 
   e.preventDefault();
   if (!contactForm) {
@@ -19,6 +38,7 @@ function handleFormSubmit(e) {
     return;
   }
 
+  // Clear previous errors
   Object.keys(errorElements).forEach((field) => {
     if (errorElements[field] && field !== "global") {
       errorElements[field].setAttribute("data-error-visible", "false");
@@ -35,7 +55,8 @@ function handleFormSubmit(e) {
     }
   });
 
-  if (!validateForm(formObject)) {
+  // Validate form
+  if (!window.Validators.areAllFieldsValid(formObject)) {
     Object.keys(errorElements).forEach((field) => {
       if (errorElements[field] && field !== "global") {
         const snakeField = toSnakeField(field);
@@ -67,22 +88,7 @@ function handleFormSubmit(e) {
     return;
   }
 
-  Object.keys(errorElements).forEach((field) => {
-    if (errorElements[field] && field !== "global") {
-      const snakeField = toSnakeField(field);
-      const value = (formObject[snakeField] || "").trim();
-      const isValid = window.Validators.validateField(snakeField, value);
-
-      if (isValid && value && snakeField !== "message") {
-        const inputElement = document.getElementById(snakeField);
-        if (inputElement) {
-          inputElement.setAttribute("data-error-visible", "false");
-          inputElement.setAttribute("data-valid", "true");
-        }
-      }
-    }
-  });
-
+  // Process successful submission
   try {
     if (submitButton) {
       submitButton.disabled = true;
@@ -96,24 +102,20 @@ function handleFormSubmit(e) {
       }
 
       setTimeout(() => {
-        if (typeof resetModalAndURL === "function") {
-          resetModalAndURL();
+        if (typeof window.resetFormAndModal === "function") {
+          window.resetFormAndModal();
         } else {
-          if (typeof window.resetFormAndModal === "function") {
-            window.resetFormAndModal();
-          } else {
-            if (contactForm) {
-              contactForm.reset();
-            }
-            if (typeof resetCharacterCount === "function") {
-              resetCharacterCount();
-            }
-            if (typeof window.resetErrorVisibility === "function") {
-              window.resetErrorVisibility();
-            }
-            if (contactModal) {
-              contactModal.classList.remove("show");
-            }
+          if (contactForm) {
+            contactForm.reset();
+          }
+          if (typeof window.resetCharacterCount === "function") {
+            window.resetCharacterCount();
+          }
+          if (typeof window.resetErrorVisibility === "function") {
+            window.resetErrorVisibility();
+          }
+          if (contactModal) {
+            contactModal.classList.remove("show");
           }
         }
 
@@ -125,11 +127,7 @@ function handleFormSubmit(e) {
       }, 2000);
     }, 1000);
   } catch (err) {
-    setFieldError(
-      "global",
-      true,
-      "Une erreur s'est produite lors de l'envoi du message."
-    );
+    setFieldError("global", true, "Une erreur s'est produite lors de l'envoi du message.");
     if (submitButton) {
       submitButton.disabled = false;
       submitButton.textContent = "Envoyer";
@@ -137,3 +135,6 @@ function handleFormSubmit(e) {
     }
   }
 }
+
+// Global access for backward compatibility
+window.handleFormSubmit = handleFormSubmit;

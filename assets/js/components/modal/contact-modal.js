@@ -1,3 +1,7 @@
+/**
+ * Photographer Page => Contact Modal
+ * Todo: Import GameOn modal code
+ */
 let contactElements = {};
 
 function initializeContactElements() {
@@ -9,7 +13,7 @@ function initializeContactElements() {
 }
 
 const setContactModalVisibility = (show) => {
-  const {contactModal} = contactElements;
+  const { contactModal } = contactElements;
   if (!contactModal) return;
   if (show) {
     contactModal.classList.add("show");
@@ -20,7 +24,7 @@ const setContactModalVisibility = (show) => {
 
 function handleContactModal() {
   initializeContactElements();
-  const {contactButton, contactModalClose} = contactElements;
+  const { contactButton, contactModalClose } = contactElements;
 
   contactButton?.addEventListener("click", () =>
     setContactModalVisibility(true)
@@ -35,7 +39,7 @@ function handleContactModal() {
 }
 
 function handleModalClose(e) {
-  const {contactModal} = contactElements;
+  const { contactModal } = contactElements;
   if (
     (e.type === "click" && e.target === contactModal) ||
     (e.key === "Escape" && contactModal.classList.contains("show"))

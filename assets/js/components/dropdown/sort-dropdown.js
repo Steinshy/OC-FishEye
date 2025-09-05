@@ -1,3 +1,7 @@
+/**
+ * Photographer Page => Sort Dropdown
+ * Todo: Refactor this code
+ */
 let dropdownElements = {};
 
 function initializeSortElements() {

@@ -129,21 +129,33 @@
       </footer>
     </main>
 
-    <!-- Scripts -->
-    <script src="assets/js/script.js"></script>
-    <script src="assets/js/errorHandler.js"></script>
-    <script src="assets/js/validators.js"></script>
-    <script src="assets/js/sortDropdown.js"></script>
+    <!-- ========================================== -->
+    <!-- JavaScript Files - Loaded in dependency order -->
+    <!-- ========================================== -->
 
-    <!-- Data loading for index page -->
-    <script src="assets/js/mediaGallery/utils/getPhotographersData.js"></script>
+    <!-- Core Application -->
+    <script src="assets/js/core/constants.js"></script>
+    <script src="assets/js/core/app.js"></script>
 
-    <script src="assets/js/modalForm/contactForm.js"></script>
-    <script src="assets/js/modalForm/handleFormSubmit.js"></script>
-    <script src="assets/js/modalForm/resetForm.js"></script>
-    <script src="assets/js/modalForm/submitHandler.js"></script>
-    <script src="assets/js/modalForm/utils/characterCount.js"></script>
-    <script src="assets/js/modalForm/utils/realTimeValidation.js"></script>
+    <!-- Photographer Functionality -->
+    <script src="assets/js/photographers/photographer-data.js"></script>
+    <script src="assets/js/photographers/photographer-renderer.js"></script>
+
+    <!-- Components -->
+    <script src="assets/js/components/dropdown/sort-dropdown.js"></script>
+    <script src="assets/js/components/modal/contact-modal.js"></script>
+
+    <!-- Form Components -->
+    <script src="assets/js/components/modal/form/form-validation.js"></script>
+    <script src="assets/js/components/modal/form/utils/error-handler.js"></script>
+    <script src="assets/js/components/modal/form/utils/character-counter.js"></script>
+    <script src="assets/js/components/modal/form/utils/real-time-validation.js"></script>
+    <script src="assets/js/components/modal/form/form-reset.js"></script>
+    <script src="assets/js/components/modal/form/form-handler.js"></script>
+
+    <!-- Utilities -->
+    <script src="assets/js/utils/dom-utils.js"></script>
+    <script src="assets/js/utils/validation-utils.js"></script>
 
   </body>
 

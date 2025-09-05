@@ -1,3 +1,8 @@
+/**
+ * Photographer Page => Character Counter Utility
+ * Todo: Import GameOn form code
+ */
+
 const getMessageElements = () => {
   const message = document.getElementById("message");
   return {
@@ -6,13 +11,12 @@ const getMessageElements = () => {
     min: document.getElementById("min"),
     max: document.getElementById("max"),
     error: document.getElementById("message_error"),
-    maxLength: 500,
+    maxLength: window.APP_CONFIG.MAX_MESSAGE_LENGTH,
     defaultLength: 0
   };
 };
 
-const {message, characterCount, min, max, maxLength, error} =
-  getMessageElements();
+const { message, characterCount, min, max, maxLength, error } = getMessageElements();
 
 const setCharacterCountState = (isWarning, isDanger) => {
   characterCount.classList.toggle("warning", isWarning);
@@ -47,7 +51,7 @@ const destroyCharacterCount = () => {
   }
 };
 
-// Expose functions globally
+// Global access for backward compatibility
 window.initCharacterCount = initCharacterCount;
 window.updateCharacterCount = updateCharacterCount;
 window.destroyCharacterCount = destroyCharacterCount;

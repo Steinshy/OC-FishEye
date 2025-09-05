@@ -1,3 +1,8 @@
+/**
+ * Photographer Page => Error Handler Utility
+ * Todo: Import GameOn form code
+ */
+
 let globalErrorElements = {};
 
 globalErrorElements = {
@@ -29,6 +34,7 @@ function hideError(targetKey) {
   toggleError(targetKey, false);
 }
 
+// Global access for backward compatibility
 window.ErrorHandler = {
   toggleError,
   setError,

@@ -1,3 +1,8 @@
+/**
+ * Photographer Page => Real-time Validation Utility
+ * Todo: Import GameOn form code
+ */
+
 let formElements = {};
 
 function initializeFormElements() {
@@ -87,7 +92,10 @@ const initializeRealTimeValidation = () => {
   }
 };
 
+// Global access for backward compatibility
 window.RealTimeValidation = {
   initializeRealTimeValidation,
   handleRealTimeValidation
 };
+
+window.initializeRealTimeValidation = initializeRealTimeValidation;

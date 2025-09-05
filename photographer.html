@@ -206,26 +206,30 @@
   <!-- JavaScript Files - Loaded in dependency order -->
   <!-- ========================================== -->
 
-  <!-- Main Application Script - Entry point and core functionality -->
-  <script src="assets/js/script.js"></script>
+  <!-- Core Application -->
+  <script src="assets/js/core/constants.js"></script>
+  <script src="assets/js/core/app.js"></script>
 
-  <!-- Utility Scripts - Core utilities used by main application -->
-  <script src="assets/js/errorHandler.js"></script>
-  <script src="assets/js/validators.js"></script>
-  <script src="assets/js/sortDropdown.js"></script>
+  <!-- Photographer Functionality -->
+  <script src="assets/js/photographers/photographer-data.js"></script>
+  <script src="assets/js/photographers/photographer-renderer.js"></script>
+  <script src="assets/js/photographers/media-gallery.js"></script>
 
-  <!-- Media Gallery Scripts - Handle photographer data and media rendering -->
-  <script src="assets/js/mediaGallery/utils/getPhotographersData.js"></script>
-  <script src="assets/js/mediaGallery/render.js"></script>
+  <!-- Components -->
+  <script src="assets/js/components/carousel/carousel.js"></script>
+  <script src="assets/js/components/dropdown/sort-dropdown.js"></script>
+  <script src="assets/js/components/modal/contact-modal.js"></script>
 
-  <!-- Contact Form Scripts - Handle modal form functionality -->
-  <script src="assets/js/modalForm/contactForm.js"></script>
-  <script src="assets/js/modalForm/handleFormSubmit.js"></script>
-  <script src="assets/js/modalForm/resetForm.js"></script>
-  <script src="assets/js/modalForm/submitHandler.js"></script>
+  <!-- Form Components -->
+  <script src="assets/js/components/modal/form/form-validation.js"></script>
+  <script src="assets/js/components/modal/form/utils/error-handler.js"></script>
+  <script src="assets/js/components/modal/form/utils/character-counter.js"></script>
+  <script src="assets/js/components/modal/form/utils/real-time-validation.js"></script>
+  <script src="assets/js/components/modal/form/form-reset.js"></script>
+  <script src="assets/js/components/modal/form/form-handler.js"></script>
 
-  <!-- Contact Form Utility Scripts - Form validation and character counting -->
-  <script src="assets/js/modalForm/utils/characterCount.js"></script>
-  <script src="assets/js/modalForm/utils/realTimeValidation.js"></script>
+  <!-- Utilities -->
+  <script src="assets/js/utils/dom-utils.js"></script>
+  <script src="assets/js/utils/validation-utils.js"></script>
 
 </html>

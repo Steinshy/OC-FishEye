@@ -1,3 +1,8 @@
+/**
+ * Photographer Page => Form Reset
+ * Todo: Import GameOn form code
+ */
+
 let resetFormElements = {};
 let modalErrorElements = [];
 let modalFormFields = [];
@@ -66,11 +71,12 @@ const resetModal = () => {
   resetFormElements.contactModal?.classList.remove("show");
 };
 
-const resetFormAndModal = ({closeModal = true} = {}) => {
+const resetFormAndModal = ({ closeModal = true } = {}) => {
   resetFormFields();
   closeModal && resetModal();
 };
 
+// Global access for backward compatibility
 window.resetFormAndModal = resetFormAndModal;
 window.resetFormFields = resetFormFields;
 window.resetErrorVisibility = resetErrorVisibility;

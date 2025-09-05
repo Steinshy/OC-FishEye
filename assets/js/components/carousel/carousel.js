@@ -1,3 +1,7 @@
+/**
+ * Todo: Refactor this code. Need to Import to Photographer Page
+ */
+
 function initializeCarrouselControl() {
   const slides = document.querySelectorAll(".carrousel_slide");
   const prev = document.getElementById("prev");

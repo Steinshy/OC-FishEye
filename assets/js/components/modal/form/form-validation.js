@@ -1,11 +1,13 @@
-const isValidFirstName = (value) => (value || "").trim().length >= 2;
+/**
+ * Photographer Page => Form Validation
+ * Todo: Import GameOn form code
+ */
 
-const isValidLastName = (value) => (value || "").trim().length >= 2;
-
-const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
+const isValidFirstName = (value) => (value || "").trim().length >= window.VALIDATION_RULES.MIN_NAME_LENGTH;
+const isValidLastName = (value) => (value || "").trim().length >= window.VALIDATION_RULES.MIN_NAME_LENGTH;
+const isValidEmail = (value) => window.VALIDATION_RULES.EMAIL_REGEX.test(value);
 const isValidMessage = (value) =>
-  (value || "").trim().length > 0 && (value || "").trim().length <= 500;
+  (value || "").trim().length > 0 && (value || "").trim().length <= window.VALIDATION_RULES.MAX_MESSAGE_LENGTH;
 
 const validateField = (fieldName, value) => {
   switch (fieldName) {
@@ -33,6 +35,9 @@ const areAllFieldsValid = (values) => {
   );
 };
 
+// Export individual validators (available globally)
+
+// Global access for backward compatibility
 window.Validators = {
   isValidFirstName,
   isValidLastName,
