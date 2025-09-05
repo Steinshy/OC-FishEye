@@ -68,3 +68,6 @@ const createSortDropdown = () => {
     });
   }
 };
+
+// Global access for backward compatibility
+window.createSortDropdown = createSortDropdown;

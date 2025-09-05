@@ -4,20 +4,20 @@
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("info_name") && window.location.pathname.includes("photographer.html")) {
     setTimeout(() => {
-      if (typeof handleContactModal === 'function') {
-        handleContactModal();
+      if (typeof window.handleContactModal === 'function') {
+        window.handleContactModal();
       }
-      if (typeof initCharacterCount === 'function') {
-        initCharacterCount();
+      if (typeof window.initCharacterCount === 'function') {
+        window.initCharacterCount();
       }
-      if (typeof initializeRealTimeValidation === 'function') {
-        initializeRealTimeValidation();
+      if (typeof window.initializeRealTimeValidation === 'function') {
+        window.initializeRealTimeValidation();
       }
 
       // Initialize form submission handler
       const contactForm = document.getElementById("contact_form");
-      if (contactForm && typeof handleFormSubmit === 'function') {
-        contactForm.addEventListener("submit", handleFormSubmit);
+      if (contactForm && typeof window.handleFormSubmit === 'function') {
+        contactForm.addEventListener("submit", window.handleFormSubmit);
       }
     }, 200);
   }

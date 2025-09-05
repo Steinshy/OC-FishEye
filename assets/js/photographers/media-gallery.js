@@ -71,7 +71,7 @@ function preloadImages(medias, folderName) {
     .filter(media => media.image)
     .map(media => {
       return new Promise((resolve, reject) => {
-        const img = new Image();
+        const img = new window.Image();
         img.onload = resolve;
         img.onerror = reject;
         img.src = `assets/photographers/${folderName}/jpg/${media.image.jpg}`;
@@ -110,10 +110,9 @@ async function renderMediaGallery(medias, folderName) {
       container.appendChild(card);
     });
 
-    console.log(`Rendered ${medias.length} media items`);
+    // Rendered media items
   } catch (error) {
-    console.error("Error preloading images:", error);
-    // Still render the gallery even if preloading fails
+    // Error preloading images - still render the gallery
     container.innerHTML = "";
     medias.forEach((media) => {
       const card = createMediaCard(media, folderName);
@@ -147,24 +146,20 @@ function sortMedia(medias, criteria) {
  */
 async function initPhotographerPage() {
   try {
-    console.log("Initializing photographer page...");
-
     // Initialize sort dropdown for photographer page
-    if (typeof createSortDropdown === "function") {
-      createSortDropdown();
+    if (typeof window.createSortDropdown === "function") {
+      window.createSortDropdown();
     }
 
-    const photographer = await renderPhotographerInfo();
+    const photographer = await window.renderPhotographerInfo();
 
     if (photographer && photographer.medias) {
       renderMediaGallery(photographer.medias, photographer.folder_name);
     } else {
-      console.warn("No photographer data or media found");
+      // No photographer data or media found
     }
-
-    console.log("Photographer page loaded successfully");
   } catch (error) {
-    console.error("Error loading photographer page:", error);
+    // Error loading photographer page
   }
 }
 

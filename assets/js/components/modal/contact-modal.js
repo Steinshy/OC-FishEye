@@ -47,3 +47,6 @@ function handleModalClose(e) {
     setContactModalVisibility(false);
   }
 }
+
+// Global access for backward compatibility
+window.handleContactModal = handleContactModal;

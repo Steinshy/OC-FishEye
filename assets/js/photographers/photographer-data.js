@@ -58,38 +58,27 @@ async function getPhotographerInformation(photographerId) {
  */
 async function getPhotographerIdFromData() {
   try {
-    console.log("Getting photographer ID from URL...");
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new window.URLSearchParams(window.location.search);
     const photographerId = urlParams.get("id");
-    console.log("URL params:", window.location.search);
-    console.log("Photographer ID from URL:", photographerId);
 
     if (!photographerId) {
-      console.error("No photographer ID found in URL");
       return null;
     }
 
     const numericId = parseInt(photographerId, 10);
     if (isNaN(numericId)) {
-      console.error("Invalid photographer ID in URL:", photographerId);
       return null;
     }
 
-    console.log("Looking for photographer with ID:", numericId);
     const photographers = await getPhotographersData();
-    console.log("Available photographer IDs:", photographers.map(p => p.id));
-
     const photographer = photographers.find((p) => p.id === numericId);
 
     if (!photographer) {
-      console.error(`Photographer with ID ${numericId} not found in data`);
       return null;
     }
 
-    console.log("Found photographer:", photographer.name);
     return numericId;
   } catch (error) {
-    console.error("Error getting photographer ID from data:", error);
     return null;
   }
 }
