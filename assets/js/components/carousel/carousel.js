@@ -89,3 +89,6 @@ function initializeCarrouselControl() {
     }
   });
 }
+
+// Global access for HTML usage
+window.initializeCarrouselControl = initializeCarrouselControl;

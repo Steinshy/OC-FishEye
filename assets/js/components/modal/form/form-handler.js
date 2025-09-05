@@ -126,7 +126,7 @@ function handleFormSubmit(e) {
         }
       }, 2000);
     }, 1000);
-  } catch (error) {
+  } catch (_error) {
     setFieldError("global", true, "Une erreur s'est produite lors de l'envoi du message.");
     if (submitButton) {
       submitButton.disabled = false;

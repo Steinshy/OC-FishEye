@@ -4,6 +4,13 @@
  */
 
 /**
+ * Validate email format
+ */
+function isValidEmail(email) {
+  return window.VALIDATION_RULES.EMAIL_REGEX.test(email);
+}
+
+/**
  * Validate minimum length
  */
 function hasMinLength(value, minLength = window.VALIDATION_RULES.MIN_NAME_LENGTH) {
@@ -60,6 +67,7 @@ function validateFormData(formData, rules = {}) {
 
 // Global access for backward compatibility
 window.ValidationUtils = {
+  isValidEmail,
   hasMinLength,
   hasMaxLength,
   isRequired,

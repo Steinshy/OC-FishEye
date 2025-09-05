@@ -58,7 +58,7 @@ async function getPhotographerInformation(photographerId) {
  */
 async function getPhotographerIdFromData() {
   try {
-    const urlParams = new window.URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
     const photographerId = urlParams.get("id");
 
     if (!photographerId) {

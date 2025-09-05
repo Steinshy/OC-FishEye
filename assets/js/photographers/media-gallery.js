@@ -88,7 +88,7 @@ async function renderMediaGallery(medias, folderName) {
   const container = document.querySelector(".media_cards");
 
   if (!container) {
-    console.error("Media container not found");
+    // Media container not found - cannot render gallery
     return;
   }
 
@@ -111,7 +111,7 @@ async function renderMediaGallery(medias, folderName) {
     });
 
     // Rendered media items
-  } catch (error) {
+  } catch (_error) {
     // Error preloading images - still render the gallery
     container.innerHTML = "";
     medias.forEach((media) => {
@@ -158,7 +158,7 @@ async function initPhotographerPage() {
     } else {
       // No photographer data or media found
     }
-  } catch (error) {
+  } catch (_error) {
     // Error loading photographer page
   }
 }

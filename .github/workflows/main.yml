@@ -8,6 +8,11 @@ env:
   # Node.js 24 latest LTS version
   NODE_VERSION: "24"
 
+# Clean up old workflow runs automatically
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pull-requests: read

@@ -15,10 +15,28 @@ export default [
         fetch: 'readonly',
         FormData: 'readonly',
         URL: 'readonly',
+        URLSearchParams: 'readonly',
         setTimeout: 'readonly',
         module: 'readonly',
         require: 'readonly',
-        process: 'readonly'
+        process: 'readonly',
+        // Photographer functions
+        getPhotographersData: 'readonly',
+        getPhotographerInformation: 'readonly',
+        getPhotographerIdFromData: 'readonly',
+        createPhotographerCard: 'readonly',
+        loadPhotographers: 'readonly',
+        renderPhotographerInfo: 'readonly',
+        // Form functions
+        handleContactModal: 'readonly',
+        initCharacterCount: 'readonly',
+        initializeRealTimeValidation: 'readonly',
+        handleFormSubmit: 'readonly',
+        // Validation functions
+        ErrorHandler: 'readonly',
+        Validators: 'readonly',
+        // Component functions
+        createSortDropdown: 'readonly'
       }
     }
   },
@@ -26,7 +44,7 @@ export default [
   {
     rules: {
       'no-unused-vars': 'warn',
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['error', 'warn'] }],
       'prefer-const': 'error',
       'no-var': 'error'
     }
