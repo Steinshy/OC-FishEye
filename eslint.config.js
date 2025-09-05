@@ -75,6 +75,7 @@ export default [
       'package-lock.json',
       'yarn.lock',
       'helper/old_project/',
+      'old_project/',
       '.github',
       '.husky/',
       'husky/'
