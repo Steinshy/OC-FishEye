@@ -61,7 +61,7 @@ async function loadPhotographers() {
       container.appendChild(card);
     });
 
-    console.log(`Loaded ${photographers.length} photographers`);
+    console.warn(`Loaded ${photographers.length} photographers`);
   } catch (error) {
     console.error("Error loading photographers:", error);
     const container = document.getElementById("photographers_container");

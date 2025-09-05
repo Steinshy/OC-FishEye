@@ -42,3 +42,8 @@ build/
 # Configuration files
 package-lock.json
 yarn.lock
+
+# Old project files
+assets/helper/old_project/
+helper/old_project/
+old_project/

@@ -111,7 +111,7 @@ async function renderMediaGallery(medias, folderName) {
     });
 
     // Rendered media items
-  } catch (_error) {
+  } catch {
     // Error preloading images - still render the gallery
     container.innerHTML = "";
     medias.forEach((media) => {
@@ -158,7 +158,7 @@ async function initPhotographerPage() {
     } else {
       // No photographer data or media found
     }
-  } catch (_error) {
+  } catch {
     // Error loading photographer page
   }
 }

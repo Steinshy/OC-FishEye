@@ -78,7 +78,7 @@ async function getPhotographerIdFromData() {
     }
 
     return numericId;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
