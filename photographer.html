@@ -2,7 +2,6 @@
 <html lang="fr">
 
   <head>
-    <!-- Meta Tags & Document Information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
@@ -13,7 +12,6 @@
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Social Media Meta Tags -->
     <meta property="og:title" content="FishEye - Photographe Professionnel">
     <meta property="og:description"
       content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée.">
@@ -28,27 +26,37 @@
 
     <title>FishEye - Photographe</title>
 
-    <!-- Favicon & App Icons -->
     <link rel="icon" type="image/x-icon" href="assets/favicons/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/logo.png">
 
+    <!-- Preload critical resources -->
+    <link rel="preload" href="assets/css/style.css" as="style">
+    <link rel="preload" href="assets/css/photographer.css" as="style">
+    <link rel="preload" href="assets/js/core/constants.js" as="script">
+    <!-- Preload Font Awesome webfonts -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/fa-solid-900.woff2"
+      as="font" type="font/woff2" crossorigin>
+    <!-- <link rel="preload" href="assets/photographers/data.json" as="fetch" crossorigin> -->
+
     <!-- Internal Resources -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/photographer.css">
     <link rel="stylesheet" type="text/css" href="assets/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/photographer.css">
 
-    <!-- Font Awesome - Online CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous" referrerpolicy="no-referrer">
-
-    <!-- Google Fonts - Online CDN -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Shrikhand&display=swap"
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Shrikhand&display=swap"
       rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
   </head>
 
   <body>
@@ -61,50 +69,35 @@
     </header>
 
     <main id="main_content">
-      <!-- Photographer Profile Section -->
       <section class="photographer_section">
         <div class="section_container">
-          <!-- Photographer Information Container -->
           <div class="section_content" id="photographer_main_info">
-            <!-- Photographer Name - Populated by JavaScript from data.json -->
             <h1 id="info_name" data-default="Nom du photographe">Nom</h1>
-            <!-- Location (City, Country) - Populated by JavaScript from data.json -->
             <p id="info_location" data-default="Ville, Pays">Ville, Pays</p>
-            <!-- Photographer Tagline - Populated by JavaScript from data.json -->
             <p id="info_tagline" data-default="Tagline par défaut">Tagline</p>
           </div>
 
-          <!-- Contact Button Container -->
           <div class="contact_container">
-            <!-- Contact Button - Opens modal form, aria-label updated by JavaScript -->
-            <button class="contact_button" id="contact_button" aria-label="Contactez-moi">Contactez-moi</button>
+            <button class="contact_button" id="contact-button" aria-label="Contactez-moi">Contactez-moi</button>
           </div>
 
-          <!-- Profile Picture Container -->
           <div class="container_img">
-            <!-- Responsive Image with Fallback -->
             <picture>
-              <!-- Fallback image if photographer portrait fails to load -->
               <source srcset="assets/photographers/account.png" type="image/png">
-              <!-- Main photographer portrait - src and alt updated by JavaScript -->
               <img id="info_picture" alt="Profile picture" loading="lazy">
             </picture>
           </div>
         </div>
       </section>
 
-      <!-- Media Gallery Section -->
       <section class="media_section">
-        <!-- Sorting Options Container -->
         <div class="section_options">
           <h2>Trier par</h2>
           <div class="button_container">
-            <!-- Sort Dropdown Button - Controls sorting of media items -->
-            <button class="options_button" id="media_sort_button" aria-haspopup="listbox" aria-expanded="false"
+            <button class="options_button" id="media-sort-button" aria-haspopup="listbox" aria-expanded="false"
               aria-controls="sort_dropdown">
               Popularité
             </button>
-            <!-- Sort Options Dropdown - Hidden by default, shown on button click -->
             <ul class="options_dropdown" id="sort_dropdown" role="listbox" tabindex="-1" hidden>
               <li role="option" aria-selected="true">Popularité</li>
               <li role="option">Date</li>
@@ -114,122 +107,112 @@
           </div>
         </div>
 
-        <!-- Media Cards Container - Populated by JavaScript from photographer's media data -->
         <div class="media_cards" id="media_cards">
-          <!-- Media cards will be dynamically inserted here by renderMediaGallery() function -->
         </div>
       </section>
     </main>
 
-    <!-- Contact Modal - Hidden by default, shown when contact button is clicked -->
-    <div class="modal_container" id="modal_container">
-      <div class="modal_content" id="modal_content">
-        <!-- Modal Header with Close Button -->
-        <div class="modal_header" id="modal_header">
-          <i class="fa-solid fa-envelope"></i>
-          <h2>Contactez-moi</h2>
-          <!-- Close Button - Closes modal and returns focus to contact button -->
-          <button class="modal_close" id="modal_close" aria-label="Fermer le modal">
-            <i class="fa-solid fa-times"></i>
-          </button>
+    <!-- Contact Modal -->
+    <div class="modal" id="modal-signup" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+      aria-describedby="modal-description">
+
+      <div class="modal_content" id="modal-content">
+        <div class="modal_header" id="modal-header">
+          <div class="header_content" id="header-content">
+            <i class="fa-solid fa-envelope"></i>
+            <h2>Contactez-moi</h2>
+          </div>
         </div>
 
-        <!-- Contact Form - Validated in real-time and on submit -->
-        <form class="contact_form" id="contact_form">
-          <!-- Last Name Field -->
-          <div class="form_group" id="form_name">
-            <label for="last_name">Nom</label>
-            <input type="text" id="last_name" name="last_name" minlength="2" aria-describedby="last_name_error">
-            <!-- Error message for last name validation -->
-            <span class="error_form" id="last_name_error" aria-live="polite" data-error-visible="false">
-              Veuillez entrer 2 caractères ou plus pour le champ du Nom.
+        <button class="modal_close" id="modal-close" aria-label="Fermer le modal">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+
+        <!-- Contact Form -->
+        <form class="main_form" id="form-signup" name="contact" method="get">
+
+          <div class="form_group">
+            <label for="firstname">Prénom *</label>
+            <input id="firstname" type="text" name="firstname" data-error-visible="false"
+              placeholder="Entrez votre Prénom" aria-describedby="firstname-error">
+            <span class="error_form" id="error-firstname" data-error-visible="false" data-valid="false"
+              aria-live="polite">
+              2 caractères minimum est requis.
             </span>
           </div>
 
-          <!-- First Name Field -->
-          <div class="form_group" id="form_first_name">
-            <label for="first_name">Prénom</label>
-            <input type="text" id="first_name" name="first_name" minlength="2" aria-describedby="first_name_error">
-            <!-- Error message for first name validation -->
-            <span class="error_form" id="first_name_error" aria-live="polite" data-error-visible="false">
-              Veuillez entrer 2 caractères ou plus pour le champ du Prénom.
+          <div class="form_group">
+            <label for="lastname">Nom *</label>
+            <input id="lastname" type="text" name="lastname" data-error-visible="false" placeholder="Entrez votre Nom"
+              aria-describedby="lastname-error">
+            <span class="error_form" id="error-lastname" data-error-visible="false" data-valid="false"
+              aria-live="polite">
+              2 caractères minimum est requis.
             </span>
           </div>
 
-          <!-- Email Field -->
-          <div class="form_group" id="form_email">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" aria-describedby="email_error">
-            <!-- Error message for email validation -->
-            <span class="error_form" id="email_error" aria-live="polite" data-error-visible="false">
-              Veuillez entrer une adresse email valide.
+          <div class="form_group">
+            <label for="email">E-mail *</label>
+            <input id="email" type="email" name="email" data-error-visible="false"
+              placeholder="Entrez votre adresse e-mail" aria-describedby="email-error">
+            <span class="error_form" id="error-email" data-error-visible="false" data-valid="false" aria-live="polite">
+              L'adresse e-mail est invalide.
             </span>
           </div>
 
-          <!-- Message Field with Character Counter -->
-          <div class="form_group" id="form_message">
-            <label for="message">Votre message</label>
-            <textarea id="message" name="message" rows="5" maxlength="500"
-              aria-describedby="message_error character_count"></textarea>
-
-            <div class="message_container">
-              <!-- Message Error Container -->
-              <div class="message_error_container" aria-live="polite">
-                <span class="error_form" id="message_error" aria-live="polite" data-error-visible="false">
-                  Veuillez entrer un message entre 0 et 500 caractères.
-                </span>
-              </div>
-
-              <!-- Character Counter - Shows current/max characters -->
-              <div class="character_count" id="form_textarea" aria-live="polite">
-                <span class="min" id="min">0</span><span class="max" id="max">/ 500</span>
-              </div>
+          <div class="form_group">
+            <div class="message_container" id="form-textarea" data-error-visible="true" aria-live="polite">
+              <label for="message">Votre message *</label>
+              <span class="min max" id="character-count">0/500</span>
             </div>
-
-          </div>
-
-          <!-- Global Error Message - Shown when form submission fails -->
-          <div class="form_group" id="form_global_error">
-            <span class="error_form global_error" id="global_error" aria-live="polite" data-error-visible="false">
-              Veuillez remplir tous les champs du formulaire.
+            <textarea id="message" name="message" rows="5" maxlength="500"
+              aria-describedby="message-error character_count" data-error-visible="false"></textarea>
+            <span class="error_form" id="error-message" data-error-visible="false" data-valid="false"
+              aria-live="polite">
+              Un message entre 0 et 500 caractères est requis.
             </span>
           </div>
-          <!-- Submit Button - Triggers form validation and submission -->
-          <button class="submit_button" id="submit_button" type="submit">Envoyer</button>
+
+
+          <!-- Global Error -->
+          <div class="error_box" id="error-global-box" data-error-visible="false">
+            <span id="error-global" data-error-visible="false" data-valid="false" aria-live="polite">
+              Tous les champs du formulaire sont requis.
+            </span>
+          </div>
         </form>
+        <!-- Submit Button -->
+        <div class="modal_footer" id="modal-footer">
+          <button type="submit" id="footer-submit-button" form="form-signup">Envoyer</button>
+        </div>
+
       </div>
     </div>
   </body>
 
-
-  <!-- ========================================== -->
-  <!-- JavaScript Files - Loaded in dependency order -->
-  <!-- ========================================== -->
-
-  <!-- Core Application -->
   <script src="assets/js/core/constants.js"></script>
   <script src="assets/js/core/app.js"></script>
 
-  <!-- Photographer Functionality -->
-  <script src="assets/js/photographers/photographer-data.js"></script>
+  <!-- Photographer scripts -->
+  <!-- <script src="assets/js/photographers/photographer-data.js"></script>
   <script src="assets/js/photographers/photographer-renderer.js"></script>
-  <script src="assets/js/photographers/media-gallery.js"></script>
+  <script src="assets/js/photographers/media-gallery.js"></script> -->
 
-  <!-- Components -->
-  <script src="assets/js/components/carousel/carousel.js"></script>
-  <script src="assets/js/components/dropdown/sort-dropdown.js"></script>
-  <script src="assets/js/components/modal/contact-modal.js"></script>
+  <!-- Components scripts -->
+  <!-- <script src="assets/js/components/carousel/carousel.js"></script>
+  <script src="assets/js/components/dropdown/sort-dropdown.js"></script> -->
 
-  <!-- Form Components -->
-  <script src="assets/js/components/modal/form/form-validation.js"></script>
-  <script src="assets/js/components/modal/form/utils/error-handler.js"></script>
-  <script src="assets/js/components/modal/form/utils/character-counter.js"></script>
-  <script src="assets/js/components/modal/form/utils/real-time-validation.js"></script>
-  <script src="assets/js/components/modal/form/form-reset.js"></script>
-  <script src="assets/js/components/modal/form/form-handler.js"></script>
+  <!-- Modal Utilities -->
+  <script src="assets/js/components/modal/utils/displayError.js"></script>
+  <script src="assets/js/components/modal/utils/submitButton.js"></script>
+  <script src="assets/js/components/modal/utils/validatorRealTime.js"></script>
+  <script src="assets/js/components/modal/utils/characterCount.js"></script>
 
-  <!-- Utilities -->
-  <script src="assets/js/utils/dom-utils.js"></script>
-  <script src="assets/js/utils/validation-utils.js"></script>
+  <!-- Modal scripts -->
+  <script src="assets/js/components/modal/cleanup.js"></script>
+  <script src="assets/js/components/modal/handler.js"></script>
+  <script src="assets/js/components/modal/eventListener.js"></script>
+  <script src="assets/js/components/modal/validators.js"></script>
+  <script src="assets/js/components/modal/submission.js"></script>
 
 </html>

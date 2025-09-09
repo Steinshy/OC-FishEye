@@ -2,36 +2,110 @@
  * Constants and Configuration
  */
 
-const APP_CONFIG = {
-  MAX_MESSAGE_LENGTH: 500,
-  MIN_NAME_LENGTH: 2,
-  PHOTOGRAPHERS_DATA_URL: './assets/photographers/data.json',
-  BASE_ASSETS_URL: 'assets/photographers/'
+const appConfig = {
+  photographersDataUrl: './assets/photographers/data.json',
+  baseAssetsUrl: 'assets/photographers/'
 };
 
-const SELECTORS = {
-  PHOTOGRAPHERS_CONTAINER: '#photographers_container',
-  LOADING_MESSAGE: '#loading_message',
-  CONTACT_MODAL: '#modal_container',
-  CONTACT_FORM: '#contact_form',
-  INFO_NAME: '#info_name',
-  MEDIA_CARDS: '.media_cards'
+const validationRules = {
+  emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  minlength: 2,
+  maxlength: 500
 };
 
-const VALIDATION_RULES = {
-  EMAIL_REGEX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  MIN_NAME_LENGTH: 2,
-  MAX_MESSAGE_LENGTH: 500
+const ModalRefs = {
+  contactButton: document.getElementById("contact-button"),
+  mainModal: {
+    main: document.getElementById("modal-signup"),
+    content: document.getElementById("modal-content"),
+    header: document.getElementById("modal-header"),
+    closeButton: document.getElementById("modal-close"),
+    modalFooter: document.getElementById("modal-footer"),
+    submitButton: document.getElementById("footer-submit-button"),
+  },
+  mainForm: document.getElementById("form-signup"),
+  formGroup: {
+    firstName: document.getElementById("firstname"),
+    lastName: document.getElementById("lastname"),
+    email: document.getElementById("email"),
+    message: document.getElementById("message"),
+  },
+  formError: {
+    main: document.getElementById("error-global"),
+    firstName: document.getElementById("error-firstname"),
+    lastName: document.getElementById("error-lastname"),
+    email: document.getElementById("error-email"),
+    message: document.getElementById("error-message"),
+    global: document.getElementById("error-global"),
+  },
+  formElements: {
+    contactForm: document.getElementById("contact_form"),
+    contactModal: document.getElementById("modal_container"),
+    characterCount: document.getElementById("character-count"),
+    minCount: document.getElementById("character-count"),
+    maxCount: document.getElementById("character-count"),
+  }
 };
 
-const ARIA_LABELS = {
-  CONTACT_BUTTON: 'Contactez-moi',
-  CLOSE_MODAL: 'Fermer le modal',
-  SORT_DROPDOWN: 'Trier par'
+const Modal = {
+  // Main elements
+  contactButton: ModalRefs.contactButton,
+  mainForm: ModalRefs.mainForm,
+
+  // Form elements
+  contactForm: ModalRefs.formElements.contactForm,
+  contactModal: ModalRefs.formElements.contactModal,
+  characterCount: ModalRefs.formElements.characterCount,
+  minCount: ModalRefs.formElements.minCount,
+  maxCount: ModalRefs.formElements.maxCount,
+
+  // Form inputs
+  firstNameInput: ModalRefs.formGroup.firstName,
+  lastNameInput: ModalRefs.formGroup.lastName,
+  emailInput: ModalRefs.formGroup.email,
+  messageInput: ModalRefs.formGroup.message,
+
+  // Form errors
+  formError: ModalRefs.formError,
+  firstNameError: ModalRefs.formError.firstName,
+  lastNameError: ModalRefs.formError.lastName,
+  emailError: ModalRefs.formError.email,
+  messageError: ModalRefs.formError.message,
+  globalError: ModalRefs.formError.global,
+
+  // Modal elements
+  modalMain: ModalRefs.mainModal.main,
+  modalContent: ModalRefs.mainModal.content,
+  modalHeader: ModalRefs.mainModal.header,
+  modalCloseButton: ModalRefs.mainModal.closeButton,
+  modalFooter: ModalRefs.mainModal.modalFooter,
+  modalSubmitButton: ModalRefs.mainModal.submitButton,
+
+  // Arrays for iteration
+  formFieldNames: ['firstNameInput', 'lastNameInput', 'emailInput', 'messageInput'],
+  formErrorNames: ['firstNameError', 'lastNameError', 'emailError', 'messageError', 'globalError']
 };
+
+// Field to error mapping for validation
+const fieldErrorMap = {
+  first_name: "firstName",
+  last_name: "lastName",
+  email: "email",
+  message: "message"
+};
+
+// Get trimmed form values from DOM
+const getTrimmedValues = () => ({
+  first_name: Modal?.firstNameInput?.value?.trim() || "",
+  last_name: Modal?.lastNameInput?.value?.trim() || "",
+  email: Modal?.emailInput?.value?.trim() || "",
+  message: Modal?.messageInput?.value?.trim() || ""
+});
 
 // Global access
-window.APP_CONFIG = APP_CONFIG;
-window.SELECTORS = SELECTORS;
-window.VALIDATION_RULES = VALIDATION_RULES;
-window.ARIA_LABELS = ARIA_LABELS;
+window.appConfig = appConfig;
+window.validationRules = validationRules;
+window.ModalRefs = ModalRefs;
+window.Modal = Modal;
+window.fieldErrorMap = fieldErrorMap;
+window.getTrimmedValues = getTrimmedValues;

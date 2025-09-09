@@ -13,7 +13,7 @@ async function getPhotographersData() {
   }
 
   try {
-    const response = await fetch(window.APP_CONFIG.PHOTOGRAPHERS_DATA_URL);
+    const response = await fetch(window.appConfig.photographersDataUrl);
     if (!response.ok) {
       throw new Error(`Failed to fetch data: ${response.status}`);
     }
