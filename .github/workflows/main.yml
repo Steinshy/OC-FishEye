@@ -2,7 +2,7 @@ name: Lint and Format
 
 on:
   push:
-    branches: Media
+    branches: dev
 
 env:
   # Node.js 24 latest LTS version
@@ -34,7 +34,7 @@ jobs:
       # Setup Node.js
       - name: Setup Node.js
         id: setup-nodejs
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"

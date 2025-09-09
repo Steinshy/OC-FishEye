@@ -1,14 +1,41 @@
 {
   "name": "fisheye",
   "version": "1.0.0",
-  "description": "FishEye photography website",
+  "description": "FishEye photography website - A modern portfolio showcasing professional photography with interactive galleries and responsive design",
   "type": "module",
   "main": "index.html",
+  "homepage": "https://steinshy.github.io/FishEye",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steinshy/FishEye.git"
+  },
+  "keywords": [
+    "photography",
+    "portfolio",
+    "gallery",
+    "responsive",
+    "accessibility",
+    "vanilla-js",
+    "html5",
+    "css3"
+  ],
+  "author": {
+    "name": "Steinshy",
+    "url": "https://github.com/steinshy"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "docs": "jsdoc -c jsdoc.conf.json",
+    "markdown:lint": "markdownlint '**/*.md' --ignore node_modules",
+    "markdown:fix": "markdownlint '**/*.md' --ignore node_modules --fix",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "changelog": "conventional-changelog --preset angular --output-format json --release-count 0",
@@ -19,15 +46,18 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.34.0",
-    "conventional-changelog-angular": "^8.0.0",
     "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.34.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-html": "^8.1.3",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^48.6.0",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-security": "^1.7.1",
     "husky": "^9.0.11",
+    "jsdoc": "^4.0.2",
     "lint-staged": "^16.1.5",
-    "yocto-queue": "^0.1.0",
+    "markdownlint-cli": "^0.38.0",
     "prettier": "^3.2.5"
   }
 }

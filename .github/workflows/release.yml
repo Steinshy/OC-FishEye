@@ -3,10 +3,10 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: "24"
 
 permissions:
   contents: write
@@ -17,19 +17,20 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
 
       - name: Install dependencies
         run: npm ci
@@ -37,10 +38,7 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          # Install conventional-changelog-cli if not already installed
-          npm install -g conventional-changelog-cli
-          
-          # Generate changelog from conventional commits
+          # Generate changelog from conventional commits using local dependencies
           if [ -f "package.json" ]; then
             # For projects with package.json, use conventional-changelog
             changelog=$(npx conventional-changelog --preset angular --output-format json --release-count 0 | jq -r '.[0].body // "No changes"')
@@ -48,55 +46,53 @@ jobs:
             # Fallback for projects without package.json
             changelog=$(git log --oneline --format="* %s" $(git describe --tags --abbrev=0 HEAD^)..HEAD | head -50)
           fi
-          
+
           # Escape newlines and quotes for GitHub Actions
           changelog="${changelog//'%'/'%25'}"
           changelog="${changelog//$'\n'/'%0A'}"
           changelog="${changelog//$'\r'/'%0D'}"
-          
+
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$changelog" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        run: |
+          # Create release using GitHub CLI
+          gh release create ${{ github.ref_name }} \
+            --title "Release ${{ github.ref_name }}" \
+            --notes "## What's Changed
+
+          ${{ steps.changelog.outputs.changelog }}
+
+          ## Installation
+
+          \`\`\`bash
+          # Clone the repository
+          git clone https://github.com/${{ github.repository }}.git
+          cd ${{ github.repository }}
+
+          # Checkout the release
+          git checkout ${{ github.ref_name }}
+          \`\`\`
+
+          ## Changelog
+
+          This release includes all changes since the previous version. See the commit history for detailed information." \
+            --draft=false \
+            --prerelease=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref_name }}
-          body: |
-            ## What's Changed
-            
-            ${{ steps.changelog.outputs.changelog }}
-            
-            ## Installation
-            
-            ```bash
-            # Clone the repository
-            git clone https://github.com/${{ github.repository }}.git
-            cd ${{ github.repository }}
-            
-            # Checkout the release
-            git checkout ${{ github.ref_name }}
-            ```
-            
-            ## Changelog
-            
-            This release includes all changes since the previous version. See the commit history for detailed information.
-          draft: false
-          prerelease: false
 
       - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
+        run: |
+          # Upload assets using GitHub CLI
+          if [ -f "README.md" ]; then
+            gh release upload ${{ github.ref_name }} README.md --clobber
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./README.md
-          asset_name: README.md
-          asset_content_type: text/markdown
 
       - name: Comment on Issues
         if: github.event_name == 'push'
