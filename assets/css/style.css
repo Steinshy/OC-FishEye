@@ -206,6 +206,12 @@ nav h1 {
 .container-picture img {
   display: inline-block;
   border-radius: 50%;
+
+}
+
+.profile-picture {
+  display: inline-block;
+  border-radius: 50%;
   width: 100%;
   height: 100%;
 }

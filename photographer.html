@@ -42,15 +42,15 @@
 
     <!-- Internal Resources -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/modal.css">
     <link rel="stylesheet" type="text/css" href="assets/css/photographer.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/modal.css">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Shrikhand&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
       rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -84,7 +84,7 @@
           <div class="container-picture">
             <picture>
               <source srcset="assets/photographers/account.png" type="image/png">
-              <img id="info-picture" alt="Profile picture" loading="lazy">
+              <img class="profile-picture" id="info-picture" alt="Profile picture" loading="lazy">
             </picture>
           </div>
         </div>
@@ -92,13 +92,12 @@
 
       <!-- Dropdown Section -->
       <section class="section-dropdown">
-        <h2>Placeholder</h2>
+        <h2>Trier par :</h2>
         <div class="dropdown-button">
           <button id="media-sort-button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort_dropdown">
-            Trier par
+            Popularité
           </button>
           <ul class="dropdown-options" id="sort-dropdown" role="listbox" tabindex="-1" hidden>
-            <li role="option">Popularité</li>
             <li role="option">Date</li>
             <li role="option">Titre</li>
             <li role="option">Likes</li>

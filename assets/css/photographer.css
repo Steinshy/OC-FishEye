@@ -2,7 +2,9 @@
     Photographer Section
 ========================= */
 .photographer-section {
-
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
 }
 
 .section-container {
@@ -16,7 +18,7 @@
 .section-info {
   display: grid;
   justify-content: start;
-  gap: 0.5rem;
+  gap: var(--space-xs);
 }
 
 
@@ -26,6 +28,25 @@
 
 .section-info p {
   color: var(--txt-color-secondary);
+}
+
+/* =========================
+    Profile Picture
+========================= */
+.container-picture {
+  width: 150px;
+  height: 150px;
+}
+
+.container-picture img {
+  display: inline-block;
+  border-radius: 50%;
+
+}
+
+.profile-picture {
+  width: 100%;
+  height: 100%;
 }
 
 /* =========================
@@ -59,9 +80,10 @@
 .section-dropdown {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
-
+  margin-top: var(--space-xl);
+  padding: 0 var(--space-md);
 }
 
 .section-dropdown h2 {
@@ -74,13 +96,14 @@
 .dropdown-button {
   position: relative;
   display: inline-block;
+  margin-left: var(--space-sm);
 }
 
 .dropdown-button button {
   background: #901C1C;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: var(--space-sm) var(--space-lg);
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
@@ -141,7 +164,7 @@
 }
 
 .dropdown-options li {
-  padding: 10px 20px;
+  padding: var(--space-sm) var(--space-lg);
   cursor: pointer;
   transition: background-color 0.2s ease;
   color: #333;
@@ -155,3 +178,14 @@
   background: #901C1C;
   color: white;
 }
+
+/* =========================
+    Media Section
+========================= */
+.media-section {
+  padding: var(--space-md);
+}
+
+/* =========================
+    Responsive Design
+========================= */
