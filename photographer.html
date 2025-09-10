@@ -61,55 +61,57 @@
 
   <body>
     <header>
-      <nav class="header_nav" role="navigation" aria-label="Navigation principale">
+      <nav role="navigation" aria-label="Navigation principale">
         <a href="index.html">
-          <img class="header_logo" src="assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="lazy">
+          <img class="nav-logo" src="assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="lazy">
         </a>
       </nav>
     </header>
 
-    <main id="main_content">
-      <section class="photographer_section">
-        <div class="section_container">
-          <div class="section_content" id="photographer_main_info">
-            <h1 id="info_name" data-default="Nom du photographe">Nom</h1>
-            <p id="info_location" data-default="Ville, Pays">Ville, Pays</p>
-            <p id="info_tagline" data-default="Tagline par défaut">Tagline</p>
+    <main>
+      <section class="photographer-section">
+        <div class="section-container">
+          <div class="section-info" id="bio-info">
+            <h1 id="name" data-label="Nom du photographe">Nom</h1>
+            <p id="location" data-label="Ville, Pays">Ville, Pays</p>
+            <p id="tagline" data-label="Tagline">Tagline</p>
           </div>
 
-          <div class="contact_container">
-            <button class="contact_button" id="contact-button" aria-label="Contactez-moi">Contactez-moi</button>
+          <div class="contact-container">
+            <button id="contact-button" aria-label="Contactez-moi">Contactez-moi</button>
           </div>
 
-          <div class="container_img">
+          <div class="container-picture">
             <picture>
               <source srcset="assets/photographers/account.png" type="image/png">
-              <img id="info_picture" alt="Profile picture" loading="lazy">
+              <img id="info-picture" alt="Profile picture" loading="lazy">
             </picture>
           </div>
         </div>
       </section>
 
-      <section class="media_section">
-        <div class="section_options">
-          <h2>Trier par</h2>
-          <div class="button_container">
-            <button class="options_button" id="media-sort-button" aria-haspopup="listbox" aria-expanded="false"
-              aria-controls="sort_dropdown">
-              Popularité
-            </button>
-            <ul class="options_dropdown" id="sort_dropdown" role="listbox" tabindex="-1" hidden>
-              <li role="option" aria-selected="true">Popularité</li>
-              <li role="option">Date</li>
-              <li role="option">Titre</li>
-              <li role="option">Likes</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="media_cards" id="media_cards">
+      <!-- Dropdown Section -->
+      <section class="section-dropdown">
+        <h2>Placeholder</h2>
+        <div class="dropdown-button">
+          <button id="media-sort-button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort_dropdown">
+            Trier par
+          </button>
+          <ul class="dropdown-options" id="sort-dropdown" role="listbox" tabindex="-1" hidden>
+            <li role="option">Popularité</li>
+            <li role="option">Date</li>
+            <li role="option">Titre</li>
+            <li role="option">Likes</li>
+          </ul>
         </div>
       </section>
+
+      <!-- Media Section -->
+      <section class="media-section">
+        <div id="media_cards">
+        </div>
+      </section>
+
     </main>
 
     <!-- Contact Modal -->

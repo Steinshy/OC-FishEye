@@ -7,12 +7,19 @@ const appConfig = {
   baseAssetsUrl: 'assets/photographers/'
 };
 
+
+/**
+ * Modal => Validation Rules
+ */
 const validationRules = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   minlength: 2,
   maxlength: 500
 };
 
+/**
+ * Modal => References
+ */
 const ModalRefs = {
   contactButton: document.getElementById("contact-button"),
   mainModal: {
@@ -45,7 +52,9 @@ const ModalRefs = {
   }
 };
 
-const Modal = {
+/**
+ * Modal => Main Constants
+ */const Modal = {
   // Main elements
   contactButton: ModalRefs.contactButton,
   mainForm: ModalRefs.mainForm,
@@ -83,7 +92,9 @@ const Modal = {
   formErrorNames: ['firstNameError', 'lastNameError', 'emailError', 'messageError']
 };
 
-// Field to error mapping for validation
+/**
+ * Modal => Field to error mapping for validation
+ */
 const fieldErrorMap = {
   first_name: "firstName",
   last_name: "lastName",
@@ -91,7 +102,9 @@ const fieldErrorMap = {
   message: "message"
 };
 
-// Get trimmed form values from DOM
+/**
+ * Modal => Get trimmed form values from DOM
+ */
 const getTrimmedValues = () => ({
   first_name: Modal?.firstNameInput?.value?.trim() || "",
   last_name: Modal?.lastNameInput?.value?.trim() || "",

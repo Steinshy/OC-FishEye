@@ -51,77 +51,87 @@
 
   <body>
     <header>
-      <nav class="header_nav" role="navigation" aria-label="Navigation principale">
+      <nav role="navigation" aria-label="Navigation principale">
         <!-- Logo -->
-        <img class="header_logo" src="./assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="lazy">
+        <img class="nav-logo" src="./assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="lazy">
         <h1 id="photographers-heading">Nos photographes</h1>
       </nav>
     </header>
 
     <main>
-      <section class="main_section" aria-labelledby="photographers-heading">
-        <div class="content_items" role="list" aria-label="Liste des photographes">
-          <!-- All 6 photographers in one container -->
-          <article class="content_item" role="listitem" tabindex="0">
-            <a href="./photographer.html?id=243" aria-label="Voir le profil de Mimi Keel"></a>
+      <section class="photographers" aria-labelledby="photographers-heading">
+        <article class="photographer" role="listitem" tabindex="0">
+          <a href="./photographer.html?id=243" aria-label="Voir le profil de Mimi Keel"></a>
+          <div class="container-picture">
             <img class="profile_picture" src="./assets/photographers/mimi/jpg/MimiKeel.jpg"
               alt="Portrait de Mimi Keel, photographe basée à Londres" loading="lazy">
-            <h1>Mimi Keel</h1>
-            <p>London, <span>UK</span></p>
-            <p>Voir le beau dans le quotidien</p>
-            <span aria-label="Tarif: 400€ par jour">400€/jour</span>
-          </article>
+          </div>
+          <h1>Mimi Keel</h1>
+          <p>London, UK</p>
+          <p>Voir le beau dans le quotidien</p>
+          <span aria-label="Tarif: 400€ par jour">400€/jour</span>
+        </article>
 
-          <article class="content_item" role="listitem" tabindex="0">
-            <a href="./photographer.html?id=930" aria-label="Voir le profil d'Ellie-Rose Wilkens"></a>
+        <article class="photographer" role="listitem" tabindex="0">
+          <a href="./photographer.html?id=930" aria-label="Voir le profil d'Ellie-Rose Wilkens"></a>
+          <div class="container-picture">
             <img class="profile_picture" src="./assets/photographers/ellie-rose/jpg/EllieRoseWilkens.jpg"
               alt="Portrait d'Ellie-Rose Wilkens, photographe basée à Paris" loading="lazy">
-            <h1>Ellie-Rose Wilkens</h1>
-            <p>Paris, France</p>
-            <p>Capturer des compositions complexes</p>
-            <span aria-label="Tarif: 250€ par jour">250€/jour</span>
-          </article>
+          </div>
+          <h1>Ellie-Rose Wilkens</h1>
+          <p>Paris, France</p>
+          <p>Capturer des compositions complexes</p>
+          <span aria-label="Tarif: 250€ par jour">250€/jour</span>
+        </article>
 
-          <article class="content_item" role="listitem" tabindex="0">
-            <a href="./photographer.html?id=82" aria-label="Voir le profil de Tracy Galindo"></a>
+        <article class="photographer" role="listitem" tabindex="0">
+          <a href="./photographer.html?id=82" aria-label="Voir le profil de Tracy Galindo"></a>
+          <div class="container-picture">
             <img class="profile_picture" src="./assets/photographers/tracy/jpg/TracyGalindo.jpg"
               alt="Portrait de Tracy Galindo, photographe basée à Montréal" loading="lazy">
-            <h1>Tracy Galindo</h1>
-            <p>Montreal, Canada</p>
-            <p>Photographe freelance</p>
-            <span aria-label="Tarif: 500€ par jour">500€/jour</span>
-          </article>
+          </div>
+          <h1>Tracy Galindo</h1>
+          <p>Montreal, Canada</p>
+          <p>Photographe freelance</p>
+          <span aria-label="Tarif: 500€ par jour">500€/jour</span>
+        </article>
 
-          <article class="content_item" role="listitem" tabindex="0">
-            <a href="./photographer.html?id=527" aria-label="Voir le profil de Nabeel Bradford"></a>
+        <article class="photographer" role="listitem" tabindex="0">
+          <a href="./photographer.html?id=527" aria-label="Voir le profil de Nabeel Bradford"></a>
+          <div class="container-picture">
             <img class="profile_picture" src="./assets/photographers/nabeel/jpg/NabeelBradford.jpg"
               alt="Portrait de Nabeel Bradford, photographe basé à Mexico" loading="lazy">
-            <h1>Nabeel Bradford</h1>
-            <p>Mexico City, Mexico</p>
-            <p>Toujours aller de l'avant</p>
-            <span aria-label="Tarif: 350€ par jour">350€/jour</span>
-          </article>
+          </div>
+          <h1>Nabeel Bradford</h1>
+          <p>Mexico City, Mexico</p>
+          <p>Toujours aller de l'avant</p>
+          <span aria-label="Tarif: 350€ par jour">350€/jour</span>
+        </article>
 
-          <article class="content_item" role="listitem" tabindex="0">
-            <a href="./photographer.html?id=925" aria-label="Voir le profil de Rhode Dubois"></a>
+        <article class="photographer" role="listitem" tabindex="0">
+          <a href="./photographer.html?id=925" aria-label="Voir le profil de Rhode Dubois"></a>
+          <div class="container-picture">
             <img class="profile_picture" src="./assets/photographers/rhode/jpg/RhodeDubois.jpg"
               alt="Portrait de Rhode Dubois, photographe basée à Barcelone" loading="lazy">
-            <h1>Rhode Dubois</h1>
-            <p>Barcelona, Spain</p>
-            <p>Je crée des souvenirs</p>
-            <span aria-label="Tarif: 275€ par jour">275€/jour</span>
-          </article>
+          </div>
+          <h1>Rhode Dubois</h1>
+          <p>Barcelona, Spain</p>
+          <p>Je crée des souvenirs</p>
+          <span aria-label="Tarif: 275€ par jour">275€/jour</span>
+        </article>
 
-          <article class="content_item" role="listitem" tabindex="0">
-            <a href="./photographer.html?id=195" aria-label="Voir le profil de Marcel Nikolic"></a>
+        <article class="photographer" role="listitem" tabindex="0">
+          <a href="./photographer.html?id=195" aria-label="Voir le profil de Marcel Nikolic"></a>
+          <div class="container-picture">
             <img class="profile_picture" src="./assets/photographers/marcel/jpg/MarcelNikolic.jpg"
               alt="Portrait de Marcel Nikolic, photographe basé à Berlin" loading="lazy">
-            <h1>Marcel Nikolic</h1>
-            <p>Berlin, Germany</p>
-            <p>Toujours à la recherche de LA photo</p>
-            <span aria-label="Tarif: 400€ par jour">400€/jour</span>
-          </article>
-        </div>
+          </div>
+          <h1>Marcel Nikolic</h1>
+          <p>Berlin, Germany</p>
+          <p>Toujours à la recherche de LA photo</p>
+          <span aria-label="Tarif: 400€ par jour">400€/jour</span>
+        </article>
+
       </section>
 
       <footer>
