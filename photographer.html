@@ -133,7 +133,7 @@
 
           <div class="form_group">
             <label for="firstname">Prénom *</label>
-            <input id="firstname" type="text" name="firstname" data-error-visible="false"
+            <input id="firstname" type="text" name="firstname" autocomplete="given-name" data-error-visible="false"
               placeholder="Entrez votre Prénom" aria-describedby="firstname-error">
             <span class="error_form" id="error-firstname" data-error-visible="false" data-valid="false"
               aria-live="polite">
@@ -143,8 +143,8 @@
 
           <div class="form_group">
             <label for="lastname">Nom *</label>
-            <input id="lastname" type="text" name="lastname" data-error-visible="false" placeholder="Entrez votre Nom"
-              aria-describedby="lastname-error">
+            <input id="lastname" type="text" name="lastname" autocomplete="family-name" data-error-visible="false"
+              placeholder="Entrez votre Nom" aria-describedby="lastname-error">
             <span class="error_form" id="error-lastname" data-error-visible="false" data-valid="false"
               aria-live="polite">
               2 caractères minimum est requis.
@@ -153,7 +153,7 @@
 
           <div class="form_group">
             <label for="email">E-mail *</label>
-            <input id="email" type="email" name="email" data-error-visible="false"
+            <input id="email" type="email" name="email" autocomplete="email" data-error-visible="false"
               placeholder="Entrez votre adresse e-mail" aria-describedby="email-error">
             <span class="error_form" id="error-email" data-error-visible="false" data-valid="false" aria-live="polite">
               L'adresse e-mail est invalide.
@@ -173,13 +173,6 @@
             </span>
           </div>
 
-
-          <!-- Global Error -->
-          <div class="error_box" id="error-global-box" data-error-visible="false">
-            <span id="error-global" data-error-visible="false" data-valid="false" aria-live="polite">
-              Tous les champs du formulaire sont requis.
-            </span>
-          </div>
         </form>
         <!-- Submit Button -->
         <div class="modal_footer" id="modal-footer">

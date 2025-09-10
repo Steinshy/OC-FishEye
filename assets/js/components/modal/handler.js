@@ -7,43 +7,29 @@
 function openModal() {
   if (!Modal || !Modal.modalMain || !Modal.modalHeader || !Modal.mainForm) return;
 
-  // Reset any previous states before opening
-  resetInputStates();
-  Modal.modalMain.setAttribute("aria-hidden", "false");
-  Modal.modalHeader.setAttribute("aria-hidden", "false");
-  Modal.mainForm.setAttribute("aria-hidden", "false");
-
+  // Show modal immediately for instant visual feedback
+  Modal.modalMain.removeAttribute("aria-hidden");
   Modal.modalHeader.classList.add("show");
   Modal.modalMain.classList.add("show");
   Modal.mainForm.classList.add("show");
-
-  if (ButtonState) {
-    ButtonState.initialize();
-    ButtonState.hide();
-  }
+  resetInputsAndFocus();
 }
 
 // Close the modal and reset form/modal state
 function closeModal() {
   if (!Modal || !Modal.modalMain || !Modal.modalHeader || !Modal.mainForm) return;
 
+  // Set aria-hidden on the main modal only
   Modal.modalMain.setAttribute("aria-hidden", "true");
-  Modal.modalHeader.setAttribute("aria-hidden", "true");
-  Modal.mainForm.setAttribute("aria-hidden", "true");
 
   Modal.modalHeader.classList.remove("show");
   Modal.modalMain.classList.remove("show");
   Modal.mainForm.classList.remove("show");
   resetFormAndModal();
-}
 
-// Toggle modal visibility
-function ModalVisibility() {
-  if (!Modal || !Modal.modalMain) return false;
-  if (Modal.modalMain.classList.contains("show")) {
-    closeModal();
-  } else {
-    openModal();
+  // Return focus to the contact button for better accessibility
+  if (Modal.contactButton) {
+    Modal.contactButton.focus();
   }
 }
 
@@ -57,7 +43,6 @@ function initializeFormHandlers() {
 }
 
 // Expose handlers globally
-window.ModalVisibility = ModalVisibility;
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.initializeFormHandlers = initializeFormHandlers;

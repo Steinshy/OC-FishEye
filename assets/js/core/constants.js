@@ -31,12 +31,10 @@ const ModalRefs = {
     message: document.getElementById("message"),
   },
   formError: {
-    main: document.getElementById("error-global"),
     firstName: document.getElementById("error-firstname"),
     lastName: document.getElementById("error-lastname"),
     email: document.getElementById("error-email"),
     message: document.getElementById("error-message"),
-    global: document.getElementById("error-global"),
   },
   formElements: {
     contactForm: document.getElementById("contact_form"),
@@ -71,7 +69,6 @@ const Modal = {
   lastNameError: ModalRefs.formError.lastName,
   emailError: ModalRefs.formError.email,
   messageError: ModalRefs.formError.message,
-  globalError: ModalRefs.formError.global,
 
   // Modal elements
   modalMain: ModalRefs.mainModal.main,
@@ -83,7 +80,7 @@ const Modal = {
 
   // Arrays for iteration
   formFieldNames: ['firstNameInput', 'lastNameInput', 'emailInput', 'messageInput'],
-  formErrorNames: ['firstNameError', 'lastNameError', 'emailError', 'messageError', 'globalError']
+  formErrorNames: ['firstNameError', 'lastNameError', 'emailError', 'messageError']
 };
 
 // Field to error mapping for validation

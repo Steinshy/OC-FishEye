@@ -26,21 +26,9 @@ const realTimeValidation = (element, fieldName) => {
     );
   };
 
-  const allFieldsValid = areAllFieldsValid(values);
-
-  if (allFieldsValid) {
-    if (window.ErrorHandler) {
-      ErrorHandler.hideError("global");
-    } else {
-      const globalError = document.getElementById("form_global_error");
-      if (globalError) {
-        globalError.setAttribute("data-error-visible", "false");
-      }
-    }
-  }
-
   // Control button state based on form validation
   if (ButtonState) {
+    const allFieldsValid = areAllFieldsValid(values);
     allFieldsValid ? ButtonState.show() : ButtonState.hide();
   }
 };

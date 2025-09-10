@@ -1,27 +1,13 @@
 /**
- * Photographer Page => Event Listener Setup
- * Handles all event listener attachments for the contact form
- * 
- * This file sets up all event listeners for the modal and form.
- * All functions are exposed globally for use in app.js or elsewhere.
- * 
- * All logic and references are correct and consistent with the rest of the codebase.
+ * Contact form event listeners
  */
 
 function attachFormEventListeners() {
-  if (!Modal.contactButton || !Modal.modalCloseButton || !Modal.mainForm) return;
-
-  // Open modal on contact button click (with DOM ready check)
+  if (!Modal.contactButton || !Modal.modalMain) return;
   Modal.contactButton.addEventListener("click", function (e) {
-    // Prevent multiple rapid clicks and ensure DOM is ready
-    if (Modal.contactButton.disabled || !document.readyState === "complete") {
-      e.preventDefault();
-      return;
-    }
-    ModalVisibility();
+    openModal();
   });
 
-  // Close modal on close button click
   Modal.modalCloseButton.addEventListener("click", function (e) {
     if (window.modalClosingPrevented) {
       e.preventDefault();
@@ -30,12 +16,10 @@ function attachFormEventListeners() {
     closeModal();
   });
 
-  // Handle form submission
   Modal.mainForm.addEventListener("submit", function (e) {
     submitForm(e);
   });
 
-  // Close modal on Escape key
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && Modal.modalMain?.classList?.contains("show")) {
       if (window.modalClosingPrevented) {
@@ -50,7 +34,7 @@ function attachFormEventListeners() {
 function attachFormValidationListeners() {
   if (!Modal.firstNameInput || !Modal.lastNameInput || !Modal.emailInput || !Modal.messageInput) return;
 
-  // Real-time validation for each field (input and blur events)
+  // todo: This array is useless, it can be removed later since we use constants.js
   const fields = [
     { element: Modal.firstNameInput, name: "first_name" },
     { element: Modal.lastNameInput, name: "last_name" },
@@ -59,18 +43,12 @@ function attachFormValidationListeners() {
   ];
 
   fields.forEach(field => {
-    // Validate on input (real-time)
-    field.element.addEventListener("input", function () {
-      realTimeValidation(field.element, field.name);
-    });
+    // Use realTimeValidation for all validation - consistent and complete
+    field.element.addEventListener("input", () => realTimeValidation(field.element, field.name));
+    field.element.addEventListener("blur", () => realTimeValidation(field.element, field.name));
 
-    // Validate on blur (when user leaves field)
-    field.element.addEventListener("blur", function () {
-      realTimeValidation(field.element, field.name);
-    });
-
-    // Clear errors on focus (if field was previously valid)
-    field.element.addEventListener("focus", function () {
+    // Clear errors on focus
+    field.element.addEventListener("focus", () => {
       if (field.element.getAttribute("data-valid") === "true") {
         field.element.setAttribute("data-error-visible", "false");
       }
@@ -78,10 +56,13 @@ function attachFormValidationListeners() {
   });
 }
 
+// todo: Try to merge attachCharacterCountListeners removeCharacterCountListeners into one function if/else
 function attachCharacterCountListeners() {
   if (!Modal.messageInput) return;
-  ["input", "keyup", "paste"].forEach(function (event) {
-    Modal.messageInput.addEventListener(event, handleCharacterCount);
+  const updateCharacterCount = () => requestAnimationFrame(handleCharacterCount);
+
+  ["input", "keyup", "paste"].forEach(event => {
+    Modal.messageInput.addEventListener(event, updateCharacterCount);
   });
 }
 

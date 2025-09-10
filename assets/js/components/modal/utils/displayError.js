@@ -5,16 +5,12 @@
 function toggleError(targetKey, shouldShow, message) {
   const errorElement = Modal.formError[targetKey];
   if (errorElement) {
-    errorElement.setAttribute(
-      "data-error-visible",
-      shouldShow ? "true" : "false"
-    );
+    errorElement.setAttribute("data-error-visible", shouldShow ? "true" : "false");
     if (message) {
       errorElement.textContent = message;
     }
   }
 }
-
 
 const resetErrorVisibility = () => {
   // Reset form field error states
@@ -31,10 +27,6 @@ const resetErrorVisibility = () => {
     Modal[errorId]?.setAttribute("data-error-visible", "false");
   });
 
-  // Specifically hide global error
-  if (Modal.globalError) {
-    Modal.globalError.setAttribute("data-error-visible", "false");
-  }
 };
 
 function setError(targetKey, shouldShow, message = "") {
@@ -46,7 +38,6 @@ function hideError(targetKey) {
 }
 
 window.ErrorHandler = {
-  globalErrorElements: Modal.formError,
   setError: setError,
   hideError: hideError,
   resetErrorVisibility: resetErrorVisibility

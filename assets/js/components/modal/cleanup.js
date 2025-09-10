@@ -9,24 +9,47 @@ const resetCharacterCount = () => {
   }
 };
 
-const resetInputStates = () =>
-  Modal.formFieldNames.forEach(name => Modal[name] && (
-    Modal[name].value = "",
-    Modal[name].classList.remove('success', 'warning', 'danger'),
-    Modal[name].disabled = false,
-    Modal[name].setAttribute('data-valid', 'false'),
-    Modal[name].setAttribute('data-error-visible', 'false')
-  ));
+const resetInputStates = () => {
+  // Reset each form field to its initial state
+  for (const fieldName of Modal.formFieldNames) {
+    const element = Modal[fieldName];
+    if (element) {
+      element.value = "";
+      element.classList.remove("success", "warning", "danger");
+      element.disabled = false;
+      element.setAttribute('data-valid', 'false');
+      element.setAttribute('data-error-visible', 'false');
+    }
+  }
+};
 
 const resetFormAndModal = () => {
-  Modal.contactForm?.reset();
-  Modal.contactModal?.classList.remove("show");
-  resetInputStates();
-  resetErrorVisibility();
-  resetCharacterCount();
+  // Defer heavy operations to next frame to avoid blocking
+  requestAnimationFrame(() => {
+    Modal.contactForm?.reset();
+    Modal.contactModal?.classList.remove("show");
+    resetInputStates();
+    resetErrorVisibility();
+    resetCharacterCount();
+  });
+};
+
+const resetInputsAndFocus = () => {
+  requestAnimationFrame(() => {
+    resetInputStates();
+    if (Modal.firstNameInput) {
+      Modal.firstNameInput.focus();
+    }
+
+    if (ButtonState) {
+      ButtonState.initialize();
+      ButtonState.hide();
+    }
+  });
 };
 
 // Global access
 window.resetFormAndModal = resetFormAndModal;
+window.resetInputsAndFocus = resetInputsAndFocus;
 window.resetCharacterCount = resetCharacterCount;
 

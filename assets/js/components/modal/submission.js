@@ -71,7 +71,6 @@ function preventModalClosing(prevent) {
   Modal.modalCloseButton.style.pointerEvents = prevent ? 'none' : 'auto';
   Modal.modalCloseButton.style.opacity = prevent ? '0.5' : '1';
 
-  // Also disable Escape key functionality
   window.modalClosingPrevented = prevent;
 }
 
