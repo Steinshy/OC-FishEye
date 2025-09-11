@@ -3,10 +3,10 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 env:
-  NODE_VERSION: "24"
+  NODE_VERSION: '24'
 
 permissions:
   contents: write
@@ -29,37 +29,36 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
-          cache-dependency-path: "package-lock.json"
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Build project
+        run: |
+          npm run lint
+          npm run format:check
+          [ -f "jsdoc.conf.json" ] && npm run docs || true
+          echo "✅ Build completed"
+
       - name: Generate changelog
         id: changelog
         run: |
-          # Generate changelog from conventional commits using local dependencies
           if [ -f "package.json" ]; then
-            # For projects with package.json, use conventional-changelog
             changelog=$(npx conventional-changelog --preset angular --output-format json --release-count 0 | jq -r '.[0].body // "No changes"')
           else
-            # Fallback for projects without package.json
             changelog=$(git log --oneline --format="* %s" $(git describe --tags --abbrev=0 HEAD^)..HEAD | head -50)
           fi
-
-          # Escape newlines and quotes for GitHub Actions
           changelog="${changelog//'%'/'%25'}"
           changelog="${changelog//$'\n'/'%0A'}"
           changelog="${changelog//$'\r'/'%0D'}"
-
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$changelog" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        id: create_release
         run: |
-          # Create release using GitHub CLI
           gh release create ${{ github.ref_name }} \
             --title "Release ${{ github.ref_name }}" \
             --notes "## What's Changed
@@ -69,40 +68,17 @@ jobs:
           ## Installation
 
           \`\`\`bash
-          # Clone the repository
           git clone https://github.com/${{ github.repository }}.git
           cd ${{ github.repository }}
-
-          # Checkout the release
           git checkout ${{ github.ref_name }}
-          \`\`\`
-
-          ## Changelog
-
-          This release includes all changes since the previous version. See the commit history for detailed information." \
+          \`\`\`" \
             --draft=false \
             --prerelease=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release Assets
+      - name: Upload assets
         run: |
-          # Upload assets using GitHub CLI
-          if [ -f "README.md" ]; then
-            gh release upload ${{ github.ref_name }} README.md --clobber
-          fi
+          [ -f "README.md" ] && gh release upload ${{ github.ref_name }} README.md --clobber || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment on Issues
-        if: github.event_name == 'push'
-        run: |
-          # Find issues that reference this release
-          git log --oneline --format="%s" $(git describe --tags --abbrev=0 HEAD^)..HEAD | \
-          grep -o '#[0-9]*' | sort -u | \
-          while read issue; do
-            if [ ! -z "$issue" ]; then
-              echo "Found issue reference: $issue"
-              # Note: GitHub will automatically link issues when they're referenced in commits
-            fi
-          done

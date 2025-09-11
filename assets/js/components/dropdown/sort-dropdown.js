@@ -1,27 +1,35 @@
 /* Photographer Page => Sort Dropdown Todo: Refactor this code */
 
-import { Dropdown } from "../../core/constants.js";
-import { MediaSorter } from "../photographer/media-sorter.js";
-import { currentPhotographer } from "../photographer/photographer-page.js";
-
-let dropdownElements = {};
+import { Dropdown } from '../../core/constants.js';
+import { MediaSorter } from '../../pages/photographer/media-sorter.js';
+import { currentPhotographer } from '../../pages/photographer/photographer-page.js';
 
 export const openSortDropdown = () => {
-  Dropdown.mediaSortDropdown.classList.add("show");
-  Dropdown.mediaSortDropdown.hidden = false;
-  Dropdown.mediaSortButton.setAttribute("aria-expanded", "true");
+  const sortDropdown = document.getElementById('sort-dropdown');
+  const sortButton = document.getElementById('media-sort-button');
+
+  if (sortDropdown && sortButton) {
+    sortDropdown.classList.add('show');
+    sortDropdown.hidden = false;
+    sortButton.setAttribute('aria-expanded', 'true');
+  }
 };
 
 export const closeDropdown = () => {
-  Dropdown.mediaSortDropdown.classList.remove("show");
-  Dropdown.mediaSortDropdown.hidden = true;
-  Dropdown.mediaSortButton.setAttribute("aria-expanded", "false");
+  const sortDropdown = document.getElementById('sort-dropdown');
+  const sortButton = document.getElementById('media-sort-button');
+
+  if (sortDropdown && sortButton) {
+    sortDropdown.classList.remove('show');
+    sortDropdown.hidden = true;
+    sortButton.setAttribute('aria-expanded', 'false');
+  }
 };
 
-export const handleDropdownClose = (e) => {
+export const handleDropdownClose = e => {
   if (
-    (e.type === "keydown" && e.key === "Escape") ||
-    (e.type === "click" &&
+    (e.type === 'keydown' && e.key === 'Escape') ||
+    (e.type === 'click' &&
       !Dropdown.mediaSortDropdown.contains(e.target) &&
       e.target !== Dropdown.mediaSortButton)
   ) {
@@ -29,39 +37,42 @@ export const handleDropdownClose = (e) => {
   }
 };
 
-export const handleSortDropdown = (e) => {
+export const handleSortDropdown = e => {
   e.stopPropagation();
-  const isExpanded =
-    Dropdown.mediaSortButton.getAttribute("aria-expanded");
-  isExpanded === "true" ? closeDropdown() : openSortDropdown();
+  const isExpanded = Dropdown.mediaSortButton.getAttribute('aria-expanded');
+  isExpanded === 'true' ? closeDropdown() : openSortDropdown();
 };
 
 export const createSortDropdown = () => {
-  if (Dropdown.mediaSortButton) {
-    Dropdown.mediaSortButton.addEventListener(
-      "click",
-      handleSortDropdown
-    );
-    document.addEventListener("keydown", handleDropdownClose);
-    document.addEventListener("click", handleDropdownClose);
+  // Get elements directly to ensure they exist
+  const sortButton = document.getElementById('media-sort-button');
+  const sortDropdown = document.getElementById('sort-dropdown');
+
+  if (!sortButton || !sortDropdown) {
+    console.warn('Sort dropdown elements not found');
+    return;
   }
-  if (Dropdown.mediaSortDropdown) {
-    Dropdown.mediaSortDropdown.addEventListener("click", (e) => {
-      if (e.target && e.target.matches("li[role='option']")) {
-        const selected = e.target.textContent.trim();
-        Dropdown.mediaSortButton.textContent = selected;
-        Dropdown.mediaSortDropdown
-          .querySelectorAll("li")
-          .forEach((li) => li.setAttribute("aria-selected", li === e.target));
-        if (MediaSorter?.handleSortSelection) {
-          const currentMedia = MediaSorter.getCurrentMedia();
-          const photographer = currentPhotographer;
-          if (currentMedia.length > 0 && photographer) {
-            MediaSorter.handleSortSelection(selected, currentMedia, photographer.folder_name);
-          }
+
+  // Add event listeners
+  sortButton.addEventListener('click', handleSortDropdown);
+  document.addEventListener('keydown', handleDropdownClose);
+  document.addEventListener('click', handleDropdownClose);
+
+  sortDropdown.addEventListener('click', e => {
+    if (e.target && e.target.matches("li[role='option']")) {
+      const selected = e.target.textContent.trim();
+      sortButton.textContent = selected;
+      sortDropdown
+        .querySelectorAll('li')
+        .forEach(li => li.setAttribute('aria-selected', li === e.target));
+      if (MediaSorter?.handleSortSelection) {
+        const currentMedia = MediaSorter.getCurrentMedia();
+        const photographer = currentPhotographer;
+        if (currentMedia.length > 0 && photographer) {
+          MediaSorter.handleSortSelection(selected, currentMedia, photographer.folder_name);
         }
-        closeDropdown();
       }
-    });
-  }
+      closeDropdown();
+    }
+  });
 };

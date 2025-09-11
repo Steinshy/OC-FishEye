@@ -3,21 +3,21 @@
  * Contains all event handler functions for the contact form
  */
 
-import { Modal } from "../../core/constants.js";
-import { ButtonState } from "../../core/constants.js";
-import { handleCharacterCount } from "./utils/characterCount.js";
-import { resetInputsAndFocus } from "./cleanup.js";
-import { resetFormAndModal } from "./cleanup.js";
+import { Modal } from '../../core/constants.js';
+import { ButtonState } from './utils/submitButton.js';
+import { handleCharacterCount } from './utils/characterCount.js';
+import { resetInputsAndFocus } from './cleanup.js';
+import { resetFormAndModal } from './cleanup.js';
 
 // Open the modal and set initial states
 export const openModal = () => {
   if (!Modal || !Modal.modalMain || !Modal.modalHeader || !Modal.mainForm) return;
 
   // Show modal immediately for instant visual feedback
-  Modal.modalMain.removeAttribute("aria-hidden");
-  Modal.modalHeader.classList.add("show");
-  Modal.modalMain.classList.add("show");
-  Modal.mainForm.classList.add("show");
+  Modal.modalMain.removeAttribute('aria-hidden');
+  Modal.modalHeader.classList.add('show');
+  Modal.modalMain.classList.add('show');
+  Modal.mainForm.classList.add('show');
   resetInputsAndFocus();
 };
 
@@ -26,11 +26,11 @@ export const closeModal = () => {
   if (!Modal || !Modal.modalMain || !Modal.modalHeader || !Modal.mainForm) return;
 
   // Set aria-hidden on the main modal only
-  Modal.modalMain.setAttribute("aria-hidden", "true");
+  Modal.modalMain.setAttribute('aria-hidden', 'true');
 
-  Modal.modalHeader.classList.remove("show");
-  Modal.modalMain.classList.remove("show");
-  Modal.mainForm.classList.remove("show");
+  Modal.modalHeader.classList.remove('show');
+  Modal.modalMain.classList.remove('show');
+  Modal.mainForm.classList.remove('show');
   resetFormAndModal();
 
   // Return focus to the contact button for better accessibility

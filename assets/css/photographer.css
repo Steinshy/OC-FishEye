@@ -12,7 +12,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
 }
 
 .section-info {
@@ -21,9 +20,11 @@
   gap: var(--space-xs);
 }
 
-
 .section-info h1 {
   color: var(--txt-color-primary);
+  font-size: 1.5rem;
+  margin: 0 0 var(--space-sm) 0;
+  font-weight: var(--font-weight-semibold);
 }
 
 .section-info p {
@@ -41,7 +42,6 @@
 .container-picture img {
   display: inline-block;
   border-radius: 50%;
-
 }
 
 .profile-picture {
@@ -54,6 +54,10 @@
 ========================= */
 .contact-container {
   position: relative;
+  /* Prevent layout shift */
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
 }
 
 .contact-container button {
@@ -61,10 +65,9 @@
   height: 3rem;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-default);
-  background: linear-gradient(0deg,
-      var(--bg-color-primary) 0%,
-      var(--bg-color-secondary) 100%);
-  transition: transform var(--transition-fast),
+  background: linear-gradient(0deg, var(--bg-color-primary) 0%, var(--bg-color-secondary) 100%);
+  transition:
+    transform var(--transition-fast),
     box-shadow var(--transition-fast);
   color: var(--color-white);
 }
@@ -100,7 +103,7 @@
 }
 
 .dropdown-button button {
-  background: #901C1C;
+  background: #901c1c;
   color: white;
   border: none;
   padding: var(--space-sm) var(--space-lg);
@@ -116,19 +119,18 @@
 }
 
 .dropdown-button button:hover {
-  background: #D3573C;
+  background: #d3573c;
 }
-
 
 /* Arrow Down Icon */
 .dropdown-button button::after {
-  content: "▼";
+  content: '▼';
   margin-left: 10px;
   font-size: 12px;
   transition: transform 0.3s ease;
 }
 
-.dropdown-button button[aria-expanded="true"]::after {
+.dropdown-button button[aria-expanded='true']::after {
   transform: rotate(180deg);
 }
 
@@ -152,7 +154,7 @@
   transition: all 0.3s ease;
 }
 
-.dropdown-options .show {
+.dropdown-options.show {
   visibility: visible;
   display: block;
   opacity: 1;
@@ -174,8 +176,8 @@
   background: #f5f5f5;
 }
 
-.dropdown-options li[aria-selected="true"] {
-  background: #901C1C;
+.dropdown-options li[aria-selected='true'] {
+  background: #901c1c;
   color: white;
 }
 

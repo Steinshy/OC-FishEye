@@ -1,7 +1,7 @@
 /** Constants and Configuration */
 export const appConfig = {
   baseAssetsUrl: 'assets/photographers/',
-  photographersDataUrl: 'baseAssetsUrl + data.json',
+  photographersDataUrl: 'assets/photographers/data.json'
 };
 
 /** Photographer Page => Modal => Validation Rules */
@@ -13,41 +13,41 @@ export const validationRules = {
 
 /** Photographer Page => Modal => References */
 const ModalRefs = {
-  contactButton: document.getElementById("contact-button"),
+  contactButton: document.getElementById('contact-button'),
   mainModal: {
-    main: document.getElementById("modal-signup"),
-    content: document.getElementById("modal-content"),
-    header: document.getElementById("modal-header"),
-    closeButton: document.getElementById("modal-close"),
-    modalFooter: document.getElementById("modal-footer"),
-    submitButton: document.getElementById("footer-submit-button"),
+    main: document.getElementById('modal-signup'),
+    content: document.getElementById('modal-content'),
+    header: document.getElementById('modal-header'),
+    closeButton: document.getElementById('modal-close'),
+    modalFooter: document.getElementById('modal-footer'),
+    submitButton: document.getElementById('footer-submit-button')
   },
-  mainForm: document.getElementById("form-signup"),
+  mainForm: document.getElementById('form-signup'),
   formGroup: {
-    firstName: document.getElementById("firstname"),
-    lastName: document.getElementById("lastname"),
-    email: document.getElementById("email"),
-    message: document.getElementById("message"),
+    firstName: document.getElementById('firstname'),
+    lastName: document.getElementById('lastname'),
+    email: document.getElementById('email'),
+    message: document.getElementById('message')
   },
   formError: {
-    firstName: document.getElementById("error-firstname"),
-    lastName: document.getElementById("error-lastname"),
-    email: document.getElementById("error-email"),
-    message: document.getElementById("error-message"),
+    firstName: document.getElementById('error-firstname'),
+    lastName: document.getElementById('error-lastname'),
+    email: document.getElementById('error-email'),
+    message: document.getElementById('error-message')
   },
   formElements: {
-    contactForm: document.getElementById("contact_form"),
-    contactModal: document.getElementById("modal_container"),
-    characterCount: document.getElementById("character-count"),
-    minCount: document.getElementById("character-count"),
-    maxCount: document.getElementById("character-count"),
+    contactForm: document.getElementById('contact_form'),
+    contactModal: document.getElementById('modal_container'),
+    characterCount: document.getElementById('character-count'),
+    minCount: document.getElementById('character-count'),
+    maxCount: document.getElementById('character-count')
   }
 };
 
 /** Photographer Page => Dropdown => Constants */
 const DropdownRefs = {
-  mediaSortButton: document.getElementById("media-sort-button"),
-  mediaSortDropdown: document.getElementById("sort-dropdown")
+  mediaSortButton: document.getElementById('media-sort-button'),
+  mediaSortDropdown: document.getElementById('sort-dropdown')
 };
 
 /** Photographer Page => Modal => Main Constants */
@@ -91,18 +91,18 @@ export const Modal = {
 
 /** Photographer Page => Modal => Field to error mapping for validation */
 export const fieldErrorMap = {
-  first_name: "firstName",
-  last_name: "lastName",
-  email: "email",
-  message: "message"
+  first_name: 'firstName',
+  last_name: 'lastName',
+  email: 'email',
+  message: 'message'
 };
 
 /** Photographer Page => Modal => Get trimmed form values from DOM */
 export const getTrimmedValues = () => ({
-  first_name: Modal?.firstNameInput?.value?.trim() || "",
-  last_name: Modal?.lastNameInput?.value?.trim() || "",
-  email: Modal?.emailInput?.value?.trim() || "",
-  message: Modal?.messageInput?.value?.trim() || ""
+  first_name: Modal?.firstNameInput?.value?.trim() || '',
+  last_name: Modal?.lastNameInput?.value?.trim() || '',
+  email: Modal?.emailInput?.value?.trim() || '',
+  message: Modal?.messageInput?.value?.trim() || ''
 });
 
 export const Dropdown = {

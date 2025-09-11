@@ -1,7 +1,7 @@
-export const updateElement = (id, value, attribute = "textContent") => {
+export const updateElement = (id, value, attribute = 'textContent') => {
   const element = document.getElementById(id) || document.querySelector(id);
   if (element) {
-    if (attribute === "textContent") {
+    if (attribute === 'textContent') {
       element.textContent = value;
     } else {
       element.setAttribute(attribute, value);
@@ -9,7 +9,7 @@ export const updateElement = (id, value, attribute = "textContent") => {
   }
 };
 
-export const getElementById = (id) => {
+export const getElementById = id => {
   const element = document.getElementById(id);
   if (!element) {
     console.warn(`Element with ID "${id}" not found`);
@@ -17,11 +17,11 @@ export const getElementById = (id) => {
   return element;
 };
 
-export const getElementsByClassName = (className) => {
+export const getElementsByClassName = className => {
   return document.getElementsByClassName(className);
 };
 
-export const querySelector = (selector) => {
+export const querySelector = selector => {
   const element = document.querySelector(selector);
   if (!element) {
     console.warn(`Element with selector "${selector}" not found`);

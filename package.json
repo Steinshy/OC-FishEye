@@ -2,6 +2,40 @@
   "name": "fisheye",
   "version": "1.0.0",
   "description": "FishEye photography website - A modern portfolio showcasing professional photography with interactive galleries and responsive design",
+  "documentation": {
+    "linting": {
+      "install": "npm install",
+      "lint-all": "npm run lint",
+      "fix-all": "npm run lint:fix",
+      "lint-js": "npm run lint:js",
+      "fix-js": "npm run lint:js:fix",
+      "lint-css": "npm run lint:css",
+      "fix-css": "npm run lint:css:fix",
+      "lint-html": "npm run lint:html",
+      "usage": [
+        "# Install new dependencies",
+        "npm install",
+        "# Lint all files (JS, CSS, HTML)",
+        "npm run lint",
+        "# Lint specific file types",
+        "npm run lint:css",
+        "npm run lint:html",
+        "npm run lint:js"
+      ],
+      "notes": [
+        "• ESLint: JavaScript linting with security, import, and JSDoc rules",
+        "• Stylelint: CSS linting with property ordering and best practices",
+        "• HTMLHint: HTML linting for accessibility and structure",
+        "• Prettier: Code formatting for consistency",
+        "🔧 Configuration files:",
+        "• .eslintrc.js - JavaScript linting rules",
+        "• .stylelintrc.json - CSS linting rules",
+        "• .htmlhintrc.json - HTML linting rules",
+        "• .prettierrc - Code formatting rules",
+        "• .lintstagedrc.js - Pre-commit hooks"
+      ]
+    }
+  },
   "type": "module",
   "main": "index.html",
   "homepage": "https://steinshy.github.io/FishEye",
@@ -9,16 +43,7 @@
     "type": "git",
     "url": "https://github.com/steinshy/FishEye.git"
   },
-  "keywords": [
-    "photography",
-    "portfolio",
-    "gallery",
-    "responsive",
-    "accessibility",
-    "vanilla-js",
-    "html5",
-    "css3"
-  ],
+  "keywords": ["photography", "portfolio", "gallery", "responsive", "accessibility", "vanilla-js", "html5", "css3"],
   "author": {
     "name": "Steinshy",
     "url": "https://github.com/steinshy"
@@ -29,11 +54,17 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
-    "lint": "eslint . --ext .js",
-    "lint:fix": "eslint . --ext .js --fix",
+    "lint": "eslint . --ext .js && stylelint '**/*.css' && html-validate '**/*.html'",
+    "lint:fix": "eslint . --ext .js --fix && stylelint '**/*.css' --fix && html-validate '**/*.html' --fix",
+    "lint:js": "eslint . --ext .js",
+    "lint:js:fix": "eslint . --ext .js --fix",
+    "lint:css": "stylelint '**/*.css'",
+    "lint:css:fix": "stylelint '**/*.css' --fix",
+    "lint:html": "html-validate '**/*.html'",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "docs": "jsdoc -c jsdoc.conf.json",
+    "server": "http-server . -p 8080 --cors -o -c-1 --no-cache",
     "markdown:lint": "markdownlint '**/*.md' --ignore node_modules",
     "markdown:fix": "markdownlint '**/*.md' --ignore node_modules --fix",
     "prepare": "husky install",
@@ -54,10 +85,17 @@
     "eslint-plugin-jsdoc": "^48.6.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-security": "^1.7.1",
+    "html-validate": "^8.7.4",
     "husky": "^9.0.11",
     "jsdoc": "^4.0.2",
     "lint-staged": "^16.1.5",
-    "markdownlint-cli": "^0.38.0",
-    "prettier": "^3.2.5"
+    "markdownlint-cli": "^0.39.0",
+    "prettier": "^3.2.5",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-order": "^6.0.3"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
   }
 }

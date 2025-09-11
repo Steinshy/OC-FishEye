@@ -1,0 +1,79 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "doctype-style": "html5",
+    "element-case": "lower",
+    "attr-case": "lower",
+    "attr-quotes": "double",
+    "void-content": "never",
+    "no-dup-attr": "error",
+    "no-dup-class": "error",
+    "no-dup-id": "error",
+    "no-unknown-elements": "error",
+    "no-unknown-attributes": "error",
+    "no-raw-text": "off",
+    "require-sri": "off",
+    "no-inline-style": "warn",
+    "no-inline-script": "warn",
+    "no-missing-close": "error",
+    "no-self-closing": "error",
+    "no-trailing-whitespace": "error",
+    "no-unused-disable": "error",
+    "prefer-tbody": "warn",
+    "require-meta-charset": "error",
+    "require-meta-description": "warn",
+    "require-meta-viewport": "warn",
+    "require-title": "error",
+    "text-content": "warn",
+    "wcag/h30": "warn",
+    "wcag/h32": "warn",
+    "wcag/h36": "warn",
+    "wcag/h37": "warn",
+    "wcag/h67": "warn",
+    "wcag/h71": "warn"
+  },
+  "elements": {
+    "html": {
+      "attributes": {
+        "lang": {
+          "required": true
+        }
+      }
+    },
+    "img": {
+      "attributes": {
+        "alt": {
+          "required": true
+        }
+      }
+    },
+    "a": {
+      "attributes": {
+        "href": {
+          "required": true
+        }
+      }
+    },
+    "input": {
+      "attributes": {
+        "type": {
+          "required": true
+        }
+      }
+    },
+    "textarea": {
+      "attributes": {
+        "name": {
+          "required": true
+        }
+      }
+    },
+    "button": {
+      "attributes": {
+        "type": {
+          "required": true
+        }
+      }
+    }
+  }
+}

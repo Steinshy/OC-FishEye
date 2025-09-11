@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - dev
+      - testing
 
 env:
-  NODE_VERSION: "24"
+  NODE_VERSION: '24'
 
 permissions:
   contents: read
@@ -16,7 +17,7 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -25,86 +26,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          show-progress: true
 
-      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
-          cache-dependency-path: "package-lock.json"
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
-      # Install dependencies
       - name: Install dependencies
         run: |
-          echo "🔧 Installing npm dependencies..."
           npm cache clean --force
-          echo "📦 Attempting npm ci installation..."
           if npm ci --prefer-offline --no-audit; then
-            echo "✅ npm ci installation successful"
+            echo "✅ Dependencies installed"
           else
             echo "⚠️ npm ci failed, trying npm install..."
-            if npm install --prefer-offline --no-audit; then
-              echo "✅ npm install successful"
-            else
-              echo "❌ npm install also failed, trying with different registry..."
+            if ! npm install --prefer-offline --no-audit; then
               npm config set registry https://registry.npmjs.com/
-              if npm install --prefer-offline --no-audit; then
-                echo "✅ npm install with alternative registry successful"
-              else
-                echo "💥 All npm installation methods failed"
-                exit 1
-              fi
+              npm install --prefer-offline --no-audit
             fi
           fi
 
-          echo "🎉 Dependencies installed successfully!"
+      - name: Security scan
+        continue-on-error: true
+        run: npm audit --audit-level=moderate || echo "⚠️ Vulnerabilities found"
 
-      # Prepare files for deployment
-      - name: Prepare deployment files
-        id: prepare-deployment-files
+      - name: Prepare files
         run: |
-          echo "📁 Preparing files for deployment..."
-          # Create a deployment directory
           mkdir -p deploy
-
-          # Copy all necessary files to deploy directory
-          cp index.html deploy/
-          cp photographer.html deploy/
-          cp carrousel.html deploy/
+          cp index.html photographer.html carrousel.html deploy/
           cp -r assets/ deploy/
+          [ -f "manifest.json" ] && cp manifest.json deploy/ || [ -f "assets/manifest.json" ] && cp assets/manifest.json deploy/ || echo "⚠️ No manifest.json found"
+          echo "📦 $(find deploy/ -type f | wc -l) files ready"
 
-          # Check if manifest.json exists before copying
-          if [ -f "manifest.json" ]; then
-            cp manifest.json deploy/
-          elif [ -f "assets/manifest.json" ]; then
-            cp assets/manifest.json deploy/
-          else
-            echo "⚠️ manifest.json not found in root or assets directory"
-          fi
-
-          # List contents to verify (avoid broken pipe)
-          echo "📋 Files ready for deployment:"
-          find deploy/ -type f | sort || echo "No files found in deploy directory"
-
-          echo "📊 Total files to deploy: $(find deploy/ -type f | wc -l)"
-
-      # Setup GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # Upload deployment artifact
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: deploy
 
-  # Deploy job
   deploy:
     name: Deploy to GitHub Pages
     environment:
@@ -113,7 +77,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

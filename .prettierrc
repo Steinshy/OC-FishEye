@@ -1,24 +1,39 @@
 {
   "semi": true,
   "trailingComma": "none",
-  "singleQuote": false,
-  "printWidth": 80,
+  "singleQuote": true,
+  "printWidth": 100,
   "tabWidth": 2,
   "useTabs": false,
-  "bracketSpacing": false,
+  "bracketSpacing": true,
   "bracketSameLine": false,
-  "arrowParens": "always",
+  "arrowParens": "avoid",
   "endOfLine": "lf",
-  "quoteProps": "preserve",
+  "quoteProps": "as-needed",
   "jsxSingleQuote": true,
-  "proseWrap": "never",
-  "htmlWhitespaceSensitivity": "strict",
-  "embeddedLanguageFormatting": "off",
-  "overrides":
-    [
-      {"files": "*.html", "options": {"parser": "html"}},
-      {"files": "*.css", "options": {"parser": "css"}},
-      {"files": "*.json", "options": {"parser": "json"}},
-      {"files": "*.js", "options": {"parser": "babel"}}
-    ]
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "css",
+  "embeddedLanguageFormatting": "auto",
+  "insertPragma": false,
+  "requirePragma": false,
+  "rangeStart": 0,
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "html",
+        "htmlWhitespaceSensitivity": "strict",
+        "printWidth": 120
+      }
+    },
+    { "files": "*.css", "options": { "parser": "css", "printWidth": 120 } },
+    { "files": "*.json", "options": { "parser": "json", "printWidth": 120 } },
+    { "files": "*.js", "options": { "parser": "babel", "printWidth": 100 } },
+    {
+      "files": "*.md",
+      "options": { "parser": "markdown", "proseWrap": "always", "printWidth": 80 }
+    },
+    { "files": "*.yml", "options": { "parser": "yaml", "printWidth": 100 } },
+    { "files": "*.yaml", "options": { "parser": "yaml", "printWidth": 100 } }
+  ]
 }

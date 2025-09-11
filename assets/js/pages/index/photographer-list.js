@@ -2,20 +2,20 @@
  * Index Page - Photographer List
  * Handles photographer list display and functionality
  */
-import { getPhotographersData } from "../../core/data-manager.js";
+import { getPhotographersData } from '../../core/data-manager.js';
 /*
  * Create photographer card for index page
  */
-export const createPhotographerCard = (photographer) => {
-  const card = document.createElement("article");
-  card.className = "photographer";
-  card.setAttribute("role", "listitem");
-  card.setAttribute("tabindex", "0");
+export const createPhotographerCard = photographer => {
+  const card = document.createElement('article');
+  card.className = 'photographer';
+  card.setAttribute('role', 'listitem');
+  card.setAttribute('tabindex', '0');
 
   const location =
     photographer.location?.city && photographer.location?.country
       ? `${photographer.location.city}, ${photographer.location.country}`
-      : photographer.location?.city || "";
+      : photographer.location?.city || '';
 
   // Handle different name structures (some have name+lastname, others just name)
   const fullName = photographer.lastname
@@ -47,32 +47,32 @@ export const createPhotographerCard = (photographer) => {
 export const loadPhotographers = async () => {
   try {
     const photographers = await getPhotographersData();
-    const container = document.querySelector(".photographers");
+    const container = document.querySelector('.photographers');
 
     if (!container) {
-      console.error("Photographers container not found");
+      console.error('Photographers container not found');
       return;
     }
 
     if (!photographers || photographers.length === 0) {
-      container.innerHTML = "<p>Aucun photographe trouvé.</p>";
+      container.innerHTML = '<p>Aucun photographe trouvé.</p>';
       return;
     }
 
     // Clear existing content
-    container.innerHTML = "";
+    container.innerHTML = '';
 
-    photographers.forEach((photographer) => {
+    photographers.forEach(photographer => {
       const card = createPhotographerCard(photographer);
       container.appendChild(card);
     });
 
-    console.log(`Loaded ${photographers.length} photographers`);
+    console.warn(`Loaded ${photographers.length} photographers`);
   } catch (error) {
-    console.error("Error loading photographers:", error);
-    const container = document.querySelector(".photographers");
+    console.error('Error loading photographers:', error);
+    const container = document.querySelector('.photographers');
     if (container) {
-      container.innerHTML = "<p>Erreur lors du chargement des photographes.</p>";
+      container.innerHTML = '<p>Erreur lors du chargement des photographes.</p>';
     }
   }
 };

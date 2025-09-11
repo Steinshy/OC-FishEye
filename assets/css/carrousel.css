@@ -7,7 +7,7 @@ body {
 }
 
 /* Main carousel wrapper */
-.main_carrousel {
+.main-carrousel {
   width: 400px;
   height: 300px;
   position: relative;
@@ -17,12 +17,12 @@ body {
 }
 
 /* Hide radio inputs */
-.main_carrousel input {
+.main-carrousel input {
   display: none;
 }
 
 /* Slides container */
-.carrousel_container {
+.carrousel-container {
   display: flex;
   width: 500%;
   height: 100%;
@@ -30,7 +30,7 @@ body {
 }
 
 /* Each slide */
-.carrousel_slide {
+.carrousel-slide {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,35 +38,35 @@ body {
   height: 100%;
 }
 
-.carrousel_slide img {
+.carrousel-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* Slide positioning by checked radio */
-#radio1:checked~.carrousel_container {
+#radio1:checked ~ .carrousel-container {
   transform: translateX(0%);
 }
 
-#radio2:checked~.carrousel_container {
+#radio2:checked ~ .carrousel-container {
   transform: translateX(-20%);
 }
 
-#radio3:checked~.carrousel_container {
+#radio3:checked ~ .carrousel-container {
   transform: translateX(-40%);
 }
 
-#radio4:checked~.carrousel_container {
+#radio4:checked ~ .carrousel-container {
   transform: translateX(-60%);
 }
 
-#radio5:checked~.carrousel_container {
+#radio5:checked ~ .carrousel-container {
   transform: translateX(-80%);
 }
 
 /* Arrow controls container */
-.carrousel_controls {
+.carrousel-controls {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -74,7 +74,7 @@ body {
 }
 
 /* Arrow buttons */
-.carrousel_button {
+.carrousel-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -97,26 +97,26 @@ body {
   z-index: 3;
 }
 
-.carrousel_button:hover {
+.carrousel-button:hover {
   opacity: 1;
   background: rgba(0, 0, 0, 0.8);
   transform: translateY(-50%) scale(1.1);
 }
 
-.carrousel_button:active {
+.carrousel-button:active {
   transform: translateY(-50%) scale(0.95);
 }
 
-.carrousel_button.prev {
+.carrousel-button.prev {
   left: 15px;
 }
 
-.carrousel_button.next {
+.carrousel-button.next {
   right: 15px;
 }
 
 /* Thumbnails container */
-.carrousel_previews {
+.carrousel-previews {
   position: absolute;
   bottom: 15px;
   left: 50%;
@@ -127,7 +127,7 @@ body {
 }
 
 /* Thumbnail preview */
-.carrousel_preview {
+.carrousel-preview {
   width: 40px;
   height: 40px;
   border-radius: 6px;
@@ -140,29 +140,29 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.carrousel_preview img {
+.carrousel-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s;
 }
 
-.carrousel_preview:hover {
+.carrousel-preview:hover {
   opacity: 0.9;
   transform: scale(1.1);
   border-color: rgba(255, 255, 255, 0.8);
 }
 
-.carrousel_preview:hover img {
+.carrousel-preview:hover img {
   transform: scale(1.05);
 }
 
 /* Active thumbnail highlight */
-#radio1:checked~.carrousel_previews .carrousel_preview:nth-child(1),
-#radio2:checked~.carrousel_previews .carrousel_preview:nth-child(2),
-#radio3:checked~.carrousel_previews .carrousel_preview:nth-child(3),
-#radio4:checked~.carrousel_previews .carrousel_preview:nth-child(4),
-#radio5:checked~.carrousel_previews .carrousel_preview:nth-child(5) {
+#radio1:checked ~ .carrousel-previews .carrousel-preview:nth-child(1),
+#radio2:checked ~ .carrousel-previews .carrousel-preview:nth-child(2),
+#radio3:checked ~ .carrousel-previews .carrousel-preview:nth-child(3),
+#radio4:checked ~ .carrousel-previews .carrousel-preview:nth-child(4),
+#radio5:checked ~ .carrousel-previews .carrousel-preview:nth-child(5) {
   opacity: 1;
   border-color: #fff;
   border-width: 3px;
@@ -172,33 +172,33 @@ body {
 
 /* Responsive: tablets */
 @media (max-width: 768px) {
-  .main_carrousel {
+  .main-carrousel {
     width: 90%;
     max-width: 350px;
     height: 250px;
     margin: 20px auto;
   }
 
-  .carrousel_button {
+  .carrousel-button {
     width: 35px;
     height: 35px;
     font-size: 20px;
   }
 
-  .carrousel_button.prev {
+  .carrousel-button.prev {
     left: 10px;
   }
 
-  .carrousel_button.next {
+  .carrousel-button.next {
     right: 10px;
   }
 
-  .carrousel_previews {
+  .carrousel-previews {
     bottom: 10px;
     gap: 6px;
   }
 
-  .carrousel_preview {
+  .carrousel-preview {
     width: 30px;
     height: 30px;
   }
@@ -206,50 +206,50 @@ body {
 
 /* Responsive: mobile */
 @media (max-width: 480px) {
-  .main_carrousel {
+  .main-carrousel {
     width: 95%;
     height: 200px;
     margin: 15px auto;
   }
 
-  .carrousel_button {
+  .carrousel-button {
     width: 30px;
     height: 30px;
     font-size: 18px;
   }
 
-  .carrousel_button.prev {
+  .carrousel-button.prev {
     left: 5px;
   }
 
-  .carrousel_button.next {
+  .carrousel-button.next {
     right: 5px;
   }
 
-  .carrousel_previews {
+  .carrousel-previews {
     bottom: 8px;
     gap: 4px;
   }
 
-  .carrousel_preview {
+  .carrousel-preview {
     width: 25px;
     height: 25px;
     border-width: 1px;
   }
 
-  #radio1:checked~.carrousel_previews .carrousel_preview:nth-child(1),
-  #radio2:checked~.carrousel_previews .carrousel_preview:nth-child(2),
-  #radio3:checked~.carrousel_previews .carrousel_preview:nth-child(3),
-  #radio4:checked~.carrousel_previews .carrousel_preview:nth-child(4),
-  #radio5:checked~.carrousel_previews .carrousel_preview:nth-child(5) {
+  #radio1:checked ~ .carrousel-previews .carrousel-preview:nth-child(1),
+  #radio2:checked ~ .carrousel-previews .carrousel-preview:nth-child(2),
+  #radio3:checked ~ .carrousel-previews .carrousel-preview:nth-child(3),
+  #radio4:checked ~ .carrousel-previews .carrousel-preview:nth-child(4),
+  #radio5:checked ~ .carrousel-previews .carrousel-preview:nth-child(5) {
     border-width: 2px;
     transform: scale(1.1);
   }
 }
 
 /* Focus styles for accessibility */
-.carrousel_controls:focus,
-.carrousel_preview:focus {
+.carrousel-controls:focus,
+.carrousel-preview:focus {
   outline: 2px solid #fff;
   outline-offset: 2px;
 }

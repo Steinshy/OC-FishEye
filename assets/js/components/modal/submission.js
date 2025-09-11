@@ -1,18 +1,17 @@
-import { getTrimmedValues } from "../../core/constants.js";
-import { ErrorHandler } from "../../core/constants.js";
-import { ButtonState } from "../../core/constants.js";
-import { Validators } from "./validators.js";
-import { handleFormSubmission } from "./submission.js";
-import { disableFormInputs } from "./submission.js";
-import { preventModalClosing } from "./submission.js";
-import { addSuccessBorders } from "./submission.js";
-import { Modal } from "../../core/constants.js";
-import { closeModal } from "./handler.js";
-import { resetFormAndModal } from "./cleanup.js";
+import { getTrimmedValues } from '../../core/constants.js';
+import { ErrorHandler } from './utils/displayError.js';
+import { ButtonState } from './utils/submitButton.js';
+import { Validators } from './validators.js';
+import { Modal } from '../../core/constants.js';
+import { closeModal } from './handler.js';
+import { resetFormAndModal } from './cleanup.js';
+
+// Modal closing prevention state
+export let modalClosingPrevented = false;
 
 /* Handles form submission, validation, and feedback for the Photographer Page contact form */
 
-export const submitForm = (e) => {
+export const submitForm = e => {
   e.preventDefault();
   const formValues = getTrimmedValues?.() || {};
   ErrorHandler?.resetErrorVisibility();
@@ -46,25 +45,19 @@ export const handleFormSubmission = () => {
         resetFormAndModal?.();
       }, 1500);
     }, 1000);
-
   } catch (err) {
     // Re-enable everything on error
     preventModalClosing(false);
     disableFormInputs(false);
-    submissionError?.(err);
+    console.error('Form submission error:', err);
   }
 };
 
 // Disable/enable all form inputs
-export const disableFormInputs = (disable) => {
+export const disableFormInputs = disable => {
   if (!Modal) return;
 
-  const inputs = [
-    Modal.firstNameInput,
-    Modal.lastNameInput,
-    Modal.emailInput,
-    Modal.messageInput
-  ];
+  const inputs = [Modal.firstNameInput, Modal.lastNameInput, Modal.emailInput, Modal.messageInput];
 
   inputs.forEach(input => {
     if (input) {
@@ -74,7 +67,7 @@ export const disableFormInputs = (disable) => {
 };
 
 // Prevent/allow modal closing
-export const preventModalClosing = (prevent) => {
+export const preventModalClosing = prevent => {
   if (!Modal.modalCloseButton) return;
 
   Modal.modalCloseButton.disabled = prevent;
@@ -88,12 +81,7 @@ export const preventModalClosing = (prevent) => {
 export const addSuccessBorders = () => {
   if (!Modal) return;
 
-  const inputs = [
-    Modal.firstNameInput,
-    Modal.lastNameInput,
-    Modal.emailInput,
-    Modal.messageInput
-  ];
+  const inputs = [Modal.firstNameInput, Modal.lastNameInput, Modal.emailInput, Modal.messageInput];
 
   inputs.forEach(input => {
     if (input) {

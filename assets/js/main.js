@@ -19,13 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize modal and form listeners
   attachFormEventListeners();
 
-  // 2. Initialize page-specific logic
-  // Both can be called; each will only act if on the correct page
-  initPhotographerPage();
-  loadPhotographers();
+  // 2. Initialize page-specific logic based on current page
+  const isPhotographerPage = window.location.pathname.includes('photographer.html');
+  const isIndexPage =
+    window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
+
+  if (isPhotographerPage) {
+    initPhotographerPage();
+  } else if (isIndexPage) {
+    loadPhotographers();
+  }
 
   // 3. Ensure modal is closed on page load
-  if (Modal.modalMain.classList?.contains?.("show")) {
+  if (Modal.modalMain.classList?.contains?.('show')) {
     closeModal();
   }
 

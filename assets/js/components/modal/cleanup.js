@@ -2,13 +2,14 @@
  * Photographer Page => Form Reset
  */
 
-import { Modal } from "../../core/constants.js";
-import { ButtonState } from "../../core/constants.js";
+import { Modal } from '../../core/constants.js';
+import { ButtonState } from './utils/submitButton.js';
+import { resetErrorVisibility } from './utils/displayError.js';
 
 export const resetCharacterCount = () => {
   if (Modal.characterCount) {
-    Modal.characterCount.textContent = "0/500";
-    Modal.characterCount.classList.remove("warning", "danger");
+    Modal.characterCount.textContent = '0/500';
+    Modal.characterCount.classList.remove('warning', 'danger');
   }
 };
 
@@ -17,8 +18,8 @@ export const resetInputStates = () => {
   for (const fieldName of Modal.formFieldNames) {
     const element = Modal[fieldName];
     if (element) {
-      element.value = "";
-      element.classList.remove("success", "warning", "danger");
+      element.value = '';
+      element.classList.remove('success', 'warning', 'danger');
       element.disabled = false;
       element.setAttribute('data-valid', 'false');
       element.setAttribute('data-error-visible', 'false');
@@ -28,9 +29,9 @@ export const resetInputStates = () => {
 
 export const resetFormAndModal = () => {
   // Defer heavy operations to next frame to avoid blocking
-  requestAnimationFrame(() => {
+  (window.requestAnimationFrame || setTimeout)(() => {
     Modal.contactForm?.reset();
-    Modal.contactModal?.classList.remove("show");
+    Modal.contactModal?.classList.remove('show');
     resetInputStates();
     resetErrorVisibility();
     resetCharacterCount();
@@ -38,7 +39,7 @@ export const resetFormAndModal = () => {
 };
 
 export const resetInputsAndFocus = () => {
-  requestAnimationFrame(() => {
+  (window.requestAnimationFrame || setTimeout)(() => {
     resetInputStates();
     if (Modal.firstNameInput) {
       Modal.firstNameInput.focus();
@@ -50,4 +51,3 @@ export const resetInputsAndFocus = () => {
     }
   });
 };
-
