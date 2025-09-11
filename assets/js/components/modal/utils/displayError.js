@@ -1,8 +1,7 @@
-/**
- * Photographer Page => Error Handler Utility
- */
+/* Photographer Page => Error Handler Utility*/
+import { Modal } from "../../../core/constants.js";
 
-function toggleError(targetKey, shouldShow, message) {
+export const toggleError = (targetKey, shouldShow, message) => {
   const errorElement = Modal.formError[targetKey];
   if (errorElement) {
     errorElement.setAttribute("data-error-visible", shouldShow ? "true" : "false");
@@ -10,9 +9,9 @@ function toggleError(targetKey, shouldShow, message) {
       errorElement.textContent = message;
     }
   }
-}
+};
 
-const resetErrorVisibility = () => {
+export const resetErrorVisibility = () => {
   // Reset form field error states
   Modal.formFieldNames.forEach((fieldName) => {
     const field = Modal[fieldName];
@@ -29,19 +28,16 @@ const resetErrorVisibility = () => {
 
 };
 
-function setError(targetKey, shouldShow, message = "") {
+export const setError = (targetKey, shouldShow, message = "") => {
   toggleError(targetKey, shouldShow, message);
-}
+};
 
-function hideError(targetKey) {
+export const hideError = (targetKey) => {
   toggleError(targetKey, false);
-}
+};
 
-window.ErrorHandler = {
+export const ErrorHandler = {
   setError: setError,
   hideError: hideError,
   resetErrorVisibility: resetErrorVisibility
 };
-
-// Export resetErrorVisibility globally
-window.resetErrorVisibility = resetErrorVisibility;

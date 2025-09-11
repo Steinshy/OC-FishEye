@@ -2,7 +2,7 @@
  * Todo: Refactor this code. Need to Import to Photographer Page
  */
 
-function initializeCarrouselControl() {
+export const initializeCarrouselControl = () => {
   const slides = document.querySelectorAll(".carrousel_slide");
   const prev = document.getElementById("prev");
   const next = document.getElementById("next");
@@ -21,20 +21,20 @@ function initializeCarrouselControl() {
     radios[0].checked = true;
   }
 
-  function goToSlide(index) {
+  const goToSlide = (index) => {
     if (index < 0) index = radios.length - 1;
     if (index >= radios.length) index = 0;
     radios[index].checked = true;
     currentSlide = index;
-  }
+  };
 
-  function nextSlide() {
+  const nextSlide = () => {
     goToSlide(currentSlide + 1);
-  }
+  };
 
-  function previousSlide() {
+  const previousSlide = () => {
     goToSlide(currentSlide - 1);
-  }
+  };
 
   slides.forEach((slide, index) => {
     slide.addEventListener("click", () => {
@@ -88,7 +88,4 @@ function initializeCarrouselControl() {
       nextSlide();
     }
   });
-}
-
-// Global access for HTML usage
-window.initializeCarrouselControl = initializeCarrouselControl;
+};

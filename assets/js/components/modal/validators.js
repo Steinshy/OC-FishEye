@@ -1,17 +1,18 @@
-/**
- * Main Validator
- * Used in validatorRealTime.js and submission.js
- */
+/* Main Validator Used in validatorRealTime.js and submission.js */
 
-const validateFields = (fieldName, value) => {
+import { validationRules } from "../../core/constants.js";
+import { ErrorHandler } from "../../core/constants.js";
+import { fieldErrorMap } from "../../core/constants.js";
+
+export const validateFields = (fieldName, value) => {
   switch (fieldName) {
     case "first_name":
     case "last_name":
-      return value.length >= window.validationRules.minlength;
+      return value.length >= validationRules.minlength;
     case "email":
-      return window.validationRules.emailRegex.test(value);
+      return validationRules.emailRegex.test(value);
     case "message":
-      return value.length > 0 && value.length <= window.validationRules.maxlength;
+      return value.length > 0 && value.length <= validationRules.maxlength;
     default:
       return false;
   }
@@ -19,7 +20,7 @@ const validateFields = (fieldName, value) => {
 
 
 // Submit validation with error display
-const submitValidation = (values) => {
+export const submitValidation = (values) => {
   let hasErrors = false;
 
   // Validate each field and show errors
@@ -38,9 +39,7 @@ const submitValidation = (values) => {
 };
 
 // Create global Validators object
-const Validators = {
+export const Validators = {
   validateFields,
   submitValidation
 };
-
-window.Validators = Validators;

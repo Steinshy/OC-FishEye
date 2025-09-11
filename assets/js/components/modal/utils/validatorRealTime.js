@@ -1,6 +1,12 @@
+import { Validators } from "../validators.js";
+import { ErrorHandler } from "../../../core/constants.js";
+import { fieldErrorMap } from "../../../core/constants.js";
+import { getTrimmedValues } from "../../../core/constants.js";
+import { ButtonState } from "../../../core/constants.js";
+
 
 // Real-time validation handler
-const realTimeValidation = (element, fieldName) => {
+export const realTimeValidation = (element, fieldName) => {
   const fieldValue = element.value.trim();
   const isValid = Validators?.validateFields(fieldName, fieldValue) || false;
   const shouldShowError = Boolean(fieldValue && !isValid);
@@ -32,6 +38,3 @@ const realTimeValidation = (element, fieldName) => {
     allFieldsValid ? ButtonState.show() : ButtonState.hide();
   }
 };
-
-// Export globally
-window.realTimeValidation = realTimeValidation;

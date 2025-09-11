@@ -1,25 +1,17 @@
-/**
- * Constants and Configuration
- */
-
-const appConfig = {
-  photographersDataUrl: './assets/photographers/data.json',
-  baseAssetsUrl: 'assets/photographers/'
+/** Constants and Configuration */
+export const appConfig = {
+  baseAssetsUrl: 'assets/photographers/',
+  photographersDataUrl: 'baseAssetsUrl + data.json',
 };
 
-
-/**
- * Modal => Validation Rules
- */
-const validationRules = {
+/** Photographer Page => Modal => Validation Rules */
+export const validationRules = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   minlength: 2,
   maxlength: 500
 };
 
-/**
- * Modal => References
- */
+/** Photographer Page => Modal => References */
 const ModalRefs = {
   contactButton: document.getElementById("contact-button"),
   mainModal: {
@@ -52,9 +44,14 @@ const ModalRefs = {
   }
 };
 
-/**
- * Modal => Main Constants
- */const Modal = {
+/** Photographer Page => Dropdown => Constants */
+const DropdownRefs = {
+  mediaSortButton: document.getElementById("media-sort-button"),
+  mediaSortDropdown: document.getElementById("sort-dropdown")
+};
+
+/** Photographer Page => Modal => Main Constants */
+export const Modal = {
   // Main elements
   contactButton: ModalRefs.contactButton,
   mainForm: ModalRefs.mainForm,
@@ -92,30 +89,23 @@ const ModalRefs = {
   formErrorNames: ['firstNameError', 'lastNameError', 'emailError', 'messageError']
 };
 
-/**
- * Modal => Field to error mapping for validation
- */
-const fieldErrorMap = {
+/** Photographer Page => Modal => Field to error mapping for validation */
+export const fieldErrorMap = {
   first_name: "firstName",
   last_name: "lastName",
   email: "email",
   message: "message"
 };
 
-/**
- * Modal => Get trimmed form values from DOM
- */
-const getTrimmedValues = () => ({
+/** Photographer Page => Modal => Get trimmed form values from DOM */
+export const getTrimmedValues = () => ({
   first_name: Modal?.firstNameInput?.value?.trim() || "",
   last_name: Modal?.lastNameInput?.value?.trim() || "",
   email: Modal?.emailInput?.value?.trim() || "",
   message: Modal?.messageInput?.value?.trim() || ""
 });
 
-// Global access
-window.appConfig = appConfig;
-window.validationRules = validationRules;
-window.ModalRefs = ModalRefs;
-window.Modal = Modal;
-window.fieldErrorMap = fieldErrorMap;
-window.getTrimmedValues = getTrimmedValues;
+export const Dropdown = {
+  mediaSortButton: DropdownRefs.mediaSortButton,
+  mediaSortDropdown: DropdownRefs.mediaSortDropdown
+};

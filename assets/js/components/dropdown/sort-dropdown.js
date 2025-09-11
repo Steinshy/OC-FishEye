@@ -1,73 +1,67 @@
-/**
- * Photographer Page => Sort Dropdown
- * Todo: Refactor this code
- */
+/* Photographer Page => Sort Dropdown Todo: Refactor this code */
+
+import { Dropdown } from "../../core/constants.js";
+import { MediaSorter } from "../photographer/media-sorter.js";
+import { currentPhotographer } from "../photographer/photographer-page.js";
+
 let dropdownElements = {};
 
-function initializeSortElements() {
-  dropdownElements = {
-    mediaSortButton: document.getElementById("media_sort_button"),
-    mediaSortDropdown: document.getElementById("sort_dropdown")
-  };
-}
-
-const openSortDropdown = () => {
-  dropdownElements.mediaSortDropdown.classList.add("show");
-  dropdownElements.mediaSortDropdown.hidden = false;
-  dropdownElements.mediaSortButton.setAttribute("aria-expanded", "true");
+export const openSortDropdown = () => {
+  Dropdown.mediaSortDropdown.classList.add("show");
+  Dropdown.mediaSortDropdown.hidden = false;
+  Dropdown.mediaSortButton.setAttribute("aria-expanded", "true");
 };
 
-const closeDropdown = () => {
-  dropdownElements.mediaSortDropdown.classList.remove("show");
-  dropdownElements.mediaSortDropdown.hidden = true;
-  dropdownElements.mediaSortButton.setAttribute("aria-expanded", "false");
+export const closeDropdown = () => {
+  Dropdown.mediaSortDropdown.classList.remove("show");
+  Dropdown.mediaSortDropdown.hidden = true;
+  Dropdown.mediaSortButton.setAttribute("aria-expanded", "false");
 };
 
-const handleDropdownClose = (e) => {
+export const handleDropdownClose = (e) => {
   if (
     (e.type === "keydown" && e.key === "Escape") ||
     (e.type === "click" &&
-      !dropdownElements.mediaSortDropdown.contains(e.target) &&
-      e.target !== dropdownElements.mediaSortButton)
+      !Dropdown.mediaSortDropdown.contains(e.target) &&
+      e.target !== Dropdown.mediaSortButton)
   ) {
     closeDropdown();
   }
 };
 
-const handleSortDropdown = (e) => {
+export const handleSortDropdown = (e) => {
   e.stopPropagation();
   const isExpanded =
-    dropdownElements.mediaSortButton.getAttribute("aria-expanded");
+    Dropdown.mediaSortButton.getAttribute("aria-expanded");
   isExpanded === "true" ? closeDropdown() : openSortDropdown();
 };
 
-const createSortDropdown = () => {
-  initializeSortElements();
-
-  if (dropdownElements.mediaSortButton) {
-    dropdownElements.mediaSortButton.addEventListener(
+export const createSortDropdown = () => {
+  if (Dropdown.mediaSortButton) {
+    Dropdown.mediaSortButton.addEventListener(
       "click",
       handleSortDropdown
     );
     document.addEventListener("keydown", handleDropdownClose);
     document.addEventListener("click", handleDropdownClose);
   }
-  if (dropdownElements.mediaSortDropdown) {
-    dropdownElements.mediaSortDropdown.addEventListener("click", (e) => {
+  if (Dropdown.mediaSortDropdown) {
+    Dropdown.mediaSortDropdown.addEventListener("click", (e) => {
       if (e.target && e.target.matches("li[role='option']")) {
         const selected = e.target.textContent.trim();
-        dropdownElements.mediaSortButton.textContent = selected;
-        dropdownElements.mediaSortDropdown
+        Dropdown.mediaSortButton.textContent = selected;
+        Dropdown.mediaSortDropdown
           .querySelectorAll("li")
           .forEach((li) => li.setAttribute("aria-selected", li === e.target));
-        if (window.MediaGallery?.sortMedia) {
-          window.MediaGallery.sortMedia(selected);
+        if (MediaSorter?.handleSortSelection) {
+          const currentMedia = MediaSorter.getCurrentMedia();
+          const photographer = currentPhotographer;
+          if (currentMedia.length > 0 && photographer) {
+            MediaSorter.handleSortSelection(selected, currentMedia, photographer.folder_name);
+          }
         }
         closeDropdown();
       }
     });
   }
 };
-
-// Global access for backward compatibility
-window.createSortDropdown = createSortDropdown;

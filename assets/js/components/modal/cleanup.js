@@ -2,14 +2,17 @@
  * Photographer Page => Form Reset
  */
 
-const resetCharacterCount = () => {
+import { Modal } from "../../core/constants.js";
+import { ButtonState } from "../../core/constants.js";
+
+export const resetCharacterCount = () => {
   if (Modal.characterCount) {
     Modal.characterCount.textContent = "0/500";
     Modal.characterCount.classList.remove("warning", "danger");
   }
 };
 
-const resetInputStates = () => {
+export const resetInputStates = () => {
   // Reset each form field to its initial state
   for (const fieldName of Modal.formFieldNames) {
     const element = Modal[fieldName];
@@ -23,7 +26,7 @@ const resetInputStates = () => {
   }
 };
 
-const resetFormAndModal = () => {
+export const resetFormAndModal = () => {
   // Defer heavy operations to next frame to avoid blocking
   requestAnimationFrame(() => {
     Modal.contactForm?.reset();
@@ -34,7 +37,7 @@ const resetFormAndModal = () => {
   });
 };
 
-const resetInputsAndFocus = () => {
+export const resetInputsAndFocus = () => {
   requestAnimationFrame(() => {
     resetInputStates();
     if (Modal.firstNameInput) {
@@ -47,9 +50,4 @@ const resetInputsAndFocus = () => {
     }
   });
 };
-
-// Global access
-window.resetFormAndModal = resetFormAndModal;
-window.resetInputsAndFocus = resetInputsAndFocus;
-window.resetCharacterCount = resetCharacterCount;
 

@@ -1,9 +1,9 @@
-/**
- * Photographer Page => Button State Management
- * Handles show/hide functionality for submit button states
- */
+/* Photographer Page => Button State Management Handles show/hide functionality for submit button states */
 
-const ButtonState = {
+import { Modal } from "../../../core/constants.js";
+import { ButtonState } from "../../../core/constants.js";
+
+export const ButtonState = {
   // Prepare the submit button to a known baseline state
   initialize() {
     if (!Modal.modalSubmitButton) return;
@@ -76,6 +76,3 @@ const ButtonState = {
     return Modal.modalSubmitButton && Modal.modalSubmitButton.disabled;
   }
 };
-
-
-window.ButtonState = ButtonState;

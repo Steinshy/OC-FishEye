@@ -1,11 +1,15 @@
 /**
- * Media Gallery - Handles & Rendering & Functionality
+ * Media Gallery - Handles rendering & functionality
+ * - Render media cards (images/videos)
+ * - Handle media loading states
+ * - Manage gallery layout
+ * - Handle media interactions
  */
 
 /**
  * Create media card
  */
-function createMediaCard(media, folderName) {
+export const createMediaCard = (media, folderName) => {
   const card = document.createElement("div");
   card.className = "media_card";
 
@@ -35,12 +39,12 @@ function createMediaCard(media, folderName) {
     mediaElement = document.createElement('img');
     mediaElement.src = `assets/photographers/${folderName}/jpg/${media.image.jpg}`;
     mediaElement.alt = media.title;
-    mediaElement.loading = 'eager'; // Load immediately instead of lazy
-    mediaElement.style.display = 'none'; // Hide until loaded
+    mediaElement.loading = 'eager';
+    mediaElement.style.display = 'none';
   } else {
     mediaElement = document.createElement('video');
     mediaElement.controls = true;
-    mediaElement.style.display = 'none'; // Hide until loaded
+    mediaElement.style.display = 'none';
     const source = document.createElement('source');
     source.src = `assets/photographers/${folderName}/video/${media.video.mp4}`;
     source.type = 'video/mp4';
@@ -61,17 +65,17 @@ function createMediaCard(media, folderName) {
   mediaContainer.insertBefore(mediaElement, mediaContainer.querySelector('.media_info'));
 
   return card;
-}
+};
 
 /**
  * Preload images for faster loading
  */
-function preloadImages(medias, folderName) {
+export const preloadImages = (medias, folderName) => {
   const imagePromises = medias
     .filter(media => media.image)
     .map(media => {
       return new Promise((resolve, reject) => {
-        const img = new window.Image();
+        const img = new Image();
         img.onload = resolve;
         img.onerror = reject;
         img.src = `assets/photographers/${folderName}/jpg/${media.image.jpg}`;
@@ -79,16 +83,16 @@ function preloadImages(medias, folderName) {
     });
 
   return Promise.allSettled(imagePromises);
-}
+};
 
 /**
  * Render media gallery
  */
-async function renderMediaGallery(medias, folderName) {
-  const container = document.querySelector(".media_cards");
+export const renderMediaGallery = async (medias, folderName) => {
+  const container = document.getElementById("media_cards");
 
   if (!container) {
-    // Media container not found - cannot render gallery
+    console.error("Media container not found");
     return;
   }
 
@@ -110,70 +114,20 @@ async function renderMediaGallery(medias, folderName) {
       container.appendChild(card);
     });
 
-    // Rendered media items
-  } catch {
-    // Error preloading images - still render the gallery
+    console.log(`Rendered ${medias.length} media items`);
+  } catch (error) {
+    console.error("Error preloading images:", error);
+    // Still render the gallery even if preloading fails
     container.innerHTML = "";
     medias.forEach((media) => {
       const card = createMediaCard(media, folderName);
       container.appendChild(card);
     });
   }
-}
-
-/**
- * Sort media by criteria
- */
-function sortMedia(medias, criteria) {
-  const sortedMedias = [...medias];
-
-  switch (criteria) {
-    case "Popularité":
-      return sortedMedias.sort((a, b) => b.likes - a.likes);
-    case "Date":
-      return sortedMedias.sort((a, b) => new Date(b.date) - new Date(a.date));
-    case "Titre":
-      return sortedMedias.sort((a, b) => a.title.localeCompare(b.title));
-    case "Likes":
-      return sortedMedias.sort((a, b) => b.likes - a.likes);
-    default:
-      return sortedMedias;
-  }
-}
-
-/**
- * Main initialization function for photographer page
- */
-async function initPhotographerPage() {
-  try {
-    // Initialize sort dropdown for photographer page
-    if (typeof window.createSortDropdown === "function") {
-      window.createSortDropdown();
-    }
-
-    const photographer = await window.renderPhotographerInfo();
-
-    if (photographer && photographer.medias) {
-      renderMediaGallery(photographer.medias, photographer.folder_name);
-    } else {
-      // No photographer data or media found
-    }
-  } catch {
-    // Error loading photographer page
-  }
-}
-
-// Global access for backward compatibility
-window.MediaGallery = {
-  createMediaCard,
-  renderMediaGallery,
-  sortMedia,
-  initPhotographerPage
 };
 
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("info_name")) {
-    initPhotographerPage();
-  }
-});
+export const MediaGallery = {
+  createMediaCard,
+  renderMediaGallery,
+  preloadImages
+};

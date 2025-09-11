@@ -1,21 +1,31 @@
-/**
- * Handles form submission, validation, and feedback for the Photographer Page.
- */
+import { getTrimmedValues } from "../../core/constants.js";
+import { ErrorHandler } from "../../core/constants.js";
+import { ButtonState } from "../../core/constants.js";
+import { Validators } from "./validators.js";
+import { handleFormSubmission } from "./submission.js";
+import { disableFormInputs } from "./submission.js";
+import { preventModalClosing } from "./submission.js";
+import { addSuccessBorders } from "./submission.js";
+import { Modal } from "../../core/constants.js";
+import { closeModal } from "./handler.js";
+import { resetFormAndModal } from "./cleanup.js";
 
-function submitForm(e) {
+/* Handles form submission, validation, and feedback for the Photographer Page contact form */
+
+export const submitForm = (e) => {
   e.preventDefault();
   const formValues = getTrimmedValues?.() || {};
   ErrorHandler?.resetErrorVisibility();
 
-  if (!window.Validators?.submitValidation(formValues)) {
+  if (!Validators?.submitValidation(formValues)) {
     ButtonState?.hide();
     return;
   }
 
   handleFormSubmission();
-}
+};
 
-function handleFormSubmission() {
+export const handleFormSubmission = () => {
   try {
     // Disable all form inputs and prevent modal closing
     disableFormInputs(true);
@@ -43,10 +53,10 @@ function handleFormSubmission() {
     disableFormInputs(false);
     submissionError?.(err);
   }
-}
+};
 
 // Disable/enable all form inputs
-function disableFormInputs(disable) {
+export const disableFormInputs = (disable) => {
   if (!Modal) return;
 
   const inputs = [
@@ -61,21 +71,21 @@ function disableFormInputs(disable) {
       input.disabled = disable;
     }
   });
-}
+};
 
 // Prevent/allow modal closing
-function preventModalClosing(prevent) {
+export const preventModalClosing = (prevent) => {
   if (!Modal.modalCloseButton) return;
 
   Modal.modalCloseButton.disabled = prevent;
   Modal.modalCloseButton.style.pointerEvents = prevent ? 'none' : 'auto';
   Modal.modalCloseButton.style.opacity = prevent ? '0.5' : '1';
 
-  window.modalClosingPrevented = prevent;
-}
+  modalClosingPrevented = prevent;
+};
 
 // Add green borders to all inputs for success state
-function addSuccessBorders() {
+export const addSuccessBorders = () => {
   if (!Modal) return;
 
   const inputs = [
@@ -92,6 +102,4 @@ function addSuccessBorders() {
       input.setAttribute('data-error-visible', 'false');
     }
   });
-}
-
-window.submitForm = submitForm;
+};

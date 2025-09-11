@@ -3,8 +3,14 @@
  * Contains all event handler functions for the contact form
  */
 
+import { Modal } from "../../core/constants.js";
+import { ButtonState } from "../../core/constants.js";
+import { handleCharacterCount } from "./utils/characterCount.js";
+import { resetInputsAndFocus } from "./cleanup.js";
+import { resetFormAndModal } from "./cleanup.js";
+
 // Open the modal and set initial states
-function openModal() {
+export const openModal = () => {
   if (!Modal || !Modal.modalMain || !Modal.modalHeader || !Modal.mainForm) return;
 
   // Show modal immediately for instant visual feedback
@@ -13,10 +19,10 @@ function openModal() {
   Modal.modalMain.classList.add("show");
   Modal.mainForm.classList.add("show");
   resetInputsAndFocus();
-}
+};
 
 // Close the modal and reset form/modal state
-function closeModal() {
+export const closeModal = () => {
   if (!Modal || !Modal.modalMain || !Modal.modalHeader || !Modal.mainForm) return;
 
   // Set aria-hidden on the main modal only
@@ -31,18 +37,13 @@ function closeModal() {
   if (Modal.contactButton) {
     Modal.contactButton.focus();
   }
-}
+};
 
 // Initialize form handlers (button, character count, validation)
-function initializeFormHandlers() {
+export const initializeFormHandlers = () => {
   if (ButtonState) {
     ButtonState.initialize();
     ButtonState.hide();
   }
   handleCharacterCount();
-}
-
-// Expose handlers globally
-window.openModal = openModal;
-window.closeModal = closeModal;
-window.initializeFormHandlers = initializeFormHandlers;
+};
