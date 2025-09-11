@@ -13,6 +13,8 @@ import {
 
 /**
  * Create media card with event handling
+ * @param media
+ * @param folderName
  */
 export const createMediaCard = (media, folderName) => {
   const { card, loadingElement, mediaElement } = renderMediaCard(media, folderName);
@@ -40,6 +42,8 @@ export const createMediaCard = (media, folderName) => {
 
 /**
  * Preload images for faster loading
+ * @param medias
+ * @param folderName
  */
 export const preloadImages = (medias, folderName) => {
   const imagePromises = medias
@@ -58,6 +62,8 @@ export const preloadImages = (medias, folderName) => {
 
 /**
  * Render media gallery
+ * @param medias
+ * @param folderName
  */
 export const renderMediaGallery = async (medias, folderName) => {
   const container = document.getElementById('media-cards');

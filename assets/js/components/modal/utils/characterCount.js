@@ -1,5 +1,4 @@
-import { Modal } from '../../../core/constants.js';
-import { validationRules } from '../../../core/constants.js';
+import { Modal, validationRules } from '../../../core/constants.js';
 
 /* Photographer Page => Character Counter Utility*/
 

@@ -163,7 +163,6 @@ export default [
       'jsdoc/check-tag-names': 'error',
       'jsdoc/check-types': 'error',
       'jsdoc/empty-tags': 'error',
-      'jsdoc/no-multi-line-arrays': 'error',
       'jsdoc/require-param': 'warn',
       'jsdoc/require-param-description': 'warn',
       'jsdoc/require-param-name': 'error',
@@ -173,12 +172,11 @@ export default [
       'jsdoc/require-returns-type': 'warn',
       'jsdoc/valid-types': 'error',
 
-      // Security rules
+      // Security rules (compatible with ESLint 9)
       'security/detect-eval-with-expression': 'error',
       'security/detect-non-literal-regexp': 'warn',
       'security/detect-unsafe-regex': 'error',
       'security/detect-buffer-noassert': 'error',
-      'security/detect-child-process': 'warn',
       'security/detect-disable-mustache-escape': 'error',
       'security/detect-no-csrf-before-method-override': 'error',
       'security/detect-object-injection': 'warn',

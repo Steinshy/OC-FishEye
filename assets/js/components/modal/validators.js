@@ -1,8 +1,8 @@
 /* Main Validator Used in validatorRealTime.js and submission.js */
 
-import { validationRules } from '../../core/constants.js';
+import { validationRules, fieldErrorMap } from '../../core/constants.js';
+
 import { ErrorHandler } from './utils/displayError.js';
-import { fieldErrorMap } from '../../core/constants.js';
 
 export const validateFields = (fieldName, value) => {
   switch (fieldName) {

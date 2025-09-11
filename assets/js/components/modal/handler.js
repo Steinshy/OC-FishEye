@@ -4,10 +4,10 @@
  */
 
 import { Modal } from '../../core/constants.js';
-import { ButtonState } from './utils/submitButton.js';
+
+import { resetInputsAndFocus, resetFormAndModal } from './cleanup.js';
 import { handleCharacterCount } from './utils/characterCount.js';
-import { resetInputsAndFocus } from './cleanup.js';
-import { resetFormAndModal } from './cleanup.js';
+import { ButtonState } from './utils/submitButton.js';
 
 // Open the modal and set initial states
 export const openModal = () => {

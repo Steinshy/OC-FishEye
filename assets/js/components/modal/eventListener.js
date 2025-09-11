@@ -1,20 +1,19 @@
 import { Modal } from '../../core/constants.js';
-import { modalClosingPrevented } from './submission.js';
-import { openModal } from './handler.js';
-import { closeModal } from './handler.js';
-import { submitForm } from './submission.js';
-import { realTimeValidation } from './utils/validatorRealTime.js';
+
+import { openModal, closeModal } from './handler.js';
+import { modalClosingPrevented, submitForm } from './submission.js';
 import { handleCharacterCount } from './utils/characterCount.js';
+import { realTimeValidation } from './utils/validatorRealTime.js';
 
 /* Contact form event listeners */
 
 export const attachFormEventListeners = () => {
   if (!Modal.contactButton || !Modal.modalMain) return;
-  Modal.contactButton.addEventListener('click', function () {
+  Modal.contactButton.addEventListener('click', () => {
     openModal();
   });
 
-  Modal.modalCloseButton.addEventListener('click', function (e) {
+  Modal.modalCloseButton.addEventListener('click', e => {
     if (modalClosingPrevented) {
       e.preventDefault();
       return;
@@ -22,11 +21,11 @@ export const attachFormEventListeners = () => {
     closeModal();
   });
 
-  Modal.mainForm.addEventListener('submit', function (e) {
+  Modal.mainForm.addEventListener('submit', e => {
     submitForm(e);
   });
 
-  document.addEventListener('keydown', function (e) {
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && Modal.modalMain?.classList?.contains('show')) {
       if (modalClosingPrevented) {
         e.preventDefault();
@@ -76,7 +75,7 @@ export const attachCharacterCountListeners = () => {
 
 export const removeCharacterCountListeners = () => {
   if (!Modal.messageInput) return;
-  ['input', 'keyup', 'paste'].forEach(function (event) {
+  ['input', 'keyup', 'paste'].forEach(event => {
     Modal.messageInput.removeEventListener(event, handleCharacterCount);
   });
 };

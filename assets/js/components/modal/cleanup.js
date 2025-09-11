@@ -3,8 +3,9 @@
  */
 
 import { Modal } from '../../core/constants.js';
-import { ButtonState } from './utils/submitButton.js';
+
 import { resetErrorVisibility } from './utils/displayError.js';
+import { ButtonState } from './utils/submitButton.js';
 
 export const resetCharacterCount = () => {
   if (Modal.characterCount) {

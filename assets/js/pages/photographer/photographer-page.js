@@ -9,9 +9,10 @@
  */
 
 import { createSortDropdown } from '../../components/dropdown/sort-dropdown.js';
-import { renderPhotographerInfo } from './photographer-info.js';
-import { MediaSorter } from './media-sorter.js';
+
 import { renderMediaGallery } from './media-gallery.js';
+import { MediaSorter } from './media-sorter.js';
+import { renderPhotographerInfo } from './photographer-info.js';
 
 // Add this at the top
 let currentPhotographer = null;

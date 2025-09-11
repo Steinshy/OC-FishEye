@@ -7,6 +7,7 @@
 
 /**
  * Create HTML structure for media card
+ * @param media
  */
 export const createMediaCardHTML = media => {
   return `
@@ -28,6 +29,8 @@ export const createMediaCardHTML = media => {
 
 /**
  * Create image element HTML
+ * @param media
+ * @param folderName
  */
 export const createImageElement = (media, folderName) => {
   const img = document.createElement('img');
@@ -40,6 +43,8 @@ export const createImageElement = (media, folderName) => {
 
 /**
  * Create video element HTML
+ * @param media
+ * @param folderName
  */
 export const createVideoElement = (media, folderName) => {
   const video = document.createElement('video');
@@ -74,6 +79,8 @@ export const createGalleryLoadingHTML = () => {
 
 /**
  * Create complete media card with all elements
+ * @param media
+ * @param folderName
  */
 export const createMediaCard = (media, folderName) => {
   const card = document.createElement('div');
@@ -107,6 +114,7 @@ export const createMediaCard = (media, folderName) => {
 
 /**
  * Render complete media card (legacy function name for compatibility)
+ * @param media
  */
 export const renderMediaCard = media => {
   const card = document.createElement('div');

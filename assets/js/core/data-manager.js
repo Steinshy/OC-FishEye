@@ -25,7 +25,7 @@ export const getPhotographersData = async () => {
         : (() => {
             throw new Error(`Failed to fetch data from ${path}`);
           })();
-    const photographers = data.photographers;
+    const {photographers} = data;
     if (!Array.isArray(photographers))
       throw new Error('Invalid data structure: photographers array not found');
     photographersCache = photographers;

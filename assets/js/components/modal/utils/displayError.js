@@ -36,7 +36,7 @@ export const hideError = targetKey => {
 };
 
 export const ErrorHandler = {
-  setError: setError,
-  hideError: hideError,
-  resetErrorVisibility: resetErrorVisibility
+  setError,
+  hideError,
+  resetErrorVisibility
 };

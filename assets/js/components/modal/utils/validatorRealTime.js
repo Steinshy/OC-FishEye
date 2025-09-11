@@ -1,7 +1,7 @@
+import { fieldErrorMap, getTrimmedValues } from '../../../core/constants.js';
 import { Validators } from '../validators.js';
+
 import { ErrorHandler } from './displayError.js';
-import { fieldErrorMap } from '../../../core/constants.js';
-import { getTrimmedValues } from '../../../core/constants.js';
 import { ButtonState } from './submitButton.js';
 
 // Real-time validation handler

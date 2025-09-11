@@ -43,7 +43,16 @@
     "type": "git",
     "url": "https://github.com/steinshy/FishEye.git"
   },
-  "keywords": ["photography", "portfolio", "gallery", "responsive", "accessibility", "vanilla-js", "html5", "css3"],
+  "keywords": [
+    "photography",
+    "portfolio",
+    "gallery",
+    "responsive",
+    "accessibility",
+    "vanilla-js",
+    "html5",
+    "css3"
+  ],
   "author": {
     "name": "Steinshy",
     "url": "https://github.com/steinshy"
@@ -82,18 +91,18 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-html": "^8.1.3",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsdoc": "^48.6.0",
+    "eslint-plugin-jsdoc": "^56.1.2",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-security": "^1.7.1",
-    "html-validate": "^8.7.4",
+    "eslint-plugin-security": "^3.0.1",
+    "html-validate": "^10.0.0",
     "husky": "^9.0.11",
     "jsdoc": "^4.0.2",
     "lint-staged": "^16.1.5",
-    "markdownlint-cli": "^0.39.0",
+    "markdownlint-cli": "^0.45.0",
     "prettier": "^3.2.5",
     "stylelint": "^16.2.1",
-    "stylelint-config-standard": "^36.0.0",
-    "stylelint-order": "^6.0.3"
+    "stylelint-config-standard": "^39.0.0",
+    "stylelint-order": "^7.0.0"
   },
   "dependencies": {
     "http-server": "^14.1.1"

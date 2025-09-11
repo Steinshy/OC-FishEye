@@ -59,7 +59,7 @@
 
 /* Video controls enhancement */
 .media-card video::-webkit-media-controls {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgb(0 0 0 / 70%);
   border-radius: var(--radius-sm);
 }
 
@@ -82,12 +82,13 @@
   flex-direction: column;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
   overflow: hidden;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
+
   /* Prevent layout shift */
   min-height: 300px;
   aspect-ratio: 1;
@@ -95,7 +96,7 @@
 
 .media-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgb(0 0 0 / 15%);
 }
 
 .media-content {
@@ -110,6 +111,7 @@
   height: 250px;
   object-fit: cover;
   border-radius: 12px 12px 0 0;
+
   /* Prevent layout shift */
   background-color: #f5f5f5;
   display: block;
@@ -172,6 +174,7 @@
   font-size: 14px;
   border-radius: 12px 12px 0 0;
   transition: all 0.3s ease;
+
   /* Prevent layout shift */
   position: absolute;
   top: 0;
@@ -228,7 +231,7 @@
   gap: 1rem;
   background: white;
   border-radius: var(--radius-lg, 8px);
-  box-shadow: var(--shadow-default, 0 2px 8px rgba(0, 0, 0, 0.1));
+  box-shadow: var(--shadow-default, 0 2px 8px rgb(0 0 0 / 10%));
   overflow: hidden;
 }
 

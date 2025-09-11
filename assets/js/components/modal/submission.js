@@ -1,10 +1,10 @@
-import { getTrimmedValues } from '../../core/constants.js';
+import { getTrimmedValues, Modal } from '../../core/constants.js';
+
+import { resetFormAndModal } from './cleanup.js';
+import { closeModal } from './handler.js';
 import { ErrorHandler } from './utils/displayError.js';
 import { ButtonState } from './utils/submitButton.js';
 import { Validators } from './validators.js';
-import { Modal } from '../../core/constants.js';
-import { closeModal } from './handler.js';
-import { resetFormAndModal } from './cleanup.js';
 
 // Modal closing prevention state
 export let modalClosingPrevented = false;

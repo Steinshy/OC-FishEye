@@ -6,14 +6,15 @@
 // 3. Modal state correction
 // 4. Form handlers and validation
 
-import { initPhotographerPage } from './pages/photographer/photographer-page.js';
-import { loadPhotographers } from './pages/index/photographer-list.js';
-import { attachFormEventListeners } from './components/modal/eventListener.js';
-import { closeModal } from './components/modal/handler.js';
-import { initializeFormHandlers } from './components/modal/handler.js';
-import { attachFormValidationListeners } from './components/modal/eventListener.js';
-import { attachCharacterCountListeners } from './components/modal/eventListener.js';
+import {
+  attachFormEventListeners,
+  attachFormValidationListeners,
+  attachCharacterCountListeners
+} from './components/modal/eventListener.js';
+import { closeModal, initializeFormHandlers } from './components/modal/handler.js';
 import { Modal } from './core/constants.js';
+import { loadPhotographers } from './pages/index/photographer-list.js';
+import { initPhotographerPage } from './pages/photographer/photographer-page.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize modal and form listeners
