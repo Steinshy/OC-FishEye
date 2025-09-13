@@ -1,8 +1,7 @@
 /** Constants and Configuration */
-export const appConfig = {
-  baseAssetsUrl: 'assets/photographers/',
-  photographersDataUrl: 'assets/photographers/data.json'
-};
+
+export const baseAssetsUrl = 'assets/photographers/';
+export const photographersDataUrl = 'assets/photographers/data.json';
 
 /** Photographer Page => Modal => Validation Rules */
 export const validationRules = {
@@ -44,10 +43,14 @@ const ModalRefs = {
   }
 };
 
-/** Photographer Page => Dropdown => Constants */
-const DropdownRefs = {
-  mediaSortButton: document.getElementById('media-sort-button'),
-  mediaSortDropdown: document.getElementById('sort-dropdown')
+/** Photographer Page => Dropdown */
+export const MediaDropdown = {
+  button: document.getElementById('media-button'),
+  options: document.getElementById('sort-options'),
+  popularOption: document.getElementById('popular-option'),
+  dateOption: document.getElementById('date-option'),
+  titleOption: document.getElementById('title-option'),
+  likesOption: document.getElementById('likes-option')
 };
 
 /** Photographer Page => Modal => Main Constants */
@@ -97,6 +100,24 @@ export const fieldErrorMap = {
   message: 'message'
 };
 
+/** Data Templates */
+export const photographerData = {
+  name: '',
+  lastname: '',
+  tagline: '',
+  price: '',
+  folder_name: '',
+  portrait: {
+    jpg: '',
+    webp: ''
+  },
+  location: {
+    city: '',
+    country: ''
+  },
+  medias: []
+};
+
 /** Photographer Page => Modal => Get trimmed form values from DOM */
 export const getTrimmedValues = () => ({
   first_name: Modal?.firstNameInput?.value?.trim() || '',
@@ -104,8 +125,3 @@ export const getTrimmedValues = () => ({
   email: Modal?.emailInput?.value?.trim() || '',
   message: Modal?.messageInput?.value?.trim() || ''
 });
-
-export const Dropdown = {
-  mediaSortButton: DropdownRefs.mediaSortButton,
-  mediaSortDropdown: DropdownRefs.mediaSortDropdown
-};

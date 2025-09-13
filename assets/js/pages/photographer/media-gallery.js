@@ -1,15 +1,8 @@
-/**
- * Media Gallery - Handles media gallery functionality
- * - Manage gallery layout
- * - Handle media loading events
- * - Coordinate rendering with media-renderer
- */
-
 import {
   createMediaCard as renderMediaCard,
   createErrorHTML,
   createGalleryLoadingHTML
-} from './media-renderer.js';
+} from './render/media-renderer.js';
 
 /**
  * Create media card with event handling

@@ -1,4 +1,4 @@
-// Main entry point for photographer page
+// Main entry point for both pages
 
 // The order of initialization is important:
 // 1. Modal and form listeners (for global UI)
@@ -12,31 +12,25 @@ import {
   attachCharacterCountListeners
 } from './components/modal/eventListener.js';
 import { closeModal, initializeFormHandlers } from './components/modal/handler.js';
-import { Modal } from './core/constants.js';
-import { loadPhotographers } from './pages/index/photographer-list.js';
-import { initPhotographerPage } from './pages/photographer/photographer-page.js';
+import { createSortDropdown } from './components/dropdown/sort-dropdown.js';
+import { loadPhotographers } from './pages/index/loadPhotographers.js';
+import { initializePhotographerPage } from './pages/photographer/photographer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialize modal and form listeners
-  attachFormEventListeners();
-
-  // 2. Initialize page-specific logic based on current page
-  const isPhotographerPage = window.location.pathname.includes('photographer.html');
-  const isIndexPage =
-    window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
-
-  if (isPhotographerPage) {
-    initPhotographerPage();
-  } else if (isIndexPage) {
+  // Logic at Boot
+  if (window.location.pathname.includes('photographer.html')) {
+    // Photographer page
+    initializePhotographerPage();
+    createSortDropdown();
+  } else {
+    // Index page
     loadPhotographers();
   }
-
-  // 3. Ensure modal is closed on page load
-  if (Modal.modalMain.classList?.contains?.('show')) {
-    closeModal();
-  }
-
-  // 4. Initialize form handlers and validation
+  // Dropdown Part
+  createSortDropdown();
+  closeModal();
+  // Modal Form Part
+  attachFormEventListeners();
   initializeFormHandlers();
   attachFormValidationListeners();
   attachCharacterCountListeners();

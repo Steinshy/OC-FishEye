@@ -5,10 +5,6 @@
  * - Generate loading states and error states
  */
 
-/**
- * Create HTML structure for media card
- * @param media
- */
 export const createMediaCardHTML = media => {
   return `
     <div class="media_content">
@@ -27,11 +23,6 @@ export const createMediaCardHTML = media => {
   `;
 };
 
-/**
- * Create image element HTML
- * @param media
- * @param folderName
- */
 export const createImageElement = (media, folderName) => {
   const img = document.createElement('img');
   img.src = `assets/photographers/${folderName}/jpg/${media.image.jpg}`;
@@ -41,11 +32,6 @@ export const createImageElement = (media, folderName) => {
   return img;
 };
 
-/**
- * Create video element HTML
- * @param media
- * @param folderName
- */
 export const createVideoElement = (media, folderName) => {
   const video = document.createElement('video');
   video.controls = true;
@@ -63,25 +49,6 @@ export const createVideoElement = (media, folderName) => {
   return video;
 };
 
-/**
- * Create error HTML content
- */
-export const createErrorHTML = () => {
-  return '<div class="error-icon">⚠️</div><p>Erreur de chargement</p>';
-};
-
-/**
- * Create gallery loading HTML
- */
-export const createGalleryLoadingHTML = () => {
-  return '<div class="gallery-loading">Chargement de la galerie...</div>';
-};
-
-/**
- * Create complete media card with all elements
- * @param media
- * @param folderName
- */
 export const createMediaCard = (media, folderName) => {
   const card = document.createElement('div');
   card.className = 'media_card';
@@ -112,10 +79,6 @@ export const createMediaCard = (media, folderName) => {
   };
 };
 
-/**
- * Render complete media card (legacy function name for compatibility)
- * @param media
- */
 export const renderMediaCard = media => {
   const card = document.createElement('div');
   card.className = 'media_card';
@@ -129,4 +92,18 @@ export const renderMediaCard = media => {
     loadingElement: card.querySelector('.media_loading'),
     infoElement: card.querySelector('.media_info')
   };
+};
+
+/**
+ * Create error HTML content
+ */
+export const createErrorHTML = () => {
+  return '<div class="error-icon">⚠️</div><p>Erreur de chargement</p>';
+};
+
+/**
+ * Create gallery loading HTML
+ */
+export const createGalleryLoadingHTML = () => {
+  return '<div class="gallery-loading">Chargement de la galerie...</div>';
 };

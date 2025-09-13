@@ -1,8 +1,8 @@
 {
-  "baseUrl": "assets/photographers",
   "photographers": [
     {
-      "name": "Tracy Galindo",
+      "name": "Tracy",
+      "lastname": "Galindo",
       "id": 82,
       "location": {
         "city": "Montreal",
@@ -129,7 +129,8 @@
     },
 
     {
-      "name": "Marcel Nikolic",
+      "name": "Marcel",
+      "lastname": "Nikolic",
       "id": 195,
       "location": {
         "city": "Berlin",
@@ -256,7 +257,8 @@
     },
     {
       "id": 243,
-      "name": "Mimi Keel",
+      "name": "Mimi",
+      "lastname": "Keel",
       "location": {
         "city": "London",
         "country": "UK"
@@ -381,7 +383,8 @@
       ]
     },
     {
-      "name": "Nabeel Bradford",
+      "name": "Nabeel",
+      "lastname": "Bradford",
       "id": 527,
       "location": {
         "city": "Mexico City",
@@ -496,7 +499,8 @@
       ]
     },
     {
-      "name": "Rhode Dubois",
+      "name": "Rhode",
+      "lastname": "Dubois",
       "id": 925,
       "location": {
         "city": "Barcelona",
