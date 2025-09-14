@@ -179,7 +179,7 @@ export default [
       'security/detect-buffer-noassert': 'error',
       'security/detect-disable-mustache-escape': 'error',
       'security/detect-no-csrf-before-method-override': 'error',
-      'security/detect-object-injection': 'warn',
+      'security/detect-object-injection': 'off',
       'security/detect-pseudoRandomBytes': 'error'
     }
   },

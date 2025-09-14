@@ -20,8 +20,11 @@ export const closeDropdown = () => {
 };
 
 export const handleDropdownClose = e => {
-  const shouldClose = (e.type === 'keydown' && e.key === 'Escape') ||
-    (e.type === 'click' && !MediaDropdown.options.contains(e.target) && e.target !== MediaDropdown.button);
+  const shouldClose =
+    (e.type === 'keydown' && e.key === 'Escape') ||
+    (e.type === 'click' &&
+      !MediaDropdown.options.contains(e.target) &&
+      e.target !== MediaDropdown.button);
 
   shouldClose ? closeDropdown() : null;
 };
@@ -49,10 +52,19 @@ export const createSortDropdown = () => {
       MediaDropdown.button.textContent = selected;
 
       // Update aria-selected for all options
-      MediaDropdown.popularOption.setAttribute('aria-selected', e.target === MediaDropdown.popularOption);
+      MediaDropdown.popularOption.setAttribute(
+        'aria-selected',
+        e.target === MediaDropdown.popularOption
+      );
       MediaDropdown.dateOption.setAttribute('aria-selected', e.target === MediaDropdown.dateOption);
-      MediaDropdown.titleOption.setAttribute('aria-selected', e.target === MediaDropdown.titleOption);
-      MediaDropdown.likesOption.setAttribute('aria-selected', e.target === MediaDropdown.likesOption);
+      MediaDropdown.titleOption.setAttribute(
+        'aria-selected',
+        e.target === MediaDropdown.titleOption
+      );
+      MediaDropdown.likesOption.setAttribute(
+        'aria-selected',
+        e.target === MediaDropdown.likesOption
+      );
 
       // Handle sorting if MediaSorter is available
       if (MediaSorter?.handleSortSelection && MediaSorter.getCurrentMedia().length > 0) {

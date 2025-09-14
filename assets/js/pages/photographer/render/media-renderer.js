@@ -96,6 +96,7 @@ export const renderMediaCard = media => {
 
 /**
  * Create error HTML content
+ * @returns {string} HTML string for error display
  */
 export const createErrorHTML = () => {
   return '<div class="error-icon">⚠️</div><p>Erreur de chargement</p>';
@@ -103,6 +104,7 @@ export const createErrorHTML = () => {
 
 /**
  * Create gallery loading HTML
+ * @returns {string} HTML string for loading display
  */
 export const createGalleryLoadingHTML = () => {
   return '<div class="gallery-loading">Chargement de la galerie...</div>';

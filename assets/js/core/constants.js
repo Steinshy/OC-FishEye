@@ -118,10 +118,19 @@ export const photographerData = {
   medias: []
 };
 
-/** Photographer Page => Modal => Get trimmed form values from DOM */
+/**
+ * Get trimmed value from input field
+ * @param {HTMLInputElement} input - The input element
+ * @returns {string} Trimmed value or empty string
+ */
+const getTrimmedValue = input => input?.value?.trim() || '';
+
+/** Photographer Page => Modal => Get trimmed form values from DOM
+ * @returns {object} Object containing trimmed form field values
+ */
 export const getTrimmedValues = () => ({
-  first_name: Modal?.firstNameInput?.value?.trim() || '',
-  last_name: Modal?.lastNameInput?.value?.trim() || '',
-  email: Modal?.emailInput?.value?.trim() || '',
-  message: Modal?.messageInput?.value?.trim() || ''
+  first_name: getTrimmedValue(Modal?.firstNameInput),
+  last_name: getTrimmedValue(Modal?.lastNameInput),
+  email: getTrimmedValue(Modal?.emailInput),
+  message: getTrimmedValue(Modal?.messageInput)
 });

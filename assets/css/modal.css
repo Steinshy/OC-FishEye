@@ -36,8 +36,8 @@
   border: 1px solid rgb(0 0 0 / 20%);
   overflow: hidden;
   pointer-events: auto;
-  background-color: black;
-  color: white;
+  background-color: #000;
+  color: #fff;
   transition: all var(--transition-normal);
 }
 
@@ -63,7 +63,7 @@
 .header-content {
   display: flex;
   flex-direction: row;
-  color: white;
+  color: #fff;
   gap: 0.5rem;
 }
 
@@ -139,7 +139,7 @@
   border: 2px solid rgb(255 255 255 / 20%);
   border-radius: var(--radius-md);
   background-color: rgb(255 255 255 / 5%);
-  color: white;
+  color: #fff;
   transition:
     border-color var(--transition-normal),
     background-color var(--transition-normal);
@@ -194,16 +194,15 @@
 }
 
 /* Input and textarea states */
-.form-group textarea.warning {
+.form-group .warning {
   border-color: #ff9800;
 }
 
-.form-group textarea.danger {
+.form-group .danger {
   border-color: #f44336;
 }
 
-.form-group input.success,
-.form-group textarea.success {
+.form-group .success {
   border-color: #4caf50;
   background-color: rgb(76 175 80 / 10%);
 }
@@ -278,7 +277,7 @@ textarea:disabled {
 .modal-footer button:not(:disabled) {
   cursor: pointer;
   background: linear-gradient(0deg, var(--bg-color-primary) 0%, var(--bg-color-primary) 100%);
-  color: white;
+  color: #fff;
   opacity: 1;
   transform: translateY(0);
   box-shadow: var(--shadow-default);
@@ -296,7 +295,7 @@ textarea:disabled {
 
 /* Submit button disabled state */
 .modal-footer button:disabled,
-.modal-footer button.disabled {
+.modal-footer .disabled {
   cursor: not-allowed;
   background: linear-gradient(0deg, #666 0%, #555 100%);
   color: rgb(255 255 255 / 60%);
@@ -306,7 +305,7 @@ textarea:disabled {
 }
 
 .modal-footer button:disabled:hover,
-.modal-footer button.disabled:hover {
+.modal-footer .disabled:hover {
   transform: none;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }

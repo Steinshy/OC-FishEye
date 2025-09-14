@@ -1,0 +1,28 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output directories
+dist/
+build/
+coverage/
+.nyc_output/
+
+# Ignore minified files
+*.min.html
+*.min.js
+
+# Ignore system files
+.DS_Store
+*.log
+
+# Ignore helper and old project files
+helper/old_project/
+old_project/
+
+# Ignore GitHub and CI/CD files
+.github/
+.husky/
+husky/
+
+# Ignore config files
+*.config.js

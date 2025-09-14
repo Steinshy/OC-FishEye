@@ -6,25 +6,21 @@
 // 3. Modal state correction
 // 4. Form handlers and validation
 
+import { createSortDropdown } from './components/dropdown/sort-dropdown.js';
 import {
   attachFormEventListeners,
   attachFormValidationListeners,
   attachCharacterCountListeners
 } from './components/modal/eventListener.js';
 import { closeModal, initializeFormHandlers } from './components/modal/handler.js';
-import { createSortDropdown } from './components/dropdown/sort-dropdown.js';
-import { loadPhotographers } from './pages/index/loadPhotographers.js';
-import { initializePhotographerPage } from './pages/photographer/photographer.js';
+import { photographerPage } from './pages/photographer/photographer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Logic at Boot
   if (window.location.pathname.includes('photographer.html')) {
     // Photographer page
-    initializePhotographerPage();
+    photographerPage();
     createSortDropdown();
-  } else {
-    // Index page
-    loadPhotographers();
   }
   // Dropdown Part
   createSortDropdown();

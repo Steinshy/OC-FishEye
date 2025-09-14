@@ -6,8 +6,9 @@ import {
 
 /**
  * Create media card with event handling
- * @param media
- * @param folderName
+ * @param {object} media - Media object containing image or video data
+ * @param {string} folderName - Photographer's folder name
+ * @returns {HTMLElement} The created media card element
  */
 export const createMediaCard = (media, folderName) => {
   const { card, loadingElement, mediaElement } = renderMediaCard(media, folderName);
@@ -35,8 +36,9 @@ export const createMediaCard = (media, folderName) => {
 
 /**
  * Preload images for faster loading
- * @param medias
- * @param folderName
+ * @param {Array} medias - Array of media objects
+ * @param {string} folderName - Photographer's folder name
+ * @returns {Promise} Promise that resolves when all images are loaded
  */
 export const preloadImages = (medias, folderName) => {
   const imagePromises = medias
@@ -55,8 +57,9 @@ export const preloadImages = (medias, folderName) => {
 
 /**
  * Render media gallery
- * @param medias
- * @param folderName
+ * @param {Array} medias - Array of media objects to render
+ * @param {string} folderName - Photographer's folder name
+ * @returns {Promise<void>} Promise that resolves when gallery is rendered
  */
 export const renderMediaGallery = async (medias, folderName) => {
   const container = document.getElementById('media-cards');
