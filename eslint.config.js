@@ -4,6 +4,7 @@ import html from 'eslint-plugin-html';
 import importPlugin from 'eslint-plugin-import';
 import jsdoc from 'eslint-plugin-jsdoc';
 import security from 'eslint-plugin-security';
+import accessibility from 'eslint-plugin-jsx-a11y';
 
 export default [
   // Base recommended configuration
@@ -13,14 +14,25 @@ export default [
   {
     files: ['**/*.html'],
     plugins: {
-      html
+      html,
     },
     languageOptions: {
       parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
-    }
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      // HTML-specific rules
+      'html/indent': ['error', 2],
+      'html/require-closing-tags': 'error',
+      'html/require-doctype': 'error',
+      'html/no-duplicate-attrs': 'error',
+      'html/no-extra-spacing-attrs': 'error',
+      'html/no-self-closing': 'off',
+      'html/require-meta-charset': 'error',
+      'html/require-meta-viewport': 'error',
+    },
   },
 
   // Main JavaScript configuration
@@ -29,7 +41,8 @@ export default [
     plugins: {
       import: importPlugin,
       jsdoc,
-      security
+      security,
+      accessibility,
     },
     languageOptions: {
       ecmaVersion: 'latest',
@@ -75,8 +88,8 @@ export default [
         handleFormSubmit: 'readonly',
         errorDisplay: 'readonly',
         Validators: 'readonly',
-        createSortDropdown: 'readonly'
-      }
+        createSortDropdown: 'readonly',
+      },
     },
     rules: {
       // Core ESLint rules
@@ -85,10 +98,10 @@ export default [
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_'
-        }
+          caughtErrorsIgnorePattern: '^_',
+        },
       ],
-      'no-console': ['warn', { allow: ['error', 'warn', 'info'] }],
+      'no-console': ['warn', { allow: ['error', 'warn', 'info', 'debug'] }],
       'no-debugger': 'error',
       'no-alert': 'warn',
       'no-var': 'error',
@@ -104,11 +117,11 @@ export default [
         'error',
         {
           array: true,
-          object: true
+          object: true,
         },
         {
-          enforceForRenamedProperties: false
-        }
+          enforceForRenamedProperties: false,
+        },
       ],
       'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
       'eol-last': 'error',
@@ -122,17 +135,37 @@ export default [
       'max-len': [
         'warn',
         {
-          code: 100,
+          code: 160,
           ignoreUrls: true,
           ignoreStrings: true,
           ignoreTemplateLiterals: true,
-          ignoreRegExpLiterals: true
-        }
+          ignoreRegExpLiterals: true,
+          ignoreComments: true,
+        },
       ],
-      complexity: ['warn', 10],
-      'max-depth': ['warn', 4],
-      'max-lines-per-function': ['warn', 50],
-      'max-params': ['warn', 4],
+      complexity: ['warn', 15],
+      'max-depth': ['warn', 5],
+      'max-lines-per-function': ['warn', 80],
+      'max-params': ['warn', 6],
+      'max-lines': ['warn', 500],
+
+      // Modern JavaScript features
+      'prefer-spread': 'error',
+      'prefer-rest-params': 'error',
+      'prefer-const': 'error',
+      'no-useless-concat': 'error',
+      'no-useless-return': 'error',
+      'no-useless-escape': 'error',
+      'no-useless-call': 'error',
+      'no-useless-computed-key': 'error',
+      'no-useless-constructor': 'error',
+      'no-useless-rename': 'error',
+      'no-useless-return': 'error',
+      'prefer-arrow-callback': 'error',
+      'prefer-template': 'error',
+      'prefer-destructuring': 'error',
+      'prefer-spread': 'error',
+      'prefer-rest-params': 'error',
 
       // Import plugin rules
       'import/no-unresolved': 'error',
@@ -151,26 +184,26 @@ export default [
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',
-            caseInsensitive: true
-          }
-        }
+            caseInsensitive: true,
+          },
+        },
       ],
 
-      // JSDoc rules
-      'jsdoc/check-alignment': 'error',
-      'jsdoc/check-indentation': 'error',
+      // JSDoc rules (relaxed for better developer experience)
+      'jsdoc/check-alignment': 'warn',
+      'jsdoc/check-indentation': 'warn',
       'jsdoc/check-param-names': 'error',
       'jsdoc/check-tag-names': 'error',
-      'jsdoc/check-types': 'error',
-      'jsdoc/empty-tags': 'error',
-      'jsdoc/require-param': 'warn',
-      'jsdoc/require-param-description': 'warn',
+      'jsdoc/check-types': 'warn',
+      'jsdoc/empty-tags': 'warn',
+      'jsdoc/require-param': 'off',
+      'jsdoc/require-param-description': 'off',
       'jsdoc/require-param-name': 'error',
-      'jsdoc/require-param-type': 'warn',
-      'jsdoc/require-returns': 'warn',
-      'jsdoc/require-returns-description': 'warn',
-      'jsdoc/require-returns-type': 'warn',
-      'jsdoc/valid-types': 'error',
+      'jsdoc/require-param-type': 'off',
+      'jsdoc/require-returns': 'off',
+      'jsdoc/require-returns-description': 'off',
+      'jsdoc/require-returns-type': 'off',
+      'jsdoc/valid-types': 'warn',
 
       // Security rules (compatible with ESLint 9)
       'security/detect-eval-with-expression': 'error',
@@ -180,8 +213,31 @@ export default [
       'security/detect-disable-mustache-escape': 'error',
       'security/detect-no-csrf-before-method-override': 'error',
       'security/detect-object-injection': 'off',
-      'security/detect-pseudoRandomBytes': 'error'
-    }
+      'security/detect-pseudoRandomBytes': 'error',
+
+      // Accessibility rules (for HTML/JS interaction)
+      'accessibility/alt-text': 'warn',
+      'accessibility/anchor-has-content': 'warn',
+      'accessibility/aria-props': 'warn',
+      'accessibility/aria-proptypes': 'warn',
+      'accessibility/aria-role': 'warn',
+      'accessibility/aria-unsupported-elements': 'warn',
+      'accessibility/click-events-have-key-events': 'warn',
+      'accessibility/heading-has-content': 'warn',
+      'accessibility/html-has-lang': 'warn',
+      'accessibility/iframe-has-title': 'warn',
+      'accessibility/img-redundant-alt': 'warn',
+      'accessibility/label-has-associated-control': 'warn',
+      'accessibility/mouse-events-have-key-events': 'warn',
+      'accessibility/no-access-key': 'warn',
+      'accessibility/no-autofocus': 'warn',
+      'accessibility/no-distracting-elements': 'warn',
+      'accessibility/no-redundant-roles': 'warn',
+      'accessibility/role-has-required-aria-props': 'warn',
+      'accessibility/role-supports-aria-props': 'warn',
+      'accessibility/scope': 'warn',
+      'accessibility/tabindex-no-positive': 'warn',
+    },
   },
 
   // Prettier configuration (must be last)
@@ -218,7 +274,9 @@ export default [
       'husky/',
       'coverage/',
       '.nyc_output/',
-      '*.config.js'
-    ]
-  }
+      '*.config.js',
+      'assets/helper/',
+      'assets/photographers/',
+    ],
+  },
 ];

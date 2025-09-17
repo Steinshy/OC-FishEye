@@ -13,15 +13,12 @@ const updateFieldAttributes = (element, fieldName, shouldShowError, shouldShowVa
   }
 };
 
-const handleErrorDisplay = (fieldName, shouldShowError) =>
-  errorDisplay?.toggleError(fieldName, shouldShowError);
+const handleErrorDisplay = (fieldName, shouldShowError) => errorDisplay?.toggleError(fieldName, shouldShowError);
 
 // Modal Submit Button State
 const updateSubmitButton = () => {
   if (!submitButtonState) return;
-  const allFieldsValid = formConfig.fieldNames.every(fieldName =>
-    validateFields(fieldName, modalElements?.formGroup?.[fieldName]?.value?.trim() || '')
-  );
+  const allFieldsValid = formConfig.fieldNames.every(fieldName => validateFields(fieldName, modalElements?.formGroup?.[fieldName]?.value?.trim() || ''));
   allFieldsValid ? submitButtonState.show() : submitButtonState.hide();
 };
 
@@ -44,31 +41,24 @@ const setupFieldListeners = field => {
   field.element.addEventListener('blur', validate);
   field.element.addEventListener(
     'focus',
-    () =>
-      field.element.getAttribute('data-valid') === 'true' &&
-      field.element.setAttribute('data-error-visible', 'false')
+    () => field.element.getAttribute('data-valid') === 'true' && field.element.setAttribute('data-error-visible', 'false')
   );
 };
 
 // Modal Form Validation Listeners
 export const formValidationListeners = () => {
   formConfig.fieldNames.forEach(
-    fieldName =>
-      modalElements.formGroup[fieldName] &&
-      setupFieldListeners({ element: modalElements.formGroup[fieldName], name: fieldName })
+    fieldName => modalElements.formGroup[fieldName] && setupFieldListeners({ element: modalElements.formGroup[fieldName], name: fieldName })
   );
 };
 
 // Modal Character Counter
-const counterStatus = (length, maxLength) =>
-  length >= maxLength ? 'danger' : length >= maxLength * 0.9 ? 'warning' : '';
+const counterStatus = (length, maxLength) => (length >= maxLength ? 'danger' : length >= maxLength * 0.9 ? 'warning' : '');
 
 // Modal Event Listeners
 const eventTypes = ['input', 'keyup', 'paste'];
-const addEventListeners = (element, handler) =>
-  eventTypes.forEach(event => element.addEventListener(event, handler));
-const removeEventListeners = (element, handler) =>
-  eventTypes.forEach(event => element.removeEventListener(event, handler));
+const addEventListeners = (element, handler) => eventTypes.forEach(event => element.addEventListener(event, handler));
+const removeEventListeners = (element, handler) => eventTypes.forEach(event => element.removeEventListener(event, handler));
 
 // Modal Create Character Counter
 export const createCharacterCounter = (inputElement, displayElement, maxLength) => {
@@ -94,11 +84,7 @@ export const createCharacterCounter = (inputElement, displayElement, maxLength) 
 export const characterCountListeners = () => {
   if (!modalElements.formGroup.message || !modalElements.formElements.characterCount) return null;
 
-  return createCharacterCounter(
-    modalElements.formGroup.message,
-    modalElements.formElements.characterCount,
-    validationRules?.maxlength || 500
-  );
+  return createCharacterCounter(modalElements.formGroup.message, modalElements.formElements.characterCount, validationRules?.maxlength || 500);
 };
 
 // Modal Submit Form Listeners
@@ -111,11 +97,7 @@ export const modalListeners = () => {
   modalElements.contactButton.onclick = () => toggleModal(true);
   modalElements.mainModal.closeButton.onclick = () => toggleModal(false);
   document.onkeydown = e => {
-    if (
-      e.key === 'Escape' &&
-      modalElements.mainModal.main.classList.contains('show') &&
-      !modalElements.mainModal.closeButton.disabled
-    ) {
+    if (e.key === 'Escape' && modalElements.mainModal.main.classList.contains('show') && !modalElements.mainModal.closeButton.disabled) {
       e.preventDefault();
       toggleModal(false);
     }

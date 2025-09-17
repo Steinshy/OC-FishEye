@@ -64,7 +64,7 @@ export const createMediaCard = (media, folderName) => {
     card,
     mediaContainer,
     loadingElement,
-    mediaElement
+    mediaElement,
   };
 };
 
@@ -78,6 +78,6 @@ export const renderMediaCard = media => {
     card,
     mediaContainer: card.querySelector('.media_content'),
     loadingElement: card.querySelector('.media_loading'),
-    mediaElement: card.querySelector('.media_info')
+    mediaElement: card.querySelector('.media_info'),
   };
 };

@@ -1,41 +1,29 @@
 name: Lint and Format
-
 on:
   push:
-    branches:
-      - dev
-      - testing
-
+    branches: [dev, testing]
 env:
-  # Node.js 24 latest LTS version
   NODE_VERSION: '24'
-
-# Clean up old workflow runs automatically
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-
 permissions:
   contents: read
   pull-requests: read
   checks: write
-
 jobs:
   lint:
     name: Lint and Format
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
-
       - name: Install dependencies
         run: |
           npm cache clean --force
@@ -48,15 +36,12 @@ jobs:
               npm install --prefer-offline --no-audit
             fi
           fi
-
       - name: Check formatting
         continue-on-error: true
         run: npm run format:check
-
       - name: Run linting
         continue-on-error: true
         run: npm run lint
-
       - name: Run tests
         continue-on-error: true
         run: |
@@ -65,7 +50,6 @@ jobs:
           else
             echo "ℹ️ No tests found"
           fi
-
       - name: Security scan
         continue-on-error: true
         run: |

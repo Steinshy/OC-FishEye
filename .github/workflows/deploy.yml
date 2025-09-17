@@ -1,41 +1,29 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
-    branches:
-      - dev
-      - testing
-
+    branches: [dev, testing]
 env:
   NODE_VERSION: '24'
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: 'pages'
   cancel-in-progress: false
-
 jobs:
   build:
     name: Build for GitHub Pages
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
-
       - name: Install dependencies
         run: |
           npm cache clean --force
@@ -48,11 +36,9 @@ jobs:
               npm install --prefer-offline --no-audit
             fi
           fi
-
       - name: Security scan
         continue-on-error: true
         run: npm audit --audit-level=moderate || echo "⚠️ Vulnerabilities found"
-
       - name: Prepare files
         run: |
           mkdir -p deploy
@@ -60,15 +46,12 @@ jobs:
           cp -r assets/ deploy/
           [ -f "manifest.json" ] && cp manifest.json deploy/ || [ -f "assets/manifest.json" ] && cp assets/manifest.json deploy/ || echo "⚠️ No manifest.json found"
           echo "📦 $(find deploy/ -type f | wc -l) files ready"
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: deploy
-
   deploy:
     name: Deploy to GitHub Pages
     environment:

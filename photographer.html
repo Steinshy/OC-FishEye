@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée."
-    />
-    <meta
-      name="keywords"
-      content="FishEye, Photographe, Photographie, Portrait, Événement, Architecture, Art, Séance Photo, Photographe Professionnel"
-    />
+      content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
+    <meta name="keywords" content="FishEye, Photographe, Photographie, Portrait, Événement, Architecture, Art, Séance Photo, Photographe Professionnel" />
     <meta name="author" content="OpenClassrooms" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#ffffff" />
@@ -18,8 +14,7 @@
     <meta property="og:title" content="FishEye - Photographe Professionnel" />
     <meta
       property="og:description"
-      content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée."
-    />
+      content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="assets/favicons/logo.png" />
@@ -27,8 +22,7 @@
     <meta name="twitter:title" content="FishEye - Photographe Professionnel" />
     <meta
       name="twitter:description"
-      content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée."
-    />
+      content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
     <meta name="twitter:image" content="assets/favicons/logo.png" />
 
     <title>FishEye - Photographe</title>
@@ -52,12 +46,10 @@
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
-      as="style"
-    />
+      as="style" />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
-    />
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap" />
 
     <!-- Font Awesome -->
     <link
@@ -65,8 +57,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+      referrerpolicy="no-referrer" />
   </head>
 
   <body>
@@ -88,15 +79,7 @@
       <section class="section-dropdown">
         <h2>Trier par :</h2>
         <div class="dropdown-button">
-          <button
-            id="media-button"
-            type="button"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-            aria-controls="sort-options"
-          >
-            Popularité
-          </button>
+          <button id="media-button" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-options"> Popularité </button>
           <ul class="dropdown-options" id="sort-options" role="listbox" tabindex="-1" aria-hidden="true">
             <li id="popular-option" role="option" style="display: none">Popularité</li>
             <li id="date-option" role="option">Date</li>
@@ -113,15 +96,7 @@
     </main>
 
     <!-- Contact Modal Section -->
-    <div
-      class="modal"
-      id="modal-signup"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-      aria-describedby="modal-description"
-      aria-hidden="true"
-    >
+    <div class="modal" id="modal-signup" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description">
       <div class="modal-content" id="modal-content">
         <div class="modal-header" id="modal-header">
           <div class="header-content" id="header-content">
@@ -131,12 +106,12 @@
         </div>
 
         <button class="modal-close" id="modal-close" type="button" aria-label="Fermer le modal">
-          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          <i class="fa-solid fa-xmark"></i>
         </button>
 
         <!-- Contact Form -->
-        <form class="main-form" id="form-signup" name="contact" method="get" aria-hidden="true">
-          <div class="form-group" aria-hidden="true">
+        <form class="main-form" id="form-signup" name="contact" method="get">
+          <div class="form-group">
             <label for="firstname">Prénom *</label>
             <input
               id="firstname"
@@ -145,15 +120,8 @@
               autocomplete="given-name"
               data-error-visible="false"
               placeholder="Entrez votre Prénom"
-              aria-describedby="firstname-error"
-            />
-            <span
-              class="error-form"
-              id="error-firstname"
-              data-error-visible="false"
-              data-valid="false"
-              aria-live="polite"
-            >
+              aria-describedby="firstname-error" />
+            <span class="error-form" id="error-firstname" data-error-visible="false" data-valid="false" aria-live="polite">
               2 caractères minimum est requis.
             </span>
           </div>
@@ -167,15 +135,8 @@
               autocomplete="family-name"
               data-error-visible="false"
               placeholder="Entrez votre Nom"
-              aria-describedby="lastname-error"
-            />
-            <span
-              class="error-form"
-              id="error-lastname"
-              data-error-visible="false"
-              data-valid="false"
-              aria-live="polite"
-            >
+              aria-describedby="lastname-error" />
+            <span class="error-form" id="error-lastname" data-error-visible="false" data-valid="false" aria-live="polite">
               2 caractères minimum est requis.
             </span>
           </div>
@@ -189,11 +150,8 @@
               autocomplete="email"
               data-error-visible="false"
               placeholder="Entrez votre adresse e-mail"
-              aria-describedby="email-error"
-            />
-            <span class="error-form" id="error-email" data-error-visible="false" data-valid="false" aria-live="polite">
-              L'adresse e-mail est invalide.
-            </span>
+              aria-describedby="email-error" />
+            <span class="error-form" id="error-email" data-error-visible="false" data-valid="false" aria-live="polite"> L'adresse e-mail est invalide. </span>
           </div>
 
           <div class="form-group">
@@ -207,22 +165,15 @@
               rows="5"
               maxlength="500"
               aria-describedby="message-error character-count"
-              data-error-visible="false"
-            ></textarea>
-            <span
-              class="error-form"
-              id="error-message"
-              data-error-visible="false"
-              data-valid="false"
-              aria-live="polite"
-            >
+              data-error-visible="false"></textarea>
+            <span class="error-form" id="error-message" data-error-visible="false" data-valid="false" aria-live="polite">
               Un message entre 0 et 500 caractères est requis.
             </span>
           </div>
         </form>
         <!-- Submit Button -->
         <div class="modal-footer" id="modal-footer">
-          <button type="submit" id="footer-submit-button" form="form-signup" aria-hidden="true">Envoyer</button>
+          <button type="submit" id="footer-submit-button" form="form-signup">Envoyer</button>
         </div>
       </div>
     </div>

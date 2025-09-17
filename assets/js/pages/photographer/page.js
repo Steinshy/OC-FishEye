@@ -5,12 +5,7 @@ import { dropdownListeners } from './dropdown.js';
 import { generateHeaderHTML } from './headerInfo.js';
 import { renderMediaGallery } from './medias/gallery.js';
 import { mediaSorter } from './medias/utils/sorter.js';
-import {
-  formValidationListeners,
-  characterCountListeners,
-  submitFormListeners,
-  modalListeners
-} from './modal/eventListener.js';
+import { formValidationListeners, characterCountListeners, submitFormListeners, modalListeners } from './modal/eventListener.js';
 
 export const photographerPage = async () => {
   try {

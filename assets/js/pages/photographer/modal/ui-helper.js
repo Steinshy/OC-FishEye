@@ -66,7 +66,7 @@ export const submitButtonState = {
 
   isDisabled() {
     return modalElements.mainModal.submitButton && modalElements.mainModal.submitButton.disabled;
-  }
+  },
 };
 
 export const errorDisplay = {
@@ -94,5 +94,5 @@ export const errorDisplay = {
         errorElement.textContent = message;
       }
     }
-  }
+  },
 };

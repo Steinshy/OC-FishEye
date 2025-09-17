@@ -4,7 +4,7 @@ const sortFunctions = {
   Popularité: (mediaA, mediaB) => mediaB.likes - mediaA.likes,
   Date: (mediaA, mediaB) => new Date(mediaB.date) - new Date(mediaA.date),
   Titre: (mediaA, mediaB) => mediaA.title.localeCompare(mediaB.title),
-  Likes: (mediaA, mediaB) => mediaB.likes - mediaA.likes
+  Likes: (mediaA, mediaB) => mediaB.likes - mediaA.likes,
 };
 
 export const mediaSorter = {
@@ -26,5 +26,5 @@ export const mediaSorter = {
   getCurrentPhotographerFolder: () => mediaSorter.currentPhotographerFolder,
   setCurrentPhotographerFolder: folderName => {
     mediaSorter.currentPhotographerFolder = folderName;
-  }
+  },
 };

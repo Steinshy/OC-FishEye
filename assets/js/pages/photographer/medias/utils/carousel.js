@@ -64,7 +64,7 @@ export const initializeCarrouselControl = () => {
     document.getElementById('radio2'),
     document.getElementById('radio3'),
     document.getElementById('radio4'),
-    document.getElementById('radio5')
+    document.getElementById('radio5'),
   ];
 
   const validRadios = radios.filter(radio => radio !== null);

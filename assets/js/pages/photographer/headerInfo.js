@@ -19,10 +19,10 @@ export const generateHeaderHTML = photographer => {
         <picture>
           <source srcset="assets/photographers/${photographer.folder_name}/${profile_webp}" type="image/webp">
           <source srcset="assets/photographers/${photographer.folder_name}/${profile_jpg}" type="image/jpeg">
-          <img 
-            class="profile-picture" 
-            src="assets/photographers/${photographer.folder_name}/${profile_jpg}" 
-            alt="Portrait de ${name} ${lastname}, photographe" 
+          <img
+            class="profile-picture"
+            src="assets/photographers/${photographer.folder_name}/${profile_jpg}"
+            alt="Portrait de ${name} ${lastname}, photographe"
             loading="lazy"
           >
         </picture>

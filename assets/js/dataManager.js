@@ -28,10 +28,10 @@ const buildPhotographerResponse = photographer => ({
     price: photographer.price || 0,
     location: {
       city: photographer.location?.city || '',
-      country: photographer.location?.country || ''
+      country: photographer.location?.country || '',
     },
-    medias: photographer.medias || []
-  }
+    medias: photographer.medias || [],
+  },
 });
 
 export const getPhotographerById = async photographerId => {

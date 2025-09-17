@@ -1,39 +1,87 @@
 {
   "semi": true,
-  "trailingComma": "none",
+  "trailingComma": "es5",
   "singleQuote": true,
-  "printWidth": 100,
+  "printWidth": 160,
   "tabWidth": 2,
   "useTabs": false,
+  "endOfLine": "lf",
   "bracketSpacing": true,
   "bracketSameLine": false,
   "arrowParens": "avoid",
-  "endOfLine": "lf",
   "quoteProps": "as-needed",
   "jsxSingleQuote": true,
-  "proseWrap": "preserve",
   "htmlWhitespaceSensitivity": "css",
   "embeddedLanguageFormatting": "auto",
+  "proseWrap": "preserve",
   "insertPragma": false,
   "requirePragma": false,
-  "rangeStart": 0,
   "overrides": [
     {
-      "files": "*.html",
+      "files": ["*.html", "*.htm"],
       "options": {
         "parser": "html",
         "htmlWhitespaceSensitivity": "strict",
-        "printWidth": 120
+        "printWidth": 160,
+        "bracketSameLine": true
       }
     },
-    { "files": "*.css", "options": { "parser": "css", "printWidth": 120 } },
-    { "files": "*.json", "options": { "parser": "json", "printWidth": 120 } },
-    { "files": "*.js", "options": { "parser": "babel", "printWidth": 100 } },
     {
-      "files": "*.md",
-      "options": { "parser": "markdown", "proseWrap": "always", "printWidth": 80 }
+      "files": ["*.css", "*.scss", "*.sass", "*.less"],
+      "options": {
+        "parser": "css",
+        "printWidth": 160,
+        "singleQuote": false
+      }
     },
-    { "files": "*.yml", "options": { "parser": "yaml", "printWidth": 100 } },
-    { "files": "*.yaml", "options": { "parser": "yaml", "printWidth": 100 } }
+    {
+      "files": ["*.json", "*.jsonc"],
+      "options": {
+        "parser": "json",
+        "printWidth": 160,
+        "singleQuote": false
+      }
+    },
+    {
+      "files": ["*.js", "*.mjs", "*.cjs"],
+      "options": {
+        "parser": "babel",
+        "printWidth": 160,
+        "trailingComma": "es5"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "options": {
+        "parser": "typescript",
+        "printWidth": 160,
+        "trailingComma": "es5"
+      }
+    },
+    {
+      "files": ["*.md", "*.mdx"],
+      "options": {
+        "parser": "markdown",
+        "proseWrap": "always",
+        "printWidth": 160,
+        "singleQuote": false
+      }
+    },
+    {
+      "files": ["*.yml", "*.yaml"],
+      "options": {
+        "parser": "yaml",
+        "printWidth": 160,
+        "singleQuote": false
+      }
+    },
+    {
+      "files": ["*.xml", "*.svg"],
+      "options": {
+        "parser": "html",
+        "printWidth": 160,
+        "htmlWhitespaceSensitivity": "strict"
+      }
+    }
   ]
 }

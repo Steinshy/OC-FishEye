@@ -21,18 +21,6 @@
         "npm run lint:css",
         "npm run lint:html",
         "npm run lint:js"
-      ],
-      "notes": [
-        "• ESLint: JavaScript linting with security, import, and JSDoc rules",
-        "• Stylelint: CSS linting with property ordering and best practices",
-        "• HTMLHint: HTML linting for accessibility and structure",
-        "• Prettier: Code formatting for consistency",
-        "🔧 Configuration files:",
-        "• .eslintrc.js - JavaScript linting rules",
-        "• .stylelintrc.json - CSS linting rules",
-        "• .htmlhintrc.json - HTML linting rules",
-        "• .prettierrc - Code formatting rules",
-        "• .lintstagedrc.js - Pre-commit hooks"
       ]
     }
   },
@@ -43,16 +31,7 @@
     "type": "git",
     "url": "https://github.com/steinshy/FishEye.git"
   },
-  "keywords": [
-    "photography",
-    "portfolio",
-    "gallery",
-    "responsive",
-    "accessibility",
-    "vanilla-js",
-    "html5",
-    "css3"
-  ],
+  "keywords": ["photography", "portfolio", "gallery", "responsive", "accessibility", "vanilla-js", "html5", "css3"],
   "author": {
     "name": "Steinshy",
     "url": "https://github.com/steinshy"
@@ -72,21 +51,15 @@
     "lint:html": "html-validate '**/*.html'",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "docs": "jsdoc -c jsdoc.conf.json",
     "server": "http-server . -p 8080 --cors -o -c-1 --no-cache",
     "markdown:lint": "markdownlint '**/*.md' --ignore node_modules",
-    "markdown:fix": "markdownlint '**/*.md' --ignore node_modules --fix",
     "prepare": "husky install",
-    "pre-commit": "lint-staged",
-    "changelog": "conventional-changelog --preset angular --output-format json --release-count 0",
-    "changelog:markdown": "conventional-changelog --preset angular --output-format markdown --release-count 0",
-    "version": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file"
+    "pre-commit": "lint-staged"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.34.0",
-    "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.34.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-html": "^8.1.3",

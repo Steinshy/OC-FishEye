@@ -1,47 +1,38 @@
 name: Release
-
 on:
   push:
     tags:
       - 'v*'
-
 env:
   NODE_VERSION: '24'
-
 permissions:
   contents: write
   issues: write
   pull-requests: write
-
 jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
-
       - name: Install dependencies
         run: npm ci
-
       - name: Build project
         run: |
           npm run lint
           npm run format:check
           [ -f "jsdoc.conf.json" ] && npm run docs || true
           echo "✅ Build completed"
-
       - name: Generate changelog
         id: changelog
         run: |
@@ -56,17 +47,12 @@ jobs:
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$changelog" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-
       - name: Create Release
         run: |
           gh release create ${{ github.ref_name }} \
             --title "Release ${{ github.ref_name }}" \
             --notes "## What's Changed
-
           ${{ steps.changelog.outputs.changelog }}
-
-          ## Installation
-
           \`\`\`bash
           git clone https://github.com/${{ github.repository }}.git
           cd ${{ github.repository }}
@@ -76,7 +62,6 @@ jobs:
             --prerelease=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload assets
         run: |
           [ -f "README.md" ] && gh release upload ${{ github.ref_name }} README.md --clobber || true

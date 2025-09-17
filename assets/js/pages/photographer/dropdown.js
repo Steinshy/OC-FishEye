@@ -4,13 +4,12 @@ import { mediaSorter } from './medias/utils/sorter.js';
 
 const eventHandlers = {
   keyboard: {
-    Escape: () => dropdownController.close()
+    Escape: () => dropdownController.close(),
   },
 
   click: {
     outside: target => {
-      const isOutside =
-        !sortDropdownElements.options?.contains(target) && target !== sortDropdownElements.button;
+      const isOutside = !sortDropdownElements.options?.contains(target) && target !== sortDropdownElements.button;
       if (isOutside) dropdownController.close();
     },
 
@@ -18,8 +17,8 @@ const eventHandlers = {
       e.stopPropagation();
       const isOpen = e.currentTarget.getAttribute('aria-expanded') === 'true';
       dropdownController.toggle(!isOpen);
-    }
-  }
+    },
+  },
 };
 
 const dropdownController = {
@@ -46,9 +45,7 @@ const dropdownController = {
   },
 
   updateAriaSelected(target) {
-    const options = Object.values(sortDropdownElements).filter(element =>
-      element?.matches?.("li[role='option']")
-    );
+    const options = Object.values(sortDropdownElements).filter(element => element?.matches?.("li[role='option']"));
     options.forEach(option => option?.setAttribute('aria-selected', option === target));
   },
 
@@ -69,7 +66,7 @@ const dropdownController = {
     }
 
     this.close();
-  }
+  },
 };
 
 export const dropdownListeners = () => {
@@ -77,13 +74,7 @@ export const dropdownListeners = () => {
   const { button, options } = sortDropdownElements;
 
   button.addEventListener('click', dropdownController.handleButtonClick.bind(dropdownController));
-  options.addEventListener(
-    'click',
-    dropdownController.handleOptionSelection.bind(dropdownController)
-  );
-  document.addEventListener(
-    'keydown',
-    dropdownController.handleGlobalKeydown.bind(dropdownController)
-  );
+  options.addEventListener('click', dropdownController.handleOptionSelection.bind(dropdownController));
+  document.addEventListener('keydown', dropdownController.handleGlobalKeydown.bind(dropdownController));
   document.addEventListener('click', dropdownController.handleGlobalClick.bind(dropdownController));
 };

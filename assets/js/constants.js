@@ -4,7 +4,7 @@ export const photographersDataUrl = 'assets/photographers/data.json';
 export const validationRules = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   minlength: 2,
-  maxlength: 500
+  maxlength: 500,
 };
 
 export let modalElements = {};
@@ -19,40 +19,40 @@ export const initializeModalElements = () => {
       content: document.getElementById('modal-content'),
       closeButton: document.getElementById('modal-close'),
       modalFooter: document.getElementById('modal-footer'),
-      submitButton: document.getElementById('footer-submit-button')
+      submitButton: document.getElementById('footer-submit-button'),
     },
     formGroup: {
       firstName: document.getElementById('firstname'),
       lastName: document.getElementById('lastname'),
       email: document.getElementById('email'),
-      message: document.getElementById('message')
+      message: document.getElementById('message'),
     },
     formError: {
       firstName: document.getElementById('error-firstname'),
       lastName: document.getElementById('error-lastname'),
       email: document.getElementById('error-email'),
-      message: document.getElementById('error-message')
+      message: document.getElementById('error-message'),
     },
     formElements: {
       contactForm: document.getElementById('contact_form'),
       contactModal: document.getElementById('modal_container'),
       characterCount: document.getElementById('character-count'),
       minCount: document.getElementById('character-count'),
-      maxCount: document.getElementById('character-count')
-    }
+      maxCount: document.getElementById('character-count'),
+    },
   };
 };
 
 export const formConfig = {
   fieldNames: ['firstName', 'lastName', 'email', 'message'],
-  errorElements: ['firstName', 'lastName', 'email', 'message']
+  errorElements: ['firstName', 'lastName', 'email', 'message'],
 };
 
 export const inputs = [
   modalElements?.formGroup?.firstName,
   modalElements?.formGroup?.lastName,
   modalElements?.formGroup?.email,
-  modalElements?.formGroup?.message
+  modalElements?.formGroup?.message,
 ];
 
 export const sortDropdownElements = {
@@ -61,5 +61,5 @@ export const sortDropdownElements = {
   popularOption: document.getElementById('popular-option'),
   dateOption: document.getElementById('date-option'),
   titleOption: document.getElementById('title-option'),
-  likesOption: document.getElementById('likes-option')
+  likesOption: document.getElementById('likes-option'),
 };
