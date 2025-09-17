@@ -12,8 +12,8 @@
       "price": 500,
       "folder_name": "tracy",
       "portrait": {
-        "jpg": "TracyGalindo.jpg",
-        "webp": "TracyGalindo.webp"
+        "profile_jpg": "TracyGalindo.jpg",
+        "profile_webp": "TracyGalindo.webp"
       },
       "medias": [
         {
@@ -23,8 +23,8 @@
           "date": "2011-12-08",
           "price": 55,
           "image": {
-            "jpg": "Fashion_Yellow_Beach.jpg",
-            "webp": "Fashion_Yellow_Beach.webp"
+            "media_jpg": "Fashion_Yellow_Beach.jpg",
+            "media_webp": "Fashion_Yellow_Beach.webp"
           }
         },
         {
@@ -34,8 +34,8 @@
           "date": "2011-11-06",
           "price": 55,
           "image": {
-            "jpg": "Fashion_Urban_Jungle.jpg",
-            "webp": "Fashion_Urban_Jungle.webp"
+            "media_jpg": "Fashion_Urban_Jungle.jpg",
+            "media_webp": "Fashion_Urban_Jungle.webp"
           }
         },
         {
@@ -45,8 +45,8 @@
           "date": "2013-08-12",
           "price": 55,
           "image": {
-            "jpg": "Fashion_Pattern_on_Pattern.jpg",
-            "webp": "Fashion_Pattern_on_Pattern.webp"
+            "media_jpg": "Fashion_Pattern_on_Pattern.jpg",
+            "media_webp": "Fashion_Pattern_on_Pattern.webp"
           }
         },
         {
@@ -56,8 +56,8 @@
           "date": "2020-05-25",
           "price": 55,
           "image": {
-            "jpg": "Event_Sparklers.jpg",
-            "webp": "Event_Sparklers.webp"
+            "media_jpg": "Event_Sparklers.jpg",
+            "media_webp": "Event_Sparklers.webp"
           }
         },
         {
@@ -67,8 +67,8 @@
           "date": "2019-06-12",
           "price": 55,
           "image": {
-            "jpg": "Event_18thAnniversary.jpg",
-            "webp": "Event_18thAnniversary.webp"
+            "media_jpg": "Event_18thAnniversary.jpg",
+            "media_webp": "Event_18thAnniversary.webp"
           }
         },
         {
@@ -78,8 +78,8 @@
           "date": "2007-05-07",
           "price": 55,
           "image": {
-            "jpg": "Art_Triangle_Man.jpg",
-            "webp": "Art_Triangle_Man.webp"
+            "media_jpg": "Art_Triangle_Man.jpg",
+            "media_webp": "Art_Triangle_Man.webp"
           }
         },
         {
@@ -89,7 +89,7 @@
           "date": "2011-12-08",
           "price": 100,
           "video": {
-            "mp4": "Art_Wooden_Horse_Sculpture.mp4"
+            "media_mp4": "Art_Wooden_Horse_Sculpture.mp4"
           }
         },
         {
@@ -99,8 +99,8 @@
           "date": "2018-05-05",
           "price": 55,
           "image": {
-            "jpg": "Art_Purple_light.jpg",
-            "webp": "Art_Purple_light.webp"
+            "media_jpg": "Art_Purple_light.jpg",
+            "media_webp": "Art_Purple_light.webp"
           }
         },
         {
@@ -110,8 +110,8 @@
           "date": "2019-06-20",
           "price": 55,
           "image": {
-            "jpg": "Art_Mine.jpg",
-            "webp": "Art_Mine.webp"
+            "media_jpg": "Art_Mine.jpg",
+            "media_webp": "Art_Mine.webp"
           }
         },
         {
@@ -121,8 +121,8 @@
           "date": "2018-02-22",
           "price": 55,
           "image": {
-            "jpg": "Event_WeddingGazebo.jpg",
-            "webp": "Event_WeddingGazebo.webp"
+            "media_jpg": "Event_WeddingGazebo.jpg",
+            "media_webp": "Event_WeddingGazebo.webp"
           }
         }
       ]
@@ -140,8 +140,8 @@
       "price": 300,
       "folder_name": "marcel",
       "portrait": {
-        "jpg": "MarcelNikolic.jpg",
-        "webp": "MarcelNikolic.webp"
+        "profile_jpg": "MarcelNikolic.jpg",
+        "profile_webp": "MarcelNikolic.webp"
       },
       "medias": [
         {
@@ -151,8 +151,8 @@
           "date": "2019-05-06",
           "price": 60,
           "image": {
-            "jpg": "Travel_SunsetonCanals.jpg",
-            "webp": "Travel_SunsetonCanals.webp"
+            "media_jpg": "Travel_SunsetonCanals.jpg",
+            "media_webp": "Travel_SunsetonCanals.webp"
           }
         },
         {
@@ -162,8 +162,8 @@
           "date": "2019-04-03",
           "price": 60,
           "image": {
-            "jpg": "Travel_Tower.jpg",
-            "webp": "Travel_Tower.webp"
+            "media_jpg": "Travel_Tower.jpg",
+            "media_webp": "Travel_Tower.webp"
           }
         },
         {
@@ -173,8 +173,8 @@
           "date": "2019-05-12",
           "price": 60,
           "image": {
-            "jpg": "Travel_OpenMountain.jpg",
-            "webp": "Travel_OpenMountain.webp"
+            "media_jpg": "Travel_OpenMountain.jpg",
+            "media_webp": "Travel_OpenMountain.webp"
           }
         },
         {
@@ -184,8 +184,8 @@
           "date": "2019-06-26",
           "price": 60,
           "image": {
-            "jpg": "Travel_Adventure_Door.jpg",
-            "webp": "Travel_Adventure_Door.webp"
+            "media_jpg": "Travel_Adventure_Door.jpg",
+            "media_webp": "Travel_Adventure_Door.webp"
           }
         },
         {
@@ -195,8 +195,8 @@
           "date": "2019-06-20",
           "price": 60,
           "image": {
-            "jpg": "Travel_Bike_and_Stair.jpg",
-            "webp": "Travel_Bike_and_Stair.webp"
+            "media_jpg": "Travel_Bike_and_Stair.jpg",
+            "media_webp": "Travel_Bike_and_Stair.webp"
           }
         },
         {
@@ -206,8 +206,8 @@
           "date": "2020-05-05",
           "price": 60,
           "image": {
-            "jpg": "Architecture_Corner_Room.jpg",
-            "webp": "Architecture_Corner_Room.webp"
+            "media_jpg": "Architecture_Corner_Room.jpg",
+            "media_webp": "Architecture_Corner_Room.webp"
           }
         },
         {
@@ -217,8 +217,8 @@
           "date": "2019-06-30",
           "price": 60,
           "image": {
-            "jpg": "Architecture_Contrast.jpg",
-            "webp": "Architecture_Contrast.webp"
+            "media_jpg": "Architecture_Contrast.jpg",
+            "media_webp": "Architecture_Contrast.webp"
           }
         },
         {
@@ -228,8 +228,8 @@
           "date": "2019-07-20",
           "price": 60,
           "image": {
-            "jpg": "Architecture_On_a_hill.jpg",
-            "webp": "Architecture_On_a_hill.webp"
+            "media_jpg": "Architecture_On_a_hill.jpg",
+            "media_webp": "Architecture_On_a_hill.webp"
           }
         },
         {
@@ -239,7 +239,7 @@
           "date": "2020-01-20",
           "price": 65,
           "video": {
-            "mp4": "Architecture_coverr_circle_empty_highway_in_buenos_aires_587740985637.mp4"
+            "media_mp4": "Architecture_coverr_circle_empty_highway_in_buenos_aires_587740985637.mp4"
           }
         },
         {
@@ -249,8 +249,8 @@
           "date": "2020-01-05",
           "price": 60,
           "image": {
-            "jpg": "Architecture_Dome.jpg",
-            "webp": "Architecture_Dome.webp"
+            "media_jpg": "Architecture_Dome.jpg",
+            "media_webp": "Architecture_Dome.webp"
           }
         }
       ]
@@ -267,8 +267,8 @@
       "price": 400,
       "folder_name": "mimi",
       "portrait": {
-        "jpg": "MimiKeel.jpg",
-        "webp": "MimiKeel.webp"
+        "profile_jpg": "MimiKeel.jpg",
+        "profile_webp": "MimiKeel.webp"
       },
       "medias": [
         {
@@ -278,8 +278,8 @@
           "date": "2019-06-21",
           "price": 45,
           "image": {
-            "jpg": "Event_SeasideWedding.jpg",
-            "webp": "Event_SeasideWedding.webp"
+            "media_jpg": "Event_SeasideWedding.jpg",
+            "media_webp": "Event_SeasideWedding.webp"
           }
         },
         {
@@ -289,7 +289,7 @@
           "date": "2019-08-23",
           "price": 60,
           "video": {
-            "mp4": "Animals_Wild_Horses_in_the_mountains.mp4"
+            "media_mp4": "Animals_Wild_Horses_in_the_mountains.mp4"
           }
         },
         {
@@ -299,8 +299,8 @@
           "date": "2019-06-28",
           "price": 45,
           "image": {
-            "jpg": "Event_BenevidesWedding.jpg",
-            "webp": "Event_BenevidesWedding.webp"
+            "media_jpg": "Event_BenevidesWedding.jpg",
+            "media_webp": "Event_BenevidesWedding.webp"
           }
         },
         {
@@ -310,8 +310,8 @@
           "date": "2019-06-25",
           "price": 45,
           "image": {
-            "jpg": "Event_PintoWedding.jpg",
-            "webp": "Event_PintoWedding.webp"
+            "media_jpg": "Event_PintoWedding.jpg",
+            "media_webp": "Event_PintoWedding.webp"
           }
         },
         {
@@ -321,8 +321,8 @@
           "date": "2019-06-20",
           "price": 45,
           "image": {
-            "jpg": "Portrait_Background.jpg",
-            "webp": "Portrait_Background.webp"
+            "media_jpg": "Portrait_Background.jpg",
+            "media_webp": "Portrait_Background.webp"
           }
         },
         {
@@ -332,8 +332,8 @@
           "date": "2019-02-03",
           "price": 45,
           "image": {
-            "jpg": "Travel_Lonesome.jpg",
-            "webp": "Travel_Lonesome.webp"
+            "media_jpg": "Travel_Lonesome.jpg",
+            "media_webp": "Travel_Lonesome.webp"
           }
         },
         {
@@ -343,8 +343,8 @@
           "date": "2019-04-03",
           "price": 45,
           "image": {
-            "jpg": "Travel_HillsideColor.jpg",
-            "webp": "Travel_HillsideColor.webp"
+            "media_jpg": "Travel_HillsideColor.jpg",
+            "media_webp": "Travel_HillsideColor.webp"
           }
         },
         {
@@ -354,8 +354,8 @@
           "date": "2019-07-02",
           "price": 60,
           "image": {
-            "jpg": "Animals_Rainbow.jpg",
-            "webp": "Animals_Rainbow.webp"
+            "media_jpg": "Animals_Rainbow.jpg",
+            "media_webp": "Animals_Rainbow.webp"
           }
         },
         {
@@ -365,8 +365,8 @@
           "date": "2019-04-07",
           "price": 45,
           "image": {
-            "jpg": "Portrait_Nora.jpg",
-            "webp": "Portrait_Nora.webp"
+            "media_jpg": "Portrait_Nora.jpg",
+            "media_webp": "Portrait_Nora.webp"
           }
         },
         {
@@ -376,8 +376,8 @@
           "date": "2019-04-07",
           "price": 45,
           "image": {
-            "jpg": "Portrait_Wednesday.jpg",
-            "webp": "Portrait_Wednesday.webp"
+            "media_jpg": "Portrait_Wednesday.jpg",
+            "media_webp": "Portrait_Wednesday.webp"
           }
         }
       ]
@@ -394,8 +394,8 @@
       "price": 350,
       "folder_name": "nabeel",
       "portrait": {
-        "jpg": "NabeelBradford.jpg",
-        "webp": "NabeelBradford.webp"
+        "profile_jpg": "NabeelBradford.jpg",
+        "profile_webp": "NabeelBradford.webp"
       },
       "medias": [
         {
@@ -405,8 +405,8 @@
           "date": "2017-03-18",
           "price": 45,
           "image": {
-            "jpg": "Travel_Boat_Wanderer.jpg",
-            "webp": "Travel_Boat_Wanderer.webp"
+            "media_jpg": "Travel_Boat_Wanderer.jpg",
+            "media_webp": "Travel_Boat_Wanderer.webp"
           }
         },
         {
@@ -416,8 +416,8 @@
           "date": "2016-04-05",
           "price": 45,
           "image": {
-            "jpg": "Travel_Bridge_into_Forest.jpg",
-            "webp": "Travel_Bridge_into_Forest.webp"
+            "media_jpg": "Travel_Bridge_into_Forest.jpg",
+            "media_webp": "Travel_Bridge_into_Forest.webp"
           }
         },
         {
@@ -427,8 +427,8 @@
           "date": "2018-11-02",
           "price": 45,
           "image": {
-            "jpg": "Portrait_Alexandra.jpg",
-            "webp": "Portrait_Alexandra.webp"
+            "media_jpg": "Portrait_Alexandra.jpg",
+            "media_webp": "Portrait_Alexandra.webp"
           }
         },
         {
@@ -438,8 +438,8 @@
           "date": "2017-04-03",
           "price": 45,
           "image": {
-            "jpg": "Travel_Outdoor_Baths.jpg",
-            "webp": "Travel_Outdoor_Baths.webp"
+            "media_jpg": "Travel_Outdoor_Baths.jpg",
+            "media_webp": "Travel_Outdoor_Baths.webp"
           }
         },
         {
@@ -449,8 +449,8 @@
           "date": "2017-04-21",
           "price": 45,
           "image": {
-            "jpg": "Portrait_Shaw.jpg",
-            "webp": "Portrait_Shaw.webp"
+            "media_jpg": "Portrait_Shaw.jpg",
+            "media_webp": "Portrait_Shaw.webp"
           }
         },
         {
@@ -460,8 +460,8 @@
           "date": "2018-04-30",
           "price": 45,
           "image": {
-            "jpg": "Travel_Road_into_Hill.jpg",
-            "webp": "Travel_Road_into_Hill.webp"
+            "media_jpg": "Travel_Road_into_Hill.jpg",
+            "media_webp": "Travel_Road_into_Hill.webp"
           }
         },
         {
@@ -471,8 +471,8 @@
           "date": "2018-05-24",
           "price": 45,
           "image": {
-            "jpg": "Portrait_Sunkissed.jpg",
-            "webp": "Portrait_Sunkissed.webp"
+            "media_jpg": "Portrait_Sunkissed.jpg",
+            "media_webp": "Portrait_Sunkissed.webp"
           }
         },
         {
@@ -482,7 +482,7 @@
           "date": "2017-03-18",
           "price": 45,
           "video": {
-            "mp4": "Travel_Rock_Mountains.mp4"
+            "media_mp4": "Travel_Rock_Mountains.mp4"
           }
         },
         {
@@ -492,8 +492,8 @@
           "date": "2019-01-02",
           "price": 45,
           "image": {
-            "jpg": "Portrait_AfternoonBreak.jpg",
-            "webp": "Portrait_AfternoonBreak.webp"
+            "media_jpg": "Portrait_AfternoonBreak.jpg",
+            "media_webp": "Portrait_AfternoonBreak.webp"
           }
         }
       ]
@@ -510,8 +510,8 @@
       "price": 275,
       "folder_name": "rhode",
       "portrait": {
-        "jpg": "RhodeDubois.jpg",
-        "webp": "RhodeDubois.webp"
+        "profile_jpg": "RhodeDubois.jpg",
+        "profile_webp": "RhodeDubois.webp"
       },
       "medias": [
         {
@@ -521,8 +521,8 @@
           "date": "2019-07-18",
           "price": 70,
           "image": {
-            "jpg": "Event_KeyboardCheck.jpg",
-            "webp": "Event_KeyboardCheck.webp"
+            "media_jpg": "Event_KeyboardCheck.jpg",
+            "media_webp": "Event_KeyboardCheck.webp"
           }
         },
         {
@@ -532,8 +532,8 @@
           "date": "2019-08-12",
           "price": 70,
           "image": {
-            "jpg": "Fashion_Melody_Red_on_Stripes.jpg",
-            "webp": "Fashion_Melody_Red_on_Stripes.webp"
+            "media_jpg": "Fashion_Melody_Red_on_Stripes.jpg",
+            "media_webp": "Fashion_Melody_Red_on_Stripes.webp"
           }
         },
         {
@@ -543,8 +543,8 @@
           "date": "2013-02-30",
           "price": 70,
           "image": {
-            "jpg": "Sport_2000_with_8.jpg",
-            "webp": "Sport_2000_with_8.webp"
+            "media_jpg": "Sport_2000_with_8.jpg",
+            "media_webp": "Sport_2000_with_8.webp"
           }
         },
         {
@@ -554,7 +554,7 @@
           "date": "2016-06-12",
           "price": 70,
           "video": {
-            "mp4": "Animals_Puppiness.mp4"
+            "media_mp4": "Animals_Puppiness.mp4"
           }
         },
         {
@@ -564,8 +564,8 @@
           "date": "2018-02-22",
           "price": 70,
           "image": {
-            "jpg": "Event_Emcee.jpg",
-            "webp": "Event_Emcee.webp"
+            "media_jpg": "Event_Emcee.jpg",
+            "media_webp": "Event_Emcee.webp"
           }
         },
         {
@@ -575,8 +575,8 @@
           "date": "2018-07-17",
           "price": 70,
           "image": {
-            "jpg": "Fashion_Wings.jpg",
-            "webp": "Fashion_Wings.webp"
+            "media_jpg": "Fashion_Wings.jpg",
+            "media_webp": "Fashion_Wings.webp"
           }
         },
         {
@@ -586,8 +586,8 @@
           "date": "2019-01-02",
           "price": 70,
           "image": {
-            "jpg": "Event_VentureConference.jpg",
-            "webp": "Event_VentureConference.webp"
+            "media_jpg": "Event_VentureConference.jpg",
+            "media_webp": "Event_VentureConference.webp"
           }
         },
         {
@@ -597,8 +597,8 @@
           "date": "2017-03-13",
           "price": 70,
           "image": {
-            "jpg": "Animals_Majesty.jpg",
-            "webp": "Animals_Majesty.webp"
+            "media_jpg": "Animals_Majesty.jpg",
+            "media_webp": "Animals_Majesty.webp"
           }
         },
         {
@@ -608,8 +608,8 @@
           "date": "2019-05-20",
           "price": 70,
           "image": {
-            "jpg": "Event_ProductPitch.jpg",
-            "webp": "Event_ProductPitch.webp"
+            "media_jpg": "Event_ProductPitch.jpg",
+            "media_webp": "Event_ProductPitch.webp"
           }
         }
       ]
@@ -626,8 +626,8 @@
       "price": 250,
       "folder_name": "ellie-rose",
       "portrait": {
-        "jpg": "EllieRoseWilkens.jpg",
-        "webp": "EllieRoseWilkens.webp"
+        "profile_jpg": "EllieRoseWilkens.jpg",
+        "profile_webp": "EllieRoseWilkens.webp"
       },
       "medias": [
         {
@@ -637,8 +637,8 @@
           "date": "2018-04-27",
           "price": 70,
           "image": {
-            "jpg": "Sport_Jump.jpg",
-            "webp": "Sport_Jump.webp"
+            "media_jpg": "Sport_Jump.jpg",
+            "media_webp": "Sport_Jump.webp"
           }
         },
         {
@@ -648,8 +648,8 @@
           "date": "2018-05-15",
           "price": 71,
           "image": {
-            "jpg": "Architecture_Horseshoe.jpg",
-            "webp": "Architecture_Horseshoe.webp"
+            "media_jpg": "Architecture_Horseshoe.jpg",
+            "media_webp": "Architecture_Horseshoe.webp"
           }
         },
         {
@@ -659,8 +659,8 @@
           "date": "2018-03-05",
           "price": 65,
           "image": {
-            "jpg": "Sport_Next_Hold.jpg",
-            "webp": "Sport_Next_Hold.webp"
+            "media_jpg": "Sport_Next_Hold.jpg",
+            "media_webp": "Sport_Next_Hold.webp"
           }
         },
         {
@@ -670,8 +670,8 @@
           "date": "2018-03-10",
           "price": 70,
           "image": {
-            "jpg": "sport_water_tunnel.jpg",
-            "webp": "sport_water_tunnel.webp"
+            "media_jpg": "sport_water_tunnel.jpg",
+            "media_webp": "sport_water_tunnel.webp"
           }
         },
         {
@@ -681,8 +681,8 @@
           "date": "2018-05-03",
           "price": 75,
           "image": {
-            "jpg": "Architecture_White_Light.jpg",
-            "webp": "Architecture_White_Light.webp"
+            "media_jpg": "Architecture_White_Light.jpg",
+            "media_webp": "Architecture_White_Light.webp"
           }
         },
         {
@@ -692,8 +692,8 @@
           "date": "2018-05-21",
           "price": 80,
           "image": {
-            "jpg": "Architecture_Connected_Curves.jpg",
-            "webp": "Architecture_Connected_Curves.webp"
+            "media_jpg": "Architecture_Connected_Curves.jpg",
+            "media_webp": "Architecture_Connected_Curves.webp"
           }
         },
         {
@@ -703,8 +703,8 @@
           "date": "2018-04-16",
           "price": 50,
           "image": {
-            "jpg": "Sport_Sky_Cross.jpg",
-            "webp": "Sport_Sky_Cross.webp"
+            "media_jpg": "Sport_Sky_Cross.jpg",
+            "media_ webp": "Sport_Sky_Cross.webp"
           }
         },
         {
@@ -714,8 +714,8 @@
           "date": "2018-05-10",
           "price": 72,
           "image": {
-            "jpg": "Architecture_Water_on_Modern.jpg",
-            "webp": "Architecture_Water_on_Modern.webp"
+            "media_jpg": "Architecture_Water_on_Modern.jpg",
+            "media_webp": "Architecture_Water_on_Modern.webp"
           }
         },
         {
@@ -725,7 +725,7 @@
           "date": "2018-02-30",
           "price": 70,
           "video": {
-            "mp4": "Sport_Tricks_in_the_air.mp4"
+            "media_mp4": "Sport_Tricks_in_the_air.mp4"
           }
         },
         {
@@ -735,8 +735,8 @@
           "date": "2018-04-22",
           "price": 65,
           "image": {
-            "jpg": "Sport_Race_End.jpg",
-            "webp": "Sport_Race_End.webp"
+            "media_jpg": "Sport_Race_End.jpg",
+            "media_webp": "Sport_Race_End.webp"
           }
         },
         {
@@ -746,8 +746,8 @@
           "date": "2018-05-20",
           "price": 58,
           "image": {
-            "jpg": "Architecture_Cross_Bar.jpg",
-            "webp": "Architecture_Cross_Bar.webp"
+            "media_jpg": "Architecture_Cross_Bar.jpg",
+            "media_webp": "Architecture_Cross_Bar.webp"
           }
         }
       ]

@@ -153,6 +153,7 @@
   list-style: none;
   margin: 0;
   transition: all 0.3s ease;
+  z-index: 1000;
 }
 
 .dropdown-options.show {

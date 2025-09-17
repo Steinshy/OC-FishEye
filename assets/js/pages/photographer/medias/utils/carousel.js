@@ -1,9 +1,3 @@
-/**
- * Setup slide navigation controls
- * @param {Function} goToSlide - Function to navigate to specific slide
- * @param {Function} previousSlide - Function to go to previous slide
- * @param {Function} nextSlide - Function to go to next slide
- */
 const setupNavigationControls = (goToSlide, previousSlide, nextSlide) => {
   const prev = document.getElementById('prev');
   const next = document.getElementById('next');
@@ -29,10 +23,6 @@ const setupNavigationControls = (goToSlide, previousSlide, nextSlide) => {
   }
 };
 
-/**
- * Setup slide click handlers
- * @param {Function} goToSlide - Function to navigate to specific slide
- */
 const setupSlideHandlers = goToSlide => {
   const slides = document.querySelectorAll('.carrousel_slide');
   slides.forEach((slide, index) => {
@@ -40,10 +30,6 @@ const setupSlideHandlers = goToSlide => {
   });
 };
 
-/**
- * Setup preview handlers
- * @param {Function} goToSlide - Function to navigate to specific slide
- */
 const setupPreviewHandlers = goToSlide => {
   const previews = document.querySelectorAll('.carrousel_preview');
   previews.forEach((preview, index) => {
@@ -60,11 +46,6 @@ const setupPreviewHandlers = goToSlide => {
   });
 };
 
-/**
- * Setup keyboard navigation
- * @param {Function} previousSlide - Function to go to previous slide
- * @param {Function} nextSlide - Function to go to next slide
- */
 const setupKeyboardNavigation = (previousSlide, nextSlide) => {
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') {
@@ -77,9 +58,6 @@ const setupKeyboardNavigation = (previousSlide, nextSlide) => {
   });
 };
 
-/**
- * Todo: Refactor this code. Need to Import to Photographer Page
- */
 export const initializeCarrouselControl = () => {
   const radios = [
     document.getElementById('radio1'),
@@ -88,20 +66,29 @@ export const initializeCarrouselControl = () => {
     document.getElementById('radio4'),
     document.getElementById('radio5')
   ];
-  let currentSlide = radios.findIndex(radio => radio.checked);
+
+  const validRadios = radios.filter(radio => radio !== null);
+  if (validRadios.length === 0) {
+    console.error('Carousel radio buttons not found, skipping carousel initialization');
+    return;
+  }
+
+  let currentSlide = radios.findIndex(radio => radio && radio.checked);
 
   if (currentSlide === -1) {
     currentSlide = 0;
-    radios[0].checked = true;
+    if (radios[0]) {
+      radios[0].checked = true;
+    }
   }
 
   const goToSlide = index => {
     // Validate input to prevent injection
     let validIndex = Number.parseInt(index, 10);
-    if (Number.isNaN(validIndex) || validIndex < 0) validIndex = radios.length - 1;
-    else if (validIndex >= radios.length) validIndex = 0;
+    if (Number.isNaN(validIndex) || validIndex < 0) validIndex = validRadios.length - 1;
+    else if (validIndex >= validRadios.length) validIndex = 0;
 
-    if (radios[validIndex]) {
+    if (radios[validIndex] && radios[validIndex] !== null) {
       radios[validIndex].checked = true;
       currentSlide = validIndex;
     }

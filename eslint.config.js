@@ -73,7 +73,7 @@ export default [
         initCharacterCount: 'readonly',
         initializeRealTimeValidation: 'readonly',
         handleFormSubmit: 'readonly',
-        ErrorHandler: 'readonly',
+        errorDisplay: 'readonly',
         Validators: 'readonly',
         createSortDropdown: 'readonly'
       }
