@@ -1,4 +1,4 @@
-import { validationRules, formConfig, modalElements } from '../../../constants.js';
+import { validationConfig, formConfig, modalElements } from '../../../constants.js';
 
 import { errorDisplay } from './ui-helper.js';
 
@@ -6,11 +6,11 @@ export const validateFields = (fieldName, value) => {
   switch (fieldName) {
     case 'firstName':
     case 'lastName':
-      return value.length >= validationRules.minlength;
+      return value.length >= validationConfig.minlength;
     case 'email':
-      return validationRules.emailRegex.test(value);
+      return validationConfig.emailRegex.test(value);
     case 'message':
-      return value.length > 0 && value.length <= validationRules.maxlength;
+      return value.length > 0 && value.length <= validationConfig.maxlength;
     default:
       return false;
   }

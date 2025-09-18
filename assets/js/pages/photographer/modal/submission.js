@@ -1,4 +1,4 @@
-import { modalElements, inputs } from '../../../constants.js';
+import { modalElements, getInputs } from '../../../constants.js';
 
 import { resetFormAndModal, toggleModal } from './modalManager.js';
 import { submitButtonState, errorDisplay } from './ui-helper.js';
@@ -24,7 +24,7 @@ export const handleFormSubmission = () => {
 
     setTimeout(() => {
       submitButtonState?.setSuccess(true);
-      inputs.forEach(input => {
+      getInputs().forEach(input => {
         if (input) {
           input.classList.add('success');
           input.setAttribute('data-valid', 'true');
@@ -50,7 +50,7 @@ export const handleFormSubmission = () => {
 export const disableFormInputs = disable => {
   if (!modalElements) return;
 
-  inputs.forEach(input => {
+  getInputs().forEach(input => {
     if (input) {
       input.disabled = disable;
     }

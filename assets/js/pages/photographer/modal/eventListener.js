@@ -1,4 +1,4 @@
-import { modalElements, validationRules, formConfig } from '../../../constants.js';
+import { modalElements, validationConfig, formConfig } from '../../../constants.js';
 
 import { toggleModal } from './modalManager.js';
 import { submitForm } from './submission.js';
@@ -84,7 +84,7 @@ export const createCharacterCounter = (inputElement, displayElement, maxLength) 
 export const characterCountListeners = () => {
   if (!modalElements.formGroup.message || !modalElements.formElements.characterCount) return null;
 
-  return createCharacterCounter(modalElements.formGroup.message, modalElements.formElements.characterCount, validationRules?.maxlength || 500);
+  return createCharacterCounter(modalElements.formGroup.message, modalElements.formElements.characterCount, validationConfig?.maxlength || 500);
 };
 
 // Modal Submit Form Listeners

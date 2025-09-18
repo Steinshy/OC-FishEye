@@ -1,7 +1,4 @@
-export const baseAssetsUrl = 'assets/photographers/';
-export const photographersDataUrl = 'assets/photographers/data.json';
-
-export const validationRules = {
+export const validationConfig = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   minlength: 2,
   maxlength: 500,
@@ -48,12 +45,8 @@ export const formConfig = {
   errorElements: ['firstName', 'lastName', 'email', 'message'],
 };
 
-export const inputs = [
-  modalElements?.formGroup?.firstName,
-  modalElements?.formGroup?.lastName,
-  modalElements?.formGroup?.email,
-  modalElements?.formGroup?.message,
-];
+export const getInputs = () =>
+  [modalElements?.formGroup?.firstName, modalElements?.formGroup?.lastName, modalElements?.formGroup?.email, modalElements?.formGroup?.message].filter(Boolean);
 
 export const sortDropdownElements = {
   button: document.getElementById('media-button'),

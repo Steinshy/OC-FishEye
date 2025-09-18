@@ -2,8 +2,9 @@ export const generateHeaderHTML = photographer => {
   const { name, lastname, tagline } = photographer;
   const { city, country } = photographer.location;
   const { profile_jpg, profile_webp } = photographer.portrait;
+  const photographerSection = document.getElementById('photographer-section');
 
-  const htmlContent = `
+  photographerSection.innerHTML = `
     <div class="section-container">
       <div class="section-info" id="bio-info">
         <h1 data-label="Nom du photographe">${name} ${lastname}</h1>
@@ -28,11 +29,4 @@ export const generateHeaderHTML = photographer => {
         </picture>
       </div>
     </div>`;
-
-  const photographerSection = document.getElementById('photographer-section');
-  if (photographerSection) {
-    photographerSection.innerHTML = htmlContent;
-  }
-
-  return htmlContent;
 };

@@ -1,27 +1,21 @@
-import { photographersDataUrl } from './constants.js';
+export class DataManagerError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'DataManagerError';
+  }
+}
 
-let photographersCache = null;
-export const getCachedData = () => photographersCache;
-export const setCachedData = data => {
-  photographersCache = data;
-};
-
+// Fetch all photographers data from the JSON file
 export const getPhotographersData = async () => {
-  const cachedData = getCachedData();
-  if (cachedData) return cachedData;
-
-  const response = await fetch(photographersDataUrl);
-  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-  const data = await response.json();
-  if (!data?.photographers?.length) throw new Error('Invalid data structure');
-
-  const result = { photographers: data.photographers };
-  setCachedData(result);
-  return result;
+  const res = await fetch('assets/photographers/data.json');
+  if (!res.ok) throw new DataManagerError(`HTTP error! status: ${res.status}`);
+  const { photographers } = await res.json();
+  if (!photographers?.length) throw new DataManagerError('Invalid data structure');
+  return { photographers };
 };
 
-const buildPhotographerResponse = photographer => ({
+// Normalize a photographer object
+export const buildPhotographerResponse = photographer => ({
   photographer: {
     ...photographer,
     tagline: photographer.tagline || '',
@@ -34,13 +28,17 @@ const buildPhotographerResponse = photographer => ({
   },
 });
 
-export const getPhotographerById = async photographerId => {
-  const id = parseInt(photographerId);
-  if (!id || isNaN(id)) throw new Error('Valid photographer ID required');
+// Get a photographer by ID
+const checkId = async id => {
+  id = parseInt(id);
+  if (!id || isNaN(id)) throw new DataManagerError('Valid photographer ID required');
+  return id;
+};
 
+export const getPhotographerById = async id => {
+  const pid = await checkId(id);
   const { photographers } = await getPhotographersData();
-  const photographer = photographers.find(p => p.id === id);
-  if (!photographer) throw new Error(`Photographer ${id} not found`);
-
+  const photographer = photographers.find(p => p.id === pid);
+  if (!photographer) throw new DataManagerError(`Photographer ${pid} not found`);
   return buildPhotographerResponse(photographer);
 };

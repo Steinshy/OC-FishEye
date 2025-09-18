@@ -1,4 +1,4 @@
-import { renderMediaGallery } from '../gallery.js';
+import { renderMediaGallery } from '../mediaHandler.js';
 
 const sortFunctions = {
   Popularité: (mediaA, mediaB) => mediaB.likes - mediaA.likes,
