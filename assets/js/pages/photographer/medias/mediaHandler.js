@@ -20,9 +20,9 @@ export const renderMediaGallery = async (medias, media_path) => {
 };
 
 export const createMediaPicture = (media, media_path) => {
-  const { wepb_src, wepb_type, jpg_src, jpg_type, alt, loading } = {
-    wepb_src: `${media_path}/webp/${media.image.media_webp}`,
-    wepb_type: 'image/webp',
+  const { webp_src, webp_type, jpg_src, jpg_type, alt, loading } = {
+    webp_src: `${media_path}/webp/${media.image.media_webp}`,
+    webp_type: 'image/webp',
     jpg_src: `${media_path}/jpg/${media.image.media_jpg}`,
     jpg_type: 'image/jpeg',
     alt: media.title,
@@ -30,7 +30,7 @@ export const createMediaPicture = (media, media_path) => {
   };
   const picture = document.createElement('picture');
   picture.innerHTML = `
-  <source srcset="${wepb_src}" type="${wepb_type}" alt="${alt}" loading="${loading}">
+  <source srcset="${webp_src}" type="${webp_type}" alt="${alt}" loading="${loading}">
   <source srcset="${jpg_src}" type="${jpg_type}" alt="${alt}" loading="${loading}">
   <img src="${jpg_src}" alt="${alt}" loading="${loading}">
   `;

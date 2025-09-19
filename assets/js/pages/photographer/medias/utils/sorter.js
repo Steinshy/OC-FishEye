@@ -15,9 +15,11 @@ export const mediaSorter = {
   sortMedia: (medias, criteria) => [...medias].sort(sortFunctions[criteria] || (() => 0)),
 
   handleSortSelection(criteria, medias, folderName) {
+    console.log('Sorter received:', { criteria, mediasCount: medias.length, folderName });
     this.currentSortCriteria = criteria;
     this.currentMedia = medias;
     const sortedMedias = this.sortMedia(medias, criteria);
+    console.log('Sorted medias:', sortedMedias.length, 'with path:', folderName);
     renderMediaGallery(sortedMedias, folderName);
   },
 
