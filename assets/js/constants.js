@@ -1,3 +1,12 @@
+export const appConfig = {
+  mediaPath: 'assets/photographers/',
+  mediaStructure: {
+    portrait: 'portrait',
+    media: 'media',
+    video: 'video',
+  },
+};
+
 export const validationConfig = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   minlength: 2,
@@ -48,11 +57,54 @@ export const formConfig = {
 export const getInputs = () =>
   [modalElements?.formGroup?.firstName, modalElements?.formGroup?.lastName, modalElements?.formGroup?.email, modalElements?.formGroup?.message].filter(Boolean);
 
-export const sortDropdownElements = {
+export const getSortOptionsElements = () => ({
   button: document.getElementById('media-button'),
-  options: document.getElementById('sort-options'),
+  sortOptions: document.getElementById('sort-options'),
   popularOption: document.getElementById('popular-option'),
   dateOption: document.getElementById('date-option'),
   titleOption: document.getElementById('title-option'),
   likesOption: document.getElementById('likes-option'),
+});
+
+export const getFilterOptionsElements = () => {
+  const elements = getSortOptionsElements();
+  return [elements.popularOption, elements.dateOption, elements.titleOption, elements.likesOption].filter(Boolean);
+};
+
+export let mediaStore = { medias: [], mediaPath: '' };
+export const setMediaStore = (medias, mediaPath) => {
+  mediaStore = { medias: Array.isArray(medias) ? medias : [], mediaPath: mediaPath || '' };
+};
+export const getDefaultSortLabel = () => {
+  const elements = getSortOptionsElements();
+  return elements.popularOption?.textContent?.trim() || 'Popularité';
+};
+
+export const sortFunctions = {
+  Popularité: (mediaA, mediaB) => mediaB.likes - mediaA.likes,
+  Date: (mediaA, mediaB) => new Date(mediaB.date) - new Date(mediaA.date),
+  Titre: (mediaA, mediaB) => mediaA.title.localeCompare(mediaB.title),
+  Likes: (mediaA, mediaB) => mediaB.likes - mediaA.likes,
+};
+
+export const dropdownConfig = {
+  attributes: {
+    show: 'show',
+    hidden: 'hidden',
+    ariaHidden: 'aria-hidden',
+    ariaExpanded: 'aria-expanded',
+    ariaSelected: 'aria-selected',
+    role: 'role',
+    option: 'option',
+  },
+  events: {
+    click: 'click',
+    keydown: 'keydown',
+  },
+  keys: {
+    escape: 'Escape',
+    arrowDown: 'ArrowDown',
+    arrowUp: 'ArrowUp',
+    enter: 'Enter',
+  },
 };

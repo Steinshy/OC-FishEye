@@ -17,25 +17,26 @@
       content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="" />
-    <meta property="og:image" content="assets/favicons/logo.png" />
+    <meta property="og:image" content="./assets/favicons/logo.png" />
     <meta name="twitter:card" content="summary-large-image" />
     <meta name="twitter:title" content="FishEye - Photographe Professionnel" />
     <meta
       name="twitter:description"
       content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
-    <meta name="twitter:image" content="assets/favicons/logo.png" />
+    <meta name="twitter:image" content="./assets/favicons/logo.png" />
 
     <title>FishEye - Photographe</title>
 
-    <link rel="icon" type="image/x-icon" href="assets/favicons/favicon.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/logo.png" />
+    <link rel="icon" type="image/x-icon" href="./assets/favicons/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/logo.png" />
 
     <!-- Internal Resources -->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/photographer.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/modal.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/photographer.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/modal.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/medias.css" />
 
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,10 +47,13 @@
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
-      as="style" />
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'" />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap" />
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
+      media="print"
+      onload="this.media='all'" />
 
     <!-- Font Awesome -->
     <link
@@ -61,10 +65,15 @@
   </head>
 
   <body>
+    <!-- Skip Links for Accessibility -->
+    <a href="#photographer-section" class="skip-link">Aller au contenu principal</a>
+    <a href="#sort-options" class="skip-link">Aller au menu de tri</a>
+    <a href="#gallery-container" class="skip-link">Aller à la galerie</a>
+
     <header>
       <nav role="navigation" aria-label="Navigation principale">
         <a href="index.html">
-          <img class="nav-logo" src="assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="lazy" />
+          <img class="nav-logo" src="./assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="lazy" />
         </a>
       </nav>
     </header>
@@ -81,34 +90,39 @@
         <div class="dropdown-button">
           <button id="media-button" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-options"> Popularité </button>
           <ul class="dropdown-options" id="sort-options" role="listbox" tabindex="-1" aria-hidden="true">
-            <li id="popular-option" role="option" style="display: none">Popularité</li>
-            <li id="date-option" role="option">Date</li>
-            <li id="title-option" role="option">Titre</li>
-            <li id="likes-option" role="option">Likes</li>
+            <li id="popular-option" role="option" tabindex="-1">Popularité</li>
+            <li id="date-option" role="option" tabindex="-1">Date</li>
+            <li id="title-option" role="option" tabindex="-1">Titre</li>
+            <li id="likes-option" role="option" tabindex="-1">Likes</li>
           </ul>
         </div>
       </section>
 
       <!-- Media Cards Section -->
-      <section class="gallery-container" id="gallery-container"></section>
+      <section class="gallery-container" id="gallery-container" aria-labelledby="gallery-heading">
+        <h2 id="gallery-heading" class="sr-only">Galerie de médias du photographe</h2>
+        <div id="gallery-status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+      </section>
     </main>
 
     <!-- Contact Modal Section -->
     <div class="modal" id="modal-signup" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description">
       <div class="modal-content" id="modal-content">
-        <div class="modal-header" id="modal-header">
+        <header class="modal-header" id="modal-header">
           <div class="header-content" id="header-content">
-            <i class="fa-solid fa-envelope"></i>
-            <h2>Contactez-moi</h2>
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <h2 id="modal-title">Contactez-moi</h2>
           </div>
-        </div>
+        </header>
 
         <button class="modal-close" id="modal-close" type="button" aria-label="Fermer le modal">
-          <i class="fa-solid fa-xmark"></i>
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
 
+        <p id="modal-description" class="sr-only"> Formulaire de contact pour envoyer un message au photographe </p>
+
         <!-- Contact Form -->
-        <form class="main-form" id="form-signup" name="contact" method="get">
+        <form class="main-form" id="form-signup" name="contact" method="get" role="form" aria-labelledby="modal-title">
           <div class="form-group">
             <label for="firstname">Prénom *</label>
             <input
@@ -170,9 +184,9 @@
           </div>
         </form>
         <!-- Submit Button -->
-        <div class="modal-footer" id="modal-footer">
-          <button type="submit" id="footer-submit-button" form="form-signup">Envoyer</button>
-        </div>
+        <footer class="modal-footer" id="modal-footer">
+          <button type="submit" id="footer-submit-button" form="form-signup" aria-label="Envoyer le message de contact">Envoyer</button>
+        </footer>
       </div>
     </div>
     <script type="module" src="assets/js/main.js"></script>

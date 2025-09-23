@@ -1,12 +1,12 @@
 import { modalElements, formConfig } from '../../../constants.js';
 
+// To do: Rework The submission process
 export const submitButtonState = {
   init() {
     if (!modalElements.mainModal.submitButton) return;
 
     modalElements.mainModal.submitButton.textContent = 'Envoyer';
     modalElements.mainModal.submitButton.classList.remove('success', 'disabled');
-    // Start disabled by default; validation toggles it
     modalElements.mainModal.submitButton.disabled = true;
     modalElements.mainModal.submitButton.setAttribute('aria-disabled', 'true');
   },

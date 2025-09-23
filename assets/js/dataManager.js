@@ -1,44 +1,65 @@
-export class DataManagerError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'DataManagerError';
-  }
-}
-
-// Fetch all photographers data from the JSON file
-export const getPhotographersData = async () => {
+export const getPhotographers = async () => {
   const res = await fetch('assets/photographers/data.json');
-  if (!res.ok) throw new DataManagerError(`HTTP error! status: ${res.status}`);
+  if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
   const { photographers } = await res.json();
-  if (!photographers?.length) throw new DataManagerError('Invalid data structure');
+  if (!photographers) throw new Error('Invalid data structure');
+  console.info('Photographers loaded:', photographers);
   return { photographers };
 };
 
-// Normalize a photographer object
-export const buildPhotographerResponse = photographer => ({
-  photographer: {
-    ...photographer,
-    tagline: photographer.tagline || '',
-    price: photographer.price || 0,
-    location: {
-      city: photographer.location?.city || '',
-      country: photographer.location?.country || '',
-    },
-    medias: photographer.medias || [],
-  },
-});
-
-// Get a photographer by ID
-const checkId = async id => {
-  id = parseInt(id);
-  if (!id || isNaN(id)) throw new DataManagerError('Valid photographer ID required');
-  return id;
+export const getPhotographer = async photographerId => {
+  const photographers = await getPhotographers();
+  const photographerList = photographers.photographers || photographers;
+  const photographer = photographerList.find(p => p.id === photographerId);
+  const photographerData = buildPhotographer(photographer);
+  if (!photographerData) throw new Error(`Photographer with ID ${photographerId} not found`);
+  console.info('Photographer loaded:', photographerData);
+  return { photographerData };
 };
 
-export const getPhotographerById = async id => {
-  const pid = await checkId(id);
-  const { photographers } = await getPhotographersData();
-  const photographer = photographers.find(p => p.id === pid);
-  if (!photographer) throw new DataManagerError(`Photographer ${pid} not found`);
-  return buildPhotographerResponse(photographer);
+export const getMedias = async photographerId => {
+  const res = await fetch('assets/photographers/data.json');
+  if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+  const { media } = await res.json();
+  const mediaList = media.filter(m => m.photographerId === photographerId);
+  const mediaData = mediaList.map(buildMedia);
+  return { mediaData };
+};
+
+export const buildPhotographer = photographer => {
+  if (!photographer) return null;
+
+  return {
+    name: photographer.name,
+    id: photographer.id,
+    city: photographer.city,
+    country: photographer.country,
+    tagline: photographer.tagline,
+    price: photographer.price,
+    city: photographer.city,
+    country: photographer.country,
+    portraits: {
+      profile_jpg: photographer.portrait,
+      profile_webp: photographer.portrait ? photographer.portrait.replace('jpg', 'webp') : '',
+    },
+  };
+};
+
+export const buildMedia = media => {
+  if (!media) return null;
+
+  return {
+    id: media.id,
+    photographerId: media.photographerId,
+    title: media.title,
+    media: {
+      imageJpg: media.image || null,
+      imageWebp: media.image ? media.image.replace('jpg', 'webp') : null,
+      video: media.video || null,
+    },
+    likes: media.likes,
+    date: media.date,
+    price: media.price,
+    media_id: media.id,
+  };
 };

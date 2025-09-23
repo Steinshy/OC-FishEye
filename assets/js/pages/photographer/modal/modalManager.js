@@ -1,6 +1,8 @@
 import { modalElements, formConfig } from '../../../constants.js';
 
 import { submitButtonState, errorDisplay } from './ui-helper.js';
+
+// To do: Focus input is broken
 export const resetCharacterCount = () => {
   if (modalElements.formElements.characterCount) {
     modalElements.formElements.characterCount.textContent = '0/500';
@@ -31,6 +33,8 @@ export const resetFormAndModal = () => {
   });
 };
 
+let previouslyFocusedElement = null;
+
 export const resetInputsAndFocus = () => {
   (window.requestAnimationFrame || setTimeout)(() => {
     resetInputStates();
@@ -45,9 +49,44 @@ export const resetInputsAndFocus = () => {
   });
 };
 
+export const trapFocus = element => {
+  const focusableElements = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  const firstFocusableElement = focusableElements[0];
+  const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+  const handleTabKey = e => {
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusableElement) {
+          lastFocusableElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastFocusableElement) {
+          firstFocusableElement.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  };
+
+  document.addEventListener('keydown', handleTabKey);
+  return () => document.removeEventListener('keydown', handleTabKey);
+};
+
+export const restoreFocus = () => {
+  if (previouslyFocusedElement) {
+    previouslyFocusedElement.focus();
+    previouslyFocusedElement = null;
+  }
+};
+
+let focusTrapCleanup = null;
+
 export const toggleModal = isOpen => {
   if (isOpen) {
-    // Remove aria-hidden from all modal elements
+    previouslyFocusedElement = document.activeElement;
+
     modalElements.mainModal.main.setAttribute('aria-hidden', 'false');
     modalElements.mainModal.form.setAttribute('aria-hidden', 'false');
     modalElements.mainModal.submitButton.setAttribute('aria-hidden', 'false');
@@ -55,8 +94,20 @@ export const toggleModal = isOpen => {
     modalElements.mainModal.header.classList.add('show');
     modalElements.mainModal.main.classList.add('show');
     modalElements.mainModal.form.classList.add('show');
+
+    focusTrapCleanup = trapFocus(modalElements.mainModal.main);
+
+    setTimeout(() => {
+      if (modalElements.formGroup.firstName) {
+        modalElements.formGroup.firstName.focus();
+      }
+    }, 0);
   } else {
-    // Blur any focused elements before hiding
+    if (focusTrapCleanup) {
+      focusTrapCleanup();
+      focusTrapCleanup = null;
+    }
+
     if (document.activeElement && modalElements.mainModal.main.contains(document.activeElement)) {
       document.activeElement.blur();
     }
@@ -65,11 +116,18 @@ export const toggleModal = isOpen => {
     modalElements.mainModal.main.classList.remove('show');
     modalElements.mainModal.form.classList.remove('show');
 
-    // Restore aria-hidden on all modal elements
     modalElements.mainModal.main.setAttribute('aria-hidden', 'true');
     modalElements.mainModal.form.setAttribute('aria-hidden', 'true');
     modalElements.mainModal.submitButton.setAttribute('aria-hidden', 'true');
+
+    setTimeout(() => {
+      restoreFocus();
+    }, 100);
   }
-  resetInputsAndFocus();
-  resetFormAndModal();
+
+  if (isOpen) {
+    resetInputsAndFocus();
+  } else {
+    resetFormAndModal();
+  }
 };

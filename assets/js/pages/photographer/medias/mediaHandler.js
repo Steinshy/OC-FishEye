@@ -1,63 +1,47 @@
 import { createMediaCard } from './card.js';
 
+let renderTimeout = null;
+let isRendering = false;
+
 export const renderMediaGallery = async (medias, media_path) => {
-  const loader = createMediaLoader();
-  const galleryContainer = document.getElementById('gallery-container');
-  const cardContainer = document.createElement('div');
-  cardContainer.className = 'media-cards';
+  if (renderTimeout) {
+    clearTimeout(renderTimeout);
+  }
 
-  galleryContainer.innerHTML = '';
-  galleryContainer.appendChild(loader);
+  if (isRendering) {
+    return new Promise(resolve => {
+      renderTimeout = setTimeout(() => {
+        renderMediaGallery(medias, media_path).then(resolve);
+      }, 100);
+    });
+  }
 
-  await new Promise(resolve => setTimeout(resolve, 800));
+  isRendering = true;
 
-  cardContainer.innerHTML = `
-      ${medias.map((media, index) => createMediaCard(media, media_path, index)).join('')}
-  `;
+  try {
+    const galleryContainer = document.getElementById('gallery-container');
 
-  galleryContainer.removeChild(loader);
-  galleryContainer.appendChild(cardContainer);
+    galleryContainer.innerHTML = '';
+
+    const loader = createMediaLoader();
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'media-cards';
+
+    galleryContainer.appendChild(loader);
+
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    galleryContainer.innerHTML = '';
+
+    cardContainer.innerHTML = `
+        ${medias.map((media, index) => createMediaCard(media, media_path, index)).join('')}
+    `;
+
+    galleryContainer.appendChild(cardContainer);
+  } finally {
+    isRendering = false;
+  }
 };
-
-export const createMediaPicture = (media, media_path) => {
-  const { webp_src, webp_type, jpg_src, jpg_type, alt, loading } = {
-    webp_src: `${media_path}/webp/${media.image.media_webp}`,
-    webp_type: 'image/webp',
-    jpg_src: `${media_path}/jpg/${media.image.media_jpg}`,
-    jpg_type: 'image/jpeg',
-    alt: media.title,
-    loading: 'lazy',
-  };
-  const picture = document.createElement('picture');
-  picture.innerHTML = `
-  <source srcset="${webp_src}" type="${webp_type}" alt="${alt}" loading="${loading}">
-  <source srcset="${jpg_src}" type="${jpg_type}" alt="${alt}" loading="${loading}">
-  <img src="${jpg_src}" alt="${alt}" loading="${loading}">
-  `;
-
-  return picture;
-};
-
-export const createVideoElement = (media, media_path) => {
-  const mp4_src = `${media_path}/video/${media.video.media_mp4}`;
-  const video = document.createElement('video');
-
-  video.controls = true;
-  video.muted = true;
-  video.loop = true;
-  video.playsInline = true;
-  video.preload = 'metadata';
-  video.style.width = '100%';
-  video.style.height = '100%';
-
-  video.innerHTML = `
-    <source src="${mp4_src}" type="video/mp4">
-    <span>Your browser does not support the video tag.</span>
-  `;
-
-  return video;
-};
-
 export const createMediaLoader = () => {
   const loader = document.createElement('div');
   loader.innerHTML = `

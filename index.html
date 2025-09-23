@@ -47,7 +47,13 @@
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
-      as="style" />
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
+      media="print"
+      onload="this.media='all'" />
 
     <!-- Font Awesome -->
     <link
@@ -68,16 +74,17 @@
     </header>
 
     <main>
+      <h1 id="photographers-heading" class="sr-only">Liste des photographes disponibles</h1>
       <section class="photographers" aria-labelledby="photographers-heading">
         <article class="photographer" role="listitem" tabindex="0">
           <a href="./photographer.html?id=243" aria-label="Voir le profil de Mimi Keel"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/mimi/MimiKeel.webp" type="image/webp" />
-              <source srcset="./assets/photographers/mimi/MimiKeel.jpg" type="image/jpeg" />
+              <source srcset="./assets/photographers/MimiKeel/MimiKeel.webp" type="image/webp" />
+              <source srcset="./assets/photographers/MimiKeel/MimiKeel.jpg" type="image/jpeg" />
               <img
                 class="profile-picture"
-                src="./assets/photographers/mimi/MimiKeel.jpg"
+                src="./assets/photographers/MimiKeel/MimiKeel.jpg"
                 alt="Portrait de Mimi Keel, photographe basée à Londres"
                 loading="lazy" />
             </picture>
@@ -92,11 +99,11 @@
           <a href="./photographer.html?id=930" aria-label="Voir le profil d'Ellie-Rose Wilkens"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/ellie-rose/EllieRoseWilkens.webp" type="image/webp" />
-              <source srcset="./assets/photographers/ellie-rose/EllieRoseWilkens.jpg" type="image/jpeg" />
+              <source srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.webp" type="image/webp" />
+              <source srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.jpg" type="image/jpeg" />
               <img
                 class="profile-picture"
-                src="./assets/photographers/ellie-rose/EllieRoseWilkens.jpg"
+                src="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.jpg"
                 alt="Portrait d'Ellie-Rose Wilkens, photographe basée à Paris"
                 loading="lazy" />
             </picture>
@@ -111,11 +118,11 @@
           <a href="./photographer.html?id=82" aria-label="Voir le profil de Tracy Galindo"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/tracy/TracyGalindo.webp" type="image/webp" />
-              <source srcset="./assets/photographers/tracy/TracyGalindo.jpg" type="image/jpeg" />
+              <source srcset="./assets/photographers/TracyGalindo/TracyGalindo.webp" type="image/webp" />
+              <source srcset="./assets/photographers/TracyGalindo/TracyGalindo.jpg" type="image/jpeg" />
               <img
                 class="profile-picture"
-                src="./assets/photographers/tracy/TracyGalindo.jpg"
+                src="./assets/photographers/TracyGalindo/TracyGalindo.jpg"
                 alt="Portrait de Tracy Galindo, photographe basée à Montréal"
                 loading="lazy" />
             </picture>
@@ -130,11 +137,11 @@
           <a href="./photographer.html?id=527" aria-label="Voir le profil de Nabeel Bradford"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/nabeel/NabeelBradford.webp" type="image/webp" />
-              <source srcset="./assets/photographers/nabeel/NabeelBradford.jpg" type="image/jpeg" />
+              <source srcset="./assets/photographers/NabeelBradford/NabeelBradford.webp" type="image/webp" />
+              <source srcset="./assets/photographers/NabeelBradford/NabeelBradford.jpg" type="image/jpeg" />
               <img
                 class="profile-picture"
-                src="./assets/photographers/nabeel/NabeelBradford.jpg"
+                src="./assets/photographers/NabeelBradford/NabeelBradford.jpg"
                 alt="Portrait de Nabeel Bradford, photographe basé à Mexico"
                 loading="lazy" />
             </picture>
@@ -149,11 +156,11 @@
           <a href="./photographer.html?id=925" aria-label="Voir le profil de Rhode Dubois"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/rhode/RhodeDubois.webp" type="image/webp" />
-              <source srcset="./assets/photographers/rhode/RhodeDubois.jpg" type="image/jpeg" />
+              <source srcset="./assets/photographers/RhodeDubois/RhodeDubois.webp" type="image/webp" />
+              <source srcset="./assets/photographers/RhodeDubois/RhodeDubois.jpg" type="image/jpeg" />
               <img
                 class="profile-picture"
-                src="./assets/photographers/rhode/RhodeDubois.jpg"
+                src="./assets/photographers/RhodeDubois/RhodeDubois.jpg"
                 alt="Portrait de Rhode Dubois, photographe basée à Barcelone"
                 loading="lazy" />
             </picture>
@@ -168,11 +175,11 @@
           <a href="./photographer.html?id=195" aria-label="Voir le profil de Marcel Nikolic"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/marcel/MarcelNikolic.webp" type="image/webp" />
-              <source srcset="./assets/photographers/marcel/MarcelNikolic.jpg" type="image/jpeg" />
+              <source srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.webp" type="image/webp" />
+              <source srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.jpg" type="image/jpeg" />
               <img
                 class="profile-picture"
-                src="./assets/photographers/marcel/MarcelNikolic.jpg"
+                src="./assets/photographers/MarcelNikolic/MarcelNikolic.jpg"
                 alt="Portrait de Marcel Nikolic, photographe basé à Berlin"
                 loading="lazy" />
             </picture>

@@ -1,151 +1,169 @@
-import { sortDropdownElements } from '../../constants.js';
+import { dropdownConfig, getSortOptionsElements, getFilterOptionsElements, mediaStore } from '../../constants.js';
+import { mediaSorter } from './medias/sorter.js';
 
-import { mediaSorter } from './medias/utils/sorter.js';
+const sortOptionsElements = getSortOptionsElements();
+const { button: sortDropdownButton, sortOptions: sortDropdownMenu } = sortOptionsElements;
+const optionElements = getFilterOptionsElements();
+const { attributes, events, keys } = dropdownConfig;
 
-const { options: dropdownOptions, button: dropdownButton } = sortDropdownElements;
-
-const eventHandlers = {
-  keyboard: {
-    Escape: () => dropdownController.close(),
+// To do: Move Accessibility code to a separate file - HOC approach
+const dropdownState = {
+  get currentSelection() {
+    return sortDropdownButton?.textContent?.trim() || '';
   },
 
+  get selectedOption() {
+    return optionElements.find(option => option?.textContent?.trim() === this.currentSelection);
+  },
+
+  get currentIndex() {
+    return optionElements.findIndex(option => option === document.activeElement) || 0;
+  },
+
+  get nextIndex() {
+    return (this.currentIndex + 1) % optionElements.length || 0;
+  },
+
+  get previousIndex() {
+    return this.currentIndex <= 0 ? optionElements.length - 1 : this.currentIndex - 1 || 0;
+  },
+
+  get userSelected() {
+    return this.selectedOption?.textContent?.trim() || 'Popularité';
+  },
+};
+
+const keyboardEventHandlers = {
+  keyboard: {
+    [keys.escape]: () => sortDropdownController.close(),
+    [keys.arrowDown]: e => handleNavigationKey(e, 'next'),
+    [keys.arrowUp]: e => handleNavigationKey(e, 'prev'),
+    [keys.enter]: e => handleOptionActivation(e),
+  },
   click: {
     outside: target => {
-      const isOutside = !dropdownOptions?.contains(target) && target !== dropdownButton;
-      if (isOutside) dropdownController.close();
+      const isOutside = !sortDropdownMenu?.contains(target) && target !== sortDropdownButton;
+      if (isOutside) sortDropdownController.close();
     },
-
     button: e => {
       e.stopPropagation();
-      const isOpen = e.currentTarget.getAttribute('aria-expanded') === 'true';
-      dropdownController.toggle(!isOpen);
+      const isOpen = e.currentTarget.getAttribute(attributes.ariaExpanded) === 'true';
+      sortDropdownController.toggleDropdownVisibility(!isOpen);
     },
   },
 };
 
-const dropdownController = {
-  // Store event handlers for proper cleanup
-  eventHandlers: {
-    buttonClick: null,
-    optionSelection: null,
-    globalKeydown: null,
-    globalClick: null
+const handleNavigationKey = (e, direction) => {
+  e.preventDefault();
+  e.stopPropagation();
+  sortDropdownController.navigateToOption(direction);
+};
+
+const handleOptionActivation = e => {
+  if (e.target.getAttribute(attributes.role) === attributes.option) {
+    e.preventDefault();
+    e.stopPropagation();
+    sortDropdownController.selectSortOption(e.target);
+  }
+};
+
+const updateDropdownState = isOpen => {
+  const attributeUpdates = [
+    { element: sortDropdownMenu, class: attributes.show, value: isOpen },
+    { element: sortDropdownMenu, property: attributes.hidden, value: !isOpen },
+    { element: sortDropdownMenu, attribute: attributes.ariaHidden, value: !isOpen },
+    { element: sortDropdownButton, attribute: attributes.ariaExpanded, value: isOpen },
+  ];
+
+  attributeUpdates.forEach(({ element, class: className, property, attribute, value }) => {
+    if (className) element.classList.toggle(className, value);
+    if (property) element[property] = value;
+    if (attribute) element.setAttribute(attribute, value);
+  });
+};
+
+const triggerMediaSorting = userSelected => {
+  if (!Array.isArray(mediaStore.medias) || mediaStore.medias.length === 0) return;
+  mediaSorter.sortAndRender(mediaStore.medias, userSelected, mediaStore.mediaPath);
+};
+
+const focusCurrentSelection = () => {
+  dropdownState.selectedOption?.focus();
+  sortDropdownController.updateSelectedOptionAria(dropdownState.selectedOption);
+};
+
+const sortDropdownController = {
+  navigateToOption(direction) {
+    const targetIndex = direction === 'next' ? dropdownState.nextIndex : dropdownState.previousIndex;
+    optionElements[targetIndex]?.focus();
   },
 
-  toggle(isOpen) {
-    if (!dropdownOptions || !dropdownButton) return;
-
-    const attributes = [
-      { element: dropdownOptions, class: 'show', value: isOpen },
-      { element: dropdownOptions, property: 'hidden', value: !isOpen },
-      { element: dropdownOptions, attribute: 'aria-hidden', value: !isOpen },
-      { element: dropdownButton, attribute: 'aria-expanded', value: isOpen }
-    ];
-
-    attributes.forEach(({ element, class: className, property, attribute, value }) => {
-      if (className) element.classList.toggle(className, value);
-      if (property) element[property] = value;
-      if (attribute) element.setAttribute(attribute, value);
-    });
+  focusNextSortOption() {
+    this.navigateToOption('next');
   },
 
-  close() {
-    this.toggle(false);
+  focusPreviousSortOption() {
+    this.navigateToOption('prev');
   },
 
-  handleGlobalKeydown(e) {
-    const handler = eventHandlers.keyboard[e.key];
-    if (handler) handler();
-  },
-
-  handleGlobalClick(e) {
-    eventHandlers.click.outside(e.target);
-  },
-
-  updateAriaSelected(target) {
-    const optionElements = Object.values(sortDropdownElements)
-      .filter(element => element?.matches?.("li[role='option']"));
-
-    optionElements.forEach(option =>
-      option?.setAttribute('aria-selected', option === target)
-    );
-  },
-
-  handleButtonClick(e) {
-    eventHandlers.click.button(e);
-  },
-
-  handleOptionSelection(e) {
-    if (!e.target?.matches("li[role='option']")) return;
-    const userSelected = e.target.textContent.trim();
-    dropdownButton.textContent = userSelected;
-
-    this.updateAriaSelected(e.target);
-
-    const shouldSort = mediaSorter?.handleSortSelection &&
-                      mediaSorter.getCurrentMedia().length > 0;
-
-    if (shouldSort) {
-      const folderName = mediaSorter.getCurrentPhotographerFolder?.() || 'default';
-      const media_path = `assets/photographers/${folderName}`;
-      console.log('Sorting by:', userSelected, 'with path:', media_path);
-      mediaSorter.handleSortSelection(userSelected, mediaSorter.getCurrentMedia(), media_path);
-    }
-
+  selectSortOption(option) {
+    const userSelected = option.textContent.trim();
+    sortDropdownButton.textContent = userSelected;
+    this.updateSelectedOptionAria(option);
+    triggerMediaSorting(userSelected);
     this.close();
   },
 
-  cleanup() {
-    const { eventHandlers } = this;
+  handleSortOptionClick: e => {
+    if (!e.target?.matches(`li[${attributes.role}='${attributes.option}']`)) return;
+    sortDropdownController.selectSortOption(e.target);
+  },
 
-    // Remove element listeners
-    const elementListeners = [
-      { element: dropdownButton, event: 'click', handler: eventHandlers.buttonClick },
-      { element: dropdownOptions, event: 'click', handler: eventHandlers.optionSelection }
+  toggleDropdownVisibility(isOpen) {
+    if (!sortDropdownMenu || !sortDropdownButton) return;
+
+    updateDropdownState(isOpen);
+    isOpen ? setTimeout(focusCurrentSelection, 0) : sortDropdownButton.focus();
+  },
+  close() {
+    this.toggleDropdownVisibility(false);
+  },
+
+  updateSelectedOptionAria(target) {
+    optionElements.forEach(option => option?.setAttribute(attributes.ariaSelected, option === target));
+  },
+
+  handleKeyboardNavigation(e) {
+    keyboardEventHandlers.keyboard[e.key]?.(e);
+  },
+
+  handleOutsideClick(e) {
+    keyboardEventHandlers.click.outside(e.target);
+  },
+
+  handleDropdownToggle(e) {
+    keyboardEventHandlers.click.button(e);
+  },
+
+  removeEventListeners() {
+    const listeners = [
+      [events.click, sortDropdownButton, sortDropdownController.handleDropdownToggle],
+      [events.click, sortDropdownMenu, sortDropdownController.handleSortOptionClick],
+      [events.click, null, sortDropdownController.handleOutsideClick],
+      [events.keydown, null, sortDropdownController.handleKeyboardNavigation],
     ];
 
-    // Remove document listeners
-    const documentListeners = [
-      { event: 'keydown', handler: eventHandlers.globalKeydown },
-      { event: 'click', handler: eventHandlers.globalClick }
-    ];
-
-    // Remove all listeners
-    elementListeners.forEach(({ element, event, handler }) => {
-      if (element && handler) {
-        element.removeEventListener(event, handler);
-      }
-    });
-
-    documentListeners.forEach(({ event, handler }) => {
-      if (handler) {
-        document.removeEventListener(event, handler);
-      }
+    listeners.forEach(([event, element, handler]) => {
+      (element || document).removeEventListener(event, handler);
     });
   },
 };
 
 export const dropdownListeners = () => {
-  if (!dropdownButton || !dropdownOptions) return;
-  const { eventHandlers } = dropdownController;
+  if (!sortDropdownButton || !sortDropdownMenu) return;
 
-  // Create and store event handlers
-  const handlers = {
-    buttonClick: (e) => dropdownController.handleButtonClick(e),
-    optionSelection: (e) => dropdownController.handleOptionSelection(e),
-    globalKeydown: (e) => dropdownController.handleGlobalKeydown(e),
-    globalClick: (e) => dropdownController.handleGlobalClick(e)
-  };
-
-  // Store handlers for cleanup
-  Object.assign(eventHandlers, handlers);
-
-  // Add event listeners
-  dropdownButton.addEventListener('click', handlers.buttonClick);
-  dropdownOptions.addEventListener('click', handlers.optionSelection);
-  document.addEventListener('keydown', handlers.globalKeydown);
-  document.addEventListener('click', handlers.globalClick);
+  sortDropdownButton.addEventListener(events.click, sortDropdownController.handleDropdownToggle);
+  sortDropdownMenu.addEventListener(events.click, sortDropdownController.handleSortOptionClick);
+  document.addEventListener(events.keydown, sortDropdownController.handleKeyboardNavigation);
+  document.addEventListener(events.click, sortDropdownController.handleOutsideClick);
 };
-
-// Export cleanup function
-export const cleanupDropdownListeners = () => dropdownController.cleanup();

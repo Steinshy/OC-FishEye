@@ -3,6 +3,38 @@
 =================================== */
 
 /* =========================
+  Accessibility Classes
+========================= */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--bg-color-primary);
+  color: var(--color-white);
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* =========================
   Design System & Variables
 ========================= */
 :root {
@@ -25,8 +57,8 @@
   --color-info: #3b82f6;
 
   /* Typography */
-  --font-family-primary: 'DM Sans', arial, helvetica, sans-serif;
-  --font-family-secondary: 'Roboto', arial, helvetica, sans-serif;
+  --font-family-primary: "DM Sans", arial, helvetica, sans-serif;
+  --font-family-secondary: "Roboto", arial, helvetica, sans-serif;
 
   /* Font Weights */
   --font-weight-light: 300;
