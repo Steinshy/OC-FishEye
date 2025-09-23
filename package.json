@@ -2,7 +2,7 @@
   "name": "fisheye",
   "version": "1.0.0",
   "description": "FishEye photography website - A modern portfolio showcasing professional photography with interactive galleries and responsive design",
-  "documentation": {
+  "usage": {
     "linting": {
       "install": "npm install",
       "lint-all": "npm run lint",
@@ -11,17 +11,7 @@
       "fix-js": "npm run lint:js:fix",
       "lint-css": "npm run lint:css",
       "fix-css": "npm run lint:css:fix",
-      "lint-html": "npm run lint:html",
-      "usage": [
-        "# Install new dependencies",
-        "npm install",
-        "# Lint all files (JS, CSS, HTML)",
-        "npm run lint",
-        "# Lint specific file types",
-        "npm run lint:css",
-        "npm run lint:html",
-        "npm run lint:js"
-      ]
+      "lint-html": "npm run lint:html"
     }
   },
   "type": "module",
