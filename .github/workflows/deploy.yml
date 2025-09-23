@@ -3,13 +3,13 @@ on:
   push:
     branches: [dev, testing]
 env:
-  NODE_VERSION: '24'
+  NODE_VERSION: "24"
 permissions:
   contents: read
   pages: write
   id-token: write
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: false
 jobs:
   build:
@@ -22,8 +22,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
       - name: Install dependencies
         run: |
           npm cache clean --force
@@ -42,8 +42,11 @@ jobs:
       - name: Prepare files
         run: |
           mkdir -p deploy
-          cp index.html photographer.html carrousel.html deploy/
+          # Copy all HTML files from root directory
+          cp *.html deploy/ 2>/dev/null || echo "⚠️ No HTML files found in root"
+          # Copy assets directory
           cp -r assets/ deploy/
+          # Copy manifest.json if it exists
           [ -f "manifest.json" ] && cp manifest.json deploy/ || [ -f "assets/manifest.json" ] && cp assets/manifest.json deploy/ || echo "⚠️ No manifest.json found"
           echo "📦 $(find deploy/ -type f | wc -l) files ready"
       - name: Setup Pages

@@ -3,7 +3,7 @@ on:
   push:
     branches: [dev, testing]
 env:
-  NODE_VERSION: '24'
+  NODE_VERSION: "24"
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -22,8 +22,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
       - name: Install dependencies
         run: |
           npm cache clean --force
