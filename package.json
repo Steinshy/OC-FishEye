@@ -1,45 +1,25 @@
 {
   "name": "fisheye",
   "version": "1.0.0",
-  "description": "FishEye photography website - A modern portfolio showcasing professional photography with interactive galleries and responsive design",
-  "type": "module",
-  "main": "index.html",
   "homepage": "https://steinshy.github.io/FishEye",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/steinshy/FishEye.git"
-  },
-  "keywords": ["photography", "portfolio", "gallery", "responsive", "accessibility", "vanilla-js", "html5", "css3"],
-  "author": {
-    "name": "Steinshy",
-    "url": "https://github.com/steinshy"
-  },
-  "license": "MIT",
   "engines": {
     "node": ">=22.0.0",
     "npm": ">=10.0.0"
   },
   "scripts": {
     "lint": "eslint . --ext .js && stylelint '**/*.css' && html-validate '**/*.html'",
-    "lint:fix": "eslint . --ext .js --fix && stylelint '**/*.css' --fix && html-validate '**/*.html' --fix",
     "lint:js": "eslint . --ext .js",
-    "lint:js:fix": "eslint . --ext .js --fix",
     "lint:css": "stylelint '**/*.css'",
-    "lint:css:fix": "stylelint '**/*.css' --fix",
     "lint:html": "html-validate '**/*.html'",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format:check": "prettier --write --check .",
     "server": "http-server . -p 8080 --cors -o -c-1 --no-cache",
-    "markdown:lint": "markdownlint '**/*.md' --ignore node_modules",
-    "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "markdown:lint": "markdownlint '**/*.md' --ignore node_modules"
   },
   "usage": {
     "setup": "npm install",
     "dev": "npm run server",
     "lint": "npm run lint",
-    "fix": "npm run lint:fix",
-    "format": "npm run format"
+    "format": "npm run format:check"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
