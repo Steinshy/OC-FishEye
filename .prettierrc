@@ -1,10 +1,10 @@
 {
-  "semi": true,
-  "trailingComma": "es5",
-  "singleQuote": true,
   "printWidth": 160,
   "tabWidth": 2,
   "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
   "endOfLine": "lf",
   "bracketSpacing": true,
   "bracketSameLine": false,
@@ -35,14 +35,6 @@
       }
     },
     {
-      "files": ["*.json", "*.jsonc"],
-      "options": {
-        "parser": "json",
-        "printWidth": 160,
-        "singleQuote": false
-      }
-    },
-    {
       "files": ["*.js", "*.mjs", "*.cjs"],
       "options": {
         "parser": "babel",
@@ -56,6 +48,14 @@
         "parser": "typescript",
         "printWidth": 160,
         "trailingComma": "es5"
+      }
+    },
+    {
+      "files": ["*.json", "*.jsonc"],
+      "options": {
+        "parser": "json",
+        "printWidth": 160,
+        "singleQuote": false
       }
     },
     {

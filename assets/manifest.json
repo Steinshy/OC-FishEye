@@ -6,16 +6,16 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#901c1c",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "scope": "/",
-  "lang": "fr",
+  "lang": "en",
   "categories": ["photography", "art", "portfolio"],
   "icons": [
     {
       "src": "favicons/favicon.png",
       "sizes": "32x32",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "favicons/logo.png",
@@ -32,7 +32,7 @@
   ],
   "screenshots": [
     {
-      "src": "photographers/ellie/jpg/EllieRoseWilkens.jpg",
+      "src": "photographers/EllieRoseWilkens/EllieRoseWilkens.jpg",
       "sizes": "1280x720",
       "type": "image/jpeg",
       "form_factor": "wide",
@@ -67,9 +67,6 @@
   ],
   "related_applications": [],
   "prefer_related_applications": false,
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
   "launch_handler": {
     "client_mode": "navigate-existing"
   }

@@ -7,7 +7,6 @@ import security from 'eslint-plugin-security';
 import accessibility from 'eslint-plugin-jsx-a11y';
 
 export default [
-  // Base recommended configuration
   js.configs.recommended,
 
   // HTML plugin configuration
@@ -23,15 +22,17 @@ export default [
       },
     },
     rules: {
-      // HTML-specific rules
+      // HTML structure rules
       'html/indent': ['error', 2],
       'html/require-closing-tags': 'error',
       'html/require-doctype': 'error',
+      'html/require-meta-charset': 'error',
+      'html/require-meta-viewport': 'error',
+
+      // HTML attribute rules
       'html/no-duplicate-attrs': 'error',
       'html/no-extra-spacing-attrs': 'error',
       'html/no-self-closing': 'off',
-      'html/require-meta-charset': 'error',
-      'html/require-meta-viewport': 'error',
     },
   },
 
@@ -56,6 +57,7 @@ export default [
         history: 'readonly',
         localStorage: 'readonly',
         sessionStorage: 'readonly',
+
         // Web APIs
         Image: 'readonly',
         console: 'readonly',
@@ -69,12 +71,14 @@ export default [
         clearInterval: 'readonly',
         requestAnimationFrame: 'readonly',
         cancelAnimationFrame: 'readonly',
+
         // Node.js globals (for build tools)
         module: 'readonly',
         require: 'readonly',
         process: 'readonly',
         __dirname: 'readonly',
         __filename: 'readonly',
+
         // Custom project functions
         getPhotographersData: 'readonly',
         getPhotographerInformation: 'readonly',
@@ -105,11 +109,11 @@ export default [
       'no-debugger': 'error',
       'no-alert': 'warn',
       'no-var': 'error',
+
+      // Code style rules
       'prefer-const': 'error',
       'prefer-arrow-callback': 'error',
       'arrow-spacing': 'error',
-      'no-duplicate-imports': 'error',
-      'no-useless-rename': 'error',
       'object-shorthand': 'error',
       'prefer-template': 'error',
       'template-curly-spacing': 'error',
@@ -123,6 +127,8 @@ export default [
           enforceForRenamedProperties: false,
         },
       ],
+
+      // Formatting rules
       'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
       'eol-last': 'error',
       'comma-dangle': ['error', 'never'],
@@ -132,6 +138,8 @@ export default [
       'no-trailing-spaces': 'error',
       'no-mixed-spaces-and-tabs': 'error',
       'no-tabs': 'error',
+
+      // Line length and complexity rules
       'max-len': [
         'warn',
         {
@@ -152,7 +160,6 @@ export default [
       // Modern JavaScript features
       'prefer-spread': 'error',
       'prefer-rest-params': 'error',
-      'prefer-const': 'error',
       'no-useless-concat': 'error',
       'no-useless-return': 'error',
       'no-useless-escape': 'error',
@@ -160,14 +167,9 @@ export default [
       'no-useless-computed-key': 'error',
       'no-useless-constructor': 'error',
       'no-useless-rename': 'error',
-      'no-useless-return': 'error',
-      'prefer-arrow-callback': 'error',
-      'prefer-template': 'error',
-      'prefer-destructuring': 'error',
-      'prefer-spread': 'error',
-      'prefer-rest-params': 'error',
 
-      // Import plugin rules
+      // Import/export rules
+      'no-duplicate-imports': 'error',
       'import/no-unresolved': 'error',
       'import/named': 'error',
       'import/default': 'error',
@@ -205,7 +207,7 @@ export default [
       'jsdoc/require-returns-type': 'off',
       'jsdoc/valid-types': 'warn',
 
-      // Security rules (compatible with ESLint 9)
+      // Security rules
       'security/detect-eval-with-expression': 'error',
       'security/detect-non-literal-regexp': 'warn',
       'security/detect-unsafe-regex': 'error',
@@ -215,7 +217,7 @@ export default [
       'security/detect-object-injection': 'off',
       'security/detect-pseudoRandomBytes': 'error',
 
-      // Accessibility rules (for HTML/JS interaction)
+      // Accessibility rules
       'accessibility/alt-text': 'warn',
       'accessibility/anchor-has-content': 'warn',
       'accessibility/aria-props': 'warn',
@@ -239,14 +241,12 @@ export default [
       'accessibility/tabindex-no-positive': 'warn',
     },
   },
-
-  // Prettier configuration (must be last)
   prettier,
-
-  // Global ignores
   {
     ignores: [
       'node_modules/',
+      'package-lock.json',
+      'yarn.lock',
       'dist/',
       'build/',
       '*.min.js',
@@ -265,18 +265,13 @@ export default [
       '*.woff',
       '*.woff2',
       '*.eot',
-      'package-lock.json',
-      'yarn.lock',
-      'helper/old_project/',
-      'old_project/',
+      'assets/photographers/',
       '.github/',
       '.husky/',
       'husky/',
       'coverage/',
       '.nyc_output/',
       '*.config.js',
-      'assets/helper/',
-      'assets/photographers/',
     ],
   },
 ];

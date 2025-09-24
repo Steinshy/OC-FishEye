@@ -1,77 +1,67 @@
 name: Release
+
+# Trigger configuration
 on:
   push:
     tags:
       - "v*"
+
+# Environment variables
 env:
   NODE_VERSION: "24"
+
+# Permissions
 permissions:
   contents: write
   issues: write
   pull-requests: write
+
 jobs:
+  # Release job
   release:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
+      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: "package-lock.json"
+
+      # Install dependencies
       - name: Install dependencies
         run: |
           npm cache clean --force
-          if npm ci --prefer-offline --no-audit; then
-            echo "✅ Dependencies installed"
-          else
-            echo "⚠️ npm ci failed, trying npm install..."
-            if ! npm install --prefer-offline --no-audit; then
-              npm config set registry https://registry.npmjs.com/
-              npm install --prefer-offline --no-audit
-            fi
-          fi
+          npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+
+      # Build project
       - name: Build project
         run: |
           npm run lint
           npm run format:check
           [ -f "jsdoc.conf.json" ] && npm run docs || true
-          echo "✅ Build completed"
-      - name: Generate changelog
-        id: changelog
-        run: |
-          if [ -f "package.json" ]; then
-            changelog=$(npx conventional-changelog --preset angular --output-format json --release-count 0 | jq -r '.[0].body // "No changes"')
-          else
-            changelog=$(git log --oneline --format="* %s" $(git describe --tags --abbrev=0 HEAD^)..HEAD | head -50)
-          fi
-          changelog="${changelog//'%'/'%25'}"
-          changelog="${changelog//$'\n'/'%0A'}"
-          changelog="${changelog//$'\r'/'%0D'}"
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$changelog" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+
+      # Create release
       - name: Create Release
         run: |
           gh release create ${{ github.ref_name }} \
             --title "Release ${{ github.ref_name }}" \
-            --notes "## What's Changed
-          ${{ steps.changelog.outputs.changelog }}
-          \`\`\`bash
-          git clone https://github.com/${{ github.repository }}.git
-          cd ${{ github.repository }}
-          git checkout ${{ github.ref_name }}
-          \`\`\`" \
+            --notes "Release ${{ github.ref_name }}" \
             --draft=false \
             --prerelease=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Upload assets
       - name: Upload assets
         run: |
           [ -f "README.md" ] && gh release upload ${{ github.ref_name }} README.md --clobber || true

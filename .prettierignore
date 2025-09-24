@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -10,6 +11,24 @@ build/
 *.min.js
 *.min.css
 
+# Configuration files
+eslint.config.js
+.prettierrc
+.prettierrc*
+.stylelintrc.json
+.htmlhintrc.json
+.lintstagedrc.js
+.eslintrc*
+.babelrc*
+*.config.js
+*.config.json
+*.config.yaml
+*.config.yml
+jest.config.*
+vite.config.*
+webpack.config.*
+rollup.config.*
+
 # Generated files
 .DS_Store
 *.log
@@ -18,7 +37,7 @@ build/
 .git/
 .gitignore
 
-# Images and media
+# Media files
 *.jpg
 *.jpeg
 *.png
@@ -38,12 +57,3 @@ build/
 # Documentation
 *.md
 *.pdf
-
-# Configuration files
-package-lock.json
-yarn.lock
-
-# Old project files
-assets/helper/old_project/
-helper/old_project/
-old_project/

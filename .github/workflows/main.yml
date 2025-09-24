@@ -1,57 +1,67 @@
 name: Lint and Format
+
+# Trigger configuration
 on:
   push:
     branches: [dev, testing]
+
+# Environment variables
 env:
   NODE_VERSION: "24"
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+
+# Permissions
 permissions:
   contents: read
   pull-requests: read
   checks: write
+
+# Concurrency control
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  # Lint and format job
   lint:
     name: Lint and Format
     runs-on: ubuntu-latest
     steps:
+      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: "package-lock.json"
+
+      # Install dependencies
       - name: Install dependencies
         run: |
           npm cache clean --force
-          if npm ci --prefer-offline --no-audit; then
-            echo "✅ Dependencies installed"
-          else
-            echo "⚠️ npm ci failed, trying npm install..."
-            if ! npm install --prefer-offline --no-audit; then
-              npm config set registry https://registry.npmjs.com/
-              npm install --prefer-offline --no-audit
-            fi
-          fi
+          npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+
+      # Check formatting
       - name: Check formatting
         continue-on-error: true
         run: npm run format:check
+
+      # Run linting
       - name: Run linting
         continue-on-error: true
         run: npm run lint
+
+      # Run tests
       - name: Run tests
         continue-on-error: true
-        run: |
-          if npm run test 2>/dev/null || npm run test:unit 2>/dev/null || npm run test:integration 2>/dev/null; then
-            echo "✅ Tests passed"
-          else
-            echo "ℹ️ No tests found"
-          fi
+        run: npm run test 2>/dev/null || npm run test:unit 2>/dev/null || npm run test:integration 2>/dev/null || true
+
+      # Security scan
       - name: Security scan
         continue-on-error: true
         run: |
-          npm audit --audit-level=moderate || echo "⚠️ Vulnerabilities found"
+          npm audit --audit-level=moderate
           npm outdated || true
