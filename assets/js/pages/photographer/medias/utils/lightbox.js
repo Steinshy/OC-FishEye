@@ -83,7 +83,6 @@ export const initializeCarrouselControl = () => {
   }
 
   const goToSlide = index => {
-    // Validate input to prevent injection
     let validIndex = Number.parseInt(index, 10);
     if (Number.isNaN(validIndex) || validIndex < 0) validIndex = validRadios.length - 1;
     else if (validIndex >= validRadios.length) validIndex = 0;

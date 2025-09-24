@@ -1,31 +1,37 @@
-import { dropdownConfig, getSortOptionsElements, getFilterOptionsElements, mediaStore } from '../../constants.js';
-import { mediaSorter } from './medias/sorter.js';
+import { dropdownConfig } from '../../constants.js';
+import { sortMedias } from './medias/sorterManager.js';
+import { createMediasCards } from './medias/mediasManager.js';
 
-const sortOptionsElements = getSortOptionsElements();
-const { button: sortDropdownButton, sortOptions: sortDropdownMenu } = sortOptionsElements;
-const optionElements = getFilterOptionsElements();
-const { attributes, events, keys } = dropdownConfig;
+const { elements, attributes, events, keys } = dropdownConfig;
+const getButton = () => elements.button;
+const getOptionsContainer = () => elements.sortOptions;
+const getSortOptions = () => {
+  const container = getOptionsContainer();
+  return container ? Array.from(container.querySelectorAll(`[${attributes.role}='${attributes.option}']`)) : [];
+};
 
 // To do: Move Accessibility code to a separate file - HOC approach
 const dropdownState = {
   get currentSelection() {
-    return sortDropdownButton?.textContent?.trim() || '';
+    return getButton()?.textContent?.trim() || '';
   },
 
   get selectedOption() {
-    return optionElements.find(option => option?.textContent?.trim() === this.currentSelection);
+    return getSortOptions().find(option => option?.textContent?.trim() === this.currentSelection);
   },
 
   get currentIndex() {
-    return optionElements.findIndex(option => option === document.activeElement) || 0;
+    return getSortOptions().findIndex(option => option === document.activeElement) || 0;
   },
 
   get nextIndex() {
-    return (this.currentIndex + 1) % optionElements.length || 0;
+    const options = getSortOptions();
+    return (this.currentIndex + 1) % options.length || 0;
   },
 
   get previousIndex() {
-    return this.currentIndex <= 0 ? optionElements.length - 1 : this.currentIndex - 1 || 0;
+    const options = getSortOptions();
+    return this.currentIndex <= 0 ? options.length - 1 : this.currentIndex - 1 || 0;
   },
 
   get userSelected() {
@@ -42,7 +48,9 @@ const keyboardEventHandlers = {
   },
   click: {
     outside: target => {
-      const isOutside = !sortDropdownMenu?.contains(target) && target !== sortDropdownButton;
+      const button = getButton();
+      const sortOptions = getOptionsContainer();
+      const isOutside = sortOptions ? !sortOptions.contains(target) && target !== button : target !== button;
       if (isOutside) sortDropdownController.close();
     },
     button: e => {
@@ -68,11 +76,13 @@ const handleOptionActivation = e => {
 };
 
 const updateDropdownState = isOpen => {
+  const button = getButton();
+  const sortOptionsContainer = getOptionsContainer();
   const attributeUpdates = [
-    { element: sortDropdownMenu, class: attributes.show, value: isOpen },
-    { element: sortDropdownMenu, property: attributes.hidden, value: !isOpen },
-    { element: sortDropdownMenu, attribute: attributes.ariaHidden, value: !isOpen },
-    { element: sortDropdownButton, attribute: attributes.ariaExpanded, value: isOpen },
+    { element: sortOptionsContainer, class: attributes.show, value: isOpen },
+    { element: sortOptionsContainer, property: attributes.hidden, value: !isOpen },
+    { element: sortOptionsContainer, attribute: attributes.ariaHidden, value: !isOpen },
+    { element: button, attribute: attributes.ariaExpanded, value: isOpen },
   ];
 
   attributeUpdates.forEach(({ element, class: className, property, attribute, value }) => {
@@ -82,20 +92,22 @@ const updateDropdownState = isOpen => {
   });
 };
 
-const triggerMediaSorting = userSelected => {
-  if (!Array.isArray(mediaStore.medias) || mediaStore.medias.length === 0) return;
-  mediaSorter.sortAndRender(mediaStore.medias, userSelected, mediaStore.mediaPath);
+const triggerMediaSorting = (medias, userSelected) => {
+  if (!Array.isArray(medias) || medias.length === 0) return;
+  return sortMedias(medias, userSelected);
 };
 
 const focusCurrentSelection = () => {
+  const button = getButton();
   dropdownState.selectedOption?.focus();
-  sortDropdownController.updateSelectedOptionAria(dropdownState.selectedOption);
+  if (button) sortDropdownController.updateSelectedOptionAria(dropdownState.selectedOption);
 };
 
 const sortDropdownController = {
   navigateToOption(direction) {
+    const options = getSortOptions();
     const targetIndex = direction === 'next' ? dropdownState.nextIndex : dropdownState.previousIndex;
-    optionElements[targetIndex]?.focus();
+    options[targetIndex]?.focus();
   },
 
   focusNextSortOption() {
@@ -106,31 +118,35 @@ const sortDropdownController = {
     this.navigateToOption('prev');
   },
 
-  selectSortOption(option) {
+  selectSortOption(option, medias) {
     const userSelected = option.textContent.trim();
-    sortDropdownButton.textContent = userSelected;
+    const button = getButton();
+    if (button) button.textContent = userSelected;
     this.updateSelectedOptionAria(option);
-    triggerMediaSorting(userSelected);
-    this.close();
-  },
+    const sortedMedias = triggerMediaSorting(medias, userSelected);
+    const mainMedia = document.getElementById('main-medias');
+    if (mainMedia && Array.isArray(sortedMedias)) {
+      mainMedia.innerHTML = '';
+      mainMedia.appendChild(createMediasCards(sortedMedias));
+    }
 
-  handleSortOptionClick: e => {
-    if (!e.target?.matches(`li[${attributes.role}='${attributes.option}']`)) return;
-    sortDropdownController.selectSortOption(e.target);
+    this.close();
+    return sortedMedias;
   },
 
   toggleDropdownVisibility(isOpen) {
-    if (!sortDropdownMenu || !sortDropdownButton) return;
+    const button = getButton();
+    if (!getOptionsContainer() || !button) return;
 
     updateDropdownState(isOpen);
-    isOpen ? setTimeout(focusCurrentSelection, 0) : sortDropdownButton.focus();
+    isOpen ? setTimeout(focusCurrentSelection, 0) : button.focus();
   },
   close() {
     this.toggleDropdownVisibility(false);
   },
 
   updateSelectedOptionAria(target) {
-    optionElements.forEach(option => option?.setAttribute(attributes.ariaSelected, option === target));
+    getSortOptions().forEach(option => option?.setAttribute(attributes.ariaSelected, option === target));
   },
 
   handleKeyboardNavigation(e) {
@@ -147,8 +163,7 @@ const sortDropdownController = {
 
   removeEventListeners() {
     const listeners = [
-      [events.click, sortDropdownButton, sortDropdownController.handleDropdownToggle],
-      [events.click, sortDropdownMenu, sortDropdownController.handleSortOptionClick],
+      [events.click, getButton(), sortDropdownController.handleDropdownToggle],
       [events.click, null, sortDropdownController.handleOutsideClick],
       [events.keydown, null, sortDropdownController.handleKeyboardNavigation],
     ];
@@ -159,11 +174,24 @@ const sortDropdownController = {
   },
 };
 
-export const dropdownListeners = () => {
-  if (!sortDropdownButton || !sortDropdownMenu) return;
+export const dropdownListeners = medias => {
+  const button = getButton();
+  const sortOptions = getOptionsContainer();
+  if (!button || !sortOptions) return triggerMediaSorting(medias, 'Popularité');
 
-  sortDropdownButton.addEventListener(events.click, sortDropdownController.handleDropdownToggle);
-  sortDropdownMenu.addEventListener(events.click, sortDropdownController.handleSortOptionClick);
+  const initialSortedMedias = triggerMediaSorting(medias, dropdownState.userSelected);
+
+  const handleSortOptionClick = e => {
+    const option = e.target.closest(`li[${attributes.role}='${attributes.option}']`);
+    if (!option) return;
+    const sortedMedias = sortDropdownController.selectSortOption(option, medias);
+    return sortedMedias;
+  };
+
+  button.addEventListener(events.click, sortDropdownController.handleDropdownToggle);
+  sortOptions.addEventListener(events.click, handleSortOptionClick);
   document.addEventListener(events.keydown, sortDropdownController.handleKeyboardNavigation);
   document.addEventListener(events.click, sortDropdownController.handleOutsideClick);
+
+  return initialSortedMedias;
 };

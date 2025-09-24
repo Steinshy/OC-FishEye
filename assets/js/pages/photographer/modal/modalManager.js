@@ -51,7 +51,7 @@ export const resetInputsAndFocus = () => {
 
 export const trapFocus = element => {
   const focusableElements = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-  const firstFocusableElement = focusableElements[0];
+  const [firstFocusableElement, ..._] = focusableElements;
   const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
   const handleTabKey = e => {

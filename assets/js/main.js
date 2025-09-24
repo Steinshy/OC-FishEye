@@ -6,7 +6,7 @@ const initializeApp = async () => {
     const isPhotographerPage = currentPath.includes('photographer.html') || currentPath.includes('/photographer');
 
     if (isPhotographerPage) {
-      console.log('Loading photographer page...');
+      console.info('Loading photographer page...');
       await photographerPage();
     } else {
       console.warn('Unknown page route:', currentPath);

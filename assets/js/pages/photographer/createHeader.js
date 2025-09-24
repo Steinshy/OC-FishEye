@@ -1,14 +1,15 @@
-export const generateHeaderHTML = photographer => {
-  const { name, tagline, city, country, portraits } = photographer;
-  const photographerSection = document.getElementById('photographer-section');
-  const folderName = name.replace(/[\s-]+/g, '');
+export const createHeader = photographer => {
+  const { name, tagline, city, country, price } = photographer;
+  const { jpgUrl, webpUrl } = photographer.portraits;
+  const section = document.getElementById('photographer-section');
 
-  photographerSection.innerHTML = `
+  section.innerHTML = `
     <div class="section-container">
       <div class="section-info" id="bio-info">
         <h1 data-label="Nom du photographe">${name}</h1>
         <p data-label="Ville, Pays">${city}, ${country}</p>
         <p data-label="Tagline">${tagline}</p>
+        <p data-label="Prix">${price}€ / jour</p>
       </div>
       <!-- contact button -->
       <div class="contact-container">
@@ -17,12 +18,12 @@ export const generateHeaderHTML = photographer => {
       <!-- profile picture -->
       <div class="container-picture">
         <picture>
-          <source srcset="assets/photographers/${folderName}/${portraits.profile_webp}" type="image/webp">
-          <source srcset="assets/photographers/${folderName}/${portraits.profile_jpg}" type="image/jpeg">
+          <source srcset="${webpUrl}" type="image/webp">
+          <source srcset="${jpgUrl}" type="image/jpeg">
           <img
             class="profile-picture"
-            src="assets/photographers/${folderName}/${portraits.profile_jpg}"
-            alt="Portrait de ${name}, photographe"
+            src="${jpgUrl}"
+            alt="Portrait de ${name}"
             loading="lazy"
           >
         </picture>

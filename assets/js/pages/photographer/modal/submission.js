@@ -39,7 +39,7 @@ export const handleFormSubmission = () => {
         toggleModal(false);
         submitButtonState?.reset();
         resetFormAndModal?.();
-        console.log('Form submitted successfully');
+        console.info('Form submitted successfully');
       }, 1500);
     }, 1000);
   } catch (err) {
