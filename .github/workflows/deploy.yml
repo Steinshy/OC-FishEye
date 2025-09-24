@@ -48,6 +48,10 @@ jobs:
         continue-on-error: true
         run: npm audit --audit-level=moderate
 
+      # Minify CSS files
+      - name: Minify CSS files
+        run: npm run minify
+
       # Prepare deployment files
       - name: Prepare files
         run: |

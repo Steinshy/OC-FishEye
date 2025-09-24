@@ -13,14 +13,21 @@
     "lint:css": "stylelint '**/*.css'",
     "lint:html": "html-validate '**/*.html'",
     "format:check": "prettier --write --check .",
-    "server": "http-server . -p 8080 --cors -o -c-1 --no-cache",
-    "markdown:lint": "markdownlint '**/*.md' --ignore node_modules"
+    "server": "http-server . -p 8080 --cors -c-1 --no-cache & open -a 'Google Chrome' http://192.168.1.35:8080",
+    "markdown:lint": "markdownlint '**/*.md' --ignore node_modules",
+    "minify": "npx minify assets/css/style.css -o assets/css/style.min.css && npx minify assets/css/photographer.css -o assets/css/photographer.min.css && npx minify assets/css/modal.css -o assets/css/modal.min.css && npx minify assets/css/medias.css -o assets/css/medias.min.css"
   },
   "usage": {
     "setup": "npm install",
     "dev": "npm run server",
     "lint": "npm run lint",
-    "format": "npm run format:check"
+    "format": "npm run format:check",
+    "minify": "npm run minify",
+    "server": "npm run server",
+    "lint:all": "npm run lint",
+    "lint:js": "npm run lint:js",
+    "lint:css": "npm run lint:css",
+    "lint:html": "npm run lint:html"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
@@ -37,6 +44,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^16.1.5",
     "markdownlint-cli": "^0.45.0",
+    "minify": "^14.1.0",
     "prettier": "^3.2.5",
     "stylelint": "^16.2.1",
     "stylelint-config-standard": "^39.0.0",

@@ -12,19 +12,19 @@
   "categories": ["photography", "art", "portfolio"],
   "icons": [
     {
-      "src": "favicons/favicon.png",
+      "src": "assets/favicons/favicon.png",
       "sizes": "32x32",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "favicons/logo.png",
+      "src": "assets/favicons/logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "favicons/logo.png",
+      "src": "assets/favicons/logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -32,7 +32,7 @@
   ],
   "screenshots": [
     {
-      "src": "photographers/EllieRoseWilkens/EllieRoseWilkens.jpg",
+      "src": "assets/photographers/EllieRoseWilkens/EllieRoseWilkens.jpg",
       "sizes": "1280x720",
       "type": "image/jpeg",
       "form_factor": "wide",
@@ -47,7 +47,7 @@
       "url": "/",
       "icons": [
         {
-          "src": "favicons/logo.png",
+          "src": "assets/favicons/logo.png",
           "sizes": "96x96"
         }
       ]
@@ -59,7 +59,7 @@
       "url": "/#contact",
       "icons": [
         {
-          "src": "favicons/logo.png",
+          "src": "assets/favicons/logo.png",
           "sizes": "96x96"
         }
       ]

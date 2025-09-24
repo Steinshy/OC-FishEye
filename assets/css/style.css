@@ -34,6 +34,15 @@
   top: 6px;
 }
 
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+}
+
+main {
+  min-height: 100vh;
+}
+
 /* =========================
   Design System & Variables
 ========================= */
@@ -226,17 +235,22 @@ nav h1 {
 .photographer h1 {
   font-size: 1.5rem;
   color: var(--txt-color-primary);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .photographer p {
   font-size: 1rem;
+  color: var(--txt-color-secondary);
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .photographer span {
   font-size: 0.9rem;
   color: var(--txt-color-secondary);
-  font-weight: var(--font-weight-light);
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 /* =========================
@@ -302,11 +316,13 @@ footer p {
 
   .photographer h1 {
     font-size: 2rem;
+    font-weight: 700;
   }
 
   .photographer p,
   .photographer span {
     font-size: 1rem;
+    font-weight: 500;
   }
 
   .container-picture {
@@ -340,6 +356,7 @@ footer p {
   .photographer p,
   .photographer span {
     font-size: 1.2rem;
+    font-weight: 500;
   }
 
   .container-picture {

@@ -10,7 +10,9 @@ export const photographerPage = async () => {
     const mainMedia = document.getElementById('main-medias');
     mainMedia.innerHTML = '';
     const urlParams = new URLSearchParams(window.location.search);
-    const urlId = parseInt(urlParams.get('id'));
+    const urlIdParam = urlParams.get('id');
+    const urlId = parseInt(urlIdParam, 10);
+
     const photographer = await getPhotographer(urlId);
     const photographerMedias = await getPhotographerMedias(urlId);
     const sortedMedias = dropdownListeners(photographerMedias);
