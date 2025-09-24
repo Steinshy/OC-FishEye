@@ -223,7 +223,7 @@ textarea:disabled {
   visibility: hidden;
 }
 
-.error-form[data-error-visible='true'] {
+.error-form[data-error-visible="true"] {
   display: block;
   visibility: visible;
   color: var(--color-error);
@@ -232,7 +232,7 @@ textarea:disabled {
   margin-top: var(--space-xs);
 }
 
-.error-box[data-error-visible='true'] {
+.error-box[data-error-visible="true"] {
   display: flex;
   flex-direction: row;
   visibility: visible;
@@ -241,7 +241,7 @@ textarea:disabled {
   gap: var(--space-xs);
 }
 
-.error-box[data-error-visible='true'] span {
+.error-box[data-error-visible="true"] span {
   color: var(--color-error);
   font-size: 0.9rem;
   font-weight: var(--font-weight-light);

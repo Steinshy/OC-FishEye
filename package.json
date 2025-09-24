@@ -1,6 +1,7 @@
 {
   "name": "fisheye",
   "version": "1.0.0",
+  "type": "module",
   "homepage": "https://steinshy.github.io/FishEye",
   "engines": {
     "node": ">=22.0.0",
@@ -30,6 +31,7 @@
     "eslint-plugin-html": "^8.1.3",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^56.1.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-security": "^3.0.1",
     "husky": "^9.0.11",

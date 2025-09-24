@@ -69,7 +69,7 @@
 }
 
 /* Tablet: 2 columns */
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .medias-cards {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
@@ -78,7 +78,7 @@
 }
 
 /* Mobile: 1 column */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .medias-cards {
     grid-template-columns: 1fr;
     gap: 1rem;

@@ -21,19 +21,6 @@ export default [
         sourceType: 'module',
       },
     },
-    rules: {
-      // HTML structure rules
-      'html/indent': ['error', 2],
-      'html/require-closing-tags': 'error',
-      'html/require-doctype': 'error',
-      'html/require-meta-charset': 'error',
-      'html/require-meta-viewport': 'error',
-
-      // HTML attribute rules
-      'html/no-duplicate-attrs': 'error',
-      'html/no-extra-spacing-attrs': 'error',
-      'html/no-self-closing': 'off',
-    },
   },
 
   // Main JavaScript configuration
@@ -217,7 +204,7 @@ export default [
       'security/detect-object-injection': 'off',
       'security/detect-pseudoRandomBytes': 'error',
 
-      // Accessibility rules
+      // Accessibility rules (adapted for vanilla JS/HTML)
       'accessibility/alt-text': 'warn',
       'accessibility/anchor-has-content': 'warn',
       'accessibility/aria-props': 'warn',

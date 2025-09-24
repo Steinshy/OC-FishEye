@@ -125,13 +125,13 @@
 
 /* Arrow Down Icon */
 .dropdown-button button::after {
-  content: '▼';
+  content: "▼";
   margin-left: 10px;
   font-size: 12px;
   transition: transform 0.3s ease;
 }
 
-.dropdown-button [aria-expanded='true']::after {
+.dropdown-button [aria-expanded="true"]::after {
   transform: rotate(180deg);
 }
 
@@ -174,7 +174,7 @@
   color: #333;
 }
 
-.dropdown-options [aria-selected='true'] {
+.dropdown-options [aria-selected="true"] {
   background: #901c1c;
   color: #fff;
 }

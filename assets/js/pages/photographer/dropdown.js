@@ -1,6 +1,7 @@
 import { dropdownConfig } from '../../constants.js';
-import { sortMedias } from './medias/sorterManager.js';
+
 import { createMediasCards } from './medias/mediasManager.js';
+import { sortMedias } from './medias/sorterManager.js';
 
 const { elements, attributes, events, keys } = dropdownConfig;
 const getButton = () => elements.button;

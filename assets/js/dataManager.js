@@ -6,11 +6,11 @@ export const helper = {
   buildwebpUrl: url => (url ? url.replace(/\.jpg$/i, '.webp') : ''),
   mediaType: (video, image) => (video ? 'video' : image ? 'image' : ''),
 
-  mediaImageUrl: (mediaPath, filename) => `${mediaPath  }/media/${  filename}`,
-  mediaWebpUrl: (mediaPath, filename) => `${mediaPath  }/media/${  helper.buildwebpUrl(filename)}`,
-  mediaVideoUrl: (mediaPath, filename) => `${mediaPath  }/media/${  filename}`,
-  portraitImageUrl: (photographerPath, filename) => `${photographerPath  }/${  filename}`,
-  portraitWebpUrl: (photographerPath, filename) => `${photographerPath  }/${  helper.buildwebpUrl(filename)}`,
+  mediaImageUrl: (mediaPath, filename) => `${mediaPath}/media/${filename}`,
+  mediaWebpUrl: (mediaPath, filename) => `${mediaPath}/media/${helper.buildwebpUrl(filename)}`,
+  mediaVideoUrl: (mediaPath, filename) => `${mediaPath}/media/${filename}`,
+  portraitImageUrl: (photographerPath, filename) => `${photographerPath}/${filename}`,
+  portraitWebpUrl: (photographerPath, filename) => `${photographerPath}/${helper.buildwebpUrl(filename)}`,
 };
 
 const getPhotographers = async () => {
