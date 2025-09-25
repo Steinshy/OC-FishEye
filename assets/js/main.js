@@ -6,13 +6,10 @@ const initializeApp = async () => {
     const isPhotographerPage = currentPath.includes('photographer.html') || currentPath.includes('/photographer');
 
     if (isPhotographerPage) {
-      console.info('Loading photographer page...');
       await photographerPage();
-    } else {
-      console.warn('Unknown page route:', currentPath);
     }
   } catch (error) {
-    console.error('Error initializing app:', error);
+    console.error(error);
   }
 };
 

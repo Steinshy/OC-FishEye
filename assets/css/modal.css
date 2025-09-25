@@ -285,12 +285,17 @@ textarea:disabled {
 
 .modal-footer button:not(:disabled):hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgb(0 0 0 / 30%);
 }
 
 .modal-footer button:not(:disabled):active {
   transform: translateY(0);
   box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+}
+
+.modal-footer button:not(:disabled):focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring-color) 35%, transparent);
 }
 
 /* Submit button disabled state */

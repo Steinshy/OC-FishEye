@@ -1,9 +1,10 @@
+import { createAccessibilityManager } from '../../accessibilityManagement.js';
 import { dropdownConfig } from '../../constants.js';
 
 import { createMediasCards } from './medias/mediasManager.js';
 import { sortMedias } from './medias/sorterManager.js';
 
-const { elements, attributes, events, keys } = dropdownConfig;
+const { elements, attributes } = dropdownConfig;
 const getButton = () => elements.button;
 const getOptionsContainer = () => elements.sortOptions;
 const getSortOptions = () => {
@@ -11,7 +12,10 @@ const getSortOptions = () => {
   return container ? Array.from(container.querySelectorAll(`[${attributes.role}='${attributes.option}']`)) : [];
 };
 
-// To do: Move Accessibility code to a separate file - HOC approach
+// Create accessibility manager for dropdown
+const accessibilityManager = createAccessibilityManager();
+
+// Simplified dropdown state management
 const dropdownState = {
   get currentSelection() {
     return getButton()?.textContent?.trim() || '';
@@ -21,178 +25,106 @@ const dropdownState = {
     return getSortOptions().find(option => option?.textContent?.trim() === this.currentSelection);
   },
 
-  get currentIndex() {
-    return getSortOptions().findIndex(option => option === document.activeElement) || 0;
-  },
-
-  get nextIndex() {
-    const options = getSortOptions();
-    return (this.currentIndex + 1) % options.length || 0;
-  },
-
-  get previousIndex() {
-    const options = getSortOptions();
-    return this.currentIndex <= 0 ? options.length - 1 : this.currentIndex - 1 || 0;
-  },
-
   get userSelected() {
     return this.selectedOption?.textContent?.trim() || 'Popularité';
   },
 };
 
-const keyboardEventHandlers = {
-  keyboard: {
-    [keys.escape]: () => sortDropdownController.close(),
-    [keys.arrowDown]: e => handleNavigationKey(e, 'next'),
-    [keys.arrowUp]: e => handleNavigationKey(e, 'prev'),
-    [keys.enter]: e => handleOptionActivation(e),
-  },
-  click: {
-    outside: target => {
-      const button = getButton();
-      const sortOptions = getOptionsContainer();
-      const isOutside = sortOptions ? !sortOptions.contains(target) && target !== button : target !== button;
-      if (isOutside) sortDropdownController.close();
-    },
-    button: e => {
-      e.stopPropagation();
-      const isOpen = e.currentTarget.getAttribute(attributes.ariaExpanded) === 'true';
-      sortDropdownController.toggleDropdownVisibility(!isOpen);
-    },
-  },
-};
-
-const handleNavigationKey = (e, direction) => {
-  e.preventDefault();
-  e.stopPropagation();
-  sortDropdownController.navigateToOption(direction);
-};
-
-const handleOptionActivation = e => {
-  if (e.target.getAttribute(attributes.role) === attributes.option) {
-    e.preventDefault();
-    e.stopPropagation();
-    sortDropdownController.selectSortOption(e.target);
-  }
-};
-
-const updateDropdownState = isOpen => {
-  const button = getButton();
-  const sortOptionsContainer = getOptionsContainer();
-  const attributeUpdates = [
-    { element: sortOptionsContainer, class: attributes.show, value: isOpen },
-    { element: sortOptionsContainer, property: attributes.hidden, value: !isOpen },
-    { element: sortOptionsContainer, attribute: attributes.ariaHidden, value: !isOpen },
-    { element: button, attribute: attributes.ariaExpanded, value: isOpen },
-  ];
-
-  attributeUpdates.forEach(({ element, class: className, property, attribute, value }) => {
-    if (className) element.classList.toggle(className, value);
-    if (property) element[property] = value;
-    if (attribute) element.setAttribute(attribute, value);
-  });
-};
-
 const triggerMediaSorting = (medias, userSelected) => {
-  if (!Array.isArray(medias) || medias.length === 0) return;
-  return sortMedias(medias, userSelected);
+  if (!Array.isArray(medias) || medias.length === 0) {
+    return;
+  }
+  const result = sortMedias(medias, userSelected);
+  return result;
 };
 
-const focusCurrentSelection = () => {
-  const button = getButton();
-  dropdownState.selectedOption?.focus();
-  if (button) sortDropdownController.updateSelectedOptionAria(dropdownState.selectedOption);
-};
-
+// Simplified dropdown controller using accessibility manager
 const sortDropdownController = {
-  navigateToOption(direction) {
-    const options = getSortOptions();
-    const targetIndex = direction === 'next' ? dropdownState.nextIndex : dropdownState.previousIndex;
-    options[targetIndex]?.focus();
-  },
+  controller: null,
+  medias: null,
 
-  focusNextSortOption() {
-    this.navigateToOption('next');
-  },
-
-  focusPreviousSortOption() {
-    this.navigateToOption('prev');
-  },
-
-  selectSortOption(option, medias) {
-    const userSelected = option.textContent.trim();
+  init(medias) {
+    this.medias = medias;
     const button = getButton();
-    if (button) button.textContent = userSelected;
-    this.updateSelectedOptionAria(option);
-    const sortedMedias = triggerMediaSorting(medias, userSelected);
-    const mainMedia = document.getElementById('main-medias');
-    if (mainMedia && Array.isArray(sortedMedias)) {
-      mainMedia.innerHTML = '';
-      mainMedia.appendChild(createMediasCards(sortedMedias));
+    const optionsContainer = getOptionsContainer();
+    const options = getSortOptions();
+
+    if (!button || !optionsContainer || !options.length) {
+      return triggerMediaSorting(medias, 'Popularité');
     }
 
-    this.close();
+    // Create dropdown controller using accessibility manager
+    this.controller = accessibilityManager.createDropdownController({
+      button,
+      optionsContainer,
+      options,
+      onSelect: option => this.selectSortOption(option),
+      onClose: () => this.onClose(),
+      orientation: 'vertical',
+    });
+
+    // Set up additional visual state management
+    this.setupVisualState();
+
+    // Accessibility manager handles click events
+
+    return triggerMediaSorting(medias, dropdownState.userSelected);
+  },
+
+  selectSortOption(option) {
+    const userSelected = option.textContent.trim();
+
+    const button = getButton();
+    if (button) button.textContent = userSelected;
+
+    // Update ARIA selected state
+    accessibilityManager.ariaManager.setSelected(getSortOptions(), option);
+
+    const sortedMedias = triggerMediaSorting(this.medias, userSelected);
+
+    this.updateMediaDisplay(sortedMedias);
+
     return sortedMedias;
   },
 
-  toggleDropdownVisibility(isOpen) {
+  onClose() {
+    // Additional cleanup if needed
+  },
+
+  setupVisualState() {
+    const optionsContainer = getOptionsContainer();
     const button = getButton();
-    if (!getOptionsContainer() || !button) return;
 
-    updateDropdownState(isOpen);
-    isOpen ? setTimeout(focusCurrentSelection, 0) : button.focus();
-  },
-  close() {
-    this.toggleDropdownVisibility(false);
-  },
+    // Set initial ARIA states
+    accessibilityManager.ariaManager.setExpanded(button, false);
+    accessibilityManager.ariaManager.setHidden(optionsContainer, true);
+    accessibilityManager.ariaManager.setSelected(getSortOptions(), dropdownState.selectedOption);
 
-  updateSelectedOptionAria(target) {
-    getSortOptions().forEach(option => option?.setAttribute(attributes.ariaSelected, option === target));
-  },
-
-  handleKeyboardNavigation(e) {
-    keyboardEventHandlers.keyboard[e.key]?.(e);
+    // Also set CSS classes for visual state
+    if (optionsContainer) {
+      optionsContainer.classList.remove('show');
+      optionsContainer.classList.add('hidden');
+    }
   },
 
-  handleOutsideClick(e) {
-    keyboardEventHandlers.click.outside(e.target);
+  updateMediaDisplay(sortedMedias) {
+    const mainMedia = document.getElementById('main-medias');
+
+    if (mainMedia && Array.isArray(sortedMedias)) {
+      mainMedia.innerHTML = '';
+      const newCards = createMediasCards(sortedMedias);
+      mainMedia.appendChild(newCards);
+    }
   },
 
-  handleDropdownToggle(e) {
-    keyboardEventHandlers.click.button(e);
-  },
-
-  removeEventListeners() {
-    const listeners = [
-      [events.click, getButton(), sortDropdownController.handleDropdownToggle],
-      [events.click, null, sortDropdownController.handleOutsideClick],
-      [events.keydown, null, sortDropdownController.handleKeyboardNavigation],
-    ];
-
-    listeners.forEach(([event, element, handler]) => {
-      (element || document).removeEventListener(event, handler);
-    });
+  destroy() {
+    if (this.controller) {
+      this.controller.destroy();
+      this.controller = null;
+    }
   },
 };
 
 export const dropdownListeners = medias => {
-  const button = getButton();
-  const sortOptions = getOptionsContainer();
-  if (!button || !sortOptions) return triggerMediaSorting(medias, 'Popularité');
-
-  const initialSortedMedias = triggerMediaSorting(medias, dropdownState.userSelected);
-
-  const handleSortOptionClick = e => {
-    const option = e.target.closest(`li[${attributes.role}='${attributes.option}']`);
-    if (!option) return;
-    const sortedMedias = sortDropdownController.selectSortOption(option, medias);
-    return sortedMedias;
-  };
-
-  button.addEventListener(events.click, sortDropdownController.handleDropdownToggle);
-  sortOptions.addEventListener(events.click, handleSortOptionClick);
-  document.addEventListener(events.keydown, sortDropdownController.handleKeyboardNavigation);
-  document.addEventListener(events.click, sortDropdownController.handleOutsideClick);
-
-  return initialSortedMedias;
+  return sortDropdownController.init(medias);
 };

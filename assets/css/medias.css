@@ -46,10 +46,10 @@
   cursor: pointer;
 }
 
+.media-content:focus,
 .media-card video:focus,
 .media-card picture:focus {
-  outline: 2px solid var(--color-info);
-  outline-offset: 2px;
+  outline: none;
 }
 
 .media-card video::-webkit-media-controls-panel {
@@ -94,8 +94,8 @@
   box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
   overflow: hidden;
   transition: all 0.3s ease;
-  cursor: pointer;
   min-height: 300px;
+  pointer-events: auto;
 }
 
 .media-card:hover {
@@ -107,6 +107,36 @@
   position: relative;
   overflow: hidden;
   background: #f5f5f5;
+  pointer-events: auto;
+}
+
+.media-content .eye-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  opacity: 1;
+  transition: all 0.3s ease;
+  z-index: 100;
+  cursor: pointer;
+  border: 2px solid white;
+  outline: none;
+  pointer-events: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.media-content:hover .eye-icon {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
 }
 
 .media-content img,
@@ -117,6 +147,13 @@
   object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.media-content:hover img,
+.media-content:hover video,
+.media-content:hover picture {
+  transform: scale(1.02);
 }
 
 .media-info {
@@ -125,6 +162,9 @@
   flex-direction: column;
   gap: 0.75rem;
   background: #fff;
+  position: relative;
+  z-index: 5;
+  pointer-events: auto;
 }
 
 .media-info h3 {
@@ -157,6 +197,16 @@
   padding: 0.25rem 0.5rem;
   border-radius: 20px;
   transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.media-stats .likes:focus {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring-color) 35%, transparent);
 }
 
 .media-stats .likes i {
@@ -209,9 +259,21 @@
   outline-offset: 2px;
 }
 
+.media-card:focus-within {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus-ring-color) 45%, transparent);
+}
+
 .media-stats .likes:focus {
   outline: 2px solid var(--color-info);
   outline-offset: 1px;
+}
+
+.media-stats .likes:focus {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring-color) 35%, transparent);
 }
 
 @keyframes spin {

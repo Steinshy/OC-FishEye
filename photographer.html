@@ -37,6 +37,7 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/photographer.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/modal.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/medias.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/lightbox.css" />
 
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -88,7 +89,7 @@
         <h2>Trier par :</h2>
         <div class="dropdown-button">
           <button id="media-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-options"> Popularité </button>
-          <ul class="dropdown-options" id="sort-options" role="listbox" tabindex="-1" aria-hidden="true" aria-labelledby="media-button">
+          <ul class="dropdown-options" id="sort-options" role="listbox" aria-hidden="true" aria-labelledby="media-button">
             <li id="popular-option" role="option" tabindex="-1">Popularité</li>
             <li id="date-option" role="option" tabindex="-1">Date</li>
             <li id="title-option" role="option" tabindex="-1">Titre</li>
@@ -185,6 +186,27 @@
         </footer>
       </div>
     </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="lightbox-content">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Fermer la galerie">×</button>
+
+        <div class="lightbox-main">
+          <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Image précédente">‹</button>
+          <div class="lightbox-media-container" id="lightbox-media-container">
+            <!-- Media content will be dynamically inserted here -->
+          </div>
+          <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Image suivante">›</button>
+        </div>
+
+        <div class="lightbox-info" id="lightbox-info">
+          <h3 id="lightbox-title"></h3>
+          <span id="lightbox-likes"></span>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+import { createAccessibilityManager } from '../../../accessibilityManagement.js';
 import { modalElements, validationConfig, formConfig } from '../../../constants.js';
 
 import { toggleModal } from './modalManager.js';
@@ -78,13 +79,37 @@ export const submitFormListeners = () => {
   modalElements.mainModal.form.addEventListener('submit', submitForm);
 };
 
+const accessibilityManager = createAccessibilityManager();
+
+let modalEventsBound = false;
+
 export const modalListeners = () => {
-  modalElements.contactButton.onclick = () => toggleModal(true);
-  modalElements.mainModal.closeButton.onclick = () => toggleModal(false);
-  document.onkeydown = e => {
-    if (e.key === 'Escape' && modalElements.mainModal.main.classList.contains('show') && !modalElements.mainModal.closeButton.disabled) {
-      e.preventDefault();
+  if (modalEventsBound) return;
+
+  modalEventsBound = true;
+
+  const openHandler = () => toggleModal(true);
+  const closeHandler = () => toggleModal(false);
+
+  const escapeHandler = accessibilityManager.keyboardHandler.createEscapeHandler(() => {
+    if (modalElements.mainModal.main.classList.contains('show') && !modalElements.mainModal.closeButton.disabled) {
       toggleModal(false);
     }
-  };
+  });
+
+  if (modalElements.contactButton) {
+    modalElements.contactButton.addEventListener('click', openHandler);
+    modalElements.contactButton.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openHandler();
+      }
+    });
+  }
+
+  if (modalElements.mainModal.closeButton) {
+    modalElements.mainModal.closeButton.addEventListener('click', closeHandler);
+  }
+
+  document.addEventListener('keydown', escapeHandler);
 };

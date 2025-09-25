@@ -5,7 +5,9 @@ import { submitButtonState, errorDisplay } from './ui-helper.js';
 import { submitValidation } from './validators.js';
 
 // To do: Rework The submission process
-export const submitForm = e => {
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+export const submitForm = async e => {
   e.preventDefault();
   errorDisplay?.resetErrorVisibility();
 
@@ -14,39 +16,34 @@ export const submitForm = e => {
     return;
   }
 
-  handleFormSubmission();
+  await handleFormSubmission();
 };
 
-export const handleFormSubmission = () => {
-  try {
-    disableFormInputs(true);
-    preventModalClosing(true);
-    submitButtonState?.setLoading(true);
+const markInputsSuccess = () => {
+  getInputs().forEach(input => {
+    if (input) {
+      input.classList.add('success');
+      input.setAttribute('data-valid', 'true');
+      input.setAttribute('data-error-visible', 'false');
+    }
+  });
+};
 
-    setTimeout(() => {
-      submitButtonState?.setSuccess(true);
-      getInputs().forEach(input => {
-        if (input) {
-          input.classList.add('success');
-          input.setAttribute('data-valid', 'true');
-          input.setAttribute('data-error-visible', 'false');
-        }
-      });
+export const handleFormSubmission = async () => {
+  disableFormInputs(true);
+  preventModalClosing(true);
+  submitButtonState?.setLoading(true);
 
-      setTimeout(() => {
-        preventModalClosing(false);
-        disableFormInputs(false);
-        toggleModal(false);
-        submitButtonState?.reset();
-        resetFormAndModal?.();
-        console.info('Form submitted successfully');
-      }, 1500);
-    }, 1000);
-  } catch (err) {
-    preventModalClosing(false);
-    disableFormInputs(false);
-    console.error('Form submission error:', err, getInputs());
-  }
+  await sleep(1000);
+  submitButtonState?.setSuccess(true);
+  markInputsSuccess();
+
+  await sleep(1500);
+  preventModalClosing(false);
+  disableFormInputs(false);
+  toggleModal(false);
+  submitButtonState?.reset();
+  resetFormAndModal?.();
 };
 
 export const disableFormInputs = disable => {

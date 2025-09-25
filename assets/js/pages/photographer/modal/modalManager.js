@@ -1,3 +1,4 @@
+import { createAccessibilityManager } from '../../../accessibilityManagement.js';
 import { modalElements, formConfig } from '../../../constants.js';
 
 import { submitButtonState, errorDisplay } from './ui-helper.js';
@@ -49,29 +50,10 @@ export const resetInputsAndFocus = () => {
   });
 };
 
+const accessibilityManager = createAccessibilityManager();
+
 export const trapFocus = element => {
-  const focusableElements = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-  const [firstFocusableElement, ..._] = focusableElements;
-  const lastFocusableElement = focusableElements[focusableElements.length - 1];
-
-  const handleTabKey = e => {
-    if (e.key === 'Tab') {
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusableElement) {
-          lastFocusableElement.focus();
-          e.preventDefault();
-        }
-      } else {
-        if (document.activeElement === lastFocusableElement) {
-          firstFocusableElement.focus();
-          e.preventDefault();
-        }
-      }
-    }
-  };
-
-  document.addEventListener('keydown', handleTabKey);
-  return () => document.removeEventListener('keydown', handleTabKey);
+  return accessibilityManager.focusManager.trapFocus(element);
 };
 
 export const restoreFocus = () => {
@@ -83,17 +65,27 @@ export const restoreFocus = () => {
 
 let focusTrapCleanup = null;
 
+const setModalAriaHidden = hidden => {
+  accessibilityManager.ariaManager.setHidden(modalElements.mainModal.main, hidden);
+  accessibilityManager.ariaManager.setHidden(modalElements.mainModal.form, hidden);
+  accessibilityManager.ariaManager.setHidden(modalElements.mainModal.submitButton, hidden);
+};
+
+const setModalClasses = show => {
+  const action = show ? 'add' : 'remove';
+  modalElements.mainModal.header.classList[action]('show');
+  modalElements.mainModal.main.classList[action]('show');
+  modalElements.mainModal.form.classList[action]('show');
+};
+
 export const toggleModal = isOpen => {
   if (isOpen) {
     previouslyFocusedElement = document.activeElement;
+    setModalAriaHidden(false);
+    setModalClasses(true);
 
-    modalElements.mainModal.main.setAttribute('aria-hidden', 'false');
-    modalElements.mainModal.form.setAttribute('aria-hidden', 'false');
-    modalElements.mainModal.submitButton.setAttribute('aria-hidden', 'false');
-
-    modalElements.mainModal.header.classList.add('show');
-    modalElements.mainModal.main.classList.add('show');
-    modalElements.mainModal.form.classList.add('show');
+    document.documentElement.classList.add('no-scroll');
+    document.body.style.overflow = 'hidden';
 
     focusTrapCleanup = trapFocus(modalElements.mainModal.main);
 
@@ -108,17 +100,15 @@ export const toggleModal = isOpen => {
       focusTrapCleanup = null;
     }
 
+    document.documentElement.classList.remove('no-scroll');
+    document.body.style.overflow = '';
+
     if (document.activeElement && modalElements.mainModal.main.contains(document.activeElement)) {
       document.activeElement.blur();
     }
 
-    modalElements.mainModal.header.classList.remove('show');
-    modalElements.mainModal.main.classList.remove('show');
-    modalElements.mainModal.form.classList.remove('show');
-
-    modalElements.mainModal.main.setAttribute('aria-hidden', 'true');
-    modalElements.mainModal.form.setAttribute('aria-hidden', 'true');
-    modalElements.mainModal.submitButton.setAttribute('aria-hidden', 'true');
+    setModalClasses(false);
+    setModalAriaHidden(true);
 
     setTimeout(() => {
       restoreFocus();
