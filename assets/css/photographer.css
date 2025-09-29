@@ -1,5 +1,9 @@
+/* ===================================
+  FishEyes - Photographer Page Styles
+=================================== */
+
 /* =========================
-    Photographer Section
+  Photographer Header Section
 ========================= */
 .photographer-section {
   display: flex;
@@ -14,6 +18,9 @@
   justify-content: space-between;
 }
 
+/* =========================
+  Photographer Information
+========================= */
 .section-info {
   display: grid;
   justify-content: start;
@@ -32,30 +39,25 @@
 }
 
 /* =========================
-    Profile Picture
+  Profile Picture
 ========================= */
 .container-picture {
   width: 150px;
   height: 150px;
 }
 
-.container-picture img {
+.profile-picture {
+  width: 100%;
+  height: 100%;
   display: inline-block;
   border-radius: 50%;
 }
 
-.profile-picture {
-  width: 100%;
-  height: 100%;
-}
-
 /* =========================
-    Contact Container
+  Contact Button
 ========================= */
 .contact-container {
   position: relative;
-
-  /* Prevent layout shift */
   min-height: 3rem;
   display: flex;
   align-items: center;
@@ -68,7 +70,7 @@
   background: linear-gradient(0deg, var(--bg-color-primary) 0%, var(--bg-color-secondary) 100%);
   transition: transform var(--transition-fast);
   box-shadow: none;
-  color: #ffffff;
+  color: #fff;
   font-weight: 600;
   border: none;
   cursor: pointer;
@@ -88,7 +90,7 @@
 }
 
 /* =========================
-    Dropdown Section
+  Media Sorting Dropdown
 ========================= */
 .section-dropdown {
   display: flex;
@@ -103,9 +105,6 @@
   color: var(--txt-color-primary);
 }
 
-/* =========================
-    Button Container
-========================= */
 .dropdown-button {
   position: relative;
   display: inline-block;
@@ -132,7 +131,6 @@
   background: #d3573c;
 }
 
-/* Arrow Down Icon */
 .dropdown-button button::after {
   content: "▼";
   margin-left: 10px;
@@ -144,9 +142,6 @@
   transform: rotate(180deg);
 }
 
-/* =========================
-    Dropdown Options
-========================= */
 .dropdown-options {
   visibility: hidden;
   display: none;
@@ -172,15 +167,15 @@
   transform: translateY(0);
 }
 
-.dropdown-options li:hover {
-  background: var(--color-background-light, #f5f5f5);
-}
-
 .dropdown-options li {
   padding: var(--space-sm) var(--space-lg);
   cursor: pointer;
   transition: background-color 0.2s ease;
   color: #333;
+}
+
+.dropdown-options li:hover {
+  background: var(--color-background-light, #f5f5f5);
 }
 
 .dropdown-options [aria-selected="true"] {
@@ -189,12 +184,8 @@
 }
 
 /* =========================
-    Media Section
+  Media Gallery Section
 ========================= */
 .media-section {
   padding: var(--space-md);
 }
-
-/* =========================
-    Responsive Design
-========================= */
