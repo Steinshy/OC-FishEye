@@ -1,34 +1,57 @@
-import { validationConfig, formConfig, modalElements } from '../../../constants.js';
+import { modalElements, getFieldNames } from '../../../constants.js';
 
 import { errorDisplay } from './ui-helper.js';
 
+export const validateForm = formData => {
+  const rules = {
+    firstname: value => value && value.length >= 2,
+    lastname: value => value && value.length >= 2,
+    email: value => value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+    message: value => value && value.length > 0 && value.length <= 500,
+  };
+
+  return Object.entries(rules).every(([field, validator]) => validator(formData[field]));
+};
+
 export const validateFields = (fieldName, value) => {
-  switch (fieldName) {
-    case 'firstName':
-    case 'lastName':
-      return value.length >= validationConfig.minlength;
-    case 'email':
-      return validationConfig.emailRegex.test(value);
-    case 'message':
-      return value.length > 0 && value.length <= validationConfig.maxlength;
-    default:
-      return false;
-  }
+  const rules = {
+    firstname: val => val && val.length >= 2,
+    lastname: val => val && val.length >= 2,
+    email: val => val && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+    message: val => val && val.length > 0 && val.length <= 500,
+  };
+
+  return rules[fieldName] ? rules[fieldName](value) : false;
 };
 
 export const submitValidation = () => {
   let hasErrors = false;
+  const formData = {};
 
-  formConfig.fieldNames.forEach(fieldName => {
+  // Collect form data
+  getFieldNames().forEach(fieldName => {
     const element = modalElements?.formGroup?.[fieldName];
-    const isValid = validateFields(fieldName, element?.value || '');
-    if (!isValid) {
-      if (errorDisplay && fieldName) {
-        errorDisplay.toggleError(fieldName, true);
-      }
-      hasErrors = true;
-    }
+    formData[fieldName] = element ? element.value : '';
   });
+
+  // Validate all fields
+  const isValid = validateForm(formData);
+
+  if (!isValid) {
+    // Show errors for invalid fields
+    getFieldNames().forEach(fieldName => {
+      const element = modalElements?.formGroup?.[fieldName];
+      const fieldValue = element ? element.value : '';
+      const fieldIsValid = validateFields(fieldName, fieldValue);
+
+      if (!fieldIsValid && fieldValue) {
+        if (errorDisplay && fieldName) {
+          errorDisplay.toggleError(fieldName, true);
+        }
+        hasErrors = true;
+      }
+    });
+  }
 
   return !hasErrors;
 };

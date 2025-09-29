@@ -4,7 +4,6 @@ import { resetFormAndModal, toggleModal } from './modalManager.js';
 import { submitButtonState, errorDisplay } from './ui-helper.js';
 import { submitValidation } from './validators.js';
 
-// To do: Rework The submission process
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const submitForm = async e => {

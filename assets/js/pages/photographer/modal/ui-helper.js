@@ -1,4 +1,4 @@
-import { modalElements, formConfig } from '../../../constants.js';
+import { modalElements, getFieldNames, getErrorElement } from '../../../constants.js';
 
 // To do: Rework The submission process
 export const submitButtonState = {
@@ -71,7 +71,7 @@ export const submitButtonState = {
 
 export const errorDisplay = {
   resetErrorVisibility() {
-    formConfig.fieldNames.forEach(fieldName => {
+    getFieldNames().forEach(fieldName => {
       const field = modalElements.formGroup[fieldName];
       if (field && field !== modalElements.formGroup.message) {
         field.setAttribute('data-error-visible', 'false');
@@ -79,15 +79,15 @@ export const errorDisplay = {
       }
     });
 
-    formConfig.errorElements.forEach(errorElementName => {
-      const errorElement = modalElements.formError[errorElementName];
+    getFieldNames().forEach(errorElementName => {
+      const errorElement = getErrorElement(errorElementName);
       errorElement?.setAttribute('data-error-visible', 'false');
     });
   },
 
   toggleError(targetKey, shouldShow, message) {
     if (!modalElements) return;
-    const errorElement = modalElements.formError[targetKey];
+    const errorElement = getErrorElement(targetKey);
     if (errorElement) {
       errorElement.setAttribute('data-error-visible', shouldShow ? 'true' : 'false');
       if (message) {
