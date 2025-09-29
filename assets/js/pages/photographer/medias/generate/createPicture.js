@@ -3,30 +3,39 @@ import { createAccessibilityManager } from '../../../../accessibilityManagement.
 const accessibilityManager = createAccessibilityManager();
 
 export const createPicture = mediaElement => {
-  if (!mediaElement) return;
+  if (!mediaElement) return null;
 
-  const picture = document.createElement('picture');
-  picture.setAttribute('data-media-type', 'image');
-  picture.setAttribute('data-media-id', mediaElement.id);
+  const wrapper = document.createElement('div');
+  wrapper.className = 'media-picture';
+  wrapper.setAttribute('data-media-type', 'image');
+  wrapper.setAttribute('data-media-id', mediaElement.id);
 
-  const img = document.createElement('img');
-  img.src = mediaElement.medias.jpgUrl;
-  img.alt = mediaElement.title || 'Image de média';
-  img.loading = 'lazy';
-  img.setAttribute('role', 'img');
-  img.setAttribute('aria-label', `Image: ${mediaElement.title || 'Média'}`);
+  wrapper.innerHTML = `
+    <picture>
+      <source
+        srcset="${mediaElement.medias.webpUrl}"
+        type="image/webp" />
+      <source
+        srcset="${mediaElement.medias.jpgUrl}"
+        type="image/jpeg" />
+      <img
+        class="media-image"
+        src="${mediaElement.medias.jpgUrl}"
+        alt="${mediaElement.title || 'Média'}"
+        loading="lazy"
+        decoding="async"
+        data-media-id="${mediaElement.id}"
+        width="${mediaElement.medias.width}"
+        height="${mediaElement.medias.height}"
+      />
+    </picture>
+  `;
 
-  // Set up ARIA attributes using accessibility manager
+  const img = wrapper.querySelector('img');
+
   accessibilityManager.ariaManager.updateAttributes(img, {
     'aria-describedby': `media-info-${mediaElement.id}`,
-    'aria-expanded': 'false',
   });
 
-  picture.innerHTML = `
-    <source srcset="${mediaElement.medias.webpUrl}" type="image/webp">
-    <source srcset="${mediaElement.medias.jpgUrl}" type="image/jpeg">
-  `;
-  picture.appendChild(img);
-
-  return picture;
+  return wrapper;
 };

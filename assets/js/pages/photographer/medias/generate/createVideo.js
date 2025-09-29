@@ -5,38 +5,37 @@ const accessibilityManager = createAccessibilityManager();
 export const createVideo = media => {
   if (!media) return;
 
-  const video = document.createElement('video');
+  const container = document.createElement('div');
+  container.className = 'media-video';
+  container.setAttribute('data-media-type', 'video');
+  container.setAttribute('data-media-id', media.id);
 
-  // Basic attributes
-  video.setAttribute('data-media-type', 'video');
-  video.setAttribute('data-media-id', media.id);
-  video.setAttribute('controls', 'true');
-  video.setAttribute('muted', 'true');
-  video.setAttribute('loop', 'true');
-  video.setAttribute('playsinline', 'true');
-  video.setAttribute('preload', 'metadata');
+  const captionPath = media.medias.mp4Url.replace(/\/media\//, '/media/captions/').replace('.mp4', '.vtt');
 
-  // Set up ARIA attributes using accessibility manager
+  container.innerHTML = `
+    <video
+      data-media-type="video"
+      data-media-id="${media.id}"
+      controls
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      class="media-video-player"
+      aria-label="${media.title || 'Vidéo'} - ${media.mediaType}"
+      aria-describedby="media-info-${media.id}"
+    >
+      <source src="${media.medias.mp4Url}" type="video/mp4">
+      <track kind="captions" src="${captionPath}" srclang="fr" label="Français" default>
+    </video>
+  `;
+
+  const video = container.querySelector('video');
+
   accessibilityManager.ariaManager.updateAttributes(video, {
     'aria-label': `${media.title || 'Vidéo'} - ${media.mediaType}`,
     'aria-describedby': `media-info-${media.id}`,
-    'aria-expanded': 'false',
-    role: 'application',
   });
 
-  // Chrome warning Fix
-  video.addEventListener('wheel', () => {}, { passive: true });
-  video.addEventListener('loadedmetadata', () => {});
-
-  // Create caption file path
-  // const captionFileName = media.medias.mp4Url.split('/').pop().replace('.mp4', '.vtt');
-  const captionPath = media.medias.mp4Url.replace(/\/media\//, '/media/captions/').replace('.mp4', '.vtt');
-
-  video.innerHTML = `
-  <source src="${media.medias.mp4Url}" type="video/mp4">
-  <track kind="captions" src="${captionPath}" srclang="fr" label="Français" default>
-  <p>Votre navigateur ne supporte pas la balise vidéo.</p>
-`;
-
-  return video;
+  return container;
 };
