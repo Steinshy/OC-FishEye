@@ -1,9 +1,10 @@
 import { createAccessibilityManager } from '../../../accessibilityManagement.js';
+import { errorConfig } from '../../../constants.js';
+import { logError } from '../../../errorHandler.js';
+import { openLightbox } from '../lightbox/lightbox.js';
 
+import { createMediaElement } from './createMediaElement.js';
 import { createCard } from './generate/createCard.js';
-import { createPicture } from './generate/createPicture.js';
-import { createVideo } from './generate/createVideo.js';
-import { openLightbox } from './lightbox.js';
 
 const accessibilityManager = createAccessibilityManager();
 
@@ -11,15 +12,14 @@ export const createMediasCards = photographerMedias => {
   if (!photographerMedias) return;
   const mediasCards = document.createElement('div');
   mediasCards.className = 'medias-cards';
-  mediasCards.setAttribute('role', 'grid');
+  mediasCards.setAttribute('role', 'list');
   mediasCards.setAttribute('aria-label', 'Galerie de médias');
 
   photographerMedias.forEach(photographerMedia => {
-    const mediaElement = handleTypeCard(photographerMedia);
+    const mediaElement = createMediaElement(photographerMedia);
     if (mediaElement) {
       const card = createCard(photographerMedia, mediaElement);
       accessibilityManager.setupMediaCardAccessibility(card, photographerMedia, openMediaLightbox, toggleLike);
-
       mediasCards.appendChild(card);
     }
   });
@@ -27,14 +27,11 @@ export const createMediasCards = photographerMedias => {
 };
 
 const openMediaLightbox = (media, allMedias) => {
-  // Use provided medias or get from global cache
   const mediasArray = allMedias || window.currentPhotographerMedias || [];
-
   if (!mediasArray.length) {
-    console.error('No media data available for lightbox');
+    logError('No media data available for lightbox', null, errorConfig.contexts.LIGHTBOX);
     return;
   }
-
   openLightbox(media.id, mediasArray);
 };
 
@@ -45,25 +42,10 @@ const toggleLike = (media, likesButton) => {
     const newLikes = currentLikes + 1;
     likesCount.textContent = newLikes;
     likesCount.setAttribute('aria-live', 'polite');
-
     media.likes = newLikes;
-
     likesButton.classList.add('liked');
-    setTimeout(() => {
-      likesButton.classList.remove('liked');
-    }, 1000);
+    setTimeout(() => likesButton.classList.remove('liked'), 1000);
   }
 };
 
-export const handleTypeCard = photographerMedia => {
-  if (!photographerMedia) return null;
-
-  switch (photographerMedia.mediaType) {
-    case 'image':
-      return createPicture(photographerMedia);
-    case 'video':
-      return createVideo(photographerMedia);
-    default:
-      return null;
-  }
-};
+export const handleTypeCard = createMediaElement;
