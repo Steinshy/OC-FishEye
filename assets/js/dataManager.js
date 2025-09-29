@@ -1,3 +1,6 @@
+import { errorConfig } from './constants.js';
+import { ErrorHandler } from './errorHandler.js';
+
 export const helper = {
   dataSource: 'assets/photographers/data.json',
   mediaPath: 'assets/photographers/',
@@ -14,23 +17,33 @@ export const helper = {
 };
 
 const getPhotographers = async () => {
-  const res = await fetch(helper.dataSource);
-  if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+  try {
+    const res = await fetch(helper.dataSource);
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
-  const { photographers, media } = await res.json();
-  if (!Array.isArray(photographers)) throw new Error('Invalid data structure: photographers');
-  if (!Array.isArray(media)) throw new Error('Invalid data structure: media');
+    const { photographers, media } = await res.json();
+    if (!Array.isArray(photographers)) throw new Error('Invalid data structure: photographers');
+    if (!Array.isArray(media)) throw new Error('Invalid data structure: media');
 
-  return { photographers, media };
+    return { photographers, media };
+  } catch (error) {
+    throw new Error(`${errorConfig.messages.DATA_LOADING_ERROR}: ${error.message}`);
+  }
 };
 
 export const getPhotographer = async photographerId => {
-  const { photographers } = await getPhotographers();
-  const single = photographers.find(p => p.id === photographerId);
-  const photographerData = buildPhotographer(single);
+  return await ErrorHandler.safeAsync(
+    async () => {
+      const { photographers } = await getPhotographers();
+      const single = photographers.find(p => p.id === photographerId);
+      const photographerData = buildPhotographer(single);
 
-  if (!photographerData) throw new Error(`Photographer with ID ${photographerId} not found`);
-  return photographerData;
+      if (!photographerData) throw new Error(`${errorConfig.messages.PHOTOGRAPHER_NOT_FOUND}: ${photographerId}`);
+      return photographerData;
+    },
+    null,
+    errorConfig.contexts.DATA_LOADING
+  );
 };
 
 export const buildPhotographer = photographerData => {
@@ -88,6 +101,8 @@ export const buildPhotographerMedia = (photographerMedia, photographerData) => {
       jpgTitle: photographerMedia.image || '',
       webpTitle: photographerMedia.image || '',
       mp4Title: photographerMedia.video || '',
+      width: photographerMedia.width || 1200,
+      height: photographerMedia.height || 800,
     },
     likes: photographerMedia.likes || 0,
     date: photographerMedia.date || '',
