@@ -1,3 +1,22 @@
+export const errorConfig = {
+  contexts: {
+    DATA_LOADING: 'Data Loading',
+    MODAL_MANAGEMENT: 'Modal Management',
+    LIGHTBOX: 'Lightbox',
+    FORM_VALIDATION: 'Form Validation',
+    ACCESSIBILITY: 'Accessibility',
+    MEDIA_RENDERING: 'Media Rendering',
+  },
+
+  messages: {
+    PHOTOGRAPHER_NOT_FOUND: 'Photographe non trouvé',
+    MEDIA_NOT_FOUND: 'Média non trouvé',
+    NETWORK_ERROR: 'Erreur de connexion',
+    VALIDATION_ERROR: 'Erreur de validation',
+    UNKNOWN_ERROR: "Une erreur inattendue s'est produite",
+  },
+};
+
 export const validationConfig = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   minlength: 2,
@@ -19,20 +38,14 @@ export const initializeModalElements = () => {
       submitButton: document.getElementById('footer-submit-button'),
     },
     formGroup: {
-      firstName: document.getElementById('firstname'),
-      lastName: document.getElementById('lastname'),
+      firstname: document.getElementById('firstname'),
+      lastname: document.getElementById('lastname'),
       email: document.getElementById('email'),
       message: document.getElementById('message'),
     },
-    formError: {
-      firstName: document.getElementById('error-firstname'),
-      lastName: document.getElementById('error-lastname'),
-      email: document.getElementById('error-email'),
-      message: document.getElementById('error-message'),
-    },
     formElements: {
-      contactForm: document.getElementById('contact_form'),
-      contactModal: document.getElementById('modal_container'),
+      contactForm: document.getElementById('form-signup'),
+      contactModal: document.getElementById('modal-signup'),
       characterCount: document.getElementById('character-count'),
       minCount: document.getElementById('character-count'),
       maxCount: document.getElementById('character-count'),
@@ -40,13 +53,18 @@ export const initializeModalElements = () => {
   };
 };
 
+export const getFieldNames = () => ['firstname', 'lastname', 'email', 'message'];
+
 export const formConfig = {
-  fieldNames: ['firstName', 'lastName', 'email', 'message'],
-  errorElements: ['firstName', 'lastName', 'email', 'message'],
+  fieldNames: ['firstname', 'lastname', 'email', 'message'],
 };
 
-export const getInputs = () =>
-  [modalElements?.formGroup?.firstName, modalElements?.formGroup?.lastName, modalElements?.formGroup?.email, modalElements?.formGroup?.message].filter(Boolean);
+export const getErrorElement = fieldName => document.getElementById(`error-${fieldName.toLowerCase()}`);
+
+export const getInputs = () => {
+  if (!modalElements.formGroup) return [];
+  return Object.values(modalElements.formGroup).filter(Boolean);
+};
 
 export const dropdownConfig = {
   elements: {
