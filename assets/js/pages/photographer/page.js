@@ -3,9 +3,9 @@ import { getPhotographer, getPhotographerMedias } from '../../dataManager.js';
 
 import { createHeader } from './createHeader.js';
 import { dropdownListeners } from './dropdown.js';
-import { initializeLightbox } from './medias/lightbox.js';
+import { initializeLightbox } from './lightbox/lightbox.js';
 import { createMediasCards } from './medias/mediasManager.js';
-import { formValidationListeners, characterCountListeners, submitFormListeners, modalListeners } from './modal/eventListener.js';
+import { modalListeners } from './modal/eventListener.js';
 export const photographerPage = async () => {
   const mainMedia = document.getElementById('main-medias');
   const urlParams = new URLSearchParams(window.location.search);
@@ -27,7 +27,4 @@ export const photographerPage = async () => {
 
   initializeModalElements();
   modalListeners();
-  formValidationListeners();
-  characterCountListeners();
-  submitFormListeners();
 };

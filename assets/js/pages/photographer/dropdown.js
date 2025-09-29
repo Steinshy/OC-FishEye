@@ -22,11 +22,11 @@ const dropdownState = {
   },
 
   get selectedOption() {
-    return getSortOptions().find(option => option?.textContent?.trim() === this.currentSelection);
+    return getSortOptions().find(option => option?.textContent?.trim() === dropdownState.currentSelection);
   },
 
   get userSelected() {
-    return this.selectedOption?.textContent?.trim() || 'Popularité';
+    return dropdownState.selectedOption?.textContent?.trim() || 'Popularité';
   },
 };
 
