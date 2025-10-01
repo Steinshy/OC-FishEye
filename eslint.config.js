@@ -259,6 +259,9 @@ export default [
       'coverage/',
       '.nyc_output/',
       '*.config.js',
+      'scripts/',
+      'assets/js/minified/',
+      'minified/',
     ],
   },
 ];

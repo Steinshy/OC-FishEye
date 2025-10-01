@@ -29,6 +29,9 @@ vite.config.*
 webpack.config.*
 rollup.config.*
 
+# Scripts
+scripts/
+
 # Generated files
 .DS_Store
 *.log

@@ -28,9 +28,9 @@
 .media-card {
   display: grid;
   grid-template-rows: 1fr auto;
-  background: #ffffff;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
   border: 1px solid #f0f0f0;
   overflow: hidden;
   transition: all 0.2s ease;
@@ -39,16 +39,16 @@
 }
 
 .media-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
   transform: translateY(-2px);
   border-color: #e0e0e0;
 }
 
 .media-card:focus,
 .media-card:focus-within {
-  outline: 2px solid #000000;
+  outline: 2px solid #000;
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 4px rgb(0 0 0 / 10%);
 }
 
 /* =========================
@@ -131,7 +131,6 @@
   Eye Icon (Lightbox Trigger)
 ========================= */
 .media-content .eye-icon {
-  display: flex;
   visibility: visible;
   position: absolute;
   opacity: 0;
@@ -139,25 +138,25 @@
   right: 12px;
   width: 36px;
   height: 36px;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgb(255 255 255 / 98%);
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333333;
+  color: #333;
   font-size: 14px;
   z-index: 100;
   cursor: pointer;
   border: 1px solid #e0e0e0;
   outline: none;
   pointer-events: auto;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
   transition: all 0.2s ease;
 }
 
 .media-content .eye-icon i {
   font-size: 12px;
-  color: #333333;
+  color: #333;
   transition: transform 0.2s ease;
 }
 
@@ -167,15 +166,15 @@
   display: flex;
   visibility: visible;
   opacity: 1;
-  background: #ffffff;
+  background: #fff;
   transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 12%);
 }
 
 .media-content .eye-icon:hover {
   background: #f8f8f8;
   transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
 }
 
 .media-content .eye-icon:hover i {
@@ -183,9 +182,9 @@
 }
 
 .media-content .eye-icon:focus {
-  outline: 2px solid #000000;
+  outline: 2px solid #000;
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 3px rgb(0 0 0 / 10%);
 }
 
 /* =========================
@@ -206,7 +205,7 @@
 .media-info h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: #000000;
+  color: #000;
   margin: 0;
   line-height: 1.5;
   overflow: hidden;
@@ -229,7 +228,7 @@
   align-items: center;
   gap: 0.375rem;
   font-size: 1rem;
-  color: #666666;
+  color: #666;
   font-weight: 700;
   background: #f5f5f5;
   padding: 0.375rem 0.75rem;
@@ -242,25 +241,25 @@
 }
 
 .media-stats .likes:hover {
-  background: #eeeeee;
-  color: #333333;
+  background: #eee;
+  color: #333;
   transform: translateY(-1px);
 }
 
 .media-stats .likes:focus {
-  outline: 2px solid #000000;
+  outline: 2px solid #000;
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 3px rgb(0 0 0 / 10%);
 }
 
 .media-stats .likes i {
-  color: #ff4444;
+  color: #f44;
   font-size: 1rem;
 }
 
 .media-stats .price {
   font-size: 1rem;
-  color: #333333;
+  color: #333;
   font-weight: 700;
   background: #f5f5f5;
   padding: 0.375rem 0.75rem;
@@ -276,7 +275,7 @@
 ========================= */
 
 /* Mobile (up to 767px) */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .medias-cards {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -310,7 +309,7 @@
 }
 
 /* Tablet (768px to 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (width >= 768px) and (width <= 1023px) {
   .medias-cards {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;

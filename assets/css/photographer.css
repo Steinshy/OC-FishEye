@@ -128,9 +128,9 @@
 }
 
 .dropdown-button button:disabled,
-.dropdown-button button[aria-disabled="true"],
+.dropdown-button [aria-disabled="true"],
 .contact-container button:disabled,
-.contact-container button[aria-disabled="true"] {
+.contact-container [aria-disabled="true"] {
   cursor: not-allowed;
   background: #f3f4f6;
   color: #9ca3af;
@@ -202,7 +202,7 @@
 ========================= */
 
 /* Mobile (up to 767px) */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .photographer-section {
     padding: var(--space-sm);
   }

@@ -3,7 +3,7 @@ name: Lint and Format
 # Trigger configuration
 on:
   push:
-    branches: [dev, testing]
+    branches: [dev]
 
 # Environment variables
 env:

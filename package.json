@@ -8,17 +8,17 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
-    "lint": "eslint . --ext .js && stylelint '**/*.css' && html-validate '**/*.html'",
+    "lint": "eslint . --ext .js && stylelint '**/*.css' --ignore-pattern '**/*.min.css' && html-validate '**/*.html'",
     "lint:js": "eslint . --ext .js",
-    "lint:css": "stylelint '**/*.css'",
+    "lint:css": "stylelint '**/*.css' --ignore-pattern '**/*.min.css'",
     "lint:html": "html-validate '**/*.html'",
     "format:check": "prettier --write --check .",
     "server": "lsof -ti:8080 | xargs kill -9 2>/dev/null || true && http-server . -p 8080 --cors -c-1 --no-cache",
     "server:chrome": "lsof -ti:8080 | xargs kill -9 2>/dev/null || true && http-server . -p 8080 --cors -c-1 --no-cache & open -a \"Google Chrome\" http://localhost:8080",
     "markdown:lint": "markdownlint '**/*.md' --ignore node_modules",
-    "minify:css": "npx minify --css assets/css/style.css > assets/css/style.min.css && npx minify --css assets/css/photographer.css > assets/css/photographer.min.css && npx minify --css assets/css/components.css > assets/css/components.min.css && npx minify --css assets/css/medias.css > assets/css/medias.min.css",
-    "minify:js": "node scripts/minify.js --target js",
-    "minify:html": "node scripts/minify.js --target html",
+    "minify:css": "cleancss -o assets/css/style.min.css assets/css/style.css && cleancss -o assets/css/photographer.min.css assets/css/photographer.css && cleancss -o assets/css/components.min.css assets/css/components.css && cleancss -o assets/css/medias.min.css assets/css/medias.css",
+    "minify:js": "node scripts/minify.cjs js",
+    "minify:html": "node scripts/minify.cjs html",
     "minify": "npm run minify:css && npm run minify:js && npm run minify:html"
   },
   "usage": {
@@ -37,6 +37,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.34.0",
+    "clean-css-cli": "^5.6.3",
     "eslint": "^9.34.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-html": "^8.1.3",
@@ -45,6 +46,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-security": "^3.0.1",
+    "glob": "^11.0.3",
     "husky": "^9.0.11",
     "lint-staged": "^16.1.5",
     "markdownlint-cli": "^0.45.0",

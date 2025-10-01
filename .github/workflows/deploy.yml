@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 # Trigger configuration
 on:
   push:
-    branches: [dev, testing]
+    branches: [dev]
 
 # Environment variables
 env:
