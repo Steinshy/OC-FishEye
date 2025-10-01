@@ -1,6 +1,7 @@
-import { modalElements, getFieldNames, getErrorElement } from '../../../constants.js';
+import { modalElements, getFieldNames } from '../../../constants.js';
 
-// To do: Rework The submission process
+const getErrorElement = fieldName => document.getElementById(`error-${fieldName.toLowerCase()}`);
+
 export const submitButtonState = {
   init() {
     if (!modalElements.mainModal.submitButton) return;

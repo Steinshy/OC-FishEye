@@ -1,57 +1,49 @@
-import { errorConfig } from './constants.js';
-import { ErrorHandler } from './errorHandler.js';
+import { safeAsync } from './utils/errorHandler.js';
 
-export const helper = {
-  dataSource: 'assets/photographers/data.json',
-  mediaPath: 'assets/photographers/',
+const dataUrl = 'assets/photographers/data.json';
+const mediaPath = 'assets/photographers/';
 
-  sanitizeName: name => (name ? name.replace(/[^a-zA-Z0-9]/g, '') : ''),
-  buildwebpUrl: url => (url ? url.replace(/\.jpg$/i, '.webp') : ''),
-  mediaType: (video, image) => (video ? 'video' : image ? 'image' : ''),
-
-  mediaImageUrl: (mediaPath, filename) => `${mediaPath}/media/${filename}`,
-  mediaWebpUrl: (mediaPath, filename) => `${mediaPath}/media/${helper.buildwebpUrl(filename)}`,
-  mediaVideoUrl: (mediaPath, filename) => `${mediaPath}/media/${filename}`,
-  portraitImageUrl: (photographerPath, filename) => `${photographerPath}/${filename}`,
-  portraitWebpUrl: (photographerPath, filename) => `${photographerPath}/${helper.buildwebpUrl(filename)}`,
-};
+const sanitizeName = name => (name ? name.replace(/[^a-zA-Z0-9]/g, '') : '');
+const getMediaType = (video, image) => (video ? 'video' : image ? 'image' : '');
+const toWebpFilename = filename => (filename ? filename.replace(/\.jpg$/i, '.webp') : '');
 
 const getPhotographers = async () => {
-  try {
-    const res = await fetch(helper.dataSource);
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
-    const { photographers, media } = await res.json();
-    if (!Array.isArray(photographers)) throw new Error('Invalid data structure: photographers');
-    if (!Array.isArray(media)) throw new Error('Invalid data structure: media');
-
-    return { photographers, media };
-  } catch (error) {
-    throw new Error(`${errorConfig.messages.DATA_LOADING_ERROR}: ${error.message}`);
+  const response = await fetch(dataUrl);
+  if (!response.ok) {
+    throw new Error(`Network error: ${response.status}`);
   }
+
+  const { photographers, media } = await response.json();
+  if (!Array.isArray(photographers)) {
+    throw new Error('Invalid data structure: photographers');
+  }
+  if (!Array.isArray(media)) {
+    throw new Error('Invalid data structure: media');
+  }
+
+  return { photographers, media };
 };
 
 export const getPhotographer = async photographerId => {
-  return await ErrorHandler.safeAsync(
+  return await safeAsync(
     async () => {
       const { photographers } = await getPhotographers();
-      const single = photographers.find(p => p.id === photographerId);
-      const photographerData = buildPhotographer(single);
-
-      if (!photographerData) throw new Error(`${errorConfig.messages.PHOTOGRAPHER_NOT_FOUND}: ${photographerId}`);
-      return photographerData;
+      const photographer = photographers.find(p => p.id === photographerId);
+      if (!photographer) {
+        throw new Error(`Photographer not found: ${photographerId}`);
+      }
+      return buildPhotographer(photographer);
     },
     null,
-    errorConfig.contexts.DATA_LOADING
+    'Data Loading'
   );
 };
 
 export const buildPhotographer = photographerData => {
   if (!photographerData) return null;
 
-  const getPortraitPath = helper.mediaPath + helper.sanitizeName(photographerData.name);
-  const getPortraitUrl = helper.portraitImageUrl(getPortraitPath, photographerData.portrait);
-  const getPortraitWebpUrl = helper.portraitWebpUrl(getPortraitPath, photographerData.portrait);
+  const portraitPath = mediaPath + sanitizeName(photographerData.name);
+  const webpFilename = toWebpFilename(photographerData.portrait);
 
   return {
     id: photographerData.id,
@@ -61,43 +53,52 @@ export const buildPhotographer = photographerData => {
     tagline: photographerData.tagline || '',
     price: photographerData.price || 0,
     portraits: {
-      path: getPortraitPath,
-      jpgUrl: getPortraitUrl,
-      webpUrl: getPortraitWebpUrl,
+      path: portraitPath,
+      jpgUrl: `${portraitPath}/${photographerData.portrait}`,
+      webpUrl: `${portraitPath}/${webpFilename}`,
     },
   };
 };
 
 export const getPhotographerMedias = async photographerId => {
-  const { photographers, media } = await getPhotographers();
-  const photographerData = photographers.find(p => p.id === photographerId);
+  return await safeAsync(
+    async () => {
+      const { photographers, media } = await getPhotographers();
+      const photographer = photographers.find(p => p.id === photographerId);
+      if (!photographer) {
+        throw new Error(`Photographer not found: ${photographerId}`);
+      }
 
-  const photographerMedias = media
-    .filter(item => item.photographerId === photographerId)
-    .map(item => buildPhotographerMedia(item, photographerData))
-    .filter(Boolean);
+      const photographerMedias = media
+        .filter(item => item.photographerId === photographerId)
+        .map(item => buildPhotographerMedia(item, photographer))
+        .filter(Boolean);
 
-  if (!photographerMedias.length) throw new Error(`Media list is empty for photographer ${photographerId}`);
-  return photographerMedias;
+      if (!photographerMedias.length) {
+        throw new Error(`No media found for photographer: ${photographerId}`);
+      }
+      return photographerMedias;
+    },
+    [],
+    'Data Loading'
+  );
 };
 
 export const buildPhotographerMedia = (photographerMedia, photographerData) => {
-  if (!photographerMedia) return null;
+  if (!photographerMedia || !photographerData) return null;
 
-  const getMediaPath = helper.mediaPath + helper.sanitizeName(photographerData.name);
-  const getMediaImageUrl = helper.mediaImageUrl(getMediaPath, photographerMedia.image);
-  const getMediaWebpUrl = helper.mediaWebpUrl(getMediaPath, photographerMedia.image);
-  const getMediaVideoUrl = helper.mediaVideoUrl(getMediaPath, photographerMedia.video);
+  const urlPath = mediaPath + sanitizeName(photographerData.name);
+  const webpFilename = toWebpFilename(photographerMedia.image);
 
   return {
     id: photographerMedia.id || 0,
     photographerId: photographerMedia.photographerId || 0,
     title: photographerMedia.title || '',
-    mediaType: helper.mediaType(photographerMedia.video, photographerMedia.image),
+    mediaType: getMediaType(photographerMedia.video, photographerMedia.image),
     medias: {
-      jpgUrl: getMediaImageUrl,
-      webpUrl: getMediaWebpUrl,
-      mp4Url: getMediaVideoUrl,
+      jpgUrl: `${urlPath}/media/${photographerMedia.image}`,
+      webpUrl: `${urlPath}/media/${webpFilename}`,
+      mp4Url: `${urlPath}/media/${photographerMedia.video}`,
       jpgTitle: photographerMedia.image || '',
       webpTitle: photographerMedia.image || '',
       mp4Title: photographerMedia.video || '',

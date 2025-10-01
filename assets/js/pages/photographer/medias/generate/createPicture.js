@@ -1,6 +1,6 @@
-import { createAccessibilityManager } from '../../../../accessibilityManagement.js';
+import { accessibilityManager } from '../../../../utils/accessibility.js';
 
-const accessibilityManager = createAccessibilityManager();
+const accessibility = accessibilityManager();
 
 export const createPicture = mediaElement => {
   if (!mediaElement) return null;
@@ -33,7 +33,7 @@ export const createPicture = mediaElement => {
 
   const img = wrapper.querySelector('img');
 
-  accessibilityManager.ariaManager.updateAttributes(img, {
+  accessibility.ariaManager.updateAttributes(img, {
     'aria-describedby': `media-info-${mediaElement.id}`,
   });
 

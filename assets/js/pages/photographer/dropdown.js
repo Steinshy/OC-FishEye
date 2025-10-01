@@ -1,7 +1,7 @@
-import { createAccessibilityManager } from '../../accessibilityManagement.js';
 import { dropdownConfig } from '../../constants.js';
+import { accessibilityManager } from '../../utils/accessibility.js';
 
-import { createMediasCards } from './medias/mediasManager.js';
+import { updateMediasOrder } from './medias/mediasManager.js';
 import { sortMedias } from './medias/sorterManager.js';
 
 const { elements, attributes } = dropdownConfig;
@@ -12,10 +12,8 @@ const getSortOptions = () => {
   return container ? Array.from(container.querySelectorAll(`[${attributes.role}='${attributes.option}']`)) : [];
 };
 
-// Create accessibility manager for dropdown
-const accessibilityManager = createAccessibilityManager();
+const accessibility = accessibilityManager();
 
-// Simplified dropdown state management
 const dropdownState = {
   get currentSelection() {
     return getButton()?.textContent?.trim() || '';
@@ -38,7 +36,6 @@ const triggerMediaSorting = (medias, userSelected) => {
   return result;
 };
 
-// Simplified dropdown controller using accessibility manager
 const sortDropdownController = {
   controller: null,
   medias: null,
@@ -53,67 +50,47 @@ const sortDropdownController = {
       return triggerMediaSorting(medias, 'Popularité');
     }
 
-    // Create dropdown controller using accessibility manager
-    this.controller = accessibilityManager.createDropdownController({
+    // Enable the dropdown button
+    button.disabled = false;
+    button.removeAttribute('aria-disabled');
+
+    this.controller = accessibility.dropdownController({
       button,
       optionsContainer,
       options,
       onSelect: option => this.selectSortOption(option),
-      onClose: () => this.onClose(),
       orientation: 'vertical',
     });
 
-    // Set up additional visual state management
     this.setupVisualState();
 
-    // Accessibility manager handles click events
-
-    return triggerMediaSorting(medias, dropdownState.userSelected);
+    const sorted = triggerMediaSorting(medias, dropdownState.userSelected);
+    window.currentPhotographerMedias = sorted;
+    return sorted;
   },
 
   selectSortOption(option) {
     const userSelected = option.textContent.trim();
-
     const button = getButton();
+
     if (button) button.textContent = userSelected;
-
-    // Update ARIA selected state
-    accessibilityManager.ariaManager.setSelected(getSortOptions(), option);
-
+    accessibility.ariaManager.setSelected(getSortOptions(), option);
     const sortedMedias = triggerMediaSorting(this.medias, userSelected);
-
-    this.updateMediaDisplay(sortedMedias);
+    window.currentPhotographerMedias = sortedMedias;
+    updateMediasOrder(sortedMedias);
 
     return sortedMedias;
-  },
-
-  onClose() {
-    // Additional cleanup if needed
   },
 
   setupVisualState() {
     const optionsContainer = getOptionsContainer();
     const button = getButton();
-
-    // Set initial ARIA states
-    accessibilityManager.ariaManager.setExpanded(button, false);
-    accessibilityManager.ariaManager.setHidden(optionsContainer, true);
-    accessibilityManager.ariaManager.setSelected(getSortOptions(), dropdownState.selectedOption);
-
-    // Also set CSS classes for visual state
+    accessibility.ariaManager.setExpanded(button, false);
+    accessibility.ariaManager.setHidden(optionsContainer, true);
+    accessibility.ariaManager.setSelected(getSortOptions(), dropdownState.selectedOption);
     if (optionsContainer) {
       optionsContainer.classList.remove('show');
       optionsContainer.classList.add('hidden');
-    }
-  },
-
-  updateMediaDisplay(sortedMedias) {
-    const mainMedia = document.getElementById('main-medias');
-
-    if (mainMedia && Array.isArray(sortedMedias)) {
-      mainMedia.innerHTML = '';
-      const newCards = createMediasCards(sortedMedias);
-      mainMedia.appendChild(newCards);
     }
   },
 

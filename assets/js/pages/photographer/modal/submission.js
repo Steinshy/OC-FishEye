@@ -1,10 +1,11 @@
-import { modalElements, getInputs } from '../../../constants.js';
+import { modalElements } from '../../../constants.js';
+import { sleep } from '../../../utils/helpers/utils.js';
 
-import { resetFormAndModal, toggleModal } from './modalManager.js';
+import { closeModal } from './modalManager.js';
 import { submitButtonState, errorDisplay } from './ui-helper.js';
 import { submitValidation } from './validators.js';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const getInputs = () => Object.values(modalElements?.formGroup ?? {}).filter(Boolean);
 
 export const submitForm = async e => {
   e.preventDefault();
@@ -20,11 +21,9 @@ export const submitForm = async e => {
 
 const markInputsSuccess = () => {
   getInputs().forEach(input => {
-    if (input) {
-      input.classList.add('success');
-      input.setAttribute('data-valid', 'true');
-      input.setAttribute('data-error-visible', 'false');
-    }
+    input.classList.add('success');
+    input.setAttribute('data-valid', 'true');
+    input.setAttribute('data-error-visible', 'false');
   });
 };
 
@@ -40,18 +39,13 @@ export const handleFormSubmission = async () => {
   await sleep(1500);
   preventModalClosing(false);
   disableFormInputs(false);
-  toggleModal(false);
+  closeModal();
   submitButtonState?.reset();
-  resetFormAndModal?.();
 };
 
 export const disableFormInputs = disable => {
-  if (!modalElements) return;
-
   getInputs().forEach(input => {
-    if (input) {
-      input.disabled = disable;
-    }
+    input.disabled = disable;
   });
 };
 

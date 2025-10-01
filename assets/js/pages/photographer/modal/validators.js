@@ -28,26 +28,20 @@ export const submitValidation = () => {
   let hasErrors = false;
   const formData = {};
 
-  // Collect form data
   getFieldNames().forEach(fieldName => {
     const element = modalElements?.formGroup?.[fieldName];
     formData[fieldName] = element ? element.value : '';
   });
 
-  // Validate all fields
   const isValid = validateForm(formData);
 
   if (!isValid) {
-    // Show errors for invalid fields
     getFieldNames().forEach(fieldName => {
       const element = modalElements?.formGroup?.[fieldName];
       const fieldValue = element ? element.value : '';
       const fieldIsValid = validateFields(fieldName, fieldValue);
-
-      if (!fieldIsValid && fieldValue) {
-        if (errorDisplay && fieldName) {
-          errorDisplay.toggleError(fieldName, true);
-        }
+      if (!fieldIsValid) {
+        errorDisplay.toggleError(fieldName, true);
         hasErrors = true;
       }
     });

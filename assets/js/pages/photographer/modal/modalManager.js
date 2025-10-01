@@ -1,49 +1,80 @@
-import { createAccessibilityManager } from '../../../accessibilityManagement.js';
-import { modalElements, formConfig } from '../../../constants.js';
+import { modalState, timeoutConfig, selectorTypes } from '../../../constants.js';
+import { accessibilityManager } from '../../../utils/accessibility.js';
+import { toggleScroll } from '../../../utils/helpers/utils.js';
 
-import { submitButtonState, errorDisplay } from './ui-helper.js';
+import { errorDisplay, submitButtonState } from './ui-helper.js';
 
-// To do: Focus input is broken
+const validationCriteria = {
+  emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  minlength: 2,
+  maxlength: 500,
+};
+
+const { focusManager, ariaManager } = accessibilityManager();
+const eventTypes = ['input', 'keyup', 'paste'];
+const addEventListeners = (element, handler) => eventTypes.forEach(event => element.addEventListener(event, handler));
+const removeEventListeners = (element, handler) => eventTypes.forEach(event => element.removeEventListener(event, handler));
+
+const getCounterStatus = (length, maxLength) => {
+  if (length >= maxLength) return 'danger';
+  if (length >= maxLength * 0.9) return 'warning';
+  return '';
+};
+
+const characterCountListeners = () => {
+  const { message } = modalState.formGroup;
+  const { characterCount } = modalState.formElements;
+  const max = validationCriteria?.maxlength;
+
+  if (!message || !characterCount) return null;
+
+  const update = () => {
+    const { length } = message.value;
+    characterCount.textContent = `${length}/${max}`;
+    characterCount.classList.remove('warning', 'danger');
+    const status = getCounterStatus(length, max);
+    if (status) characterCount.classList.add(status);
+  };
+
+  addEventListeners(message, update);
+  return () => removeEventListeners(message, update);
+};
+
+const resetElement = element => {
+  if (!element) return;
+  element.value = '';
+  element.classList.remove('success', 'warning', 'danger');
+  element.disabled = false;
+  Object.assign(element.dataset, { valid: 'false', errorVisible: 'false' });
+};
+
 export const resetCharacterCount = () => {
-  if (modalElements.formElements.characterCount) {
-    modalElements.formElements.characterCount.textContent = '0/500';
-    modalElements.formElements.characterCount.classList.remove('warning', 'danger');
+  const counter = modalState.formElements.characterCount;
+  if (counter) {
+    counter.textContent = '0/500';
+    counter.classList.remove('warning', 'danger');
   }
 };
 
 export const resetInputStates = () => {
-  formConfig.fieldNames.forEach(fieldName => {
-    const element = modalElements.formGroup[fieldName];
-    if (element) {
-      element.value = '';
-      element.classList.remove('success', 'warning', 'danger');
-      element.disabled = false;
-      element.setAttribute('data-valid', 'false');
-      element.setAttribute('data-error-visible', 'false');
-    }
-  });
+  Object.keys(modalState.formGroup).forEach(fieldName => resetElement(modalState.formGroup[fieldName]));
 };
 
 export const resetFormAndModal = () => {
-  (window.requestAnimationFrame || setTimeout)(() => {
-    modalElements.formElements.contactForm?.reset();
-    modalElements.formElements.contactModal?.classList.remove('show');
+  requestAnimationFrame(() => {
+    modalState.formElements.contactForm?.reset();
+    modalState.formElements.contactModal?.classList.remove('show');
     resetInputStates();
     errorDisplay.resetErrorVisibility();
     resetCharacterCount();
   });
 };
 
-let previouslyFocusedElement = null;
-
 export const resetInputsAndFocus = () => {
-  (window.requestAnimationFrame || setTimeout)(() => {
+  requestAnimationFrame(() => {
     resetInputStates();
-    // Focus the first input field using accessibility manager
-    const firstInput = accessibilityManager.focusManager.focusFirst(modalElements.mainModal.main, 'input, textarea');
-    if (!firstInput && modalElements.formGroup.firstname) {
-      modalElements.formGroup.firstname.focus();
-    }
+    const firstInput = focusManager.focusFirst(modalState.mainModal.main, selectorTypes.formInputs);
+    if (!firstInput) modalState.formGroup.firstname?.focus();
 
     if (submitButtonState) {
       submitButtonState.init();
@@ -52,133 +83,88 @@ export const resetInputsAndFocus = () => {
   });
 };
 
-const accessibilityManager = createAccessibilityManager();
-
-export const trapFocus = element => {
-  const originalTrap = accessibilityManager.focusManager.trapFocus(element);
-
-  // Enhanced focus trap with additional safety
-  const enhancedTrap = () => {
-    // Check if focus is still within the modal
-    const { activeElement } = document;
-    if (activeElement && !element.contains(activeElement)) {
-      // Focus escaped, bring it back
-      const firstFocusable = accessibilityManager.focusManager.focusFirst(element, 'input, textarea, button');
-      if (!firstFocusable) {
-        element.focus();
-      }
-    }
-  };
-
-  // Check focus every 100ms as additional safety
-  const focusCheckInterval = setInterval(enhancedTrap, 100);
-
-  return () => {
-    originalTrap();
-    clearInterval(focusCheckInterval);
-  };
+const focusFirstInput = () => {
+  const firstInput = focusManager.focusFirst(modalState.mainModal.main, selectorTypes.formInputs);
+  if (!firstInput) modalState.formGroup.firstname?.focus();
 };
 
-const handleModalFocusIn = e => {
-  // If focus goes outside the modal, immediately bring it back
-  if (!modalElements.mainModal.main.contains(e.target)) {
-    e.preventDefault();
-    e.stopPropagation();
-    accessibilityManager.focusManager.focusFirst(modalElements.mainModal.main, 'input, textarea, button');
-  }
+const toggleBackgroundContent = hide => {
+  const main = document.querySelector(selectorTypes.main);
+  const header = document.querySelector(selectorTypes.header);
+
+  if (main) main.inert = hide;
+  if (header) header.inert = hide;
 };
 
-const handleModalFocusOut = e => {
-  // If focus is about to leave the modal, prevent it
-  if (!modalElements.mainModal.main.contains(e.relatedTarget)) {
-    e.preventDefault();
-    e.stopPropagation();
-    // Force focus back to the first focusable element
-    setTimeout(() => {
-      const firstFocusable = accessibilityManager.focusManager.focusFirst(modalElements.mainModal.main, 'input, textarea, button');
-      if (!firstFocusable) {
-        // If no focusable element found, focus the modal itself
-        modalElements.mainModal.main.focus();
-      }
-    }, 0);
-  }
-};
-
-export const restoreFocus = () => {
-  if (previouslyFocusedElement) {
-    previouslyFocusedElement.focus();
-    previouslyFocusedElement = null;
-  }
-};
-
-let focusTrapCleanup = null;
-
-const setModalAriaHidden = hidden => {
-  accessibilityManager.ariaManager.setHidden(modalElements.mainModal.main, hidden);
-  accessibilityManager.ariaManager.setHidden(modalElements.mainModal.form, hidden);
-  accessibilityManager.ariaManager.setHidden(modalElements.mainModal.submitButton, hidden);
-};
-
-const setModalClasses = show => {
+const toggleModalDisplay = show => {
   const action = show ? 'add' : 'remove';
-  modalElements.mainModal.main.classList[action]('show');
-  modalElements.mainModal.form.classList[action]('show');
+  modalState.mainModal.main.classList[action]('show');
+  modalState.mainModal.form.classList[action]('show');
 };
 
-export const toggleModal = isOpen => {
-  if (isOpen) {
-    previouslyFocusedElement = document.activeElement;
-    setModalAriaHidden(false);
-    setModalClasses(true);
+const toggleModalAria = hidden => {
+  ariaManager.setHidden(modalState.mainModal.main, hidden);
+  ariaManager.setHidden(modalState.mainModal.form, hidden);
+  ariaManager.setHidden(modalState.mainModal.submitButton, hidden);
+};
 
-    // Prevent body scroll
-    document.documentElement.classList.add('no-scroll');
-    document.body.classList.add('no-scroll');
+const setupFocusManagement = () => {
+  modalState.mainModal.main.setAttribute('tabindex', '-1');
+  modalState.focusTrap = focusManager.trapFocus(modalState.mainModal.main, selectorTypes.focusable);
+};
 
-    focusTrapCleanup = trapFocus(modalElements.mainModal.main);
+const cleanupFocusManagement = () => {
+  modalState.mainModal.main.removeAttribute('tabindex');
 
-    // Make modal focusable and add focus management event listeners
-    modalElements.mainModal.main.setAttribute('tabindex', '-1');
-    modalElements.mainModal.main.addEventListener('focusin', handleModalFocusIn);
-    modalElements.mainModal.main.addEventListener('focusout', handleModalFocusOut);
+  if (modalState.focusTrap) {
+    modalState.focusTrap();
+    modalState.focusTrap = null;
+  }
+};
 
-    setTimeout(() => {
-      // Use accessibility manager to focus the first input
-      const firstInput = accessibilityManager.focusManager.focusFirst(modalElements.mainModal.main, 'input, textarea');
-      if (!firstInput && modalElements.formGroup.firstname) {
-        modalElements.formGroup.firstname.focus();
-      }
-    }, 0);
-  } else {
-    if (focusTrapCleanup) {
-      focusTrapCleanup();
-      focusTrapCleanup = null;
-    }
+const restorePreviousFocus = () => {
+  if (modalState.previousFocus) {
+    modalState.previousFocus.focus();
+    modalState.previousFocus = null;
+  }
+};
 
-    // Remove focus management event listeners
-    modalElements.mainModal.main.removeEventListener('focusin', handleModalFocusIn);
-    modalElements.mainModal.main.removeEventListener('focusout', handleModalFocusOut);
-    modalElements.mainModal.main.removeAttribute('tabindex');
+export const openModal = () => {
+  modalState.previousFocus = document.activeElement;
+  toggleModalAria(false);
+  toggleModalDisplay(true);
+  toggleScroll(true);
+  toggleBackgroundContent(true);
 
-    // Restore body scroll
-    document.documentElement.classList.remove('no-scroll');
-    document.body.classList.remove('no-scroll');
-
-    if (document.activeElement && modalElements.mainModal.main.contains(document.activeElement)) {
-      document.activeElement.blur();
-    }
-
-    setModalClasses(false);
-    setModalAriaHidden(true);
-
-    setTimeout(() => {
-      restoreFocus();
-    }, 100);
+  if (modalState.mainModal.submitButton) {
+    modalState.mainModal.submitButton.disabled = true;
+    modalState.mainModal.submitButton.classList.add('disabled');
+    modalState.mainModal.submitButton.setAttribute('aria-disabled', 'true');
   }
 
-  if (isOpen) {
-    resetInputsAndFocus();
-  } else {
-    resetFormAndModal();
+  setupFocusManagement();
+  setTimeout(focusFirstInput, timeoutConfig.focus);
+  resetInputsAndFocus();
+  if (!modalState.characterCountCleanup) {
+    modalState.characterCountCleanup = characterCountListeners();
+  }
+};
+
+export const closeModal = () => {
+  cleanupFocusManagement();
+  toggleScroll(false);
+  toggleBackgroundContent(false);
+
+  if (document.activeElement && modalState.mainModal.main.contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
+
+  toggleModalDisplay(false);
+  toggleModalAria(true);
+  setTimeout(restorePreviousFocus, timeoutConfig.focus);
+  resetFormAndModal();
+  if (modalState.characterCountCleanup) {
+    modalState.characterCountCleanup();
+    modalState.characterCountCleanup = null;
   }
 };

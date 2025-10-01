@@ -1,9 +1,13 @@
 export const createHeader = photographer => {
+  const photographerSection = document.createElement('section');
+  photographerSection.id = 'photographer-section';
+  photographerSection.className = 'photographer-section';
+  photographerSection.setAttribute('aria-label', 'Section du photographe');
+
   const { name, tagline, city, country, price } = photographer;
   const { jpgUrl, webpUrl } = photographer.portraits;
-  const section = document.getElementById('photographer-section');
 
-  section.innerHTML = `
+  photographerSection.innerHTML = `
     <div class="section-container">
       <div class="section-info" id="bio-info">
         <h1 data-label="Nom du photographe">${name}</h1>
@@ -24,12 +28,15 @@ export const createHeader = photographer => {
             class="profile-picture"
             src="${jpgUrl}"
             alt="Portrait de ${name}"
-            loading="lazy"
-            decoding="async"
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
             width="900"
             height="900"
           >
         </picture>
       </div>
     </div>`;
+
+  return photographerSection;
 };

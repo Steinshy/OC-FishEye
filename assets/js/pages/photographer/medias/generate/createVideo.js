@@ -1,6 +1,6 @@
-import { createAccessibilityManager } from '../../../../accessibilityManagement.js';
+import { accessibilityManager } from '../../../../utils/accessibility.js';
 
-const accessibilityManager = createAccessibilityManager();
+const accessibility = accessibilityManager();
 
 export const createVideo = media => {
   if (!media) return;
@@ -16,7 +16,6 @@ export const createVideo = media => {
     <video
       data-media-type="video"
       data-media-id="${media.id}"
-      controls
       muted
       loop
       playsinline
@@ -32,7 +31,7 @@ export const createVideo = media => {
 
   const video = container.querySelector('video');
 
-  accessibilityManager.ariaManager.updateAttributes(video, {
+  accessibility.ariaManager.updateAttributes(video, {
     'aria-label': `${media.title || 'Vidéo'} - ${media.mediaType}`,
     'aria-describedby': `media-info-${media.id}`,
   });

@@ -1,70 +1,67 @@
 export const errorConfig = {
   contexts: {
-    DATA_LOADING: 'Data Loading',
-    MODAL_MANAGEMENT: 'Modal Management',
+    DATA_LOADING: 'Données chargées',
+    MODAL_MANAGEMENT: "Gestion de l'affichage du modal",
     LIGHTBOX: 'Lightbox',
-    FORM_VALIDATION: 'Form Validation',
-    ACCESSIBILITY: 'Accessibility',
-    MEDIA_RENDERING: 'Media Rendering',
+    FORM_VALIDATION: 'Validation du formulaire',
+    ACCESSIBILITY: 'Accessibilité',
+    MEDIA_RENDERING: 'Rendu des médias',
+    FORM_SUBMISSION: 'Envoi du formulaire',
   },
 
   messages: {
+    DATA_ERROR: 'Erreur de chargement des données',
     PHOTOGRAPHER_NOT_FOUND: 'Photographe non trouvé',
     MEDIA_NOT_FOUND: 'Média non trouvé',
     NETWORK_ERROR: 'Erreur de connexion',
+    MODAL_ERROR: 'Erreur de gestion du modal',
     VALIDATION_ERROR: 'Erreur de validation',
     UNKNOWN_ERROR: "Une erreur inattendue s'est produite",
+    SUBMIT_ERROR: "Erreur lors de l'envoi du formulaire",
   },
-};
-
-export const validationConfig = {
-  emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  minlength: 2,
-  maxlength: 500,
 };
 
 export let modalElements = {};
 
 export const initializeModalElements = () => {
+  modalState.mainModal = {
+    main: document.getElementById('modal-signup'),
+    form: document.getElementById('form-signup'),
+    header: document.getElementById('modal-header'),
+    content: document.getElementById('modal-content'),
+    closeButton: document.getElementById('modal-close'),
+    modalFooter: document.getElementById('modal-footer'),
+    submitButton: document.getElementById('footer-submit-button'),
+  };
+  modalState.formGroup = {
+    firstname: document.getElementById('firstname'),
+    lastname: document.getElementById('lastname'),
+    email: document.getElementById('email'),
+    message: document.getElementById('message'),
+  };
+  modalState.formElements = {
+    contactForm: document.getElementById('form-signup'),
+    contactModal: document.getElementById('modal-signup'),
+    characterCount: document.getElementById('character-count'),
+  };
   modalElements = {
     contactButton: document.getElementById('contact-button'),
-    mainModal: {
-      main: document.getElementById('modal-signup'),
-      form: document.getElementById('form-signup'),
-      header: document.getElementById('modal-header'),
-      content: document.getElementById('modal-content'),
-      closeButton: document.getElementById('modal-close'),
-      modalFooter: document.getElementById('modal-footer'),
-      submitButton: document.getElementById('footer-submit-button'),
-    },
-    formGroup: {
-      firstname: document.getElementById('firstname'),
-      lastname: document.getElementById('lastname'),
-      email: document.getElementById('email'),
-      message: document.getElementById('message'),
-    },
-    formElements: {
-      contactForm: document.getElementById('form-signup'),
-      contactModal: document.getElementById('modal-signup'),
-      characterCount: document.getElementById('character-count'),
-      minCount: document.getElementById('character-count'),
-      maxCount: document.getElementById('character-count'),
-    },
+    mainModal: modalState.mainModal,
+    formGroup: modalState.formGroup,
+    formElements: modalState.formElements,
   };
-};
 
-export const getFieldNames = () => ['firstname', 'lastname', 'email', 'message'];
+  if (modalElements.contactButton) {
+    modalElements.contactButton.disabled = false;
+    modalElements.contactButton.removeAttribute('aria-disabled');
+  }
+};
 
 export const formConfig = {
   fieldNames: ['firstname', 'lastname', 'email', 'message'],
 };
 
-export const getErrorElement = fieldName => document.getElementById(`error-${fieldName.toLowerCase()}`);
-
-export const getInputs = () => {
-  if (!modalElements.formGroup) return [];
-  return Object.values(modalElements.formGroup).filter(Boolean);
-};
+export const getFieldNames = () => formConfig.fieldNames;
 
 export const dropdownConfig = {
   elements: {
@@ -77,46 +74,71 @@ export const dropdownConfig = {
   },
 
   attributes: {
-    show: 'show',
-    hidden: 'hidden',
-    ariaHidden: 'aria-hidden',
-    ariaExpanded: 'aria-expanded',
-    ariaSelected: 'aria-selected',
     role: 'role',
     option: 'option',
   },
-  events: {
-    click: 'click',
-    keydown: 'keydown',
-  },
-  keys: {
-    escape: 'Escape',
-    arrowDown: 'ArrowDown',
-    arrowUp: 'ArrowUp',
-    enter: 'Enter',
-  },
 };
 
-export const sortConfig = {
-  elements: {
-    popular: document.getElementById('popular-option'),
-    date: document.getElementById('date-option'),
-    title: document.getElementById('title-option'),
-    likes: document.getElementById('likes-option'),
-  },
-};
-
-export const mediaStore = {
+export const modalState = {
+  currentIndex: 0,
   medias: [],
-  mediaPath: '',
-  photographerId: null,
+  modal: null,
+  focusTrap: null,
+  previousFocus: null,
+  isInitialized: false,
+  isNavigating: false,
+  touch: { startX: 0, startY: 0, minDistance: 50 },
+  characterCountCleanup: null,
+  mainModal: {
+    main: null,
+    form: null,
+    header: null,
+    content: null,
+    closeButton: null,
+    modalFooter: null,
+    submitButton: null,
+  },
+  formGroup: {
+    firstname: null,
+    lastname: null,
+    email: null,
+    message: null,
+  },
+  formElements: {
+    contactForm: null,
+    contactModal: null,
+    characterCount: null,
+  },
 };
 
-export const mediasConfig = {
-  get mainMedias() {
-    return document.getElementById('main-medias');
-  },
-  get cardsContainer() {
-    return document.createElement('div');
-  },
+export const lightboxElements = {
+  modal: document.getElementById('lightbox-modal'),
+  container: document.getElementById('lightbox-media-container'),
+  title: document.getElementById('lightbox-title'),
+  likes: document.getElementById('lightbox-likes-count'),
+  counter: document.getElementById('lightbox-counter'),
+  mediaElementCache: new Map(),
+};
+
+export const timeoutConfig = {
+  promise: 100,
+  like: 1000,
+  focus: 0,
+};
+
+export const selectorTypes = {
+  focusable: 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+  formInputs: 'input, textarea, button',
+  dropdownOptions: '[role="option"]',
+  mediaCards: 'article.media-card',
+  mediaCardsContainer: '.medias-cards',
+  mediaContent: '.media-content',
+  eyeIcon: '.eye-icon',
+  likesButton: '.likes',
+  main: 'main',
+  header: 'header',
+};
+
+export const mediasElements = {
+  main: document.getElementById('main-medias'),
 };

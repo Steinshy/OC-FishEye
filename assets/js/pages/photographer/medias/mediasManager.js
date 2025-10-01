@@ -1,12 +1,11 @@
-import { createAccessibilityManager } from '../../../accessibilityManagement.js';
-import { errorConfig } from '../../../constants.js';
-import { logError } from '../../../errorHandler.js';
-import { openLightbox } from '../lightbox/lightbox.js';
+import { timeoutConfig, selectorTypes } from '../../../constants.js';
+import { accessibilityManager } from '../../../utils/accessibility.js';
+import { open } from '../lightbox/lightbox.js';
 
 import { createMediaElement } from './createMediaElement.js';
 import { createCard } from './generate/createCard.js';
 
-const accessibilityManager = createAccessibilityManager();
+const accessibility = accessibilityManager();
 
 export const createMediasCards = photographerMedias => {
   if (!photographerMedias) return;
@@ -19,20 +18,52 @@ export const createMediasCards = photographerMedias => {
     const mediaElement = createMediaElement(photographerMedia);
     if (mediaElement) {
       const card = createCard(photographerMedia, mediaElement);
-      accessibilityManager.setupMediaCardAccessibility(card, photographerMedia, openMediaLightbox, toggleLike);
+      accessibility.setupMediaCardAccessibility(card, photographerMedia, openMediaLightbox, toggleLike);
       mediasCards.appendChild(card);
     }
   });
   return mediasCards;
 };
 
+export const updateMediasOrder = sortedMedias => {
+  const mainMedia = document.getElementById('main-medias');
+  if (!mainMedia || !Array.isArray(sortedMedias)) return;
+
+  let container = mainMedia.querySelector(selectorTypes.mediaCardsContainer);
+  if (!container) {
+    mainMedia.innerHTML = '';
+    container = createMediasCards(sortedMedias);
+    if (container) mainMedia.appendChild(container);
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  const existingById = new Map(Array.from(container.querySelectorAll(selectorTypes.mediaCards)).map(card => [card.getAttribute('data-media-id'), card]));
+
+  sortedMedias.forEach(media => {
+    const id = String(media.id);
+    const existing = existingById.get(id);
+    if (existing) {
+      fragment.appendChild(existing);
+    } else {
+      const mediaElement = createMediaElement(media);
+      if (mediaElement) {
+        const card = createCard(media, mediaElement);
+        accessibility.setupMediaCardAccessibility(card, media, openMediaLightbox, toggleLike);
+        fragment.appendChild(card);
+      }
+    }
+  });
+
+  container.replaceChildren(fragment);
+};
+
 const openMediaLightbox = (media, allMedias) => {
   const mediasArray = allMedias || window.currentPhotographerMedias || [];
   if (!mediasArray.length) {
-    logError('No media data available for lightbox', null, errorConfig.contexts.LIGHTBOX);
     return;
   }
-  openLightbox(media.id, mediasArray);
+  open(media.id, mediasArray);
 };
 
 const toggleLike = (media, likesButton) => {
@@ -44,8 +75,6 @@ const toggleLike = (media, likesButton) => {
     likesCount.setAttribute('aria-live', 'polite');
     media.likes = newLikes;
     likesButton.classList.add('liked');
-    setTimeout(() => likesButton.classList.remove('liked'), 1000);
+    setTimeout(() => likesButton.classList.remove('liked'), timeoutConfig.like);
   }
 };
-
-export const handleTypeCard = createMediaElement;

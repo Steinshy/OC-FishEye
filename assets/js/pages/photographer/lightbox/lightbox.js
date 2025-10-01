@@ -1,235 +1,198 @@
-import { createAccessibilityManager, setupLightboxEventListeners, cleanupLightboxEventListeners } from '../../../accessibilityManagement.js';
-import { errorConfig } from '../../../constants.js';
-import { logError, logWarning } from '../../../errorHandler.js';
+import { lightboxElements, timeoutConfig, selectorTypes } from '../../../constants.js';
+import { accessibilityManager } from '../../../utils/accessibility.js';
+import { setupLightboxEventListeners } from '../../../utils/helpers/eventListeners.js';
+import { toggleScroll } from '../../../utils/helpers/utils.js';
 import { createMediaElement } from '../medias/createMediaElement.js';
 
-const accessibilityManager = createAccessibilityManager();
+const { focusManager } = accessibilityManager();
 
-// Lightbox state
-let currentMediaIndex = 0;
-let photographerMedias = [];
-let lightboxModal = null;
-let focusTrapCleanup = null;
-let previouslyFocusedElement = null;
-let isInitialized = false;
-let touchStartX = 0;
-let touchStartY = 0;
-let touchEndX = 0;
-let touchEndY = 0;
-const minSwipeDistance = 50;
-let isNavigating = false; // Prevent rapid navigation
-
-const initialize = () => {
-  if (isInitialized) return;
-  lightboxModal = document.getElementById('lightbox-modal');
-  if (!lightboxModal) {
-    logError('Lightbox modal not found', null, errorConfig.contexts.LIGHTBOX);
-    return;
+// Helper functions
+const getCachedElement = media => {
+  const key = String(media.id);
+  if (lightboxElements.mediaElementCache.has(key)) {
+    return lightboxElements.mediaElementCache.get(key).cloneNode(true);
   }
-  setupEventListeners();
-  isInitialized = true;
+  const element = createMediaElement(media);
+  lightboxElements.mediaElementCache.set(key, element?.cloneNode(true));
+  return element;
 };
 
-const setupEventListeners = () => {
-  setupLightboxEventListeners(lightboxModal, {
-    previousSlide,
-    nextSlide,
-    close,
-    handleKeyDown,
-    handleTouchStart,
-    handleTouchEnd,
-    handleWheel,
-    handleFocusIn,
+const getValidIndex = (index, length) => {
+  if (index < 0) return length - 1;
+  if (index >= length) return 0;
+  return index;
+};
+
+const isLightboxOpen = () => lightboxElements.modal?.classList.contains('show');
+
+const setupMediaElement = (element, container) => {
+  container.innerHTML = '';
+  element.addEventListener('click', e => e.stopPropagation());
+  container.appendChild(element);
+};
+
+const updateUI = media => {
+  const { title, likes, counter } = lightboxElements;
+  title.textContent = media.title;
+  likes.textContent = media.likes;
+  counter.textContent = `${lightboxElements.currentIndex + 1} / ${lightboxElements.medias.length}`;
+};
+
+const toggleUI = show => {
+  toggleLightboxAria(!show);
+  toggleLightboxDisplay(show);
+  toggleScroll(show);
+  toggleBackgroundContent(show);
+};
+
+const updateContent = () => {
+  const { container } = lightboxElements;
+  if (!lightboxElements.medias?.length || !container) return;
+
+  requestAnimationFrame(() => {
+    const media = lightboxElements.medias[lightboxElements.currentIndex];
+    const element = getCachedElement(media);
+
+    if (element) {
+      setupMediaElement(element, container);
+      updateUI(media);
+    }
   });
 };
 
-const handleKeyDown = e => {
-  if (!lightboxModal.classList.contains('show')) return;
-  accessibilityManager.keyboardHandler.createEscapeHandler(close)(e);
+const navigate = index => {
+  if (!lightboxElements.medias?.length || lightboxElements.isNavigating) return;
+  lightboxElements.isNavigating = true;
+  lightboxElements.currentIndex = index;
+  updateContent();
+  setTimeout(() => (lightboxElements.isNavigating = false), timeoutConfig.focus);
+};
 
-  switch (e.key) {
-    case 'ArrowLeft':
-      e.preventDefault();
-      previousSlide();
-      break;
-    case 'ArrowRight':
-      e.preventDefault();
-      nextSlide();
-      break;
-    case 'Home':
-      e.preventDefault();
-      goToSlide(0);
-      break;
-    case 'End':
-      e.preventDefault();
-      goToSlide(photographerMedias.length - 1);
-      break;
-    case ' ':
-      e.preventDefault();
-      togglePlayPause();
-      break;
+const next = () => {
+  const nextIndex = getValidIndex(lightboxElements.currentIndex + 1, lightboxElements.medias.length);
+  navigate(nextIndex);
+};
+
+const previous = () => {
+  const prevIndex = getValidIndex(lightboxElements.currentIndex - 1, lightboxElements.medias.length);
+  navigate(prevIndex);
+};
+
+const toggleBackgroundContent = hide => {
+  const main = document.querySelector(selectorTypes.main);
+  const header = document.querySelector(selectorTypes.header);
+  if (main) main.inert = hide;
+  if (header) header.inert = hide;
+};
+
+const toggleLightboxDisplay = show => {
+  lightboxElements.modal?.classList.toggle('show', show);
+};
+
+const toggleLightboxAria = hidden => {
+  lightboxElements.modal?.setAttribute('aria-hidden', hidden);
+};
+
+const handleKeyboard = e => {
+  if (!isLightboxOpen()) return;
+
+  const actions = {
+    Escape: close,
+    ArrowLeft: previous,
+    ArrowRight: next,
+    Home: () => navigate(0),
+    End: () => navigate(lightboxElements.medias?.length - 1),
+    ' ': () => {
+      const video = lightboxElements.modal.querySelector('video');
+      video?.paused ? video.play() : video?.pause();
+    },
+  };
+
+  if (actions[e.key]) {
+    e.preventDefault();
+    actions[e.key]();
   }
 };
 
 const handleTouchStart = e => {
-  if (!lightboxModal.classList.contains('show')) return;
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
+  if (!isLightboxOpen()) return;
+  lightboxElements.touch.startX = e.touches[0].clientX;
+  lightboxElements.touch.startY = e.touches[0].clientY;
 };
 
 const handleTouchEnd = e => {
-  if (!lightboxModal.classList.contains('show')) return;
-  touchEndX = e.changedTouches[0].clientX;
-  touchEndY = e.changedTouches[0].clientY;
+  if (!isLightboxOpen()) return;
+  const deltaX = e.changedTouches[0].clientX - lightboxElements.touch.startX;
+  const deltaY = e.changedTouches[0].clientY - lightboxElements.touch.startY;
+  const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
+  const isLongEnough = Math.abs(deltaX) > lightboxElements.touch.minDistance;
 
-  if (Math.abs(touchEndX - touchStartX) > Math.abs(touchEndY - touchStartY) && Math.abs(touchEndX - touchStartX) > minSwipeDistance) {
-    touchEndX - touchStartX > 0 ? previousSlide() : nextSlide();
+  if (isHorizontalSwipe && isLongEnough) {
+    deltaX > 0 ? previous() : next();
   }
 };
 
 const handleWheel = e => {
-  if (!lightboxModal.classList.contains('show')) return;
+  if (!isLightboxOpen()) return;
   e.preventDefault();
-  e.deltaY > 0 ? nextSlide() : e.deltaY < 0 ? previousSlide() : null;
+  e.deltaY > 0 ? next() : previous();
 };
 
-const handleFocusIn = e => {
-  if (!lightboxModal.contains(e.target)) {
-    accessibilityManager.focusManager.focusFirst(lightboxModal);
+const handleFocus = e => {
+  if (!lightboxElements.modal.contains(e.target)) focusManager.focusFirst(lightboxElements.modal);
+};
+
+export const open = (mediaId, medias) => {
+  lightboxElements.medias = medias || window.currentPhotographerMedias || [];
+  if (!lightboxElements.medias.length) return;
+
+  lightboxElements.currentIndex = Math.max(
+    0,
+    lightboxElements.medias.findIndex(m => m.id === mediaId)
+  );
+  lightboxElements.previousFocus = document.activeElement;
+
+  toggleUI(true);
+  updateContent();
+  lightboxElements.focusTrap = focusManager.trapFocus(lightboxElements.modal);
+  requestAnimationFrame(() => document.getElementById('lightbox-close')?.focus());
+};
+
+export const close = () => {
+  if (!isLightboxOpen()) return;
+
+  document.activeElement?.blur();
+  toggleUI(false);
+
+  lightboxElements.focusTrap?.();
+  lightboxElements.focusTrap = null;
+
+  if (lightboxElements.previousFocus) {
+    requestAnimationFrame(() => {
+      lightboxElements.previousFocus?.focus();
+      lightboxElements.previousFocus = null;
+    });
   }
 };
 
-const open = (mediaId, medias) => {
-  photographerMedias = medias || window.currentPhotographerMedias || [];
-  if (!photographerMedias.length) {
-    logError('No media data available for lightbox', null, errorConfig.contexts.LIGHTBOX);
+export const initialize = () => {
+  if (lightboxElements.isInitialized) return;
+
+  lightboxElements.modal = document.getElementById('lightbox-modal');
+  if (!lightboxElements.modal) {
     return;
   }
 
-  currentMediaIndex = photographerMedias.findIndex(media => media.id === mediaId);
-  if (currentMediaIndex === -1) {
-    logWarning(`Media with ID ${mediaId} not found, showing first media`, null, errorConfig.contexts.LIGHTBOX);
-    currentMediaIndex = 0;
-  }
-
-  previouslyFocusedElement = document.activeElement;
-  updateContent();
-  lightboxModal.classList.add('show');
-  lightboxModal.setAttribute('aria-hidden', 'false');
-  document.documentElement.classList.add('no-scroll');
-  document.body.classList.add('no-scroll');
-  focusTrapCleanup = accessibilityManager.focusManager.trapFocus(lightboxModal);
-  document.getElementById('lightbox-close')?.focus();
-};
-
-const close = () => {
-  if (!lightboxModal || !lightboxModal.classList.contains('show')) return;
-
-  // Instant close - no animations
-  lightboxModal.classList.remove('show');
-  lightboxModal.setAttribute('aria-hidden', 'true');
-
-  // Clean up immediately
-  if (focusTrapCleanup) {
-    focusTrapCleanup();
-    focusTrapCleanup = null;
-  }
-  document.documentElement.classList.remove('no-scroll');
-  document.body.classList.remove('no-scroll');
-  if (previouslyFocusedElement) {
-    previouslyFocusedElement.focus();
-    previouslyFocusedElement = null;
-  }
-};
-
-const goToSlide = index => {
-  if (!photographerMedias.length || isNavigating) return;
-  isNavigating = true;
-  currentMediaIndex = Math.max(0, Math.min(index, photographerMedias.length - 1));
-  updateContent();
-
-  // Reset navigation flag after a short delay
-  setTimeout(() => {
-    isNavigating = false;
-  }, 100);
-};
-
-const nextSlide = () => goToSlide((currentMediaIndex + 1) % photographerMedias.length);
-const previousSlide = () => goToSlide(currentMediaIndex <= 0 ? photographerMedias.length - 1 : currentMediaIndex - 1);
-
-const updateContent = () => {
-  if (!photographerMedias.length) return;
-  const elements = getLightboxElements();
-  if (!elements) return;
-
-  // Use requestAnimationFrame for smoother updates
-  requestAnimationFrame(() => {
-    elements.mediaContainer.innerHTML = '';
-    const mediaElement = createMediaElement(photographerMedias[currentMediaIndex]);
-    if (!mediaElement) {
-      logError('Unable to render media in lightbox', null, errorConfig.contexts.LIGHTBOX);
-      return;
-    }
-
-    const mediaType = mediaElement.getAttribute('data-media-type') || photographerMedias[currentMediaIndex].mediaType;
-    if (mediaType === 'image') {
-      const img = mediaElement.querySelector('img') || mediaElement;
-      if (img && img.tagName === 'IMG') {
-        img.loading = 'eager';
-        img.decoding = 'async';
-        img.classList.add('lightbox-media-image');
-      }
-    } else if (mediaType === 'video') {
-      const video = mediaElement.querySelector('video') || mediaElement;
-      if (video && video.tagName === 'VIDEO') {
-        video.classList.add('lightbox-media-video');
-        video.setAttribute('controls', 'true');
-        video.setAttribute('playsinline', 'true');
-        video.setAttribute('preload', 'metadata');
-        video.style.width = '100%';
-        video.style.height = '100%';
-        video.style.objectFit = 'contain';
-      }
-    }
-
-    mediaElement.addEventListener('click', e => e.stopPropagation());
-    elements.mediaContainer.appendChild(mediaElement);
-    elements.titleElement.textContent = photographerMedias[currentMediaIndex].title;
-    elements.likesElement.textContent = photographerMedias[currentMediaIndex].likes;
-    elements.counterElement.textContent = `${currentMediaIndex + 1} / ${photographerMedias.length}`;
+  setupLightboxEventListeners(lightboxElements.modal, {
+    previousSlide: previous,
+    nextSlide: next,
+    close,
+    handleKeyDown: handleKeyboard,
+    handleTouchStart,
+    handleTouchEnd,
+    handleWheel,
+    handleFocusIn: handleFocus,
   });
+
+  lightboxElements.isInitialized = true;
 };
-
-const getLightboxElements = () => {
-  const mediaContainer = document.getElementById('lightbox-media-container');
-  const titleElement = document.getElementById('lightbox-title');
-  const likesElement = document.getElementById('lightbox-likes-count');
-  const counterElement = document.getElementById('lightbox-counter');
-  if (!mediaContainer || !titleElement || !likesElement || !counterElement) {
-    logError('Lightbox elements not found', null, errorConfig.contexts.LIGHTBOX);
-    return null;
-  }
-  return { mediaContainer, titleElement, likesElement, counterElement };
-};
-
-const togglePlayPause = () => {
-  const video = lightboxModal.querySelector('video');
-  if (video) video.paused ? video.play() : video.pause();
-};
-
-const _destroy = () => {
-  if (focusTrapCleanup) focusTrapCleanup();
-  cleanupLightboxEventListeners();
-  isInitialized = false;
-};
-
-// Export functions for backward compatibility
-export const openLightbox = open;
-export const initializeLightbox = initialize;
-
-// Auto-initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initialize);
-} else {
-  initialize();
-}
