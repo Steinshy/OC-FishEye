@@ -77,11 +77,6 @@ input:-webkit-autofill:active {
 /* =========================
   CSS Reset & Base Styles
 ========================= */
-* {
-  transition: none !important;
-  transition-color: none !important;
-}
-
 *,
 *::before,
 *::after {
@@ -350,8 +345,63 @@ footer p {
 /* =========================
   Responsive Design
 ========================= */
-/* Tablet */
-@media (width >= 768px) {
+
+/* Mobile (up to 767px) */
+@media (max-width: 767px) {
+  body,
+  header,
+  main,
+  footer {
+    max-width: 100%;
+  }
+
+  nav {
+    padding: var(--space-sm);
+  }
+
+  .nav-logo {
+    height: 1.8rem;
+  }
+
+  nav h1 {
+    font-size: 1.2rem;
+  }
+
+  main {
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+  }
+
+  .photographers {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .photographer h1 {
+    font-size: 1.5rem;
+  }
+
+  .photographer p,
+  .photographer span {
+    font-size: 0.9rem;
+  }
+
+  .container-picture {
+    width: 120px;
+    height: 120px;
+  }
+
+  footer {
+    margin-top: var(--space-lg);
+  }
+
+  footer p {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   body,
   header,
   main,
@@ -362,30 +412,33 @@ footer p {
   .nav-logo {
     height: 2.2rem;
   }
+
   main {
     gap: var(--space-md);
   }
+
   .photographers {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
   }
+
   .photographer h1 {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.8rem;
   }
+
   .photographer p,
   .photographer span {
     font-size: 1rem;
-    font-weight: 500;
   }
+
   .container-picture {
     width: 180px;
     height: 180px;
   }
 }
 
-/* Desktop */
-@media (width >= 1440px) {
+/* Desktop (1024px and above) */
+@media (min-width: 1024px) {
   body,
   header,
   main,
@@ -396,18 +449,25 @@ footer p {
   .nav-logo {
     height: 2.5rem;
   }
+
   main {
     gap: var(--space-lg);
   }
+
   .photographers {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xl);
   }
+
+  .photographer h1 {
+    font-size: 2rem;
+  }
+
   .photographer p,
   .photographer span {
     font-size: 1.2rem;
-    font-weight: 500;
   }
+
   .container-picture {
     width: 200px;
     height: 200px;

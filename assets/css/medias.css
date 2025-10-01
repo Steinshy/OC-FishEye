@@ -131,8 +131,8 @@
   Eye Icon (Lightbox Trigger)
 ========================= */
 .media-content .eye-icon {
-  display: none;
-  visibility: hidden;
+  display: flex;
+  visibility: visible;
   position: absolute;
   opacity: 0;
   top: 12px;
@@ -161,7 +161,9 @@
   transition: transform 0.2s ease;
 }
 
-.media-content:hover .eye-icon {
+.media-content:hover .eye-icon,
+.media-content:focus .eye-icon,
+.media-content .eye-icon:focus {
   display: flex;
   visibility: visible;
   opacity: 1;
@@ -269,68 +271,62 @@
   gap: 0.25rem;
 }
 
-.media-stats .price .price-icon {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-left: 0.125rem;
-}
-
-/* =========================
-  Loading & Error States
-========================= */
-.gallery-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  font-size: 1.1rem;
-  color: var(--txt-color-secondary);
-  background: var(--bg-color-tertiary);
-  border-radius: 12px;
-  margin: 2rem;
-}
-
-.error-icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-sm);
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.card-video {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: #fff;
-  border-radius: var(--radius-lg, 8px);
-  box-shadow: var(--shadow-default, 0 2px 8px rgb(0 0 0 / 10%));
-  overflow: hidden;
-}
-
 /* =========================
   Responsive Design
 ========================= */
-@media (width <= 1024px) {
+
+/* Mobile (up to 767px) */
+@media (max-width: 767px) {
+  .medias-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .media-card {
+    height: 350px;
+  }
+
+  .media-info h3 {
+    font-size: 0.9rem;
+  }
+
+  .media-stats .likes,
+  .media-stats .price {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .media-content .eye-icon {
+    width: 32px;
+    height: 32px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .media-content .eye-icon i {
+    font-size: 11px;
+  }
+}
+
+/* Tablet (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .medias-cards {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     padding: 1.5rem;
   }
-}
 
-@media (width <= 768px) {
-  .medias-cards {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1rem;
+  .media-card {
+    height: 380px;
+  }
+
+  .media-info h3 {
+    font-size: 0.95rem;
+  }
+
+  .media-stats .likes,
+  .media-stats .price {
+    font-size: 0.95rem;
   }
 }
