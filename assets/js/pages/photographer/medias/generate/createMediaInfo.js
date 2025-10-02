@@ -1,6 +1,4 @@
-import { accessibilityManager } from '../../../../utils/accessibility.js';
-
-const accessibility = accessibilityManager();
+import { accessibility } from '../../../../constants.js';
 
 export const createMediaInfo = media => {
   if (!media) return;

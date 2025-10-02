@@ -1,6 +1,5 @@
 import { accessibilityManager } from '../../../../utils/accessibility.js';
-
-const accessibility = accessibilityManager();
+import { videoEventListeners } from '../../../../utils/helpers/eventListeners.js';
 
 export const createVideo = media => {
   if (!media) return;
@@ -10,8 +9,6 @@ export const createVideo = media => {
   container.setAttribute('data-media-type', 'video');
   container.setAttribute('data-media-id', media.id);
 
-  const captionPath = media.medias.mp4Url.replace(/\/media\//, '/media/captions/').replace('.mp4', '.vtt');
-
   container.innerHTML = `
     <video
       data-media-type="video"
@@ -20,21 +17,19 @@ export const createVideo = media => {
       loop
       playsinline
       preload="metadata"
+      controls
       class="media-video-player"
-      aria-label="${media.title || 'Vidéo'} - ${media.mediaType}"
+      aria-label="${media.title || 'Vidéo'}"
       aria-describedby="media-info-${media.id}"
+      tabindex="0"
     >
       <source src="${media.medias.mp4Url}" type="video/mp4">
-      <track kind="captions" src="${captionPath}" srclang="fr" label="Français" default>
     </video>
   `;
 
   const video = container.querySelector('video');
 
-  accessibility.ariaManager.updateAttributes(video, {
-    'aria-label': `${media.title || 'Vidéo'} - ${media.mediaType}`,
-    'aria-describedby': `media-info-${media.id}`,
-  });
+  videoEventListeners(video, accessibilityManager().keyboardHandler.createVideoInteractionHandler(video));
 
   return container;
 };

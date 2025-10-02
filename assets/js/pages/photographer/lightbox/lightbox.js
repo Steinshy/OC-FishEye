@@ -1,20 +1,13 @@
-import { lightboxElements, timeoutConfig, selectorTypes } from '../../../constants.js';
-import { accessibilityManager } from '../../../utils/accessibility.js';
-import { setupLightboxEventListeners } from '../../../utils/helpers/eventListeners.js';
-import { toggleScroll } from '../../../utils/helpers/utils.js';
+import { lightboxElements, timeoutConfig, selectorTypes, accessibility } from '../../../constants.js';
+import { mediaCache } from '../../../utils/cacheManager.js';
+import { setupLightboxEventListeners } from '../../../utils/helpers/lightboxEventListeners.js';
+import { createFragment, toggleScroll } from '../../../utils/helpers/utils.js';
 import { createMediaElement } from '../medias/createMediaElement.js';
 
-const { focusManager } = accessibilityManager();
+const { focusManager } = accessibility;
 
-// Helper functions
 const getCachedElement = media => {
-  const key = String(media.id);
-  if (lightboxElements.mediaElementCache.has(key)) {
-    return lightboxElements.mediaElementCache.get(key).cloneNode(true);
-  }
-  const element = createMediaElement(media);
-  lightboxElements.mediaElementCache.set(key, element?.cloneNode(true));
-  return element;
+  return mediaCache.getOrCreateElement('mediaElements', media.id, () => createMediaElement(media));
 };
 
 const getValidIndex = (index, length) => {
@@ -28,7 +21,7 @@ const isLightboxOpen = () => lightboxElements.modal?.classList.contains('show');
 const setupMediaElement = (element, container) => {
   container.innerHTML = '';
   element.addEventListener('click', e => e.stopPropagation());
-  container.appendChild(element);
+  container.appendChild(createFragment(element));
 };
 
 const updateUI = media => {
@@ -143,7 +136,7 @@ const handleFocus = e => {
 };
 
 export const open = (mediaId, medias) => {
-  lightboxElements.medias = medias || window.currentPhotographerMedias || [];
+  lightboxElements.medias = medias || [];
   if (!lightboxElements.medias.length) return;
 
   lightboxElements.currentIndex = Math.max(
@@ -175,10 +168,9 @@ export const close = () => {
   }
 };
 
-export const initialize = () => {
+export const initializeLightbox = () => {
   if (lightboxElements.isInitialized) return;
 
-  lightboxElements.modal = document.getElementById('lightbox-modal');
   if (!lightboxElements.modal) {
     return;
   }

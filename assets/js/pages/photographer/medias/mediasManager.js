@@ -1,76 +1,50 @@
-import { timeoutConfig, selectorTypes } from '../../../constants.js';
-import { accessibilityManager } from '../../../utils/accessibility.js';
+import { timeoutConfig, accessibility } from '../../../constants.js';
 import { open } from '../lightbox/lightbox.js';
 
 import { createMediaElement } from './createMediaElement.js';
 import { createCard } from './generate/createCard.js';
 
-const accessibility = accessibilityManager();
-
-export const createMediasCards = photographerMedias => {
+export const createMediasCards = (mainMedia, photographerMedias) => {
   if (!photographerMedias) return;
-  const mediasCards = document.createElement('div');
-  mediasCards.className = 'medias-cards';
-  mediasCards.setAttribute('role', 'list');
-  mediasCards.setAttribute('aria-label', 'Galerie de médias');
-
-  photographerMedias.forEach(photographerMedia => {
-    const mediaElement = createMediaElement(photographerMedia);
-    if (mediaElement) {
-      const card = createCard(photographerMedia, mediaElement);
-      accessibility.setupMediaCardAccessibility(card, photographerMedia, openMediaLightbox, toggleLike);
-      mediasCards.appendChild(card);
-    }
-  });
-  return mediasCards;
+  renderMedias(mainMedia, photographerMedias);
 };
 
 export const updateMediasOrder = sortedMedias => {
   const mainMedia = document.getElementById('main-medias');
   if (!mainMedia || !Array.isArray(sortedMedias)) return;
 
-  let container = mainMedia.querySelector(selectorTypes.mediaCardsContainer);
-  if (!container) {
-    mainMedia.innerHTML = '';
-    container = createMediasCards(sortedMedias);
-    if (container) mainMedia.appendChild(container);
-    return;
-  }
-
-  const fragment = document.createDocumentFragment();
-  const existingById = new Map(Array.from(container.querySelectorAll(selectorTypes.mediaCards)).map(card => [card.getAttribute('data-media-id'), card]));
-
-  sortedMedias.forEach(media => {
-    const id = String(media.id);
-    const existing = existingById.get(id);
-    if (existing) {
-      fragment.appendChild(existing);
-    } else {
-      const mediaElement = createMediaElement(media);
-      if (mediaElement) {
-        const card = createCard(media, mediaElement);
-        accessibility.setupMediaCardAccessibility(card, media, openMediaLightbox, toggleLike);
-        fragment.appendChild(card);
-      }
-    }
-  });
-
-  container.replaceChildren(fragment);
+  createMediasCards(mainMedia, sortedMedias);
 };
 
-const openMediaLightbox = (media, allMedias) => {
-  const mediasArray = allMedias || window.currentPhotographerMedias || [];
-  if (!mediasArray.length) {
-    return;
-  }
-  open(media.id, mediasArray);
+const renderMedias = (mainMedia, sortedMedias) => {
+  mainMedia.innerHTML = '';
+  sortedMedias.forEach((media, index) => {
+    const mediaElement = createMediaElement(media);
+    if (mediaElement) {
+      const card = createCard(media, mediaElement);
+      const img = card.querySelector('img');
+      const video = card.querySelector('video');
+
+      if (img) {
+        img.loading = index < 3 ? 'eager' : 'lazy';
+        img.fetchpriority = index < 3 ? 'high' : 'low';
+      }
+      if (video) video.preload = 'metadata';
+
+      accessibility.setupMediaCardAccessibility(card, media, media => openMediaLightbox(media, sortedMedias), toggleLike);
+      mainMedia.appendChild(card);
+    }
+  });
+};
+
+const openMediaLightbox = (media, mediasArray) => {
+  if (mediasArray?.length) open(media.id, mediasArray);
 };
 
 const toggleLike = (media, likesButton) => {
   const likesCount = likesButton.querySelector('span');
   if (likesCount) {
-    const currentLikes = parseInt(likesCount.textContent, 10) || 0;
-    const newLikes = currentLikes + 1;
+    const newLikes = (parseInt(likesCount.textContent, 10) || 0) + 1;
     likesCount.textContent = newLikes;
     likesCount.setAttribute('aria-live', 'polite');
     media.likes = newLikes;

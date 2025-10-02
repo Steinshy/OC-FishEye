@@ -41,6 +41,7 @@ export const handleFormSubmission = async () => {
   disableFormInputs(false);
   closeModal();
   submitButtonState?.reset();
+  console.info('form submitted');
 };
 
 export const disableFormInputs = disable => {

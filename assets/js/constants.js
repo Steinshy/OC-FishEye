@@ -1,29 +1,6 @@
-export const errorConfig = {
-  contexts: {
-    DATA_LOADING: 'Données chargées',
-    MODAL_MANAGEMENT: "Gestion de l'affichage du modal",
-    LIGHTBOX: 'Lightbox',
-    FORM_VALIDATION: 'Validation du formulaire',
-    ACCESSIBILITY: 'Accessibilité',
-    MEDIA_RENDERING: 'Rendu des médias',
-    FORM_SUBMISSION: 'Envoi du formulaire',
-  },
-
-  messages: {
-    DATA_ERROR: 'Erreur de chargement des données',
-    PHOTOGRAPHER_NOT_FOUND: 'Photographe non trouvé',
-    MEDIA_NOT_FOUND: 'Média non trouvé',
-    NETWORK_ERROR: 'Erreur de connexion',
-    MODAL_ERROR: 'Erreur de gestion du modal',
-    VALIDATION_ERROR: 'Erreur de validation',
-    UNKNOWN_ERROR: "Une erreur inattendue s'est produite",
-    SUBMIT_ERROR: "Erreur lors de l'envoi du formulaire",
-  },
-};
-
 export let modalElements = {};
 
-export const initializeModalElements = () => {
+export const populateModalElements = () => {
   modalState.mainModal = {
     main: document.getElementById('modal-signup'),
     form: document.getElementById('form-signup'),
@@ -50,11 +27,6 @@ export const initializeModalElements = () => {
     formGroup: modalState.formGroup,
     formElements: modalState.formElements,
   };
-
-  if (modalElements.contactButton) {
-    modalElements.contactButton.disabled = false;
-    modalElements.contactButton.removeAttribute('aria-disabled');
-  }
 };
 
 export const formConfig = {
@@ -112,12 +84,32 @@ export const modalState = {
 };
 
 export const lightboxElements = {
-  modal: document.getElementById('lightbox-modal'),
-  container: document.getElementById('lightbox-media-container'),
-  title: document.getElementById('lightbox-title'),
-  likes: document.getElementById('lightbox-likes-count'),
-  counter: document.getElementById('lightbox-counter'),
-  mediaElementCache: new Map(),
+  get modal() {
+    return document.getElementById('lightbox-modal');
+  },
+  get container() {
+    return document.getElementById('lightbox-media-container');
+  },
+  get title() {
+    return document.getElementById('lightbox-title');
+  },
+  get likes() {
+    return document.getElementById('lightbox-likes-count');
+  },
+  get counter() {
+    return document.getElementById('lightbox-counter');
+  },
+  medias: [],
+  currentIndex: 0,
+  isNavigating: false,
+  isInitialized: false,
+  previousFocus: null,
+  focusTrap: null,
+  touch: {
+    startX: 0,
+    startY: 0,
+    minDistance: 50,
+  },
 };
 
 export const timeoutConfig = {
@@ -139,6 +131,5 @@ export const selectorTypes = {
   header: 'header',
 };
 
-export const mediasElements = {
-  main: document.getElementById('main-medias'),
-};
+import { accessibilityManager } from './utils/accessibility.js';
+export const accessibility = accessibilityManager();

@@ -1,12 +1,9 @@
-import { modalElements, formConfig, selectorTypes } from '../../../constants.js';
-import { accessibilityManager } from '../../../utils/accessibility.js';
+import { populateModalElements, modalElements, formConfig } from '../../../constants.js';
+import { setupFieldValidationListeners } from '../../../utils/helpers/formEventListeners.js';
+import { setupModalEventListeners } from '../../../utils/helpers/modalEventListeners.js';
 
-import { closeModal, openModal } from './modalManager.js';
-import { submitForm } from './submission.js';
 import { submitButtonState, errorDisplay } from './ui-helper.js';
 import { validateFields } from './validators.js';
-
-const { focusManager, keyboardHandler } = accessibilityManager();
 
 let isInitialized = false;
 
@@ -55,58 +52,19 @@ const setupFieldValidation = field => {
     }
   };
 
-  field.element.addEventListener('input', validate);
-  field.element.addEventListener('blur', validate);
-  field.element.addEventListener('focus', hideErrorOnFocus);
-};
-
-const canCloseModal = () => {
-  return modalElements.mainModal.main.classList.contains('show') && !modalElements.mainModal.closeButton.disabled;
-};
-
-const ensureFocusWithinModal = () => {
-  if (!modalElements.mainModal.main.contains(document.activeElement)) {
-    focusManager.focusFirst(modalElements.mainModal.main, selectorTypes.formInputs);
-  }
+  setupFieldValidationListeners(field.element, validate, hideErrorOnFocus);
 };
 
 export const modalListeners = () => {
   if (isInitialized) return;
   isInitialized = true;
 
+  populateModalElements();
+
   formConfig.fieldNames.forEach(fieldName => {
     const element = modalElements.formGroup[fieldName];
     if (element) setupFieldValidation({ element, name: fieldName });
   });
 
-  const escapeHandler = keyboardHandler.createEscapeHandler(() => {
-    if (canCloseModal()) closeModal();
-  });
-
-  const focusHandler = keyboardHandler.createActivationHandler(ensureFocusWithinModal);
-
-  if (modalElements.contactButton) {
-    modalElements.contactButton.addEventListener('click', openModal);
-    modalElements.contactButton.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal();
-      }
-    });
-  }
-
-  if (modalElements.mainModal.submitButton) {
-    modalElements.mainModal.submitButton.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        submitForm(e);
-      }
-    });
-  }
-
-  modalElements.mainModal.closeButton?.addEventListener('click', closeModal);
-  modalElements.mainModal.form?.addEventListener('submit', submitForm);
-  modalElements.mainModal.main?.addEventListener('keydown', focusHandler);
-  document.addEventListener('keydown', escapeHandler);
+  setupModalEventListeners();
 };

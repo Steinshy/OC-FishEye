@@ -1,16 +1,14 @@
-import { selectorTypes } from '../constants.js';
-
 import { EventManager } from './eventManager.js';
-import { dropdownEventListeners, setupCardAccessibility } from './helpers/eventListeners.js';
+import { dropdownEventListeners } from './helpers/eventListeners.js';
 
 const focus = {
-  focusFirst(container, selector = selectorTypes.focusable) {
+  focusFirst(container, selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') {
     const element = container.querySelector(selector);
     element?.focus();
     return element;
   },
 
-  focusLast(container, selector = selectorTypes.focusable) {
+  focusLast(container, selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') {
     const elements = container.querySelectorAll(selector);
     const element = elements[elements.length - 1];
     element?.focus();
@@ -33,7 +31,7 @@ const focus = {
     return element;
   },
 
-  trapFocus(container, selector = selectorTypes.focusable) {
+  trapFocus(container, selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') {
     if (!container) return () => {};
     const handleTab = e => {
       if (e.key !== 'Tab') return;
@@ -124,6 +122,21 @@ const handlers = {
     };
   },
 
+  createVideoInteractionHandler(video) {
+    return e => {
+      if (e.type === 'click' || (e.type === 'keydown' && (e.key === 'Enter' || e.key === ' '))) {
+        if (e.type === 'keydown') {
+          e.preventDefault();
+        }
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
+    };
+  },
+
   updateVisualState(optionsContainer, isOpen) {
     if (!optionsContainer) return;
     optionsContainer.classList.toggle('show', isOpen);
@@ -143,10 +156,9 @@ const dropdownController = ({ button, optionsContainer, options, onSelect, onClo
       aria.setHidden(optionsContainer, false);
       handlers.updateVisualState(optionsContainer, true);
       const selectedOption = options.find(option => option.getAttribute('aria-selected') === 'true');
-      const targetOption =
-        selectedOption || options.find(option => !option.hasAttribute('disabled')) || focus.focusFirst(optionsContainer, selectorTypes.dropdownOptions);
+      const targetOption = selectedOption || options.find(option => !option.hasAttribute('disabled')) || focus.focusFirst(optionsContainer, '[role="option"]');
       targetOption?.focus();
-      this.focusTrap = focus.trapFocus(optionsContainer, selectorTypes.dropdownOptions);
+      this.focusTrap = focus.trapFocus(optionsContainer, '[role="option"]');
     },
 
     close() {
@@ -201,6 +213,50 @@ const dropdownController = ({ button, optionsContainer, options, onSelect, onClo
   return controller;
 };
 
+const setupCardAccessibility = (card, media, onMediaClick, onLikeClick, handlers) => {
+  const eyeIcon = card.querySelector('.eye-icon');
+  const likesButton = card.querySelector('.likes');
+  const mediaContent = card.querySelector('.media-content');
+
+  if (eyeIcon && onMediaClick) {
+    eyeIcon.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      onMediaClick(media);
+    });
+    eyeIcon.addEventListener(
+      'keydown',
+      handlers.createActivationHandler(() => onMediaClick(media))
+    );
+  }
+
+  if (mediaContent && onMediaClick) {
+    mediaContent.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      onMediaClick(media);
+    });
+    mediaContent.addEventListener(
+      'keydown',
+      handlers.createActivationHandler(() => onMediaClick(media))
+    );
+    mediaContent.setAttribute('tabindex', '0');
+    mediaContent.setAttribute('role', 'button');
+    mediaContent.setAttribute('aria-label', `Ouvrir ${media.mediaType}: ${media.title || ''}`);
+  }
+
+  if (likesButton && onLikeClick) {
+    likesButton.addEventListener('click', e => {
+      e.stopPropagation();
+      onLikeClick(media, likesButton);
+    });
+    likesButton.addEventListener(
+      'keydown',
+      handlers.createActivationHandler(() => onLikeClick(media, likesButton))
+    );
+  }
+};
+
 const accessibilityManager = () => ({
   focusManager: focus,
   ariaManager: aria,
@@ -208,6 +264,7 @@ const accessibilityManager = () => ({
     createArrowNavigation: handlers.createArrowNavigation,
     createEscapeHandler: handlers.createEscapeHandler,
     createActivationHandler: handlers.createActivationHandler,
+    createVideoInteractionHandler: handlers.createVideoInteractionHandler,
   },
   eventManager: EventManager,
   dropdownController,

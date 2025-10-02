@@ -1,3 +1,4 @@
+import { mediaCache } from './utils/cacheManager.js';
 import { safeAsync } from './utils/errorHandler.js';
 
 const dataUrl = 'assets/photographers/data.json';
@@ -8,35 +9,36 @@ const getMediaType = (video, image) => (video ? 'video' : image ? 'image' : '');
 const toWebpFilename = filename => (filename ? filename.replace(/\.jpg$/i, '.webp') : '');
 
 const getPhotographers = async () => {
-  const response = await fetch(dataUrl);
-  if (!response.ok) {
-    throw new Error(`Network error: ${response.status}`);
-  }
+  return mediaCache.getOrCreateData('photographersData', 'all', async () => {
+    const response = await fetch(dataUrl, {
+      cache: 'force-cache',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Network error: ${response.status}`);
+    }
 
-  const { photographers, media } = await response.json();
-  if (!Array.isArray(photographers)) {
-    throw new Error('Invalid data structure: photographers');
-  }
-  if (!Array.isArray(media)) {
-    throw new Error('Invalid data structure: media');
-  }
+    const { photographers, media } = await response.json();
+    if (!Array.isArray(photographers) || !Array.isArray(media)) {
+      throw new Error('Invalid data structure: photographers');
+    }
 
-  return { photographers, media };
+    console.info('photographers & media loaded', { photographersCount: photographers.length, mediaCount: media.length });
+    return { photographers, media };
+  });
 };
 
 export const getPhotographer = async photographerId => {
-  return await safeAsync(
-    async () => {
-      const { photographers } = await getPhotographers();
-      const photographer = photographers.find(p => p.id === photographerId);
-      if (!photographer) {
-        throw new Error(`Photographer not found: ${photographerId}`);
-      }
-      return buildPhotographer(photographer);
-    },
-    null,
-    'Data Loading'
-  );
+  return await safeAsync(async () => {
+    const { photographers } = await getPhotographers();
+    const photographer = photographers.find(p => p.id === photographerId);
+    if (!photographer) {
+      throw new Error(`Photographer not found: ${photographerId}`);
+    }
+    return buildPhotographer(photographer);
+  });
 };
 
 export const buildPhotographer = photographerData => {
@@ -61,8 +63,10 @@ export const buildPhotographer = photographerData => {
 };
 
 export const getPhotographerMedias = async photographerId => {
-  return await safeAsync(
-    async () => {
+  return await safeAsync(async () => {
+    const cacheKey = `photographerMedias_${photographerId}`;
+
+    return mediaCache.getOrCreateData('photographerMedias', cacheKey, async () => {
       const { photographers, media } = await getPhotographers();
       const photographer = photographers.find(p => p.id === photographerId);
       if (!photographer) {
@@ -77,11 +81,11 @@ export const getPhotographerMedias = async photographerId => {
       if (!photographerMedias.length) {
         throw new Error(`No media found for photographer: ${photographerId}`);
       }
+
+      console.info(`Loaded ${photographerMedias.length} media items for photographer ${photographerId}`);
       return photographerMedias;
-    },
-    [],
-    'Data Loading'
-  );
+    });
+  }, []);
 };
 
 export const buildPhotographerMedia = (photographerMedia, photographerData) => {

@@ -1,5 +1,5 @@
-import { modalState, timeoutConfig, selectorTypes } from '../../../constants.js';
-import { accessibilityManager } from '../../../utils/accessibility.js';
+import { modalState, timeoutConfig, selectorTypes, accessibility } from '../../../constants.js';
+import { addFormEventListeners, removeFormEventListeners } from '../../../utils/helpers/formEventListeners.js';
 import { toggleScroll } from '../../../utils/helpers/utils.js';
 
 import { errorDisplay, submitButtonState } from './ui-helper.js';
@@ -10,10 +10,7 @@ const validationCriteria = {
   maxlength: 500,
 };
 
-const { focusManager, ariaManager } = accessibilityManager();
-const eventTypes = ['input', 'keyup', 'paste'];
-const addEventListeners = (element, handler) => eventTypes.forEach(event => element.addEventListener(event, handler));
-const removeEventListeners = (element, handler) => eventTypes.forEach(event => element.removeEventListener(event, handler));
+const { focusManager, ariaManager } = accessibility;
 
 const getCounterStatus = (length, maxLength) => {
   if (length >= maxLength) return 'danger';
@@ -36,8 +33,8 @@ const characterCountListeners = () => {
     if (status) characterCount.classList.add(status);
   };
 
-  addEventListeners(message, update);
-  return () => removeEventListeners(message, update);
+  addFormEventListeners(message, update);
+  return () => removeFormEventListeners(message, update);
 };
 
 const resetElement = element => {

@@ -2,7 +2,7 @@ import { modalElements, getFieldNames } from '../../../constants.js';
 
 import { errorDisplay } from './ui-helper.js';
 
-export const validateForm = formData => {
+const validateForm = formData => {
   const rules = {
     firstname: value => value && value.length >= 2,
     lastname: value => value && value.length >= 2,

@@ -1,7 +1,3 @@
-import { accessibilityManager } from '../../../../utils/accessibility.js';
-
-const accessibility = accessibilityManager();
-
 export const createPicture = mediaElement => {
   if (!mediaElement) return null;
 
@@ -23,19 +19,15 @@ export const createPicture = mediaElement => {
         src="${mediaElement.medias.jpgUrl}"
         alt="${mediaElement.title || 'Média'}"
         loading="lazy"
+        fetchpriority="low"
         decoding="async"
         data-media-id="${mediaElement.id}"
         width="${mediaElement.medias.width}"
         height="${mediaElement.medias.height}"
+        aria-describedby="media-info-${mediaElement.id}"
       />
     </picture>
   `;
-
-  const img = wrapper.querySelector('img');
-
-  accessibility.ariaManager.updateAttributes(img, {
-    'aria-describedby': `media-info-${mediaElement.id}`,
-  });
 
   return wrapper;
 };

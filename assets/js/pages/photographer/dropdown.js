@@ -1,5 +1,4 @@
-import { dropdownConfig } from '../../constants.js';
-import { accessibilityManager } from '../../utils/accessibility.js';
+import { dropdownConfig, accessibility } from '../../constants.js';
 
 import { updateMediasOrder } from './medias/mediasManager.js';
 import { sortMedias } from './medias/sorterManager.js';
@@ -11,8 +10,6 @@ const getSortOptions = () => {
   const container = getOptionsContainer();
   return container ? Array.from(container.querySelectorAll(`[${attributes.role}='${attributes.option}']`)) : [];
 };
-
-const accessibility = accessibilityManager();
 
 const dropdownState = {
   get currentSelection() {
@@ -50,7 +47,6 @@ const sortDropdownController = {
       return triggerMediaSorting(medias, 'Popularité');
     }
 
-    // Enable the dropdown button
     button.disabled = false;
     button.removeAttribute('aria-disabled');
 
@@ -65,7 +61,6 @@ const sortDropdownController = {
     this.setupVisualState();
 
     const sorted = triggerMediaSorting(medias, dropdownState.userSelected);
-    window.currentPhotographerMedias = sorted;
     return sorted;
   },
 
@@ -76,7 +71,6 @@ const sortDropdownController = {
     if (button) button.textContent = userSelected;
     accessibility.ariaManager.setSelected(getSortOptions(), option);
     const sortedMedias = triggerMediaSorting(this.medias, userSelected);
-    window.currentPhotographerMedias = sortedMedias;
     updateMediasOrder(sortedMedias);
 
     return sortedMedias;
