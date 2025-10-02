@@ -32,22 +32,21 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/logo.png" />
 
-    <!-- Internal Resources -->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/photographer.css" />
     <link rel="preload" as="style" href="./assets/css/components.css" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href="./assets/css/components.css" media="print" onload="this.media='all'" />
     <link rel="preload" as="style" href="./assets/css/medias.css" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href="./assets/css/medias.css" media="print" onload="this.media='all'" />
     <noscript>
       <link rel="stylesheet" type="text/css" href="./assets/css/components.css" />
       <link rel="stylesheet" type="text/css" href="./assets/css/medias.css" />
     </noscript>
 
-    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous" />
 
-    <!-- Google Fonts -->
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
@@ -59,7 +58,6 @@
       media="print"
       onload="this.media='all'" />
 
-    <!-- Font Awesome Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -84,14 +82,13 @@
       <section class="section-dropdown">
         <h2>Trier par :</h2>
         <div class="dropdown-button">
-          <button id="media-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-options" disabled aria-disabled="true">
+          <button id="media-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-options" aria-disabled="true" tabindex="-1">
             Popularité
           </button>
           <ul class="dropdown-options" id="sort-options" role="listbox" aria-hidden="true" aria-labelledby="media-button">
             <li id="popular-option" role="option" tabindex="-1">Popularité</li>
             <li id="date-option" role="option" tabindex="-1">Date</li>
             <li id="title-option" role="option" tabindex="-1">Titre</li>
-            <li id="likes-option" role="option" tabindex="-1">Likes</li>
           </ul>
         </div>
       </section>
@@ -112,8 +109,6 @@
             <i class="fas fa-times" aria-hidden="true"></i>
           </button>
         </div>
-
-        <p id="modal-description" class="sr-only"> Formulaire de contact pour envoyer un message au photographe </p>
 
         <!-- Contact Form -->
         <form class="main-form" id="form-signup" name="contact" method="get" aria-labelledby="modal-title">
@@ -184,7 +179,6 @@
       </div>
     </div>
 
-    <!-- Enhanced Lightbox Modal -->
     <div
       id="lightbox-modal"
       class="lightbox-modal"
@@ -193,17 +187,13 @@
       aria-hidden="true"
       aria-labelledby="lightbox-title"
       aria-describedby="lightbox-counter">
-      <!-- Backdrop overlay -->
       <div class="lightbox-backdrop"></div>
 
-      <!-- Main lightbox container -->
       <div class="lightbox-container">
-        <!-- Close button -->
         <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Fermer la galerie">
           <i class="fas fa-times"></i>
         </button>
 
-        <!-- Navigation arrows -->
         <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Image précédente">
           <i class="fas fa-chevron-left"></i>
         </button>
@@ -212,14 +202,10 @@
           <i class="fas fa-chevron-right"></i>
         </button>
 
-        <!-- Media container -->
         <div class="lightbox-media-wrapper">
-          <div class="lightbox-media-container" id="lightbox-media-container">
-            <!-- Media content will be dynamically inserted here -->
-          </div>
+          <div class="lightbox-media-container" id="lightbox-media-container"> </div>
         </div>
 
-        <!-- Media information -->
         <div class="lightbox-info" id="lightbox-info">
           <div class="lightbox-info-content">
             <h3 id="lightbox-title" class="lightbox-title">Titre du média</h3>
@@ -235,6 +221,6 @@
       </div>
     </div>
 
-    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/main.js" defer="defer"></script>
   </body>
 </html>

@@ -113,6 +113,21 @@ img {
 /* =========================
   Base Typography & Layout
 ========================= */
+@font-face {
+  font-family: "DM Sans";
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Shrikhand";
+  font-display: swap;
+}
+
 html {
   font-family: var(--font-family-primary);
   color: var(--color-black);

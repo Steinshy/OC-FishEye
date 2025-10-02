@@ -238,10 +238,9 @@
   text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
 }
 
-.lightbox-likes svg {
-  width: 18px;
-  height: 18px;
-  fill: currentcolor;
+.lightbox-likes i {
+  font-size: 18px;
+  color: #ff6b6b;
 }
 
 .lightbox-counter {

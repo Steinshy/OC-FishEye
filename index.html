@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="fr">
   <head>
-    <!-- Meta Tags & Document Information -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
@@ -12,38 +11,33 @@
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#ffffff" />
 
-    <!-- Social Media Meta Tags -->
     <meta property="og:title" content="FishEye - Photographe Professionnel" />
     <meta
       property="og:description"
       content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="" />
-    <meta property="og:image" content="assets/favicons/logo.png" />
+    <meta property="og:image" content="./assets/favicons/logo.png" />
     <meta name="twitter:card" content="summary-large-image" />
     <meta name="twitter:title" content="FishEye - Photographe Professionnel" />
     <meta
       name="twitter:description"
       content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
-    <meta name="twitter:image" content="assets/favicons/logo.png" />
+    <meta name="twitter:image" content="./assets/favicons/logo.png" />
 
     <title>FishEye - Photographe Professionnel</title>
-
-    <!-- Favicon & App Icons -->
+    <link rel="manifest" href="manifest.json" />
     <link rel="icon" type="image/x-icon" href="./assets/favicons/favicon.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/logo.png" />
 
-    <!-- Internal Resources -->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 
-    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous" />
 
-    <!-- Google Fonts -->
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap"
@@ -55,20 +49,32 @@
       media="print"
       onload="this.media='all'" />
 
-    <!-- Font Awesome -->
     <link
-      rel="stylesheet"
+      rel="preload"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'" />
+
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;700&family=Shrikhand&display=swap" />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+    </noscript>
+
+    <link rel="preload" as="image" href="./assets/photographers/MimiKeel/MimiKeel.webp" fetchpriority="high" />
   </head>
 
   <body>
-    <header>
+    <header role="banner" aria-label="En-tête principal">
       <nav role="navigation" aria-label="Navigation principale">
-        <!-- Logo -->
-        <img class="nav-logo" src="./assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="lazy" />
+        <img class="nav-logo" src="./assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="eager" fetchpriority="high" />
         <h1>Nos photographes</h1>
       </nav>
     </header>
@@ -86,7 +92,11 @@
                 class="profile-picture"
                 src="./assets/photographers/MimiKeel/MimiKeel.jpg"
                 alt="Portrait de Mimi Keel, photographe basée à Londres"
-                loading="lazy" />
+                loading="eager"
+                fetchpriority="high"
+                decoding="sync"
+                width="300"
+                height="300" />
             </picture>
           </div>
           <h1>Mimi Keel</h1>
@@ -105,7 +115,11 @@
                 class="profile-picture"
                 src="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.jpg"
                 alt="Portrait d'Ellie-Rose Wilkens, photographe basée à Paris"
-                loading="lazy" />
+                loading="eager"
+                fetchpriority="high"
+                decoding="sync"
+                width="300"
+                height="300" />
             </picture>
           </div>
           <h1>Ellie-Rose Wilkens</h1>
@@ -124,7 +138,11 @@
                 class="profile-picture"
                 src="./assets/photographers/TracyGalindo/TracyGalindo.jpg"
                 alt="Portrait de Tracy Galindo, photographe basée à Montréal"
-                loading="lazy" />
+                loading="eager"
+                fetchpriority="high"
+                decoding="sync"
+                width="300"
+                height="300" />
             </picture>
           </div>
           <h1>Tracy Galindo</h1>
@@ -143,7 +161,10 @@
                 class="profile-picture"
                 src="./assets/photographers/NabeelBradford/NabeelBradford.jpg"
                 alt="Portrait de Nabeel Bradford, photographe basé à Mexico"
-                loading="lazy" />
+                loading="lazy"
+                decoding="async"
+                width="300"
+                height="300" />
             </picture>
           </div>
           <h1>Nabeel Bradford</h1>
@@ -162,7 +183,10 @@
                 class="profile-picture"
                 src="./assets/photographers/RhodeDubois/RhodeDubois.jpg"
                 alt="Portrait de Rhode Dubois, photographe basée à Barcelone"
-                loading="lazy" />
+                loading="lazy"
+                decoding="async"
+                width="300"
+                height="300" />
             </picture>
           </div>
           <h1>Rhode Dubois</h1>
@@ -181,7 +205,10 @@
                 class="profile-picture"
                 src="./assets/photographers/MarcelNikolic/MarcelNikolic.jpg"
                 alt="Portrait de Marcel Nikolic, photographe basé à Berlin"
-                loading="lazy" />
+                loading="lazy"
+                decoding="async"
+                width="300"
+                height="300" />
             </picture>
           </div>
           <h1>Marcel Nikolic</h1>
