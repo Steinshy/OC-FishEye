@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta
       name="description"
       content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
@@ -78,14 +78,22 @@
     <main>
       <!-- Photographer Header Section -->
 
-      <!-- Dropdown Sort Section -->
-      <section class="section-dropdown">
+      <!-- Media Sort Section -->
+      <section class="section-sort">
         <h2>Trier par :</h2>
-        <div class="dropdown-button">
-          <button id="media-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-options" aria-disabled="true" tabindex="-1">
+        <div class="sort-button">
+          <button
+            id="media-button"
+            class="focus-ring"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="sort-options"
+            aria-disabled="true"
+            tabindex="-1">
             Popularité
           </button>
-          <ul class="dropdown-options" id="sort-options" role="listbox" aria-hidden="true" aria-labelledby="media-button">
+          <ul class="sort-options" id="sort-options" role="listbox" aria-hidden="true" aria-labelledby="media-button">
             <li id="popular-option" role="option" tabindex="-1">Popularité</li>
             <li id="date-option" role="option" tabindex="-1">Date</li>
             <li id="title-option" role="option" tabindex="-1">Titre</li>
@@ -103,7 +111,7 @@
         <div class="modal-header" id="modal-header" aria-label="En-tête de la modale de contact">
           <div class="header-content" id="header-content">
             <i class="fas fa-envelope" aria-hidden="true"></i>
-            <h2 id="modal-title">Contactez-moi</h2>
+            <p class="modal-photographer-name" id="modal-photographer-name"></p>
           </div>
           <button class="modal-close" id="modal-close" type="button" aria-label="Fermer le modal">
             <i class="fas fa-times" aria-hidden="true"></i>
@@ -166,16 +174,15 @@
               rows="5"
               maxlength="500"
               aria-describedby="message-error character-count"
+              placeholder="Entrez votre message"
+              autocomplete="Enter your message"
               data-error-visible="false"></textarea>
-            <span class="error-form" id="message-error" data-error-visible="false" data-valid="false" aria-live="polite">
-              Un message entre 0 et 500 caractères est requis.
-            </span>
           </div>
         </form>
         <!-- Submit Button -->
-        <footer class="modal-footer" id="modal-footer">
-          <button type="submit" id="footer-submit-button" form="form-signup" aria-label="Envoyer le message de contact">Envoyer</button>
-        </footer>
+        <div class="modal-footer" id="modal-footer">
+          <button type="submit" id="footer-submit-button" form="form-signup" aria-label="Envoyer le message de contact">Envoyer le message</button>
+        </div>
       </div>
     </div>
 
@@ -203,23 +210,37 @@
         </button>
 
         <div class="lightbox-media-wrapper">
-          <div class="lightbox-media-container" id="lightbox-media-container"> </div>
+          <div class="lightbox-media-container" id="lightbox-media-container"></div>
         </div>
 
         <div class="lightbox-info" id="lightbox-info">
           <div class="lightbox-info-content">
             <h3 id="lightbox-title" class="lightbox-title">Titre du média</h3>
             <div class="lightbox-meta">
-              <span id="lightbox-likes" class="lightbox-likes">
+              <div id="lightbox-likes" class="lightbox-likes">
                 <i class="fas fa-heart" aria-hidden="true"></i>
                 <span id="lightbox-likes-count">0</span>
-              </span>
+              </div>
               <span id="lightbox-counter" class="lightbox-counter">1 / 1</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Photographer Stats Bar -->
+    <aside class="photographer-stats" id="photographer-stats" aria-label="Statistiques du photographe">
+      <div class="stats-likes">
+        <span id="total-likes-count" class="stats-likes-count">0</span>
+        <i class="fas fa-heart" aria-hidden="true"></i>
+      </div>
+      <div class="stats-price" id="stats-price">0€ / jour</div>
+    </aside>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Retour en haut de la page">
+      <i class="fas fa-chevron-up"></i>
+    </button>
 
     <script type="module" src="assets/js/main.js" defer="defer"></script>
   </body>
