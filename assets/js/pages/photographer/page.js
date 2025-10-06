@@ -1,30 +1,34 @@
-import { getPhotographer, getPhotographerMedias } from '../../dataManager.js';
+import { getModalRefs } from '../../constants.js';
+import { setupModalEventListeners } from '../../utils/helpers/events/modalEventListeners.js';
+import { getPhotographer, getPhotographerMedias } from '../../utils/helpers/managers/dataManager.js';
+import { createMediasCards } from '../../utils/helpers/managers/mediasManager.js';
+import { initializeStats } from '../../utils/helpers/managers/statsManager.js';
+import { scrollToTop } from '../../utils/scrollToTop.js';
 
-import { createHeader } from './createHeader.js';
-import { dropdownListeners } from './dropdown.js';
-import { initializeLightbox } from './lightbox/lightbox.js';
-import { createMediasCards } from './medias/mediasManager.js';
-import { modalListeners } from './modal/modalEvents.js';
+import { photographerHeader } from './createPhotographerHeader.js';
+import { initializeLightbox } from './lightbox.js';
+import { sortButton } from './sortButton.js';
+
 export const photographerPage = async () => {
+  const mainElement = document.querySelector('main');
   const mainMedia = document.getElementById('main-medias');
   const urlParams = new URLSearchParams(window.location.search);
   const urlIdParam = urlParams.get('id');
   const urlId = parseInt(urlIdParam, 10);
+  const [photographer, photographerMedias] = await Promise.all([getPhotographer(urlId), getPhotographerMedias(urlId)]);
 
-  const photographerPromise = getPhotographer(urlId);
-  const mediasPromise = getPhotographerMedias(urlId);
-
-  const photographer = await photographerPromise;
-  const photographerHeader = createHeader(photographer);
-
-  const mainElement = document.querySelector('main');
-  mainElement.prepend(photographerHeader);
-
+  mainElement.prepend(photographerHeader(photographer));
   initializeLightbox();
-  modalListeners();
+  setupModalEventListeners();
 
-  const photographerMedias = await mediasPromise;
-  const sortedMedias = dropdownListeners(photographerMedias);
+  const modalRefs = getModalRefs();
+  if (modalRefs.photographerName) {
+    modalRefs.photographerName.textContent = photographer.name;
+  }
 
-  createMediasCards(mainMedia, sortedMedias);
+  scrollToTop.init();
+  initializeStats(photographerMedias, photographer.price);
+
+  const sortedMedias = sortButton.init(photographerMedias);
+  createMediasCards(mainMedia, sortedMedias || photographerMedias);
 };

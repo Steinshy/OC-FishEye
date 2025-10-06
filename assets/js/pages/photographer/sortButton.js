@@ -1,9 +1,9 @@
-import { dropdownConfig, accessibility } from '../../constants.js';
+import { sortButtonConfig } from '../../constants.js';
+import { accessibilityManager } from '../../utils/accessibility.js';
+import { updateMediasOrder } from '../../utils/helpers/managers/mediasManager.js';
+import { sortMedias } from '../../utils/helpers/managers/sorterManager.js';
 
-import { updateMediasOrder } from './medias/mediasManager.js';
-import { sortMedias } from './medias/sorterManager.js';
-
-const { elements, attributes } = dropdownConfig;
+const { elements, attributes } = sortButtonConfig;
 const getButton = () => elements.button;
 const getOptionsContainer = () => elements.sortOptions;
 const getSortOptions = () => {
@@ -11,17 +11,17 @@ const getSortOptions = () => {
   return container ? Array.from(container.querySelectorAll(`[${attributes.role}='${attributes.option}']`)) : [];
 };
 
-const dropdownState = {
+const sortButtonState = {
   get currentSelection() {
     return getButton()?.textContent?.trim() || '';
   },
 
   get selectedOption() {
-    return getSortOptions().find(option => option?.textContent?.trim() === dropdownState.currentSelection);
+    return getSortOptions().find(option => option?.textContent?.trim() === sortButtonState.currentSelection);
   },
 
   get userSelected() {
-    return dropdownState.selectedOption?.textContent?.trim() || 'Popularité';
+    return sortButtonState.selectedOption?.textContent?.trim() || 'Popularité';
   },
 };
 
@@ -33,7 +33,7 @@ const triggerMediaSorting = (medias, userSelected) => {
   return result;
 };
 
-const sortDropdownController = {
+export const sortButton = {
   controller: null,
   medias: null,
 
@@ -49,7 +49,9 @@ const sortDropdownController = {
 
     button.disabled = false;
     button.removeAttribute('aria-disabled');
+    button.setAttribute('tabindex', '0');
 
+    const accessibility = accessibilityManager();
     this.controller = accessibility.dropdownController({
       button,
       optionsContainer,
@@ -60,7 +62,7 @@ const sortDropdownController = {
 
     this.setupVisualState();
 
-    const sorted = triggerMediaSorting(medias, dropdownState.userSelected);
+    const sorted = triggerMediaSorting(medias, sortButtonState.userSelected);
     return sorted;
   },
 
@@ -69,7 +71,8 @@ const sortDropdownController = {
     const button = getButton();
 
     if (button) button.textContent = userSelected;
-    accessibility.ariaManager.setSelected(getSortOptions(), option);
+    const { ariaManager } = accessibilityManager();
+    ariaManager.setSelected(getSortOptions(), option);
     const sortedMedias = triggerMediaSorting(this.medias, userSelected);
     updateMediasOrder(sortedMedias);
 
@@ -79,12 +82,12 @@ const sortDropdownController = {
   setupVisualState() {
     const optionsContainer = getOptionsContainer();
     const button = getButton();
-    accessibility.ariaManager.setExpanded(button, false);
-    accessibility.ariaManager.setHidden(optionsContainer, true);
-    accessibility.ariaManager.setSelected(getSortOptions(), dropdownState.selectedOption);
+    const { ariaManager } = accessibilityManager();
+    ariaManager.setExpanded(button, false);
+    ariaManager.setHidden(optionsContainer, true);
+    ariaManager.setSelected(getSortOptions(), sortButtonState.selectedOption);
     if (optionsContainer) {
       optionsContainer.classList.remove('show');
-      optionsContainer.classList.add('hidden');
     }
   },
 
@@ -94,8 +97,4 @@ const sortDropdownController = {
       this.controller = null;
     }
   },
-};
-
-export const dropdownListeners = medias => {
-  return sortDropdownController.init(medias);
 };

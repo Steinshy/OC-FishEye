@@ -14,16 +14,7 @@ export const createCard = (media, mediaElement) => {
   mediaContent.className = 'media-content';
   mediaContent.setAttribute('aria-describedby', `media-info-${media.id}`);
 
-  mediaContent.innerHTML = `
-    ${mediaElement.outerHTML}
-    <button
-      class="eye-icon"
-      aria-label="Ouvrir ${media.mediaType}: ${media.title || ''}"
-      tabindex="0"
-      type="button">
-      <i class="fas fa-search-plus" aria-hidden="true"></i>
-    </button>
-  `;
+  mediaContent.innerHTML = mediaElement.outerHTML;
 
   article.appendChild(mediaContent);
   article.appendChild(createMediaInfo(media));

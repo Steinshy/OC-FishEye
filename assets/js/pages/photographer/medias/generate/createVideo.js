@@ -1,5 +1,5 @@
 import { accessibilityManager } from '../../../../utils/accessibility.js';
-import { videoEventListeners } from '../../../../utils/helpers/eventListeners.js';
+import { videoEventListeners } from '../../../../utils/helpers/events/mediasEventsListeners.js';
 
 export const createVideo = media => {
   if (!media) return;

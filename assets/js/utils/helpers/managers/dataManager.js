@@ -1,5 +1,6 @@
-import { mediaCache } from './utils/cacheManager.js';
-import { safeAsync } from './utils/errorHandler.js';
+import { safeAsync } from '../../errorHandler.js';
+
+import { mediaCache } from './cacheManager.js';
 
 const dataUrl = 'assets/photographers/data.json';
 const mediaPath = 'assets/photographers/';
@@ -9,7 +10,7 @@ const getMediaType = (video, image) => (video ? 'video' : image ? 'image' : '');
 const toWebpFilename = filename => (filename ? filename.replace(/\.jpg$/i, '.webp') : '');
 
 const getPhotographers = async () => {
-  return mediaCache.getOrCreateData('photographersData', 'all', async () => {
+  return mediaCache.getOrCreate('photographersData', 'all', async () => {
     const response = await fetch(dataUrl, {
       cache: 'force-cache',
       headers: {
@@ -48,7 +49,7 @@ export const buildPhotographer = photographerData => {
   const webpFilename = toWebpFilename(photographerData.portrait);
 
   return {
-    id: photographerData.id,
+    id: photographerData.id || 0,
     name: photographerData.name,
     city: photographerData.city || '',
     country: photographerData.country || '',
@@ -64,9 +65,9 @@ export const buildPhotographer = photographerData => {
 
 export const getPhotographerMedias = async photographerId => {
   return await safeAsync(async () => {
-    const cacheKey = `photographerMedias_${photographerId}`;
+    const cacheKey = `media_${photographerId}`;
 
-    return mediaCache.getOrCreateData('photographerMedias', cacheKey, async () => {
+    return mediaCache.getOrCreate('photographerMedias', cacheKey, async () => {
       const { photographers, media } = await getPhotographers();
       const photographer = photographers.find(p => p.id === photographerId);
       if (!photographer) {
@@ -106,8 +107,6 @@ export const buildPhotographerMedia = (photographerMedia, photographerData) => {
       jpgTitle: photographerMedia.image || '',
       webpTitle: photographerMedia.image || '',
       mp4Title: photographerMedia.video || '',
-      width: photographerMedia.width || 1200,
-      height: photographerMedia.height || 800,
     },
     likes: photographerMedia.likes || 0,
     date: photographerMedia.date || '',

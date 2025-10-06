@@ -1,4 +1,10 @@
-import { EventManager } from '../eventManager.js';
+import { lightboxElements } from '../../../constants.js';
+
+import { EventManager } from './eventListeners.js';
+
+export const lightboxState = () => {
+  return lightboxElements.modal.classList.contains('show');
+};
 
 export const setupLightboxEventListeners = (modal, callbacks) => {
   const { previousSlide, nextSlide, close, handleKeyDown, handleTouchStart, handleTouchEnd, handleWheel, handleFocusIn } = callbacks;

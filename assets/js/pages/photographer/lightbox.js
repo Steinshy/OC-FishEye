@@ -1,13 +1,14 @@
-import { lightboxElements, timeoutConfig, selectorTypes, accessibility } from '../../../constants.js';
-import { mediaCache } from '../../../utils/cacheManager.js';
-import { setupLightboxEventListeners } from '../../../utils/helpers/lightboxEventListeners.js';
-import { createFragment, toggleScroll } from '../../../utils/helpers/utils.js';
-import { createMediaElement } from '../medias/createMediaElement.js';
+import { lightboxElements, timeoutConfig, selectorTypes } from '../../constants.js';
+import { accessibilityManager } from '../../utils/accessibility.js';
+import { setupLightboxEventListeners } from '../../utils/helpers/events/lightboxEventListeners.js';
+import { mediaCache } from '../../utils/helpers/managers/cacheManager.js';
+import { createMediaElement } from '../../utils/helpers/managers/generateMediasManager.js';
+import { toggleScroll } from '../../utils/helpers/utils.js';
 
-const { focusManager } = accessibility;
+const { focusManager } = accessibilityManager();
 
 const getCachedElement = media => {
-  return mediaCache.getOrCreateElement('mediaElements', media.id, () => createMediaElement(media));
+  return mediaCache.getOrCreate('mediaElements', media.id, () => createMediaElement(media));
 };
 
 const getValidIndex = (index, length) => {
@@ -16,14 +17,17 @@ const getValidIndex = (index, length) => {
   return index;
 };
 
-const isLightboxOpen = () => lightboxElements.modal?.classList.contains('show');
-
 const setupMediaElement = (element, container) => {
-  container.innerHTML = '';
   element.addEventListener('click', e => e.stopPropagation());
-  container.appendChild(createFragment(element));
+
+  if (container.firstChild) {
+    container.replaceChild(element, container.firstChild);
+  } else {
+    container.appendChild(element);
+  }
 };
 
+// TODO: Weird bug where the lightbox-info-content have ghosting jump effect when the media is changed
 const updateUI = media => {
   const { title, likes, counter } = lightboxElements;
   title.textContent = media.title;
@@ -42,13 +46,14 @@ const updateContent = () => {
   const { container } = lightboxElements;
   if (!lightboxElements.medias?.length || !container) return;
 
-  requestAnimationFrame(() => {
-    const media = lightboxElements.medias[lightboxElements.currentIndex];
-    const element = getCachedElement(media);
+  const media = lightboxElements.medias[lightboxElements.currentIndex];
+  const element = getCachedElement(media);
 
+  updateUI(media);
+
+  requestAnimationFrame(() => {
     if (element) {
       setupMediaElement(element, container);
-      updateUI(media);
     }
   });
 };
@@ -135,7 +140,7 @@ const handleFocus = e => {
   if (!lightboxElements.modal.contains(e.target)) focusManager.focusFirst(lightboxElements.modal);
 };
 
-export const open = (mediaId, medias) => {
+export const openLightbox = (mediaId, medias) => {
   lightboxElements.medias = medias || [];
   if (!lightboxElements.medias.length) return;
 
@@ -151,7 +156,7 @@ export const open = (mediaId, medias) => {
   requestAnimationFrame(() => document.getElementById('lightbox-close')?.focus());
 };
 
-export const close = () => {
+export const closeLightbox = () => {
   if (!isLightboxOpen()) return;
 
   document.activeElement?.blur();
@@ -167,6 +172,11 @@ export const close = () => {
     });
   }
 };
+
+const isLightboxOpen = () => lightboxElements.modal?.classList?.contains('show');
+
+export const close = closeLightbox;
+export const open = openLightbox;
 
 export const initializeLightbox = () => {
   if (lightboxElements.isInitialized) return;

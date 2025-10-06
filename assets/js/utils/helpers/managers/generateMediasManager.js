@@ -1,5 +1,5 @@
-import { createPicture } from './generate/createPicture.js';
-import { createVideo } from './generate/createVideo.js';
+import { createPicture } from '../../../pages/photographer/medias/generate/createPicture.js';
+import { createVideo } from '../../../pages/photographer/medias/generate/createVideo.js';
 
 export const createMediaElement = photographerMedia => {
   if (!photographerMedia) return null;

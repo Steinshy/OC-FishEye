@@ -1,8 +1,10 @@
-import { timeoutConfig, accessibility } from '../../../constants.js';
-import { open } from '../lightbox/lightbox.js';
+import { timeoutConfig } from '../../../constants.js';
+import { openLightbox } from '../../../pages/photographer/lightbox.js';
+import { createCard } from '../../../pages/photographer/medias/generate/createCard.js';
+import { accessibilityManager } from '../../accessibility.js';
 
-import { createMediaElement } from './createMediaElement.js';
-import { createCard } from './generate/createCard.js';
+import { createMediaElement } from './generateMediasManager.js';
+import { incrementTotalLikes } from './statsManager.js';
 
 export const createMediasCards = (mainMedia, photographerMedias) => {
   if (!photographerMedias) return;
@@ -31,14 +33,11 @@ const renderMedias = (mainMedia, sortedMedias) => {
       }
       if (video) video.preload = 'metadata';
 
-      accessibility.setupMediaCardAccessibility(card, media, media => openMediaLightbox(media, sortedMedias), toggleLike);
+      const accessibility = accessibilityManager();
+      accessibility.setupMediaCardAccessibility(card, media, media => openLightbox(media.id, sortedMedias), toggleLike);
       mainMedia.appendChild(card);
     }
   });
-};
-
-const openMediaLightbox = (media, mediasArray) => {
-  if (mediasArray?.length) open(media.id, mediasArray);
 };
 
 const toggleLike = (media, likesButton) => {
@@ -50,5 +49,8 @@ const toggleLike = (media, likesButton) => {
     media.likes = newLikes;
     likesButton.classList.add('liked');
     setTimeout(() => likesButton.classList.remove('liked'), timeoutConfig.like);
+
+    // Update total likes in stats bar
+    incrementTotalLikes();
   }
 };

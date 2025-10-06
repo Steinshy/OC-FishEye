@@ -1,12 +1,20 @@
-import { EventManager } from '../eventManager.js';
+export const EventManager = {
+  listeners: new Map(),
 
-export const videoEventListeners = (video, interactionHandler) => {
-  if (!video || !interactionHandler) return;
+  add(element, event, handler, key, options = {}) {
+    this.remove(key);
+    element.addEventListener(event, handler, options);
+    this.listeners.set(key, { element, event, handler, options });
+  },
 
-  const videoKey = `video-${video.getAttribute('data-media-id') || 'unknown'}`;
-
-  EventManager.add(video, 'click', interactionHandler, `${videoKey}-click`);
-  EventManager.add(video, 'keydown', interactionHandler, `${videoKey}-keydown`);
+  remove(key) {
+    if (!key) return;
+    const listener = this.listeners.get(key);
+    if (listener) {
+      listener.element.removeEventListener(listener.event, listener.handler, listener.options);
+      this.listeners.delete(key);
+    }
+  },
 };
 
 export const dropdownEventListeners = ({ button, optionsContainer, options, controller, orientation, handlers }) => {

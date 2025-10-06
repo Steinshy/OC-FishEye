@@ -1,6 +1,6 @@
 import { createFragment } from '../../utils/helpers/utils.js';
 
-export const createHeader = photographer => {
+export const photographerHeader = photographer => {
   const photographerSection = document.createElement('section');
   photographerSection.id = 'photographer-section';
   photographerSection.className = 'photographer-section';
