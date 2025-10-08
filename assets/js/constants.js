@@ -26,20 +26,20 @@ export const getFormElements = () => {
 
 export const getFieldNames = () => ['firstname', 'lastname', 'email', 'message'];
 
-export const sortButtonConfig = {
-  elements: {
-    get button() {
-      return document.getElementById('media-button');
-    },
-    get sortOptions() {
-      return document.getElementById('sort-options');
-    },
-  },
+export const getStatsElements = () => {
+  return {
+    totalLikesCount: document.getElementById('total-likes-count'),
+    statsPrice: document.getElementById('stats-price'),
+    statsLikes: document.querySelector('.stats-likes'),
+  };
+};
 
-  attributes: {
-    role: 'role',
-    option: 'option',
-  },
+export const getSortButtonElements = () => {
+  return {
+    button: document.getElementById('media-button'),
+    optionsContainer: document.getElementById('sort-options'),
+    sortOptions: document.querySelectorAll('[role="option"]'),
+  };
 };
 
 export const lightboxElements = {
@@ -73,7 +73,7 @@ export const lightboxElements = {
 
 export const timeoutConfig = {
   promise: 100,
-  like: 1000,
+  like: 500,
   focus: 0,
 };
 
@@ -87,4 +87,10 @@ export const selectorTypes = {
   likesButton: '.likes',
   main: 'main',
   header: 'header',
+};
+
+export const getScrollToTopElements = () => {
+  return {
+    button: document.getElementById('scroll-to-top'),
+  };
 };

@@ -1,8 +1,7 @@
 import { timeoutConfig, selectorTypes, getModalRefs, getFormElements, getFieldNames } from '../../../constants.js';
 import { accessibilityManager } from '../../accessibility.js';
 import { errorDisplay } from '../../errorHandler.js';
-import { characterCountListeners } from '../events/modalEventListeners.js';
-import { toggleScroll } from '../utils.js';
+import { toggleScroll } from '../helper.js';
 
 import { submitButtonState } from './submissionManager.js';
 import { validateFields } from './validationManager.js';
@@ -23,6 +22,40 @@ export const resetCharacterCount = () => {
     counter.textContent = '0/500';
     counter.classList.remove('warning', 'danger');
   }
+};
+
+const eventTypes = ['input', 'keyup', 'paste'];
+
+const addFormEventListeners = (element, handler) => {
+  eventTypes.forEach(event => element.addEventListener(event, handler));
+};
+
+const removeFormEventListeners = (element, handler) => {
+  eventTypes.forEach(event => element.removeEventListener(event, handler));
+};
+
+const characterCountListeners = () => {
+  const maxLength = 500;
+  const { message, characterCount } = getFormElements();
+
+  if (!message || !characterCount) return null;
+
+  const getCounterStatus = (length, max) => {
+    if (length >= max) return 'danger';
+    if (length >= max * 0.9) return 'warning';
+    return '';
+  };
+
+  const update = () => {
+    const { length } = message.value;
+    characterCount.textContent = `${length}/${maxLength}`;
+    characterCount.classList.remove('warning', 'danger');
+    const status = getCounterStatus(length, maxLength);
+    if (status) characterCount.classList.add(status);
+  };
+
+  addFormEventListeners(message, update);
+  return () => removeFormEventListeners(message, update);
 };
 
 export const resetInputStates = () => {
@@ -143,22 +176,37 @@ export const openModal = () => {
 
 export const closeModal = () => {
   const modalRefs = getModalRefs();
-  cleanupFocusManagement();
-  toggleScroll(false);
-  toggleBackgroundContent(false);
-  mobileKeyboard.resetModalPosition();
-  toggleModalDisplay(false);
-  toggleModalAria(true);
-  setTimeout(restorePreviousFocus, timeoutConfig.focus);
-  resetFormAndModal();
-  if (document.activeElement && modalRefs.mainModal && modalRefs.mainModal.contains(document.activeElement)) {
-    document.activeElement.blur();
+
+  // Add closing class for animation
+  if (modalRefs.mainModal) {
+    modalRefs.mainModal.classList.add('closing');
   }
 
-  if (characterCountCleanup) {
-    characterCountCleanup();
-    characterCountCleanup = null;
-  }
+  // Wait for animation to complete before cleanup
+  setTimeout(() => {
+    cleanupFocusManagement();
+    toggleScroll(false);
+    toggleBackgroundContent(false);
+    mobileKeyboard.resetModalPosition();
+    toggleModalDisplay(false);
+    toggleModalAria(true);
+
+    // Remove closing class
+    if (modalRefs.mainModal) {
+      modalRefs.mainModal.classList.remove('closing');
+    }
+
+    setTimeout(restorePreviousFocus, timeoutConfig.focus);
+    resetFormAndModal();
+    if (document.activeElement && modalRefs.mainModal && modalRefs.mainModal.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
+
+    if (characterCountCleanup) {
+      characterCountCleanup();
+      characterCountCleanup = null;
+    }
+  }, 200);
 };
 
 // Form validation functions
@@ -170,7 +218,7 @@ const getValidationClass = (hasValue, isValid) => {
 const validateField = (element, fieldName) => {
   if (!element) return;
   const value = element.value.trim();
-  const isValid = validateFields(fieldName, value);
+  const isValid = Boolean(validateFields(fieldName, value));
   const hasValue = Boolean(value);
 
   updateFieldState(element, hasValue, isValid);
@@ -196,7 +244,7 @@ const updateSubmitButton = () => {
   const formElements = getFormElements();
   const allValid = getFieldNames().every(fieldName => {
     const input = formElements[fieldName];
-    const isValid = input && validateFields(fieldName, input.value.trim());
+    const isValid = Boolean(input && validateFields(fieldName, input.value.trim()));
     return isValid;
   });
 

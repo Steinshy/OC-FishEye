@@ -1,6 +1,6 @@
-import { createMediaInfo } from './createMediaInfo.js';
+import { generateMediaInfo } from './generateMediaInfo.js';
 
-export const createCard = (media, mediaElement) => {
+export const generateCard = (media, mediaElement) => {
   if (!media || !mediaElement) return null;
 
   const article = document.createElement('article');
@@ -14,10 +14,10 @@ export const createCard = (media, mediaElement) => {
   mediaContent.className = 'media-content';
   mediaContent.setAttribute('aria-describedby', `media-info-${media.id}`);
 
-  mediaContent.innerHTML = mediaElement.outerHTML;
+  mediaContent.appendChild(mediaElement);
 
   article.appendChild(mediaContent);
-  article.appendChild(createMediaInfo(media));
+  article.appendChild(generateMediaInfo(media));
 
   return article;
 };

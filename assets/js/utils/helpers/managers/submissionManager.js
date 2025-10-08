@@ -1,8 +1,7 @@
 import { getFormElements, getModalRefs } from '../../../constants.js';
 import { errorDisplay } from '../../errorHandler.js';
-import { sleep } from '../utils.js';
+import { sleep } from '../helper.js';
 
-import { closeModal } from './modalManager.js';
 import { submitValidation } from './validationManager.js';
 
 export const submitButtonState = {
@@ -86,7 +85,7 @@ const getInputs = () => {
   return [formElements.firstname, formElements.lastname, formElements.email, formElements.message].filter(Boolean);
 };
 
-export const submitForm = async e => {
+export const submitForm = async (e, onComplete) => {
   e.preventDefault();
   errorDisplay?.resetErrorVisibility();
 
@@ -95,7 +94,7 @@ export const submitForm = async e => {
     return;
   }
 
-  await handleFormSubmission();
+  await handleFormSubmission(onComplete);
 };
 
 const markInputsSuccess = () => {
@@ -107,7 +106,7 @@ const markInputsSuccess = () => {
   });
 };
 
-export const handleFormSubmission = async () => {
+export const handleFormSubmission = async onComplete => {
   disableFormInputs(true);
   preventModalClosing(true);
   submitButtonState?.setLoading(true);
@@ -119,7 +118,9 @@ export const handleFormSubmission = async () => {
   await sleep(1500);
   preventModalClosing(false);
   disableFormInputs(false);
-  closeModal();
+
+  if (onComplete) onComplete();
+
   submitButtonState?.reset();
   console.info('form submitted');
 };

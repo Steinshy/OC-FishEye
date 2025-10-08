@@ -1,7 +1,7 @@
-import { accessibilityManager } from '../../../../utils/accessibility.js';
-import { videoEventListeners } from '../../../../utils/helpers/events/mediasEventsListeners.js';
+import { accessibilityManager } from '../../../utils/accessibility.js';
+import { videoEventListeners } from '../../../utils/helpers/events/mediasEventsListeners.js';
 
-export const createVideo = media => {
+export const generateVideo = media => {
   if (!media) return;
 
   const container = document.createElement('div');

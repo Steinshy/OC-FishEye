@@ -1,4 +1,4 @@
-export const createPicture = mediaElement => {
+export const generatePicture = mediaElement => {
   if (!mediaElement) return null;
 
   const wrapper = document.createElement('div');

@@ -1,4 +1,5 @@
 import { safeAsync } from '../../errorHandler.js';
+import { isValidArray } from '../helper.js';
 
 import { mediaCache } from './cacheManager.js';
 
@@ -22,7 +23,7 @@ const getPhotographers = async () => {
     }
 
     const { photographers, media } = await response.json();
-    if (!Array.isArray(photographers) || !Array.isArray(media)) {
+    if (!isValidArray(photographers, false) || !isValidArray(media, false)) {
       throw new Error('Invalid data structure: photographers');
     }
 

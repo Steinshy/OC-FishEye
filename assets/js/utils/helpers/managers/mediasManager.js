@@ -1,29 +1,30 @@
 import { timeoutConfig } from '../../../constants.js';
+import { generateCard } from '../../../pages/photographer/generate/generateCard.js';
 import { openLightbox } from '../../../pages/photographer/lightbox.js';
-import { createCard } from '../../../pages/photographer/medias/generate/createCard.js';
 import { accessibilityManager } from '../../accessibility.js';
+import { isValidArray } from '../helper.js';
 
-import { createMediaElement } from './generateMediasManager.js';
+import { generateMedias } from './generateMediasManager.js';
 import { incrementTotalLikes } from './statsManager.js';
-
-export const createMediasCards = (mainMedia, photographerMedias) => {
-  if (!photographerMedias) return;
-  renderMedias(mainMedia, photographerMedias);
-};
 
 export const updateMediasOrder = sortedMedias => {
   const mainMedia = document.getElementById('main-medias');
-  if (!mainMedia || !Array.isArray(sortedMedias)) return;
+  if (!mainMedia || !isValidArray(sortedMedias, false)) return;
 
-  createMediasCards(mainMedia, sortedMedias);
+  const existingCards = mainMedia.querySelectorAll('.media-card');
+  existingCards.forEach(card => card.classList.add('sorting'));
+
+  setTimeout(() => {
+    generateMediasCards(mainMedia, sortedMedias);
+  }, 200);
 };
 
-const renderMedias = (mainMedia, sortedMedias) => {
+export const generateMediasCards = (mainMedia, sortedMedias) => {
   mainMedia.innerHTML = '';
   sortedMedias.forEach((media, index) => {
-    const mediaElement = createMediaElement(media);
+    const mediaElement = generateMedias(media);
     if (mediaElement) {
-      const card = createCard(media, mediaElement);
+      const card = generateCard(media, mediaElement);
       const img = card.querySelector('img');
       const video = card.querySelector('video');
 
@@ -42,15 +43,19 @@ const renderMedias = (mainMedia, sortedMedias) => {
 
 const toggleLike = (media, likesButton) => {
   const likesCount = likesButton.querySelector('span');
+  const heartIcon = likesButton.querySelector('.fa-heart');
+
   if (likesCount) {
     const newLikes = (parseInt(likesCount.textContent, 10) || 0) + 1;
     likesCount.textContent = newLikes;
     likesCount.setAttribute('aria-live', 'polite');
     media.likes = newLikes;
-    likesButton.classList.add('liked');
-    setTimeout(() => likesButton.classList.remove('liked'), timeoutConfig.like);
 
-    // Update total likes in stats bar
+    if (heartIcon) {
+      heartIcon.classList.add('pulse');
+      setTimeout(() => heartIcon.classList.remove('pulse'), timeoutConfig.like);
+    }
+
     incrementTotalLikes();
   }
 };

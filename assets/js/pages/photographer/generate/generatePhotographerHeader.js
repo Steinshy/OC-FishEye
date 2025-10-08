@@ -1,6 +1,6 @@
-import { createFragment } from '../../utils/helpers/utils.js';
+import { generateFragment } from '../../../utils/helpers/helper.js';
 
-export const photographerHeader = photographer => {
+export const generatePhotographerHeader = photographer => {
   const photographerSection = document.createElement('section');
   photographerSection.id = 'photographer-section';
   photographerSection.className = 'photographer-section';
@@ -41,7 +41,7 @@ export const photographerHeader = photographer => {
       </div>
     </div>`;
 
-  return createFragment(photographerSection, {
+  return generateFragment(photographerSection, {
     img: photographerSection.querySelector('.profile-picture'),
     picture: photographerSection.querySelector('picture'),
     jpgUrl: photographer.portraits.jpgUrl,

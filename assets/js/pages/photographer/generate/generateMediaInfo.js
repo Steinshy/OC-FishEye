@@ -1,6 +1,6 @@
-import { accessibilityManager } from '../../../../utils/accessibility.js';
+import { accessibilityManager } from '../../../utils/accessibility.js';
 
-export const createMediaInfo = media => {
+export const generateMediaInfo = media => {
   if (!media) return;
 
   const mediaInfo = document.createElement('div');

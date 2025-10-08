@@ -4,11 +4,15 @@ export const toggleScroll = add => {
   document.documentElement.classList.toggle('no-scroll', add);
   document.body.classList.toggle('no-scroll', add);
 };
+export const isArray = value => Array.isArray(value);
+export const isValidArray = (value, checkLength = true) => {
+  return checkLength ? Array.isArray(value) && value.length > 0 : Array.isArray(value);
+};
 
-export const createFragment = (elements, skeletonConfig = null) => {
+export const generateFragment = (elements, skeletonConfig = null) => {
   const fragment = document.createDocumentFragment();
 
-  const elementArray = Array.isArray(elements) ? elements : [elements];
+  const elementArray = isArray(elements) ? elements : [elements];
 
   elementArray.forEach(element => {
     if (element) {

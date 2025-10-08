@@ -1,38 +1,29 @@
-import { lightboxElements } from '../../../constants.js';
-
 import { EventManager } from './eventListeners.js';
 
-export const lightboxState = () => {
-  return lightboxElements.modal.classList.contains('show');
-};
+export const LightboxEventListeners = (modal, callbacks) => {
+  const {
+    previousSlide,
+    nextSlide,
+    closeLightbox,
+    handleKeyboardNavigation,
+    handleTouchSwipeStart,
+    handleTouchSwipeEnd,
+    handleMouseWheelNavigation,
+    handleFocus,
+  } = callbacks;
 
-export const setupLightboxEventListeners = (modal, callbacks) => {
-  const { previousSlide, nextSlide, close, handleKeyDown, handleTouchStart, handleTouchEnd, handleWheel, handleFocusIn } = callbacks;
+  const createControlHandler =
+    (callback, preventDefaults = true) =>
+    e => {
+      if (preventDefaults) e.preventDefault();
+      e.stopPropagation();
+      callback();
+    };
 
   const controls = [
-    {
-      id: 'lightbox-prev',
-      handler: e => {
-        e.preventDefault();
-        e.stopPropagation();
-        previousSlide();
-      },
-    },
-    {
-      id: 'lightbox-next',
-      handler: e => {
-        e.preventDefault();
-        e.stopPropagation();
-        nextSlide();
-      },
-    },
-    {
-      id: 'lightbox-close',
-      handler: e => {
-        e.stopPropagation();
-        close();
-      },
-    },
+    { id: 'lightbox-prev', handler: createControlHandler(previousSlide) },
+    { id: 'lightbox-next', handler: createControlHandler(nextSlide) },
+    { id: 'lightbox-close', handler: createControlHandler(closeLightbox, false) },
   ];
 
   controls.forEach(({ id, handler }) => {
@@ -41,11 +32,11 @@ export const setupLightboxEventListeners = (modal, callbacks) => {
   });
 
   const events = [
-    [document, 'keydown', handleKeyDown, 'lightbox-keyboard', {}],
-    [modal, 'touchstart', handleTouchStart, 'lightbox-touchstart', { passive: true }],
-    [modal, 'touchend', handleTouchEnd, 'lightbox-touchend', { passive: true }],
-    [modal, 'wheel', handleWheel, 'lightbox-wheel', { passive: false }],
-    [modal, 'focusin', handleFocusIn, 'lightbox-focus', {}],
+    [document, 'keydown', handleKeyboardNavigation, 'lightbox-keyboard', {}],
+    [modal, 'touchstart', handleTouchSwipeStart, 'lightbox-touchstart', { passive: true }],
+    [modal, 'touchend', handleTouchSwipeEnd, 'lightbox-touchend', { passive: true }],
+    [modal, 'wheel', handleMouseWheelNavigation, 'lightbox-wheel', { passive: false }],
+    [modal, 'focusin', handleFocus, 'lightbox-focus', {}],
   ];
 
   events.forEach(([element, event, handler, key, options]) => {

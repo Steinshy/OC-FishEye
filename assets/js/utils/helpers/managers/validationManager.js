@@ -31,7 +31,7 @@ export const submitValidation = () => {
     formData[fieldName] = element ? element.value : '';
   });
 
-  const isValid = validateForm(formData);
+  const isValid = Boolean(validateForm(formData));
 
   if (!isValid) {
     getFieldNames().forEach(fieldName => {

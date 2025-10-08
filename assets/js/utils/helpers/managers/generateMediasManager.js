@@ -1,13 +1,13 @@
-import { createPicture } from '../../../pages/photographer/medias/generate/createPicture.js';
-import { createVideo } from '../../../pages/photographer/medias/generate/createVideo.js';
+import { generatePicture } from '../../../pages/photographer/generate/generatePicture.js';
+import { generateVideo } from '../../../pages/photographer/generate/generateVideo.js';
 
-export const createMediaElement = photographerMedia => {
+export const generateMedias = photographerMedia => {
   if (!photographerMedia) return null;
   switch (photographerMedia.mediaType) {
     case 'image':
-      return createPicture(photographerMedia);
+      return generatePicture(photographerMedia);
     case 'video':
-      return createVideo(photographerMedia);
+      return generateVideo(photographerMedia);
     default:
       return null;
   }

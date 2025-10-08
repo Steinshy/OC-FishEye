@@ -1,11 +1,11 @@
 import { getModalRefs } from '../../constants.js';
 import { setupModalEventListeners } from '../../utils/helpers/events/modalEventListeners.js';
 import { getPhotographer, getPhotographerMedias } from '../../utils/helpers/managers/dataManager.js';
-import { createMediasCards } from '../../utils/helpers/managers/mediasManager.js';
+import { generateMediasCards } from '../../utils/helpers/managers/mediasManager.js';
 import { initializeStats } from '../../utils/helpers/managers/statsManager.js';
 import { scrollToTop } from '../../utils/scrollToTop.js';
 
-import { photographerHeader } from './createPhotographerHeader.js';
+import { generatePhotographerHeader } from './generate/generatePhotographerHeader.js';
 import { initializeLightbox } from './lightbox.js';
 import { sortButton } from './sortButton.js';
 
@@ -17,7 +17,7 @@ export const photographerPage = async () => {
   const urlId = parseInt(urlIdParam, 10);
   const [photographer, photographerMedias] = await Promise.all([getPhotographer(urlId), getPhotographerMedias(urlId)]);
 
-  mainElement.prepend(photographerHeader(photographer));
+  mainElement.prepend(generatePhotographerHeader(photographer));
   initializeLightbox();
   setupModalEventListeners();
 
@@ -30,5 +30,5 @@ export const photographerPage = async () => {
   initializeStats(photographerMedias, photographer.price);
 
   const sortedMedias = sortButton.init(photographerMedias);
-  createMediasCards(mainMedia, sortedMedias || photographerMedias);
+  generateMediasCards(mainMedia, sortedMedias || photographerMedias);
 };

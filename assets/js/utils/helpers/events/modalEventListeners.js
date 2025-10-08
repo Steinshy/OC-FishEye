@@ -3,8 +3,6 @@ import { accessibilityManager } from '../../accessibility.js';
 import { openModal, closeModal, setupFieldValidation } from '../managers/modalManager.js';
 import { submitForm } from '../managers/submissionManager.js';
 
-const eventTypes = ['input', 'keyup', 'paste'];
-
 const { focusManager, keyboardHandler } = accessibilityManager();
 
 const ensureFocusWithinModal = () => {
@@ -12,38 +10,6 @@ const ensureFocusWithinModal = () => {
   if (modalRefs.mainModal && !modalRefs.mainModal.contains(document.activeElement)) {
     focusManager.focusFirst(modalRefs.mainModal, 'input, textarea, button');
   }
-};
-
-const addFormEventListeners = (element, handler) => {
-  eventTypes.forEach(event => element.addEventListener(event, handler));
-};
-
-const removeFormEventListeners = (element, handler) => {
-  eventTypes.forEach(event => element.removeEventListener(event, handler));
-};
-
-export const characterCountListeners = () => {
-  const maxLength = 500;
-  const { message, characterCount } = getFormElements();
-
-  if (!message || !characterCount) return null;
-
-  const getCounterStatus = (length, max) => {
-    if (length >= max) return 'danger';
-    if (length >= max * 0.9) return 'warning';
-    return '';
-  };
-
-  const update = () => {
-    const { length } = message.value;
-    characterCount.textContent = `${length}/${maxLength}`;
-    characterCount.classList.remove('warning', 'danger');
-    const status = getCounterStatus(length, maxLength);
-    if (status) characterCount.classList.add(status);
-  };
-
-  addFormEventListeners(message, update);
-  return () => removeFormEventListeners(message, update);
 };
 
 export const setupModalEventListeners = () => {
@@ -82,7 +48,7 @@ export const setupModalEventListeners = () => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         e.stopPropagation();
-        submitForm(e);
+        submitForm(e, closeModal);
       }
     });
   }
@@ -98,7 +64,7 @@ export const setupModalEventListeners = () => {
     });
   }
 
-  modalRefs.form?.addEventListener('submit', submitForm);
+  modalRefs.form?.addEventListener('submit', e => submitForm(e, closeModal));
   modalRefs.mainModal?.addEventListener('keydown', focusHandler);
   document.addEventListener('keydown', escapeHandler);
 };

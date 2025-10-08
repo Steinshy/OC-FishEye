@@ -1,4 +1,5 @@
-import { EventManager, dropdownEventListeners } from './helpers/events/eventListeners.js';
+import { EventManager } from './helpers/events/eventListeners.js';
+import { dropdownEventListeners } from './helpers/events/sortButtonsEventListeners.js';
 
 const isModalOpen = () => Boolean(document.getElementById('modal-signup')?.classList?.contains('show'));
 
@@ -85,7 +86,7 @@ const aria = {
 const handlers = {
   createArrowNavigation({ elements, orientation = 'vertical', onNavigate, onActivate }) {
     return e => {
-      const isVertical = orientation === 'vertical';
+      const isVertical = orientation === true || orientation === 'vertical';
       const downKey = isVertical ? 'ArrowDown' : 'ArrowRight';
       const upKey = isVertical ? 'ArrowUp' : 'ArrowLeft';
 
