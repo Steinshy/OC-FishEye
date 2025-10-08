@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta
       name="description"
       content="Découvrez FishEye, votre photographe professionnel. Explorez notre galerie de photos d'art, portraits, événements, architecture et plus encore. Réservez votre séance photo personnalisée." />
@@ -33,6 +33,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/logo.png" />
 
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/animations.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
@@ -72,6 +73,13 @@
   </head>
 
   <body>
+    <div class="loading-screen" id="loading-screen" aria-label="Chargement en cours">
+      <div class="loading-spinner">
+        <div class="aperture"></div>
+        <img src="./assets/favicons/logo.png" alt="" class="loading-logo" aria-hidden="true" />
+      </div>
+    </div>
+
     <header role="banner" aria-label="En-tête principal">
       <nav role="navigation" aria-label="Navigation principale">
         <img class="nav-logo" src="./assets/favicons/logo.png" alt="Logo FishEye" height="30" loading="eager" fetchpriority="high" />

@@ -1,0 +1,326 @@
+/* ===================================
+  FishEye - Animations & Transitions
+=================================== */
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* =========================
+  Modal Animations
+========================= */
+.modal,
+.lightbox-modal {
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.modal.show,
+.lightbox-modal.show {
+  animation: modalFadeIn 0.2s ease forwards;
+}
+
+.modal.show .modal-content {
+  animation: modalSlideIn 0.2s ease forwards;
+}
+
+.modal.closing,
+.lightbox-modal.closing {
+  animation: modalFadeOut 0.2s ease forwards;
+}
+
+.modal.closing .modal-content {
+  animation: modalSlideOut 0.2s ease forwards;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+  }
+}
+
+@keyframes modalFadeOut {
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes modalSlideOut {
+  to {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* =========================
+  Lightbox Animations
+========================= */
+.lightbox-close,
+.lightbox-nav {
+  transition: all 0.2s ease;
+}
+
+.lightbox-modal.show .lightbox-media-container {
+  animation: lightboxZoomIn 0.25s ease forwards;
+}
+
+.lightbox-modal.show .lightbox-close,
+.lightbox-modal.show .lightbox-nav {
+  animation: fadeInUp 0.2s ease 0.1s both;
+}
+
+.lightbox-modal.closing .lightbox-media-container {
+  animation: lightboxZoomOut 0.2s ease forwards;
+}
+
+.lightbox-modal.closing .lightbox-close,
+.lightbox-modal.closing .lightbox-nav {
+  animation: fadeOutDown 0.15s ease both;
+}
+
+@keyframes lightboxZoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes lightboxZoomOut {
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes fadeOutDown {
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* =========================
+  Like Button Animations
+========================= */
+.media-info .likes {
+  transition: all 0.2s ease;
+}
+
+.media-info .likes:active {
+  animation: likePulse 0.4s ease;
+}
+
+.media-info .likes i {
+  transition: transform 0.2s ease;
+}
+
+.media-info .likes:active i,
+.media-info .likes .pulse {
+  animation: heartPulse 0.5s ease;
+}
+
+.media-info .likes .pulse {
+  color: #e74c3c;
+}
+
+@keyframes likePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  75% {
+    transform: scale(1.05);
+  }
+}
+
+/* =========================
+  Stats Like Animation
+========================= */
+.photographer-stats,
+.stats-likes,
+.stats-likes-count {
+  transition: all 0.2s ease;
+}
+
+.stats-likes-count,
+.stats-likes .fa-heart {
+  display: inline-block;
+}
+
+.stats-likes .fa-heart {
+  transition: transform 0.2s ease;
+}
+
+.stats-likes:hover .fa-heart,
+.stats-likes.pulse .fa-heart {
+  animation: heartPulse 0.4s ease;
+}
+
+.stats-likes.pulse,
+.stats-likes-count.pulse {
+  animation: statsPulse 0.4s ease;
+}
+
+@keyframes heartPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.3);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  75% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes statsPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.15);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  75% {
+    transform: scale(1.1);
+  }
+}
+
+/* =========================
+  Sort Button Animations
+========================= */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInStagger {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes cardSorting {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+  Utility Animations
+========================= */
+.fade-in {
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+.scale-in {
+  animation: scaleIn 0.2s ease forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* =========================
+  Performance Optimization
+========================= */
+.loading-screen,
+.modal,
+.lightbox-modal,
+.sort-options {
+  will-change: opacity, transform;
+}

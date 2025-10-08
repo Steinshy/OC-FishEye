@@ -34,6 +34,7 @@
 
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/photographer.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/animations.css" />
     <link rel="preload" as="style" href="./assets/css/components.css" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href="./assets/css/components.css" media="print" onload="this.media='all'" />
     <link rel="preload" as="style" href="./assets/css/medias.css" onload="this.onload=null;this.rel='stylesheet'" />
@@ -67,6 +68,13 @@
   </head>
 
   <body>
+    <div class="loading-screen" id="loading-screen" aria-label="Chargement en cours">
+      <div class="loading-spinner">
+        <div class="aperture"></div>
+        <img src="./assets/favicons/logo.png" alt="" class="loading-logo" aria-hidden="true" />
+      </div>
+    </div>
+
     <header role="banner" aria-label="En-tête principal">
       <nav role="navigation" aria-label="Navigation principale">
         <a href="index.html">
@@ -94,7 +102,7 @@
             Popularité
           </button>
           <ul class="sort-options" id="sort-options" role="listbox" aria-hidden="true" aria-labelledby="media-button">
-            <li id="popular-option" role="option" tabindex="-1">Popularité</li>
+            <li id="popular-option" autofocus="true" role="option" tabindex="-1">Popularité</li>
             <li id="date-option" role="option" tabindex="-1">Date</li>
             <li id="title-option" role="option" tabindex="-1">Titre</li>
           </ul>
@@ -127,6 +135,7 @@
               type="text"
               name="firstname"
               autocomplete="given-name"
+              autofocus="true"
               data-error-visible="false"
               placeholder="Entrez votre Prénom"
               aria-describedby="firstname-error" />
