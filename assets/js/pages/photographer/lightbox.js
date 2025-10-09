@@ -1,4 +1,4 @@
-import { lightboxElements, timeoutConfig, selectorTypes } from '../../constants.js';
+import { lightboxElements, selectorTypes } from '../../constants.js';
 import { accessibilityManager } from '../../utils/accessibility.js';
 import { LightboxEventListeners } from '../../utils/helpers/events/lightboxEventListeners.js';
 import { toggleScroll } from '../../utils/helpers/helper.js';
@@ -10,7 +10,7 @@ const { focusManager } = accessibilityManager();
 const getCachedElement = media => mediaCache.getOrCreate('mediaElements', media.id, () => generateMedias(media));
 
 export const lightboxState = () => {
-  return lightboxElements.modal.classList.contains('show');
+  return lightboxElements.modal()?.classList.contains('show');
 };
 
 const getValidIndex = (index, length) => {
@@ -39,10 +39,12 @@ const setupMediaElement = (element, container) => {
 };
 
 const updateUI = media => {
-  const { title, likes, counter } = lightboxElements;
-  title.textContent = media.title;
-  likes.textContent = media.likes;
-  counter.textContent = `${lightboxElements.currentIndex + 1} / ${lightboxElements.medias.length}`;
+  const title = lightboxElements.title();
+  const likes = lightboxElements.likes();
+  const counter = lightboxElements.counter();
+  if (title) title.textContent = media.title;
+  if (likes) likes.textContent = media.likes;
+  if (counter) counter.textContent = `${lightboxElements.currentIndex + 1} / ${lightboxElements.medias.length}`;
 };
 
 const applyTransition = (element, opacity, scale) => {
@@ -61,7 +63,7 @@ const preloadAdjacentMedia = currentIndex => {
 };
 
 const updateContent = (animate = false) => {
-  const { container } = lightboxElements;
+  const container = lightboxElements.container();
   if (!lightboxElements.medias?.length || !container) return;
 
   const media = lightboxElements.medias[lightboxElements.currentIndex];
@@ -94,11 +96,11 @@ const updateContent = (animate = false) => {
 
 const navigate = (index, animate = true) => {
   if (!lightboxElements.medias?.length || lightboxElements.isNavigating) return;
-  lightboxElements.container?.querySelector('video:not([paused])')?.pause();
+  lightboxElements.container()?.querySelector('video:not([paused])')?.pause();
   lightboxElements.isNavigating = true;
   lightboxElements.currentIndex = index;
   updateContent(animate);
-  setTimeout(() => (lightboxElements.isNavigating = false), timeoutConfig.focus);
+  lightboxElements.isNavigating = false;
 };
 
 const nextSlide = () => navigate(getValidIndex(lightboxElements.currentIndex + 1, lightboxElements.medias.length));
@@ -112,7 +114,7 @@ const toggleBackgroundContent = hide => {
 };
 
 const toggleLightboxUI = show => {
-  const { modal } = lightboxElements;
+  const modal = lightboxElements.modal();
   if (!modal) return;
 
   modal.classList.toggle('show', show);
@@ -123,7 +125,7 @@ const toggleLightboxUI = show => {
 
 const handleKeyboardNavigation = e => {
   if (!lightboxState()) return;
-  const video = lightboxElements.modal.querySelector('video');
+  const video = lightboxElements.modal()?.querySelector('video');
   const keyboardActions = {
     Escape: closeLightbox,
     ArrowLeft: previousSlide,
@@ -163,7 +165,8 @@ const handleMouseWheelNavigation = e => {
 };
 
 const handleFocus = e => {
-  if (!lightboxElements.modal.contains(e.target)) focusManager.focusFirst(lightboxElements.modal);
+  const modal = lightboxElements.modal();
+  if (modal && !modal.contains(e.target)) focusManager.focusFirst(modal);
 };
 
 export const openLightbox = (mediaId, medias) => {
@@ -178,19 +181,20 @@ export const openLightbox = (mediaId, medias) => {
 
   toggleLightboxUI(true);
   updateContent(false);
-  lightboxElements.focusTrap = focusManager.trapFocus(lightboxElements.modal);
+  const modal = lightboxElements.modal();
+  if (modal) lightboxElements.focusTrap = focusManager.trapFocus(modal);
   requestAnimationFrame(() => document.getElementById('lightbox-close')?.focus());
 };
 
 export const closeLightbox = () => {
   if (!lightboxState()) return;
-  lightboxElements.container?.querySelector('video:not([paused])')?.pause();
-  lightboxElements.modal?.classList.add('closing');
+  lightboxElements.container()?.querySelector('video:not([paused])')?.pause();
+  lightboxElements.modal()?.classList.add('closing');
   document.activeElement?.blur();
 
   setTimeout(() => {
     toggleLightboxUI(false);
-    lightboxElements.modal?.classList.remove('closing');
+    lightboxElements.modal()?.classList.remove('closing');
     lightboxElements.focusTrap?.();
     lightboxElements.focusTrap = null;
 
@@ -204,9 +208,10 @@ export const closeLightbox = () => {
 };
 
 export const initializeLightbox = () => {
-  if (lightboxElements.isInitialized || !lightboxElements.modal) return;
+  const modal = lightboxElements.modal();
+  if (lightboxElements.isInitialized || !modal) return;
 
-  LightboxEventListeners(lightboxElements.modal, {
+  LightboxEventListeners(modal, {
     previousSlide,
     nextSlide,
     closeLightbox,

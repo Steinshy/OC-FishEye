@@ -1,4 +1,4 @@
-import { timeoutConfig, selectorTypes, getModalRefs, getFormElements, getFieldNames } from '../../../constants.js';
+import { selectorTypes, getModalRefs, getFormElements, getFieldNames } from '../../../constants.js';
 import { accessibilityManager } from '../../accessibility.js';
 import { errorDisplay } from '../../errorHandler.js';
 import { toggleScroll } from '../helper.js';
@@ -186,7 +186,7 @@ export const closeModal = () => {
       modalRefs.mainModal.classList.remove('closing');
     }
 
-    setTimeout(restorePreviousFocus, timeoutConfig.focus);
+    restorePreviousFocus();
     resetFormAndModal();
     if (document.activeElement && modalRefs.mainModal && modalRefs.mainModal.contains(document.activeElement)) {
       document.activeElement.blur();

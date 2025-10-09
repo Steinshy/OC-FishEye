@@ -1,8 +1,4 @@
-import { accessibilityManager } from '../../../utils/accessibility.js';
-
 export const generateMediaInfo = media => {
-  if (!media) return;
-
   const mediaInfo = document.createElement('div');
   mediaInfo.innerHTML = `
     <div class="media-info" id="media-info-${media.id}">
@@ -19,12 +15,6 @@ export const generateMediaInfo = media => {
         </button>
     </div>
   `;
-
-  const { ariaManager } = accessibilityManager();
-  ariaManager.updateAttributes(mediaInfo.firstElementChild.querySelector('.likes'), {
-    'aria-pressed': 'false',
-    'aria-live': 'polite',
-  });
 
   return mediaInfo;
 };

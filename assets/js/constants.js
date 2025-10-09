@@ -43,21 +43,11 @@ export const getSortButtonElements = () => {
 };
 
 export const lightboxElements = {
-  get modal() {
-    return document.getElementById('lightbox-modal');
-  },
-  get container() {
-    return document.getElementById('lightbox-media-container');
-  },
-  get title() {
-    return document.getElementById('lightbox-title');
-  },
-  get likes() {
-    return document.getElementById('lightbox-likes-count');
-  },
-  get counter() {
-    return document.getElementById('lightbox-counter');
-  },
+  modal: () => document.getElementById('lightbox-modal'),
+  container: () => document.getElementById('lightbox-media-container'),
+  title: () => document.getElementById('lightbox-title'),
+  likes: () => document.getElementById('lightbox-likes-count'),
+  counter: () => document.getElementById('lightbox-counter'),
   medias: [],
   currentIndex: 0,
   isNavigating: false,
@@ -69,12 +59,6 @@ export const lightboxElements = {
     startY: 0,
     minDistance: 50,
   },
-};
-
-export const timeoutConfig = {
-  promise: 100,
-  like: 500,
-  focus: 0,
 };
 
 export const selectorTypes = {

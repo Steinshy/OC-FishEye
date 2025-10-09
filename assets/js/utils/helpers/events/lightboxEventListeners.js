@@ -1,5 +1,6 @@
 import { EventManager } from './eventListeners.js';
 
+// Need to rename callbacks to something more descriptive
 export const LightboxEventListeners = (modal, callbacks) => {
   const {
     previousSlide,

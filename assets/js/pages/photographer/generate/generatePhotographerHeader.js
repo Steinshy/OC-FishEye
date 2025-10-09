@@ -1,13 +1,13 @@
 import { generateFragment } from '../../../utils/helpers/helper.js';
 
 export const generatePhotographerHeader = photographer => {
+  const { name, tagline, city, country, price } = photographer;
+  const { jpgUrl, webpUrl } = photographer.portraits;
   const photographerSection = document.createElement('section');
   photographerSection.id = 'photographer-section';
   photographerSection.className = 'photographer-section';
   photographerSection.setAttribute('aria-label', 'Section du photographe');
 
-  const { name, tagline, city, country, price } = photographer;
-  const { jpgUrl, webpUrl } = photographer.portraits;
   const placeholderUrl = 'assets/photographers/account.png';
 
   photographerSection.innerHTML = `

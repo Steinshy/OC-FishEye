@@ -9,6 +9,7 @@ import { generatePhotographerHeader } from './generate/generatePhotographerHeade
 import { initializeLightbox } from './lightbox.js';
 import { sortButton } from './sortButton.js';
 
+// Move this part to helper later
 export const photographerPage = async () => {
   const mainElement = document.querySelector('main');
   const mainMedia = document.getElementById('main-medias');

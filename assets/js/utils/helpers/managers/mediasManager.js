@@ -1,4 +1,3 @@
-import { timeoutConfig } from '../../../constants.js';
 import { generateCard } from '../../../pages/photographer/generate/generateCard.js';
 import { openLightbox } from '../../../pages/photographer/lightbox.js';
 import { accessibilityManager } from '../../accessibility.js';
@@ -52,7 +51,7 @@ const toggleLike = (media, likesButton) => {
 
     if (heartIcon) {
       heartIcon.classList.add('pulse');
-      setTimeout(() => heartIcon.classList.remove('pulse'), timeoutConfig.like);
+      setTimeout(() => heartIcon.classList.remove('pulse'), 500);
     }
 
     incrementTotalLikes();

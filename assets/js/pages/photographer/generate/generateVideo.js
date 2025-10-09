@@ -1,12 +1,10 @@
 export const generateVideo = media => {
-  if (!media) return;
+  const videoMedia = document.createElement('div');
+  videoMedia.className = 'media-video';
+  videoMedia.setAttribute('data-media-type', 'video');
+  videoMedia.setAttribute('data-media-id', media.id);
 
-  const container = document.createElement('div');
-  container.className = 'media-video';
-  container.setAttribute('data-media-type', 'video');
-  container.setAttribute('data-media-id', media.id);
-
-  container.innerHTML = `
+  videoMedia.innerHTML = `
     <video
       data-media-type="video"
       data-media-id="${media.id}"
@@ -25,12 +23,5 @@ export const generateVideo = media => {
     </video>
   `;
 
-  const video = container.querySelector('video');
-  video.addEventListener('click', e => {
-    if (e.clientY < video.getBoundingClientRect().bottom - 50) {
-      e.stopPropagation();
-      video.paused ? video.play() : video.pause();
-    }
-  });
-  return container;
+  return videoMedia;
 };
