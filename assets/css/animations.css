@@ -1,9 +1,19 @@
 /* ===================================
   FishEye - Animations & Transitions
 =================================== */
+
+/* Core Keyframes */
 @keyframes rotate {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes hideLoading {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
@@ -13,7 +23,6 @@
     opacity: 1;
     transform: scale(1);
   }
-
   50% {
     opacity: 0.7;
     transform: scale(0.95);
@@ -33,6 +42,18 @@
   }
 }
 
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
 /* =========================
   Modal Animations
 ========================= */
@@ -172,17 +193,30 @@
   100% {
     transform: scale(1);
   }
-
   25% {
     transform: scale(1.1);
   }
-
   50% {
     transform: scale(0.95);
   }
-
   75% {
     transform: scale(1.05);
+  }
+}
+
+@keyframes heartPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  75% {
+    transform: scale(1.1);
   }
 }
 
@@ -204,51 +238,10 @@
   transition: transform 0.2s ease;
 }
 
-.stats-likes.pulse .fa-heart {
-  animation: heartPulse 0.4s ease;
-}
-
+.stats-likes.pulse .fa-heart,
 .stats-likes.pulse,
 .stats-likes-count.pulse {
-  animation: statsPulse 0.4s ease;
-}
-
-@keyframes heartPulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.3);
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
-
-  75% {
-    transform: scale(1.2);
-  }
-}
-
-@keyframes statsPulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.15);
-  }
-
-  50% {
-    transform: scale(1.05);
-  }
-
-  75% {
-    transform: scale(1.1);
-  }
+  animation: heartPulse 0.4s ease;
 }
 
 /* =========================
@@ -276,24 +269,19 @@
 }
 
 @keyframes cardSorting {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.5;
-    transform: scale(0.95);
-  }
-
+  0%,
   100% {
     opacity: 1;
     transform: scale(1);
   }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
 }
 
 /* =========================
-  Utility Animations
+  Utility Classes
 ========================= */
 .fade-in {
   animation: fadeIn 0.2s ease forwards;
@@ -307,19 +295,15 @@
   animation: scaleIn 0.2s ease forwards;
 }
 
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-}
-
 /* =========================
   Performance Optimization
 ========================= */
-.loading-screen,
 .modal,
 .lightbox-modal,
 .sort-options {
   will-change: opacity, transform;
+}
+
+.loading-screen {
+  will-change: opacity, visibility;
 }

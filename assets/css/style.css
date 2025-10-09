@@ -9,7 +9,6 @@
   /* Colors */
   --bg-color-primary: #901c1c;
   --bg-color-secondary: #d3573c;
-  --bg-color-dark: #232323;
   --bg-color-modal: #db8876;
   --bg-color-light: #f5f5f5;
   --txt-color-primary: var(--bg-color-primary);
@@ -39,11 +38,8 @@
   --space-lg: 24px;
   --space-xl: 32px;
   --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  --space-4xl: 5rem;
 
   /* Sizes */
-  --size-full: 100%;
   --size-profile-mobile: 120px;
   --size-profile-tablet: 180px;
   --size-profile-desktop: 200px;
@@ -65,9 +61,7 @@
   --shadow-modal: 0 20px 60px rgb(0 0 0 / 50%);
 
   /* Transitions */
-  --transition-fast: 0.15s ease;
   --transition-normal: 0.2s ease;
-  --transition-slow: 0.3s ease;
 
   /* Z-index Layers */
   --z-base: 1;
@@ -89,7 +83,6 @@
   --font-size-mobile-sm: 1rem;
   --font-size-mobile-md: 1.125rem;
   --font-size-mobile-lg: 1.25rem;
-  --font-size-mobile-xl: 1.5rem;
 }
 
 /* =========================
@@ -266,7 +259,7 @@ footer {
 }
 
 footer p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: var(--font-weight-light);
 }
 
@@ -353,8 +346,10 @@ footer p {
 }
 
 /* =========================
-  Responsive Design
+  Responsive Design - Mobile First
 ========================= */
+
+/* Tablet: 768px - 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
   .nav-logo {
     height: 2.2rem;
@@ -379,6 +374,10 @@ footer p {
     font-size: 1rem;
   }
 
+  footer p {
+    font-size: 1.3rem;
+  }
+
   .container-picture,
   .profile-picture {
     width: var(--size-profile-tablet);
@@ -386,6 +385,7 @@ footer p {
   }
 }
 
+/* Desktop: 1024px+ */
 @media (min-width: 1024px) {
   .nav-logo {
     height: 2.5rem;
@@ -398,6 +398,7 @@ footer p {
   .photographers {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xl);
+    padding: var(--tablet-padding);
   }
 
   .photographer h1 {
@@ -408,55 +409,73 @@ footer p {
   .photographer span {
     font-size: 1.2rem;
   }
+
+  .container-picture,
+  .profile-picture {
+    width: var(--size-profile-desktop);
+    height: var(--size-profile-desktop);
+  }
 }
 
+/* Mobile: 0 - 767px */
 @media (max-width: 767px) {
   .nav-logo {
-    height: 36px;
+    height: 32px;
     width: auto;
   }
 
   nav,
   header nav {
-    padding: 16px;
+    padding: 12px 16px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   nav h1 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    margin: 0;
   }
 
   main {
-    gap: var(--space-sm);
-    padding: var(--space-sm);
+    gap: var(--space-md);
+    padding: var(--space-md);
+    min-height: calc(100vh - 120px);
   }
 
   .photographers {
-    padding: var(--mobile-padding);
+    padding: var(--space-md);
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 32px;
+    max-width: 100%;
   }
 
   .photographer {
-    padding: 20px;
+    padding: 24px;
     touch-action: manipulation;
   }
 
   .photographer h1 {
-    font-size: var(--font-size-mobile-lg);
+    font-size: 1.6rem;
+    margin-bottom: 8px;
   }
 
   .photographer p {
-    font-size: var(--font-size-mobile-sm);
+    font-size: 1rem;
+    margin-bottom: 6px;
+    line-height: 1.4;
   }
 
   .photographer span {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
   }
 
   .container-picture,
   .profile-picture {
-    width: var(--size-profile-mobile);
-    height: var(--size-profile-mobile);
+    width: 140px;
+    height: 140px;
+    margin-bottom: 16px;
   }
 
   button,
@@ -470,8 +489,12 @@ footer p {
   button[type="submit"],
   .btn-primary {
     min-height: var(--touch-target-comfortable);
-    padding: 14px 24px;
-    font-size: var(--font-size-mobile-md);
+    padding: 16px 28px;
+    font-size: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
   }
 
   button:active,
@@ -512,7 +535,7 @@ footer p {
   }
 
   footer p {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   button,
@@ -523,35 +546,73 @@ footer p {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
-}
 
-@media (max-width: 767px) and (hover: none) {
-  button:hover,
-  a:hover {
-    transform: none;
+  nav,
+  header nav {
+    padding: 12px;
+  }
+
+  nav h1 {
+    font-size: 1.1rem;
+  }
+
+  main {
+    padding: 0.5rem;
+  }
+
+  .photographers {
+    gap: 20px;
+    padding: var(--space-sm);
+  }
+
+  .photographer {
+    padding: 20px;
+  }
+
+  .photographer h1 {
+    font-size: 1.4rem;
+  }
+
+  .photographer p {
+    font-size: 0.9rem;
+  }
+
+  .photographer span {
+    font-size: 0.85rem;
+  }
+
+  .container-picture,
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+  }
+
+  .btn-primary {
+    font-size: 0.9rem;
+    padding: 14px 24px;
+    max-width: 220px;
+  }
+
+  footer p {
+    font-size: 1.1rem;
   }
 }
-
 /* =========================
-  iOS Safe Area Support
+  Special Features & Accessibility
 ========================= */
+
+/* iOS Safe Area */
 @supports (padding: env(safe-area-inset-top)) {
   body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 }
 
-/* =========================
-  Accessibility
-========================= */
+/* Accessibility */
 @media (hover: hover) and (pointer: fine) {
   *:focus:not(:focus-visible) {
     outline: none;
   }
-
   *:focus-visible {
     outline: 3px solid var(--bg-color-primary);
     outline-offset: 2px;
@@ -585,16 +646,13 @@ footer p {
   a {
     outline: 2px solid currentColor;
   }
-
   input,
   textarea {
     border-width: 2px;
   }
 }
 
-/* =========================
-  Print Styles
-========================= */
+/* Print */
 @media print {
   .modal,
   .lightbox-modal,
@@ -604,17 +662,14 @@ footer p {
   .sort-button {
     display: none;
   }
-
   body {
     background: white;
     color: black;
   }
-
   .photographers,
   .medias {
     display: block;
   }
-
   a[href]::after {
     content: " (" attr(href) ")";
   }
