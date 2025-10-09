@@ -1,8 +1,4 @@
 /* =========================
-  Empty media card color c4c4c4
-========================= */
-
-/* =========================
   Media Gallery Container
 ========================= */
 .medias,
@@ -51,7 +47,7 @@
 }
 
 /* =========================
-  Media Content Area
+  Media Content
 ========================= */
 .media-content {
   position: relative;
@@ -68,8 +64,16 @@
   outline: none;
 }
 
+.media-video .media-content {
+  pointer-events: none;
+}
+
+.media-video video {
+  pointer-events: auto;
+}
+
 /* =========================
-  Media Elements (Images & Videos)
+  Media Elements
 ========================= */
 .media-picture,
 .media-video {
@@ -207,9 +211,26 @@
 /* =========================
   Responsive Design
 ========================= */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .medias,
+  .medias-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
 
-/* Mobile (up to 767px) */
-@media (width <= 767px) {
+  .media-card {
+    height: var(--size-card-height-tablet);
+  }
+
+  .media-info h3,
+  .media-info .likes,
+  .media-info .price {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 767px) {
   .medias,
   .medias-cards {
     grid-template-columns: 1fr;
@@ -231,24 +252,29 @@
   .media-info .price {
     padding: 0.3rem 0.6rem;
   }
+
+  video {
+    width: 100%;
+    height: auto;
+  }
+
+  video::-webkit-media-controls {
+    transform: scale(1.2);
+    transform-origin: bottom;
+  }
+
+  video::-webkit-media-controls-panel {
+    padding: 8px;
+  }
+
+  video::-webkit-media-controls-play-button,
+  video::-webkit-media-controls-fullscreen-button {
+    transform: scale(1.3);
+  }
 }
 
-/* Tablet (768px to 1023px) */
-@media (width >= 768px) and (width <= 1023px) {
-  .medias,
-  .medias-cards {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    padding: 1.5rem;
-  }
-
-  .media-card {
-    height: var(--size-card-height-tablet);
-  }
-
-  .media-info h3,
-  .media-info .likes,
-  .media-info .price {
-    font-size: 0.95rem;
+@media (max-width: 767px) and (orientation: landscape) {
+  video::-webkit-media-controls {
+    transform: scale(1);
   }
 }

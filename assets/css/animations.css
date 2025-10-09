@@ -204,7 +204,6 @@
   transition: transform 0.2s ease;
 }
 
-.stats-likes:hover .fa-heart,
 .stats-likes.pulse .fa-heart {
   animation: heartPulse 0.4s ease;
 }

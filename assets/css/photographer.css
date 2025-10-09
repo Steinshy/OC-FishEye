@@ -1,8 +1,6 @@
 /* ===================================
   FishEyes - Photographer Page Styles
 =================================== */
-
-/* Loading State */
 .loading-state {
   display: flex;
   justify-content: center;
@@ -17,9 +15,6 @@
   font-weight: 500;
 }
 
-/* =========================
-  Photographer Header Section
-========================= */
 .photographer-section {
   display: flex;
   flex-direction: column;
@@ -224,9 +219,6 @@
   color: var(--color-white);
 }
 
-/* =========================
-  Media Gallery Section
-========================= */
 .media-section {
   padding: var(--space-md);
 }
@@ -234,9 +226,13 @@
 /* =========================
   Responsive Design
 ========================= */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .photographer-header {
+    padding: var(--tablet-padding);
+  }
+}
 
-/* Mobile (up to 767px) */
-@media (width <= 767px) {
+@media (max-width: 767px) {
   .photographer-section,
   .media-section {
     padding: var(--space-sm);
@@ -279,32 +275,107 @@
     transition: var(--transition-fast);
   }
 
+  .medias {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: var(--mobile-padding);
+  }
+
+  .media-card {
+    height: var(--size-card-height-mobile);
+  }
+
+  .media-card .likes {
+    padding: 8px 12px;
+    font-size: var(--font-size-mobile-md);
+  }
+
+  .media-card .likes i {
+    font-size: 1.2rem;
+  }
+
   .section-sort {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-sm);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
     margin-top: var(--space-lg);
-    padding: 0 var(--space-sm);
+    padding: var(--mobile-padding);
   }
 
   .section-sort h2 {
-    font-size: 0.875rem;
+    font-size: var(--font-size-mobile-md);
     flex-shrink: 0;
   }
 
   .sort-button {
+    width: 100%;
+    min-width: auto;
     margin-left: 0;
   }
 
-  .sort-button button {
-    font-size: 0.875rem;
+  .sort-button button,
+  #media-button {
+    width: 100%;
+    min-height: var(--touch-target-comfortable);
+    font-size: var(--font-size-mobile-md);
     padding: var(--space-sm) var(--space-md);
-    min-width: 120px;
     transition: all 0.2s ease;
   }
 
   .sort-button button::after {
     transition: transform 0.3s ease;
+  }
+
+  .sort-options {
+    width: 100%;
+  }
+
+  .sort-options li {
+    min-height: var(--touch-target-comfortable);
+    padding: 12px 16px;
+    font-size: var(--font-size-mobile-md);
+  }
+
+  /* Stats & Scroll */
+  .photographer-stats {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    font-size: var(--font-size-mobile-sm);
+  }
+
+  .stats-likes,
+  .stats-price {
+    font-size: var(--font-size-mobile-md);
+  }
+
+  .scroll-to-top {
+    width: 48px;
+    height: 48px;
+    bottom: 80px;
+    right: 16px;
+    font-size: 1.25rem;
+  }
+
+  .error-form {
+    font-size: var(--font-size-mobile-sm);
+    padding: 8px;
+    margin-top: 6px;
+  }
+
+  .character-count,
+  .min.max {
+    font-size: var(--font-size-mobile-xs);
+  }
+}
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .photographer-stats {
+    font-size: var(--font-size-mobile-xs);
+    padding: 8px 12px;
   }
 }
