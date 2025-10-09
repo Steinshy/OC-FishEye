@@ -65,21 +65,6 @@ export default [
         process: 'readonly',
         __dirname: 'readonly',
         __filename: 'readonly',
-
-        // Custom project functions
-        getPhotographersData: 'readonly',
-        getPhotographerInformation: 'readonly',
-        getPhotographerIdFromData: 'readonly',
-        createPhotographerCard: 'readonly',
-        loadPhotographers: 'readonly',
-        renderPhotographerInfo: 'readonly',
-        handleContactModal: 'readonly',
-        initCharacterCount: 'readonly',
-        initializeRealTimeValidation: 'readonly',
-        handleFormSubmit: 'readonly',
-        errorDisplay: 'readonly',
-        Validators: 'readonly',
-        createSortDropdown: 'readonly',
       },
     },
     rules: {

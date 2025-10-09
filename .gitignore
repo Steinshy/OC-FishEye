@@ -1,45 +1,28 @@
-# Dependencies
 node_modules/
 yarn.lock
 pnpm-lock.yaml
-
-# Build outputs
 dist/
 build/
 coverage/
 .next/
 .out/
 .vite/
-
-# Environment files
 .env
 .env.*
-
-# Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 debug.log*
-
-# Runtime data
 pids
-
-# IDE directories
-.vscode/
-.idea/
-
-# Caches
 .sass-cache/
 .cache/
 .tmp/
-
-# OS files
 .DS_Store
 Thumbs.db
-
-# Development tools
 .husky/
 husky/
 .cursor/
+.vscode/
+.idea/

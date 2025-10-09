@@ -1,0 +1,54 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+env:
+  NODE_VERSION: 24
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    name: Lighthouse Audits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+
+      - name: Start server
+        run: npm run dev & sleep 5
+        env:
+          CI: true
+
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:8080/
+            http://localhost:8080/photographer.html?id=243
+            http://localhost:8080/photographer.html?id=930
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 3

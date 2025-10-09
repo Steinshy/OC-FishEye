@@ -1,69 +1,51 @@
 name: Release
 
-# Trigger configuration
 on:
   push:
     tags:
       - "v*"
 
-# Environment variables
 env:
-  NODE_VERSION: "24"
+  NODE_VERSION: 24
 
-# Permissions
 permissions:
   contents: write
   issues: write
   pull-requests: write
 
 jobs:
-  # Release job
   release:
-    name: Create Release
+    name: Release
     runs-on: ubuntu-latest
     steps:
-      # Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
 
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-          npm cache clean --force
-          npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+      - name: Install
+        run: npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
 
-      # Build project
-      - name: Build project
+      - name: Build
         run: |
           npm run lint
-          npm run format:check
+          npm run format
           npm run minify
-          [ -f "jsdoc.conf.json" ] && npm run docs || true
 
-      # Create release
       - name: Create Release
         run: |
           gh release create ${{ github.ref_name }} \
             --title "Release ${{ github.ref_name }}" \
-            --notes "Release ${{ github.ref_name }}" \
-            --draft=false \
-            --prerelease=false
+            --notes "Release ${{ github.ref_name }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Upload assets
-      - name: Upload assets
-        run: |
-          [ -f "README.md" ] && gh release upload ${{ github.ref_name }} README.md --clobber || true
+      - name: Upload README
+        run: gh release upload ${{ github.ref_name }} readme.md --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

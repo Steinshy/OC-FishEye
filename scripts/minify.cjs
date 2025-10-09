@@ -1,52 +1,31 @@
 #!/usr/bin/env node
-
-/* eslint-env node */
 const fs = require('fs');
 const path = require('path');
 const { minify } = require('minify');
 const glob = require('glob');
 
-const target = process.argv[2];
-if (!['js', 'html'].includes(target)) {
+const [, , target] = process.argv;
+const patterns = { js: 'assets/js/**/*.js', html: '*.html' };
+const outputDirs = { js: 'assets/js/minified/', html: 'minified/' };
+
+if (!patterns[target]) {
   console.error('Usage: node scripts/minify.cjs <js|html>');
   process.exit(1);
 }
 
-const minifyFiles = async (pattern, outputDir) => {
-  const files = glob.sync(pattern).filter(file => !file.includes('.min.') && !file.includes('minified/'));
-
-  if (!files.length) {
-    console.log(`No ${target} files found`);
-    return;
-  }
-
-  console.log(`Minifying ${files.length} ${target} file(s)...`);
-
-  for (const file of files) {
-    try {
-      const outputPath = path.join(outputDir, path.basename(file, path.extname(file)) + '.min' + path.extname(file));
-      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-
-      const result = await minify(file);
-      fs.writeFileSync(outputPath, result);
-
-      console.log(`✓ ${file} → ${outputPath}`);
-    } catch (error) {
-      console.error(`✗ ${file}: ${error.message}`);
-    }
-  }
-};
-
 (async () => {
   try {
-    if (target === 'js') {
-      await minifyFiles('assets/js/**/*.js', 'assets/js/minified/');
-    } else {
-      await minifyFiles('*.html', 'minified/');
+    const files = glob.sync(patterns[target]).filter(f => !f.includes('.min.') && !f.includes('minified/'));
+    if (!files.length) return console.log(`No ${target} files found`);
+
+    for (const file of files) {
+      const output = path.join(outputDirs[target], path.basename(file, path.extname(file)) + '.min' + path.extname(file));
+      fs.mkdirSync(path.dirname(output), { recursive: true });
+      fs.writeFileSync(output, await minify(file));
     }
-    console.log(`✅ ${target.toUpperCase()} minification completed!`);
+    console.log(`✅ Minified ${files.length} ${target} file(s)`);
   } catch (error) {
-    console.error('Minification failed:', error.message);
+    console.error('❌ Error:', error.message);
     process.exit(1);
   }
 })();

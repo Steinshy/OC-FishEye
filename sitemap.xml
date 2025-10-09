@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <!-- Homepage -->
+  <url>
+    <loc>https://steinshy.github.io/FishEye/</loc>
+    <lastmod>2025-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Photographer: Mimi Keel -->
+  <url>
+    <loc>https://steinshy.github.io/FishEye/photographer.html?id=243</loc>
+    <lastmod>2025-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Photographer: Ellie-Rose Wilkens -->
+  <url>
+    <loc>https://steinshy.github.io/FishEye/photographer.html?id=930</loc>
+    <lastmod>2025-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Photographer: Tracy Galindo -->
+  <url>
+    <loc>https://steinshy.github.io/FishEye/photographer.html?id=82</loc>
+    <lastmod>2025-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Photographer: Nabeel Bradford -->
+  <url>
+    <loc>https://steinshy.github.io/FishEye/photographer.html?id=527</loc>
+    <lastmod>2025-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Photographer: Rhode Dubois -->
+  <url>
+    <loc>https://steinshy.github.io/FishEye/photographer.html?id=925</loc>
+    <lastmod>2025-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Photographer: Marcel Nikolic -->
+  <url>
+    <loc>https://steinshy.github.io/FishEye/photographer.html?id=195</loc>
+    <lastmod>2025-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

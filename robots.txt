@@ -1,0 +1,24 @@
+# robots.txt for FishEye Photography Portfolio
+# https://steinshy.github.io/FishEye/
+
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow crawling of scripts and assets that don't need indexing
+Disallow: /assets/js/
+Disallow: /node_modules/
+Disallow: /scripts/
+
+# Allow crawling of CSS for better rendering in search results
+Allow: /assets/css/
+
+# Allow crawling of images for Google Images
+Allow: /assets/photographers/
+Allow: /assets/favicons/
+
+# Sitemap location
+Sitemap: https://steinshy.github.io/FishEye/sitemap.xml
+
+# Crawl delay (optional - not needed for most sites)
+# Crawl-delay: 1

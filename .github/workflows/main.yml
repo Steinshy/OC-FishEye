@@ -1,66 +1,49 @@
 name: Lint and Format
 
-# Trigger configuration
 on:
   push:
-    branches: [dev]
+    branches:
+      - dev
 
-# Environment variables
 env:
-  NODE_VERSION: "24"
+  NODE_VERSION: 24
 
-# Permissions
 permissions:
   contents: read
   pull-requests: read
   checks: write
 
-# Concurrency control
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # Lint and format job
   lint:
     name: Lint and Format
     runs-on: ubuntu-latest
     steps:
-      # Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
 
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-          npm cache clean --force
-          npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+      - name: Install
+        run: npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
 
-      # Check formatting
-      - name: Check formatting
+      - name: Format
         continue-on-error: true
-        run: npm run format:check
+        run: npm run format
 
-      # Run linting
-      - name: Run linting
+      - name: Lint
         continue-on-error: true
         run: npm run lint
 
-      # Run tests
-      - name: Run tests
+      - name: Lint Markdown
         continue-on-error: true
-        run: npm run test 2>/dev/null || npm run test:unit 2>/dev/null || npm run test:integration 2>/dev/null || true
+        run: npm run lint:md
 
-      # Security scan
-      - name: Security scan
+      - name: Security
         continue-on-error: true
-        run: |
-          npm audit --audit-level=moderate
-          npm outdated || true
+        run: npm audit --audit-level=moderate

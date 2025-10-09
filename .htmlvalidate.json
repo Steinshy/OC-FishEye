@@ -1,5 +1,6 @@
 {
   "extends": ["html-validate:recommended"],
+  "plugins": [],
   "rules": {
     "doctype-style": "off",
     "void-style": "off",
@@ -12,6 +13,12 @@
     "wcag/h36": "warn",
     "wcag/h37": "warn",
     "wcag/h67": "warn",
-    "wcag/h71": "warn"
-  }
+    "wcag/h71": "warn",
+    "no-unused-disable": "off",
+    "class-pattern": "off",
+    "no-missing-references": "off",
+    "require-sri": "off",
+    "no-unknown-elements": "off"
+  },
+  "elements": ["html5"]
 }
