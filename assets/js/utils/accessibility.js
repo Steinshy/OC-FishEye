@@ -124,21 +124,6 @@ const handlers = {
     };
   },
 
-  createVideoInteractionHandler(video) {
-    return e => {
-      if (e.type === 'click' || (e.type === 'keydown' && (e.key === 'Enter' || e.key === ' '))) {
-        if (e.type === 'keydown') {
-          e.preventDefault();
-        }
-        if (video.paused) {
-          video.play();
-        } else {
-          video.pause();
-        }
-      }
-    };
-  },
-
   updateVisualState(optionsContainer, isOpen) {
     if (!optionsContainer) return;
     optionsContainer.classList.toggle('show', isOpen);
@@ -217,8 +202,9 @@ const dropdownController = ({ button, optionsContainer, options, onSelect, onClo
 const setupCardAccessibility = (card, media, onMediaClick, onLikeClick, handlers) => {
   const likesButton = card.querySelector('.likes');
   const mediaContent = card.querySelector('.media-content');
+  const video = card.querySelector('video');
 
-  if (mediaContent && onMediaClick) {
+  if (mediaContent && onMediaClick && !video) {
     mediaContent.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
@@ -318,7 +304,6 @@ const accessibilityManager = () => ({
     createArrowNavigation: handlers.createArrowNavigation,
     createEscapeHandler: handlers.createEscapeHandler,
     createActivationHandler: handlers.createActivationHandler,
-    createVideoInteractionHandler: handlers.createVideoInteractionHandler,
   },
   mobileKeyboard,
   eventManager: EventManager,

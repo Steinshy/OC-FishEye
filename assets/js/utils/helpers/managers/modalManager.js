@@ -92,12 +92,6 @@ export const resetInputsAndFocus = () => {
   });
 };
 
-const focusFirstInput = () => {
-  const modalRefs = getModalRefs();
-  const firstInput = focusManager.focusFirst(modalRefs.mainModal, selectorTypes.formInputs);
-  if (!firstInput) getFormElements().firstname?.focus();
-};
-
 const toggleBackgroundContent = hide => {
   const main = document.querySelector(selectorTypes.main);
   const header = document.querySelector(selectorTypes.header);
@@ -127,6 +121,7 @@ const setupFocusManagement = () => {
   if (modalRefs.mainModal) {
     modalRefs.mainModal.setAttribute('tabindex', '-1');
     focusTrapCleanup = focusManager.trapFocus(modalRefs.mainModal, selectorTypes.focusable);
+    setTimeout(() => getFormElements().firstname?.focus(), 250);
   }
 };
 
@@ -166,23 +161,19 @@ export const openModal = () => {
     modalRefs.submitButton.setAttribute('aria-disabled', 'true');
   }
 
+  resetInputStates();
+  resetCharacterCount();
+  characterCountCleanup = characterCountListeners();
   setupFocusManagement();
-  setTimeout(focusFirstInput, timeoutConfig.focus);
-  resetInputsAndFocus();
-  if (!characterCountCleanup) {
-    characterCountCleanup = characterCountListeners();
-  }
 };
 
 export const closeModal = () => {
   const modalRefs = getModalRefs();
 
-  // Add closing class for animation
   if (modalRefs.mainModal) {
     modalRefs.mainModal.classList.add('closing');
   }
 
-  // Wait for animation to complete before cleanup
   setTimeout(() => {
     cleanupFocusManagement();
     toggleScroll(false);
@@ -191,7 +182,6 @@ export const closeModal = () => {
     toggleModalDisplay(false);
     toggleModalAria(true);
 
-    // Remove closing class
     if (modalRefs.mainModal) {
       modalRefs.mainModal.classList.remove('closing');
     }

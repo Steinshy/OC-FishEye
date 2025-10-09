@@ -2,14 +2,13 @@ import { timeoutConfig } from '../../../constants.js';
 import { generateCard } from '../../../pages/photographer/generate/generateCard.js';
 import { openLightbox } from '../../../pages/photographer/lightbox.js';
 import { accessibilityManager } from '../../accessibility.js';
-import { isValidArray } from '../helper.js';
 
 import { generateMedias } from './generateMediasManager.js';
 import { incrementTotalLikes } from './statsManager.js';
 
 export const updateMediasOrder = sortedMedias => {
   const mainMedia = document.getElementById('main-medias');
-  if (!mainMedia || !isValidArray(sortedMedias, false)) return;
+  if (!mainMedia || !Array.isArray(sortedMedias)) return;
 
   const existingCards = mainMedia.querySelectorAll('.media-card');
   existingCards.forEach(card => card.classList.add('sorting'));

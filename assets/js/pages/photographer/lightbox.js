@@ -19,7 +19,6 @@ const getValidIndex = (index, length) => {
   return index;
 };
 
-// Helper functions for touch events
 const getTouchCoordinates = touchEvent => ({
   x: touchEvent.clientX,
   y: touchEvent.clientY,
@@ -80,11 +79,9 @@ const updateContent = (animate = false) => {
     return;
   }
 
-  // Fade out current content
   const currentChild = container.firstChild;
   if (currentChild) applyTransition(currentChild, '0', '0.85');
 
-  // Swap and fade in new content
   setTimeout(() => {
     updateUI(media);
     if (element) {
@@ -97,6 +94,7 @@ const updateContent = (animate = false) => {
 
 const navigate = (index, animate = true) => {
   if (!lightboxElements.medias?.length || lightboxElements.isNavigating) return;
+  lightboxElements.container?.querySelector('video:not([paused])')?.pause();
   lightboxElements.isNavigating = true;
   lightboxElements.currentIndex = index;
   updateContent(animate);
@@ -123,31 +121,22 @@ const toggleLightboxUI = show => {
   toggleBackgroundContent(show);
 };
 
-// Keyboard navigation: Arrow keys, Home/End, Escape, Spacebar for video control
 const handleKeyboardNavigation = e => {
   if (!lightboxState()) return;
-
-  const toggleVideoPlayback = () => {
-    const videoElement = lightboxElements.modal.querySelector('video');
-    if (videoElement) videoElement.paused ? videoElement.play() : videoElement.pause();
-  };
-
+  const video = lightboxElements.modal.querySelector('video');
   const keyboardActions = {
     Escape: closeLightbox,
     ArrowLeft: previousSlide,
     ArrowRight: nextSlide,
     Home: () => navigate(0, false),
     End: () => navigate(lightboxElements.medias?.length - 1, false),
-    ' ': toggleVideoPlayback,
+    ' ': () => video && (video.paused ? video.play() : video.pause()),
   };
-
   if (keyboardActions[e.key]) {
     e.preventDefault();
     keyboardActions[e.key]();
   }
 };
-
-// Touch swipe support for mobile navigation (left/right gestures)
 const handleTouchSwipeStart = e => {
   if (!lightboxState()) return;
   const coords = getTouchCoordinates(e.touches[0]);
@@ -167,7 +156,6 @@ const handleTouchSwipeEnd = e => {
   }
 };
 
-// Mouse wheel navigation (scroll up/down to navigate)
 const handleMouseWheelNavigation = e => {
   if (!lightboxState()) return;
   e.preventDefault();
@@ -196,7 +184,7 @@ export const openLightbox = (mediaId, medias) => {
 
 export const closeLightbox = () => {
   if (!lightboxState()) return;
-
+  lightboxElements.container?.querySelector('video:not([paused])')?.pause();
   lightboxElements.modal?.classList.add('closing');
   document.activeElement?.blur();
 

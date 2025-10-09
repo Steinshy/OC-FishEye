@@ -1,14 +1,10 @@
 import { safeAsync } from '../../errorHandler.js';
-import { isValidArray } from '../helper.js';
+import { sanitizeName, getMediaType, toWebpFilename } from '../helper.js';
 
 import { mediaCache } from './cacheManager.js';
 
 const dataUrl = 'assets/photographers/data.json';
 const mediaPath = 'assets/photographers/';
-
-const sanitizeName = name => (name ? name.replace(/[^a-zA-Z0-9]/g, '') : '');
-const getMediaType = (video, image) => (video ? 'video' : image ? 'image' : '');
-const toWebpFilename = filename => (filename ? filename.replace(/\.jpg$/i, '.webp') : '');
 
 const getPhotographers = async () => {
   return mediaCache.getOrCreate('photographersData', 'all', async () => {
@@ -23,7 +19,7 @@ const getPhotographers = async () => {
     }
 
     const { photographers, media } = await response.json();
-    if (!isValidArray(photographers, false) || !isValidArray(media, false)) {
+    if (!Array.isArray(photographers) || !Array.isArray(media)) {
       throw new Error('Invalid data structure: photographers');
     }
 
@@ -105,6 +101,7 @@ export const buildPhotographerMedia = (photographerMedia, photographerData) => {
       jpgUrl: `${urlPath}/media/${photographerMedia.image}`,
       webpUrl: `${urlPath}/media/${webpFilename}`,
       mp4Url: `${urlPath}/media/${photographerMedia.video}`,
+      posterUrl: photographerMedia.video ? `${urlPath}/media/${photographerMedia.video.replace(/\.mp4$/i, '.jpg')}` : '',
       jpgTitle: photographerMedia.image || '',
       webpTitle: photographerMedia.image || '',
       mp4Title: photographerMedia.video || '',
