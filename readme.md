@@ -232,9 +232,10 @@ Séparation claire des responsabilités :
 ### CI/CD
 
 - Lint et format (GitHub Actions)
-- Lighthouse audits (performance, a11y, SEO, best practices)
+- Lighthouse audits local + production
 - Déploiement automatique GitHub Pages
-- 3 workflows (main, deploy, lighthouse, release)
+- Cleanup automatique des anciennes runs
+- 4 workflows (main+cleanup, deploy, lighthouse, release)
 
 ---
 

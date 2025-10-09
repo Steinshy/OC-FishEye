@@ -7,9 +7,11 @@ on:
   pull_request:
     branches:
       - dev
+  workflow_dispatch:
 
 env:
   NODE_VERSION: 24
+  PHOTOGRAPHER_IDS: "243 930 82 527 925 195"
 
 permissions:
   contents: read
@@ -21,34 +23,78 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lighthouse:
-    name: Lighthouse Audits
+  lighthouse-local:
+    name: Lighthouse - Local Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
 
-      - name: Install dependencies
+      - name: Install
         run: npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
 
       - name: Start server
         run: npm run dev & sleep 5
-        env:
-          CI: true
 
-      - name: Run Lighthouse
+      - name: Generate URLs
+        id: urls_local
+        run: |
+          URLS="http://localhost:8080/"
+          for id in ${{ env.PHOTOGRAPHER_IDS }}; do
+            URLS="$URLS
+          http://localhost:8080/photographer.html?id=$id"
+          done
+          echo "urls<<EOF" >> $GITHUB_OUTPUT
+          echo "$URLS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Run Lighthouse (Local)
         uses: treosh/lighthouse-ci-action@v11
         with:
-          urls: |
-            http://localhost:8080/
-            http://localhost:8080/photographer.html?id=243
-            http://localhost:8080/photographer.html?id=930
+          urls: ${{ steps.urls_local.outputs.urls }}
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-local
+          path: .lighthouseci
+          retention-days: 30
+
+  lighthouse-production:
+    name: Lighthouse - Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate URLs
+        id: urls_prod
+        run: |
+          BASE="https://steinshy.github.io/FishEye"
+          URLS="$BASE/"
+          for id in ${{ env.PHOTOGRAPHER_IDS }}; do
+            URLS="$URLS
+          $BASE/photographer.html?id=$id"
+          done
+          echo "urls<<EOF" >> $GITHUB_OUTPUT
+          echo "$URLS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Run Lighthouse (Production)
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: ${{ steps.urls_prod.outputs.urls }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 3
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-production
+          path: .lighthouseci
+          retention-days: 30

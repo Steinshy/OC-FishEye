@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - dev
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
 
 env:
   NODE_VERSION: 24
@@ -12,6 +15,7 @@ permissions:
   contents: read
   pull-requests: read
   checks: write
+  actions: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -47,3 +51,16 @@ jobs:
       - name: Security
         continue-on-error: true
         run: npm audit --audit-level=moderate
+
+  cleanup:
+    name: Cleanup Old Runs
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Delete old runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 30
+          keep_minimum_runs: 6
