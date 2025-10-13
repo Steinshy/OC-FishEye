@@ -9,7 +9,7 @@
   }
 }
 
-@keyframes hideLoading {
+@keyframes hide-loading {
   to {
     opacity: 0;
     visibility: hidden;
@@ -23,19 +23,20 @@
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.7;
     transform: scale(0.95);
   }
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
 }
 
-@keyframes fadeOut {
+@keyframes fade-out {
   to {
     opacity: 0;
     visibility: hidden;
@@ -48,12 +49,13 @@
   }
 }
 
-@keyframes scaleIn {
+@keyframes scale-in {
   from {
     opacity: 0;
     transform: scale(0.9);
   }
 }
+
 /* =========================
   Modal Animations
 ========================= */
@@ -66,44 +68,44 @@
 
 .modal.show,
 .lightbox-modal.show {
-  animation: modalFadeIn 0.2s ease forwards;
+  animation: modal-fade-in 0.2s ease forwards;
 }
 
 .modal.show .modal-content {
-  animation: modalSlideIn 0.2s ease forwards;
+  animation: modal-slide-in 0.2s ease forwards;
 }
 
 .modal.closing,
 .lightbox-modal.closing {
-  animation: modalFadeOut 0.2s ease forwards;
+  animation: modal-fade-out 0.2s ease forwards;
 }
 
 .modal.closing .modal-content {
-  animation: modalSlideOut 0.2s ease forwards;
+  animation: modal-slide-out 0.2s ease forwards;
 }
 
-@keyframes modalFadeIn {
+@keyframes modal-fade-in {
   from {
     opacity: 0;
     backdrop-filter: blur(0);
   }
 }
 
-@keyframes modalSlideIn {
+@keyframes modal-slide-in {
   from {
     transform: translate(-50%, -50%) scale(0.9);
     opacity: 0;
   }
 }
 
-@keyframes modalFadeOut {
+@keyframes modal-fade-out {
   to {
     opacity: 0;
     backdrop-filter: blur(0);
   }
 }
 
-@keyframes modalSlideOut {
+@keyframes modal-slide-out {
   to {
     transform: translate(-50%, -50%) scale(0.9);
     opacity: 0;
@@ -118,46 +120,62 @@
   transition: all 0.2s ease;
 }
 
+.lightbox-transition {
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.lightbox-hidden {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+.lightbox-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .lightbox-modal.show .lightbox-media-container {
-  animation: lightboxZoomIn 0.25s ease forwards;
+  animation: lightbox-zoom-in 0.2s ease forwards;
 }
 
 .lightbox-modal.show .lightbox-close,
 .lightbox-modal.show .lightbox-nav {
-  animation: fadeInUp 0.2s ease 0.1s both;
+  animation: fade-in-up 0.2s ease 0.1s both;
 }
 
 .lightbox-modal.closing .lightbox-media-container {
-  animation: lightboxZoomOut 0.2s ease forwards;
+  animation: lightbox-zoom-out 0.15s ease forwards;
 }
 
 .lightbox-modal.closing .lightbox-close,
 .lightbox-modal.closing .lightbox-nav {
-  animation: fadeOutDown 0.15s ease both;
+  animation: fade-out-down 0.1s ease both;
 }
 
-@keyframes lightboxZoomIn {
+@keyframes lightbox-zoom-in {
   from {
     transform: scale(0.8);
     opacity: 0;
   }
 }
 
-@keyframes lightboxZoomOut {
+@keyframes lightbox-zoom-out {
   to {
     transform: scale(0.8);
     opacity: 0;
   }
 }
 
-@keyframes fadeInUp {
+@keyframes fade-in-up {
   from {
     opacity: 0;
     transform: translateY(10px);
   }
 }
 
-@keyframes fadeOutDown {
+@keyframes fade-out-down {
   to {
     opacity: 0;
     transform: translateY(10px);
@@ -172,7 +190,7 @@
 }
 
 .media-info .likes:active {
-  animation: likePulse 0.4s ease;
+  animation: like-pulse 0.4s ease;
 }
 
 .media-info .likes i {
@@ -181,40 +199,46 @@
 
 .media-info .likes:active i,
 .media-info .likes .pulse {
-  animation: heartPulse 0.5s ease;
+  animation: heart-pulse 0.5s ease;
 }
 
 .media-info .likes .pulse {
   color: #e74c3c;
 }
 
-@keyframes likePulse {
+@keyframes like-pulse {
   0%,
   100% {
     transform: scale(1);
   }
+
   25% {
     transform: scale(1.1);
   }
+
   50% {
     transform: scale(0.95);
   }
+
   75% {
     transform: scale(1.05);
   }
 }
 
-@keyframes heartPulse {
+@keyframes heart-pulse {
   0%,
   100% {
     transform: scale(1);
   }
+
   25% {
     transform: scale(1.2);
   }
+
   50% {
     transform: scale(1.05);
   }
+
   75% {
     transform: scale(1.1);
   }
@@ -241,39 +265,40 @@
 .stats-likes.pulse .fa-heart,
 .stats-likes.pulse,
 .stats-likes-count.pulse {
-  animation: heartPulse 0.4s ease;
+  animation: heart-pulse 0.4s ease;
 }
 
 /* =========================
   Sort Button Animations
 ========================= */
-@keyframes slideDown {
+@keyframes slide-down {
   from {
     opacity: 0;
     transform: translateY(-10px);
   }
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
   to {
     opacity: 0;
     transform: translateY(-10px);
   }
 }
 
-@keyframes slideInStagger {
+@keyframes slide-in-stagger {
   from {
     opacity: 0;
     transform: translateX(-10px);
   }
 }
 
-@keyframes cardSorting {
+@keyframes card-sorting {
   0%,
   100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.5;
     transform: scale(0.95);
@@ -284,15 +309,15 @@
   Utility Classes
 ========================= */
 .fade-in {
-  animation: fadeIn 0.2s ease forwards;
+  animation: fade-in 0.2s ease forwards;
 }
 
 .fade-out {
-  animation: fadeOut 0.2s ease forwards;
+  animation: fade-out 0.2s ease forwards;
 }
 
 .scale-in {
-  animation: scaleIn 0.2s ease forwards;
+  animation: scale-in 0.2s ease forwards;
 }
 
 /* =========================
