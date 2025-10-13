@@ -1,8 +1,6 @@
 /* ===================================
   FishEye - Animations & Transitions
 =================================== */
-
-/* Core Keyframes */
 @keyframes rotate {
   to {
     transform: rotate(360deg);
@@ -72,16 +70,16 @@
 }
 
 .modal.show .modal-content {
-  animation: modal-slide-in 0.2s ease forwards;
+  animation: modal-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .modal.closing,
 .lightbox-modal.closing {
-  animation: modal-fade-out 0.2s ease forwards;
+  animation: modal-fade-out 0.25s ease forwards;
 }
 
 .modal.closing .modal-content {
-  animation: modal-slide-out 0.2s ease forwards;
+  animation: modal-slide-down 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
 }
 
 @keyframes modal-fade-in {
@@ -91,10 +89,14 @@
   }
 }
 
-@keyframes modal-slide-in {
+@keyframes modal-slide-up {
   from {
-    transform: translate(-50%, calc(-50% + 100px));
+    transform: translate(-50%, 100%);
     opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
   }
 }
 
@@ -105,10 +107,47 @@
   }
 }
 
-@keyframes modal-slide-out {
+@keyframes modal-slide-down {
+  from {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
   to {
-    transform: translate(-50%, calc(-50% - 100px));
+    transform: translate(-50%, 100%);
     opacity: 0;
+  }
+}
+
+/* Mobile Modal Animations */
+@media (width <= 767px) {
+  .modal.show .modal-content {
+    animation: modal-slide-up-mobile 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .modal.closing .modal-content {
+    animation: modal-slide-down-mobile 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  }
+
+  @keyframes modal-slide-up-mobile {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes modal-slide-down-mobile {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
   }
 }
 

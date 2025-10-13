@@ -1,12 +1,15 @@
 import { getResponsiveImageUrls } from '../../../utils/helpers/responsiveImages.js';
 
-export const generatePicture = mediaElement => {
+export const generatePicture = (mediaElement, isLCP = false) => {
   const pictureMedia = document.createElement('div');
   pictureMedia.className = 'media-picture';
   pictureMedia.setAttribute('data-media-type', 'image');
   pictureMedia.setAttribute('data-media-id', mediaElement.id);
 
   const { webp, jpg, sizes } = getResponsiveImageUrls(mediaElement.medias.webpUrl, mediaElement.medias.jpgUrl);
+
+  const loading = isLCP ? 'eager' : 'lazy';
+  const fetchpriority = isLCP ? 'high' : 'low';
 
   pictureMedia.innerHTML = `
     <picture>
@@ -16,8 +19,8 @@ export const generatePicture = mediaElement => {
         class="media-image"
         src="${jpg.desktop}"
         alt="${mediaElement.title || 'Média'}"
-        loading="lazy"
-        fetchpriority="low"
+        loading="${loading}"
+        fetchpriority="${fetchpriority}"
         decoding="async"
         data-media-id="${mediaElement.id}"
         aria-describedby="media-info-${mediaElement.id}"

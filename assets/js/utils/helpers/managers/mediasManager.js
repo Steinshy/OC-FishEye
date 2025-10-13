@@ -20,21 +20,10 @@ export const updateMediasOrder = sortedMedias => {
 export const generateMediasCards = (mainMedia, sortedMedias) => {
   mainMedia.innerHTML = '';
   sortedMedias.forEach((media, index) => {
-    const mediaElement = generateMedias(media);
+    const isLCP = index < 3;
+    const mediaElement = generateMedias(media, isLCP);
     if (mediaElement) {
       const card = generateCard(media, mediaElement);
-      const img = card.querySelector('img');
-      const video = card.querySelector('video');
-
-      if (img && index < 3) {
-        img.loading = 'eager';
-        img.fetchpriority = 'high';
-      }
-      if (video && index === 0) {
-        video.preload = 'metadata';
-        video.fetchpriority = 'high';
-      }
-
       setupCardAccessibility(card, media, clickedMedia => openLightbox(clickedMedia.id, sortedMedias), incrementLike);
       mainMedia.appendChild(card);
     }
