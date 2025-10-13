@@ -1,3 +1,10 @@
+export const getPageElements = () => {
+  return {
+    main: document.getElementById('main'),
+    mainMedias: document.getElementById('main-medias'),
+  };
+};
+
 export const getModalRefs = () => {
   return {
     contactButton: document.getElementById('contact-button'),
@@ -21,6 +28,7 @@ export const getFormElements = () => {
     contactForm: document.getElementById('form-signup'),
     contactModal: document.getElementById('modal-signup'),
     characterCount: document.getElementById('character-count'),
+    formGroup: document.querySelectorAll('.form-group'),
   };
 };
 
@@ -43,22 +51,19 @@ export const getSortButtonElements = () => {
 };
 
 export const lightboxElements = {
-  modal: () => document.getElementById('lightbox-modal'),
-  container: () => document.getElementById('lightbox-media-container'),
-  title: () => document.getElementById('lightbox-title'),
-  likes: () => document.getElementById('lightbox-likes-count'),
-  counter: () => document.getElementById('lightbox-counter'),
+  mainModal: document.getElementById('lightbox-modal'),
+  container: document.getElementById('lightbox-media-container'),
+  title: document.getElementById('lightbox-title'),
+  likes: document.getElementById('lightbox-likes-count'),
+  counter: document.getElementById('lightbox-counter'),
+  prev: document.getElementById('lightbox-prev'),
+  next: document.getElementById('lightbox-next'),
+  close: document.getElementById('lightbox-close'),
   medias: [],
   currentIndex: 0,
   isNavigating: false,
   isInitialized: false,
-  previousFocus: null,
-  focusTrap: null,
-  touch: {
-    startX: 0,
-    startY: 0,
-    minDistance: 50,
-  },
+  minDistance: 50,
 };
 
 export const selectorTypes = {
@@ -73,8 +78,15 @@ export const selectorTypes = {
   header: 'header',
 };
 
-export const getScrollToTopElements = () => {
-  return {
-    button: document.getElementById('scroll-to-top'),
-  };
+export const lightboxClasses = {
+  visible: 'show',
+  transition: 'lightbox-transition',
+  hidden: 'lightbox-hidden',
+  showing: 'lightbox-visible',
+};
+
+export const submissionButtonText = {
+  defaultText: 'Envoyer le message',
+  loadingText: 'Envoi en cours...',
+  successText: 'Message envoyé !',
 };

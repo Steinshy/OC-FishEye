@@ -1,5 +1,6 @@
-import { getModalRefs } from '../../constants.js';
+import { getPageElements } from '../../constants.js';
 import { setupModalEventListeners } from '../../utils/helpers/events/modalEventListeners.js';
+import { getUrlParam } from '../../utils/helpers/helper.js';
 import { getPhotographer, getPhotographerMedias } from '../../utils/helpers/managers/dataManager.js';
 import { generateMediasCards } from '../../utils/helpers/managers/mediasManager.js';
 import { initializeStats } from '../../utils/helpers/managers/statsManager.js';
@@ -11,25 +12,21 @@ import { sortButton } from './sortButton.js';
 
 // Move this part to helper later
 export const photographerPage = async () => {
-  const mainElement = document.querySelector('main');
-  const mainMedia = document.getElementById('main-medias');
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlIdParam = urlParams.get('id');
-  const urlId = parseInt(urlIdParam, 10);
+  const { main, mainMedias } = getPageElements();
+  const urlId = getUrlParam('id', true);
   const [photographer, photographerMedias] = await Promise.all([getPhotographer(urlId), getPhotographerMedias(urlId)]);
+  if (!photographer || !Array.isArray(photographerMedias)) return;
 
-  mainElement.prepend(generatePhotographerHeader(photographer));
+  const header = generatePhotographerHeader(photographer);
+  if (header) main.prepend(header);
   initializeLightbox();
-  setupModalEventListeners();
-
-  const modalRefs = getModalRefs();
-  if (modalRefs.photographerName) {
-    modalRefs.photographerName.textContent = photographer.name;
-  }
+  setTimeout(() => {
+    if (photographer?.name) setupModalEventListeners(photographer.name);
+  }, 0);
 
   scrollToTop.init();
-  initializeStats(photographerMedias, photographer.price);
+  initializeStats(photographerMedias, photographer.price || 0);
 
-  const sortedMedias = sortButton.init(photographerMedias);
-  generateMediasCards(mainMedia, sortedMedias || photographerMedias);
+  const sorted = sortButton.init(photographerMedias);
+  if (mainMedias && Array.isArray(sorted)) generateMediasCards(mainMedias, sorted);
 };

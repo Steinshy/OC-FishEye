@@ -1,9 +1,9 @@
 import { generateCard } from '../../../pages/photographer/generate/generateCard.js';
 import { openLightbox } from '../../../pages/photographer/lightbox.js';
-import { accessibilityManager } from '../../accessibility.js';
+import { setupCardAccessibility } from '../../accessibility/card.js';
 
 import { generateMedias } from './generateMediasManager.js';
-import { incrementTotalLikes } from './statsManager.js';
+import { incrementLike } from './statsManager.js';
 
 export const updateMediasOrder = sortedMedias => {
   const mainMedia = document.getElementById('main-medias');
@@ -32,28 +32,8 @@ export const generateMediasCards = (mainMedia, sortedMedias) => {
       }
       if (video) video.preload = 'metadata';
 
-      const accessibility = accessibilityManager();
-      accessibility.setupMediaCardAccessibility(card, media, media => openLightbox(media.id, sortedMedias), toggleLike);
+      setupCardAccessibility(card, media, clickedMedia => openLightbox(clickedMedia.id, sortedMedias), incrementLike);
       mainMedia.appendChild(card);
     }
   });
-};
-
-const toggleLike = (media, likesButton) => {
-  const likesCount = likesButton.querySelector('span');
-  const heartIcon = likesButton.querySelector('.fa-heart');
-
-  if (likesCount) {
-    const newLikes = (parseInt(likesCount.textContent, 10) || 0) + 1;
-    likesCount.textContent = newLikes;
-    likesCount.setAttribute('aria-live', 'polite');
-    media.likes = newLikes;
-
-    if (heartIcon) {
-      heartIcon.classList.add('pulse');
-      setTimeout(() => heartIcon.classList.remove('pulse'), 500);
-    }
-
-    incrementTotalLikes();
-  }
 };

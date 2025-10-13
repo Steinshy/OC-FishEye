@@ -2,22 +2,6 @@ export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const toggleScroll = add => [document.documentElement, document.body].forEach(element => element.classList.toggle('no-scroll', add));
 
-export const generateFragment = (elements, skeletonConfig = null) => {
-  const fragment = document.createDocumentFragment();
-  (Array.isArray(elements) ? elements : [elements]).forEach(element => element && fragment.appendChild(element));
-
-  if (skeletonConfig?.img && skeletonConfig?.picture && skeletonConfig?.jpgUrl) {
-    const { img, picture, jpgUrl, webpUrl } = skeletonConfig;
-    [
-      { element: picture.querySelector('source[type="image/webp"]'), fallback: webpUrl },
-      { element: picture.querySelector('source[type="image/jpeg"]'), fallback: jpgUrl },
-    ].forEach(({ element, fallback }) => element && element.setAttribute('srcset', element.dataset?.srcset || fallback));
-
-    Object.assign(img, { src: jpgUrl, fetchpriority: 'high', decoding: 'sync' });
-  }
-  return fragment;
-};
-
 export const toggleElementsDisabled = (elements, disable) =>
   elements && (Array.isArray(elements) ? elements : [elements]).forEach(element => element && (element.disabled = disable));
 
@@ -42,3 +26,30 @@ export const validate = (rules, fieldNameOrData, value) =>
 export const sanitizeName = name => (name ? name.replace(/[^a-zA-Z0-9]/g, '') : '');
 export const getMediaType = (video, image) => (video ? 'video' : image ? 'image' : '');
 export const toWebpFilename = filename => (filename ? filename.replace(/\.jpg$/i, '.webp') : '');
+
+export const getUrlParam = (param, parseAsInt = false) => {
+  const value = new URLSearchParams(window.location.search).get(param);
+  return parseAsInt && value ? parseInt(value, 10) : value;
+};
+
+export const addPulseAnimation = element => {
+  if (!element) return;
+  element.classList.add('pulse');
+  setTimeout(() => element.classList.remove('pulse'), 400);
+};
+
+export const getFormInputsArray = ({ firstname, lastname, email, message }) => [firstname, lastname, email, message].filter(Boolean);
+
+export const getFormValues = ({ firstname, lastname, email, message }) => ({
+  firstname: firstname?.value,
+  lastname: lastname?.value,
+  email: email?.value,
+  message: message?.value,
+});
+
+export const forEachFormField = (formElements, fieldNames, callback) => {
+  fieldNames.forEach(fieldName => {
+    const element = formElements[fieldName];
+    if (element) callback(element, fieldName);
+  });
+};

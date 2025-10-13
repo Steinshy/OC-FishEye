@@ -1,15 +1,11 @@
-import { getScrollToTopElements } from '../constants.js';
 import { lightboxState } from '../pages/photographer/lightbox.js';
 
 import { isModalOpen } from './helpers/managers/modalManager.js';
 
-const { button } = getScrollToTopElements();
-
 export const scrollToTop = {
-  button: null,
+  button: document.getElementById('scroll-to-top'),
 
   init() {
-    this.button = button;
     if (!this.button) return;
 
     this.setupEventListeners();
@@ -17,19 +13,17 @@ export const scrollToTop = {
   },
 
   setupEventListeners() {
-    document.addEventListener('scroll', this.handleScroll.bind(this));
-    button.addEventListener('click', this.scrollToTop.bind(this));
+    window.addEventListener('scroll', this.handleScroll.bind(this));
+    this.button.addEventListener('click', this.scrollToTop.bind(this));
   },
 
   handleScroll() {
-    if (!button) return;
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const shouldShow = scrollTop > 300 && !isModalOpen() && !lightboxState();
-    button.classList.toggle('show', shouldShow);
+    if (!this.button) return;
+    const shouldShow = window.scrollY > 300 && !isModalOpen() && !lightboxState();
+    this.button.classList.toggle('show', shouldShow);
   },
 
   scrollToTop() {
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   },
 };

@@ -6,7 +6,6 @@ export const generateMediaInfo = media => {
       <button
           type="button"
           class="likes"
-          aria-pressed="false"
           aria-describedby="likes-count-${media.id}"
           aria-label="Aimer cette ${media.mediaType}"
           tabindex="0">

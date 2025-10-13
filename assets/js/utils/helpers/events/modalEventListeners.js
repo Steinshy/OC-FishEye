@@ -1,70 +1,38 @@
 import { getModalRefs, getFormElements, getFieldNames } from '../../../constants.js';
-import { accessibilityManager } from '../../accessibility.js';
-import { openModal, closeModal, setupFieldValidation } from '../managers/modalManager.js';
+import { aria } from '../../accessibility/aria.js';
+import { handlers, events } from '../../accessibility/keyboard.js';
+import { forEachFormField } from '../helper.js';
+import { openModal, closeModal } from '../managers/modalManager.js';
 import { submitForm } from '../managers/submissionManager.js';
+import { setupFieldValidation } from '../managers/validationManager.js';
 
-const { focusManager, keyboardHandler } = accessibilityManager();
+export const setupModalEventListeners = (photographerName = '') => {
+  const { photographerName: photographerNameElement, contactButton, submitButton, closeButton, form } = getModalRefs();
 
-const ensureFocusWithinModal = () => {
-  const modalRefs = getModalRefs();
-  if (modalRefs.mainModal && !modalRefs.mainModal.contains(document.activeElement)) {
-    focusManager.focusFirst(modalRefs.mainModal, 'input, textarea, button');
+  // Set photographer name in modal
+  if (photographerNameElement && photographerName) {
+    photographerNameElement.textContent = `Contactez ${photographerName}`;
   }
-};
 
-export const setupModalEventListeners = () => {
-  const modalRefs = getModalRefs();
-  const formElements = getFormElements();
-  const fieldNames = getFieldNames();
-
-  fieldNames.forEach(fieldName => {
-    const element = formElements[fieldName];
-    if (element) setupFieldValidation({ element, name: fieldName });
+  // Setup field validation
+  forEachFormField(getFormElements(), getFieldNames(), (element, name) => {
+    setupFieldValidation({ element, name });
   });
 
-  const contactButton = modalRefs.contactButton || document.getElementById('contact-button');
-  if (contactButton) {
-    contactButton.disabled = false;
-    contactButton.removeAttribute('aria-disabled');
+  // Enable contact button
+  aria.setDisabled(contactButton, false);
+
+  // Attach event listeners
+  events.attachClickAndKeyboard(contactButton, openModal, { preventDefault: false });
+  events.attachClickAndKeyboard(closeButton, closeModal);
+
+  if (submitButton) {
+    submitButton.addEventListener(
+      'keydown',
+      handlers.createActivationHandler(() => form?.requestSubmit())
+    );
   }
 
-  const escapeHandler = keyboardHandler.createEscapeHandler(() => {
-    closeModal();
-  });
-
-  const focusHandler = keyboardHandler.createActivationHandler(ensureFocusWithinModal);
-  if (modalRefs.contactButton) {
-    modalRefs.contactButton.addEventListener('click', openModal);
-    modalRefs.contactButton.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal();
-      }
-    });
-  }
-
-  if (modalRefs.submitButton) {
-    modalRefs.submitButton.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        submitForm(e, closeModal);
-      }
-    });
-  }
-
-  if (modalRefs.closeButton) {
-    modalRefs.closeButton.addEventListener('click', closeModal);
-    modalRefs.closeButton.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        closeModal();
-      }
-    });
-  }
-
-  modalRefs.form?.addEventListener('submit', e => submitForm(e, closeModal));
-  modalRefs.mainModal?.addEventListener('keydown', focusHandler);
-  document.addEventListener('keydown', escapeHandler);
+  form?.addEventListener('submit', e => submitForm(e, closeModal));
+  document.addEventListener('keydown', handlers.createEscapeHandler(closeModal));
 };

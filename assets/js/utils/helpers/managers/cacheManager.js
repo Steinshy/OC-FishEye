@@ -21,6 +21,12 @@ const store = {
   },
 };
 
+const getWrappedIndex = (index, length) => {
+  if (index < 0) return length - 1;
+  if (index >= length) return 0;
+  return index;
+};
+
 export const mediaCache = {
   getOrCreate(storeName, key, createFn) {
     if (store.has(storeName, key)) {
@@ -34,5 +40,18 @@ export const mediaCache = {
       store.set(storeName, key, toStore);
     }
     return data;
+  },
+
+  preloadAdjacent(storeName, items, currentIndex, createFn, getKey = item => item.id) {
+    if (!items?.length) return;
+
+    const indicesToPreload = [getWrappedIndex(currentIndex - 1, items.length), getWrappedIndex(currentIndex + 1, items.length)];
+
+    indicesToPreload.forEach(index => {
+      const item = items[index];
+      if (item) {
+        this.getOrCreate(storeName, getKey(item), () => createFn(item));
+      }
+    });
   },
 };

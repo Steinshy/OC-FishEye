@@ -1,5 +1,6 @@
 import { safeAsync } from '../../errorHandler.js';
 import { sanitizeName, getMediaType, toWebpFilename } from '../helper.js';
+import { logData } from '../logData.js';
 
 import { mediaCache } from './cacheManager.js';
 
@@ -22,8 +23,6 @@ const getPhotographers = async () => {
     if (!Array.isArray(photographers) || !Array.isArray(media)) {
       throw new Error('Invalid data structure: photographers');
     }
-
-    console.info('photographers & media loaded', { photographersCount: photographers.length, mediaCount: media.length });
     return { photographers, media };
   });
 };
@@ -35,7 +34,9 @@ export const getPhotographer = async photographerId => {
     if (!photographer) {
       throw new Error(`Photographer not found: ${photographerId}`);
     }
-    return buildPhotographer(photographer);
+    const builtPhotographer = buildPhotographer(photographer);
+    logData.photographer(builtPhotographer);
+    return builtPhotographer;
   });
 };
 
@@ -80,7 +81,7 @@ export const getPhotographerMedias = async photographerId => {
         throw new Error(`No media found for photographer: ${photographerId}`);
       }
 
-      console.info(`Loaded ${photographerMedias.length} media items for photographer ${photographerId}`);
+      logData.photographerMedias(photographerMedias, photographerId);
       return photographerMedias;
     });
   }, []);
