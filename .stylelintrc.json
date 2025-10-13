@@ -18,6 +18,10 @@
     "dist/**/*",
     "build/**/*",
     "*.min.css",
-    "assets/favicons/**/*"
+    "assets/favicons/**/*",
+    "lighthouse*.html",
+    ".lighthouseci/**/*",
+    "lhci-reports/**/*",
+    "lighthouse-ci/**/*"
   ]
 }

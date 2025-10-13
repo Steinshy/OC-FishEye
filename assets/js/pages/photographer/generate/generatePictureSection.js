@@ -1,28 +1,25 @@
+import { getResponsiveImageUrls } from '../../../utils/helpers/responsiveImages.js';
+
 const loadPictureImages = (pictureContainer, jpgUrl, webpUrl) => {
   const img = pictureContainer.querySelector('.profile-picture');
-  const picture = pictureContainer.querySelector('picture');
+  const webpSource = pictureContainer.querySelector('source[type="image/webp"]');
+  const jpgSource = pictureContainer.querySelector('source[type="image/jpeg"]');
 
-  if (!img || !picture) return;
-
-  const sources = [
-    { element: picture.querySelector('source[type="image/webp"]'), url: webpUrl },
-    { element: picture.querySelector('source[type="image/jpeg"]'), url: jpgUrl },
-  ];
-
-  sources.forEach(({ element, url }) => {
-    if (element) element.setAttribute('srcset', element.dataset?.srcset || url);
-  });
-
-  Object.assign(img, { src: jpgUrl, fetchpriority: 'high', decoding: 'sync' });
+  if (webpSource) webpSource.srcset = webpSource.dataset.srcset || webpUrl;
+  if (jpgSource) jpgSource.srcset = jpgSource.dataset.srcset || jpgUrl;
+  if (img) Object.assign(img, { src: jpgUrl, fetchpriority: 'high', decoding: 'sync' });
 };
 
 export const generatePictureSection = ({ name, jpgUrl, webpUrl }) => {
   const pictureContainer = document.createElement('div');
   pictureContainer.className = 'container-picture';
+
+  const { webp, jpg, sizes } = getResponsiveImageUrls(webpUrl, jpgUrl);
+
   pictureContainer.innerHTML = `
     <picture>
-      <source data-srcset="${webpUrl}" type="image/webp">
-      <source data-srcset="${jpgUrl}" type="image/jpeg">
+      <source data-srcset="${webp.srcset}" type="image/webp" sizes="${sizes}">
+      <source data-srcset="${jpg.srcset}" type="image/jpeg" sizes="${sizes}">
       <img
         class="profile-picture"
         src="assets/photographers/account.png"

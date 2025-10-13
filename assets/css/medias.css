@@ -58,6 +58,17 @@
   flex-direction: column;
   min-height: 0;
   flex: 1;
+  aspect-ratio: 16/9;
+}
+
+.media-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  z-index: 1;
 }
 
 .media-content:focus-visible {
@@ -104,6 +115,11 @@
   display: block;
   object-fit: cover;
   border-radius: inherit;
+  aspect-ratio: 16/9;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
 .media-picture img,
@@ -112,11 +128,13 @@
   flex-shrink: 0;
 }
 
-.media-content img,
-.media-content video,
-.media-content picture {
-  cursor: pointer;
-  transition: opacity 0.3s ease;
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* =========================

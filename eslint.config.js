@@ -247,6 +247,10 @@ export default [
       'scripts/',
       'assets/js/minified/',
       'minified/',
+      'lighthouse*.html',
+      '.lighthouseci/',
+      'lhci-reports/',
+      'lighthouse-ci/',
     ],
   },
 ];

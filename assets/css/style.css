@@ -110,9 +110,9 @@
 
 *:focus-visible,
 .media-card:focus-within {
-  outline: 3px solid rgba(144, 28, 28, 0.3);
+  outline: 3px solid rgb(144 28 28 / 30%);
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px rgba(144, 28, 28, 0.08);
+  box-shadow: 0 0 0 3px rgb(144 28 28 / 8%);
 }
 
 [aria-hidden="true"] {
@@ -383,6 +383,7 @@ footer p {
   aspect-ratio: 1 / 1;
   contain: layout size;
 }
+
 /* =========================
   Responsive Design
 ========================= */

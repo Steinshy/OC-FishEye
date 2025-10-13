@@ -30,9 +30,14 @@ const updateContent = (animate = false) => {
 
   const media = medias[lightboxElements.currentIndex];
   const element = getCachedElement(media);
+  const currentChild = container.firstChild;
 
   mediaCache.preloadAdjacent('mediaElements', medias, lightboxElements.currentIndex, generateMedias);
   updateUI(media);
+
+  if (currentChild === element) return;
+
+  element.classList.remove(lightboxClasses.visible, lightboxClasses.showing, lightboxClasses.hidden, lightboxClasses.transition);
 
   if (!animate) {
     setupMediaElement(element, container);
@@ -40,20 +45,17 @@ const updateContent = (animate = false) => {
     return;
   }
 
-  const currentChild = container.firstChild;
-  if (currentChild) {
-    currentChild.classList.remove(lightboxClasses.visible, lightboxClasses.showing);
-    currentChild.classList.add(lightboxClasses.transition, lightboxClasses.hidden);
-  }
+  if (currentChild) currentChild.style.opacity = '0';
+
+  element.classList.add(lightboxClasses.hidden, lightboxClasses.transition);
 
   setTimeout(() => {
     setupMediaElement(element, container);
-    element.classList.add(lightboxClasses.transition, lightboxClasses.hidden);
     requestAnimationFrame(() => {
       element.classList.remove(lightboxClasses.hidden);
       element.classList.add(lightboxClasses.showing);
     });
-  }, 150);
+  }, 100);
 };
 
 const pauseActiveVideo = () => {
@@ -68,7 +70,13 @@ const navigate = (index, animate = true) => {
   lightboxElements.isNavigating = true;
   lightboxElements.currentIndex = index;
   updateContent(animate);
-  lightboxElements.isNavigating = false;
+
+  setTimeout(
+    () => {
+      lightboxElements.isNavigating = false;
+    },
+    animate ? 200 : 0
+  );
 };
 
 const nextSlide = () => {
@@ -105,7 +113,7 @@ export const openLightbox = (mediaId, medias) => {
   updateContent(false);
 
   const { mainModal, close } = lightboxElements;
-  setupFocusTrap(mainModal, close, 350);
+  setupFocusTrap(mainModal, close, 200);
 };
 
 export const closeLightbox = () => {
@@ -120,7 +128,7 @@ export const closeLightbox = () => {
     toggleLightboxUI(false);
     mainModal?.classList.remove(lightboxClasses.closing);
     cleanupFocusTrap(mainModal);
-  }, 150);
+  }, 100);
 };
 
 const handleKeyboardNavigation = handlers.createKeyMapHandler({

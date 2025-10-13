@@ -27,6 +27,13 @@ export const sanitizeName = name => (name ? name.replace(/[^a-zA-Z0-9]/g, '') : 
 export const getMediaType = (video, image) => (video ? 'video' : image ? 'image' : '');
 export const toWebpFilename = filename => (filename ? filename.replace(/\.jpg$/i, '.webp') : '');
 
+export const getMobileUrl = url => {
+  const ext = url.substring(url.lastIndexOf('.'));
+  return url.replace(ext, `.mobile${ext}`);
+};
+
+export const isMobileOrTablet = () => window.innerWidth <= 1024;
+
 export const getUrlParam = (param, parseAsInt = false) => {
   const value = new URLSearchParams(window.location.search).get(param);
   return parseAsInt && value ? parseInt(value, 10) : value;

@@ -26,5 +26,15 @@ husky/
 .cursor/
 .vscode/
 .idea/
+# Lighthouse reports and CI
 lighthouse*.html
-lighthouse-report.html
+lighthouse-report*.html
+.lighthouseci/
+lhci-reports/
+lighthouse-ci/
+*.lighthouse.json
+
+# Generated mobile images
+*.mobile.jpg
+*.mobile.jpeg
+*.mobile.webp

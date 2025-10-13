@@ -93,7 +93,7 @@
 
 @keyframes modal-slide-in {
   from {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, calc(-50% + 100px));
     opacity: 0;
   }
 }
@@ -107,7 +107,7 @@
 
 @keyframes modal-slide-out {
   to {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, calc(-50% - 100px));
     opacity: 0;
   }
 }
@@ -122,8 +122,8 @@
 
 .lightbox-transition {
   transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
+    opacity 0.1s ease,
+    transform 0.1s ease;
 }
 
 .lightbox-hidden {
@@ -137,16 +137,16 @@
 }
 
 .lightbox-modal.show .lightbox-media-container {
-  animation: lightbox-zoom-in 0.2s ease forwards;
+  animation: lightbox-zoom-in 0.15s ease forwards;
 }
 
 .lightbox-modal.show .lightbox-close,
 .lightbox-modal.show .lightbox-nav {
-  animation: fade-in-up 0.2s ease 0.1s both;
+  animation: fade-in-up 0.15s ease 0.05s both;
 }
 
 .lightbox-modal.closing .lightbox-media-container {
-  animation: lightbox-zoom-out 0.15s ease forwards;
+  animation: lightbox-zoom-out 0.1s ease forwards;
 }
 
 .lightbox-modal.closing .lightbox-close,

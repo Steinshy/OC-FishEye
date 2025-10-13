@@ -10,7 +10,6 @@ import { generatePhotographerHeader } from './generate/generatePhotographerHeade
 import { initializeLightbox } from './lightbox.js';
 import { sortButton } from './sortButton.js';
 
-// Move this part to helper later
 export const photographerPage = async () => {
   const { main, mainMedias } = getPageElements();
   const urlId = getUrlParam('id', true);
@@ -19,14 +18,13 @@ export const photographerPage = async () => {
 
   const header = generatePhotographerHeader(photographer);
   if (header) main.prepend(header);
-  initializeLightbox();
-  setTimeout(() => {
-    if (photographer?.name) setupModalEventListeners(photographer.name);
-  }, 0);
 
-  scrollToTop.init();
   initializeStats(photographerMedias, photographer.price || 0);
 
-  const sorted = sortButton.init(photographerMedias);
-  if (mainMedias && Array.isArray(sorted)) generateMediasCards(mainMedias, sorted);
+  const sortedMedias = sortButton.init(photographerMedias);
+  generateMediasCards(mainMedias, sortedMedias);
+
+  scrollToTop.init();
+  initializeLightbox();
+  setupModalEventListeners(photographer.name);
 };

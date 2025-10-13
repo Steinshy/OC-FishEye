@@ -60,3 +60,11 @@ scripts/
 # Documentation
 *.md
 *.pdf
+
+# Lighthouse
+lighthouse*.html
+lighthouse-report*.html
+.lighthouseci/
+lhci-reports/
+lighthouse-ci/
+*.lighthouse.json

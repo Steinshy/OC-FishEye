@@ -26,11 +26,14 @@ export const generateMediasCards = (mainMedia, sortedMedias) => {
       const img = card.querySelector('img');
       const video = card.querySelector('video');
 
-      if (img) {
-        img.loading = index < 3 ? 'eager' : 'lazy';
-        img.fetchpriority = index < 3 ? 'high' : 'low';
+      if (img && index < 3) {
+        img.loading = 'eager';
+        img.fetchpriority = 'high';
       }
-      if (video) video.preload = 'metadata';
+      if (video && index === 0) {
+        video.preload = 'metadata';
+        video.fetchpriority = 'high';
+      }
 
       setupCardAccessibility(card, media, clickedMedia => openLightbox(clickedMedia.id, sortedMedias), incrementLike);
       mainMedia.appendChild(card);

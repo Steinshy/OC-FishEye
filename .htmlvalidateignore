@@ -12,3 +12,10 @@ coverage/
 .husky/
 husky/
 *.config.js
+
+# Lighthouse
+lighthouse*.html
+lighthouse-report*.html
+.lighthouseci/
+lhci-reports/
+lighthouse-ci/
