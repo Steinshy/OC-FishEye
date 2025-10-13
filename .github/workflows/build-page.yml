@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy
 
 on:
   push:
@@ -43,8 +43,13 @@ jobs:
       - name: Prepare
         run: |
           mkdir -p deploy
-          cp *.html deploy/
+          cp minified/*.min.html deploy/
+          for file in deploy/*.min.html; do
+            mv "$file" "${file%.min.html}.html"
+          done
           cp -r assets/ deploy/
+          rm -rf deploy/assets/js/*.js
+          cp assets/js/minified/*.min.js deploy/assets/js/
           cp manifest.json sitemap.xml robots.txt deploy/ 2>/dev/null || true
 
       - uses: actions/configure-pages@v4

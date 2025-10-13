@@ -42,7 +42,6 @@
     "lighthouse": "^12.8.2",
     "lightningcss-cli": "^1.30.2",
     "lint-staged": "^16.1.5",
-    "markdownlint-cli": "^0.45.0",
     "minify": "^14.1.0",
     "prettier": "^3.2.5",
     "stylelint": "^16.2.1",
