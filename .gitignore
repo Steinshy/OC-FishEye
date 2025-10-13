@@ -26,3 +26,5 @@ husky/
 .cursor/
 .vscode/
 .idea/
+lighthouse*.html
+lighthouse-report.html
