@@ -1,4 +1,4 @@
-import { getModalRefs, getFormElements, getFieldNames } from '../../../constants.js';
+import { getModalRefs, getFormElements, formFieldNames } from '../../../constants.js';
 import { aria } from '../../accessibility/aria.js';
 import { handlers, events } from '../../accessibility/keyboard.js';
 import { forEachFormField } from '../helper.js';
@@ -15,7 +15,7 @@ export const setupModalEventListeners = (photographerName = '') => {
   }
 
   // Setup field validation
-  forEachFormField(getFormElements(), getFieldNames(), (element, name) => {
+  forEachFormField(getFormElements(), formFieldNames, (element, name) => {
     setupFieldValidation({ element, name });
   });
 

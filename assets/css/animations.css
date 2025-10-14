@@ -273,30 +273,6 @@
 }
 
 /* =========================
-  Stats Like Animation
-========================= */
-.photographer-stats,
-.stats-likes,
-.stats-likes-count {
-  transition: all 0.2s ease;
-}
-
-.stats-likes-count,
-.stats-likes .fa-heart {
-  display: inline-block;
-}
-
-.stats-likes .fa-heart {
-  transition: transform 0.2s ease;
-}
-
-.stats-likes.pulse .fa-heart,
-.stats-likes.pulse,
-.stats-likes-count.pulse {
-  animation: heart-pulse 0.4s ease;
-}
-
-/* =========================
   Sort Button Animations
 ========================= */
 @keyframes slide-down {

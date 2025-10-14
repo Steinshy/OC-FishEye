@@ -1,8 +1,7 @@
 import { safeAsync } from '../../errorHandler.js';
+import { mediaCache } from '../cache.js';
 import { sanitizeName, getMediaType, toWebpFilename } from '../helper.js';
 import { logData } from '../logData.js';
-
-import { mediaCache } from './cacheManager.js';
 
 const dataUrl = 'assets/photographers/data.json';
 const mediaPath = 'assets/photographers/';

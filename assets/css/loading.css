@@ -1,6 +1,23 @@
 /* =========================
   Loading Screen
 ========================= */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: var(--space-2xl);
+}
+
+.loading-state p {
+  font-size: 1.1rem;
+  color: #901c1c;
+  font-weight: 500;
+}
+
+/* =========================
+  Loading Screen Animation
+========================= */
 .loading-screen {
   position: fixed;
   inset: 0;
@@ -134,7 +151,7 @@
 }
 
 /* =========================
-  Responsive Design - Mobile First
+  Responsive Design
 ========================= */
 
 /* Extra small screens (320px and below) */

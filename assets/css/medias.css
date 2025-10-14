@@ -1,5 +1,5 @@
 /* =========================
-  Media Gallery Container - Mobile First
+  Media Gallery Container
 ========================= */
 .medias,
 .medias-cards {
@@ -219,7 +219,7 @@
 }
 
 /* =========================
-  Responsive Design - Mobile First
+  Responsive Design
 ========================= */
 
 /* Tablet: 768px - 1023px */
@@ -257,5 +257,27 @@
   .media-info .likes,
   .media-info .price {
     font-size: 1rem;
+  }
+}
+
+/* Mobile: 0 - 767px */
+@media (width <= 767px) {
+  .medias {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: var(--mobile-padding);
+  }
+
+  .media-card {
+    height: var(--size-card-height-mobile);
+  }
+
+  .media-card .likes {
+    padding: 8px 12px;
+    font-size: var(--font-size-mobile-md);
+  }
+
+  .media-card .likes i {
+    font-size: 1.4rem;
   }
 }

@@ -5,11 +5,19 @@ const { minify } = require('minify');
 const glob = require('glob');
 
 const [, , target] = process.argv;
-const patterns = { js: 'assets/js/**/*.js', html: '*.html' };
-const outputDirs = { js: 'assets/js/minified/', html: 'minified/' };
+const patterns = {
+  js: 'assets/js/**/*.js',
+  css: 'assets/css/**/*.css',
+  html: '*.html'
+};
+const outputDirs = {
+  js: 'assets/minified/js/',
+  css: 'assets/minified/css/',
+  html: 'assets/minified/html/'
+};
 
 if (!patterns[target]) {
-  console.error('Usage: node scripts/minify.cjs <js|html>');
+  console.error('Usage: node scripts/minify.cjs <js|css|html>');
   process.exit(1);
 }
 

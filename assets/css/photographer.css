@@ -1,20 +1,6 @@
 /* ===================================
   FishEyes - Photographer Page Styles
 =================================== */
-.loading-state {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  padding: var(--space-2xl);
-}
-
-.loading-state p {
-  font-size: 1.1rem;
-  color: #901c1c;
-  font-weight: 500;
-}
-
 .photographer-section {
   display: flex;
   flex-direction: column;
@@ -125,7 +111,7 @@
 }
 
 /* =========================
-  Responsive Design - Mobile First
+  Responsive Design
 ========================= */
 
 /* Tablet: 768px - 1023px */
@@ -211,80 +197,6 @@
     max-width: 300px;
     transition: var(--transition-fast);
   }
-
-  .medias {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: var(--mobile-padding);
-  }
-
-  .media-card {
-    height: var(--size-card-height-mobile);
-  }
-
-  .media-card .likes {
-    padding: 8px 12px;
-    font-size: var(--font-size-mobile-md);
-  }
-
-  .media-card .likes i {
-    font-size: 1.4rem;
-  }
-
-  /* Stats & Scroll */
-  .photographer-stats {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding: var(--space-md) var(--space-lg) 0 var(--space-lg);
-    padding-bottom: env(safe-area-inset-bottom, 0);
-    font-size: var(--font-size-mobile-sm);
-    height: 60px;
-    min-height: 60px;
-    min-width: 280px;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    gap: var(--space-lg);
-    backdrop-filter: blur(10px);
-  }
-
-  .stats-likes,
-  .stats-price {
-    font-size: 1.4rem;
-    color: var(--color-white);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  .stats-likes-count,
-  .stats-price {
-    line-height: 1.8rem;
-    min-width: fit-content;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .stats-price {
-    min-width: 120px;
-    white-space: nowrap;
-    text-align: right;
-  }
-
-  .scroll-to-top {
-    width: 48px;
-    height: 48px;
-    bottom: 80px;
-    right: 16px;
-    font-size: 1.5rem;
-  }
-
-  .error-form {
-    font-size: var(--font-size-mobile-sm);
-    padding: 8px;
-    margin-top: 6px;
-  }
-
-  .character-count,
-  .min.max {
-    font-size: var(--font-size-mobile-xs);
-  }
 }
 
 /* Extra small screens (320px and below) */
@@ -309,17 +221,5 @@
   .contact-container button {
     font-size: 0.9rem;
     padding: 12px 20px;
-  }
-
-  .photographer-stats {
-    right: var(--space-sm);
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-sm);
-  }
-
-  .stats-likes,
-  .stats-price,
-  .stats-likes-count {
-    font-size: 0.9rem;
   }
 }

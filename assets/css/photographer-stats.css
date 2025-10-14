@@ -34,7 +34,7 @@
 .stats-likes-count,
 .stats-price {
   font-size: 1.4rem;
-  color: var(--color-white);
+  color: var(--color-black);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -52,67 +52,12 @@
 }
 
 .stats-likes .fa-heart {
-  font-size: 1.5rem;
-  color: var(--color-white);
-  opacity: 0.9;
+  font-size: 2rem;
+  color: var(--bg-color-primary);
 }
 
-/* =========================
-  Scroll to Top Button
-========================= */
-.scroll-to-top {
-  position: fixed;
-  bottom: 90px;
-  right: var(--space-md);
-  width: 50px;
-  height: 50px;
-  z-index: var(--z-fixed);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: var(--radius-circle);
-  background: var(--bg-color-primary);
-  color: var(--color-white);
-  font-size: 1.5rem;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
-}
-
-.scroll-to-top.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.scroll-to-top:hover {
-  background: var(--bg-color-secondary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-}
-
-.scroll-to-top:active {
-  transform: translateY(0);
-  transition-duration: 0.1s;
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .scroll-to-top:hover {
-    background: var(--bg-color-primary);
-    transform: translateY(0);
-    box-shadow: var(--shadow-md);
-  }
-
-  .scroll-to-top:focus {
-    outline: none;
-  }
-}
-
-:is(.modal.show, .lightbox-modal.show) ~ :is(.scroll-to-top, .photographer-stats) {
+/* Hide when modal or lightbox is shown */
+:is(.modal.show, .lightbox-modal.show) ~ .photographer-stats {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -121,12 +66,35 @@
 }
 
 /* =========================
+  Animations
+========================= */
+.photographer-stats,
+.stats-likes,
+.stats-likes-count {
+  transition: all 0.2s ease;
+}
+
+.stats-likes-count,
+.stats-likes .fa-heart {
+  display: inline-block;
+}
+
+.stats-likes .fa-heart {
+  transition: transform 0.2s ease;
+}
+
+.stats-likes.pulse .fa-heart,
+.stats-likes.pulse,
+.stats-likes-count.pulse {
+  animation: heart-pulse 0.4s ease;
+}
+
+/* =========================
   Responsive Design
 ========================= */
 
 /* Tablet: 768px - 1023px */
 @media (width >= 768px) and (width <= 1023px) {
-  /* Stats & Scroll */
   .photographer-stats {
     gap: var(--space-lg);
     padding: var(--space-sm) 0 var(--space-sm) var(--space-md);
@@ -143,7 +111,7 @@
   .stats-price,
   .stats-likes-count {
     font-size: 1.4rem;
-    color: var(--color-white);
+    color: var(--color-black);
     font-weight: var(--font-weight-semibold);
   }
 
@@ -161,17 +129,8 @@
   }
 
   .stats-likes .fa-heart {
-    font-size: 1.5rem;
-    color: var(--color-white);
-    opacity: 0.9;
-  }
-
-  .scroll-to-top {
-    bottom: 75px;
-    right: var(--space-xs);
-    width: 44px;
-    height: 44px;
-    font-size: 1.3rem;
+    font-size: 2rem;
+    color: var(--bg-color-primary);
   }
 }
 
@@ -179,5 +138,58 @@
 @media (width >= 1024px) {
   .photographer-stats {
     right: var(--space-md);
+  }
+}
+
+/* Mobile: 0 - 767px */
+@media (width <= 767px) {
+  .photographer-stats {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: var(--space-md) var(--space-lg) 0 var(--space-lg);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    font-size: var(--font-size-mobile-sm);
+    height: 60px;
+    min-height: 60px;
+    min-width: 280px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    gap: var(--space-lg);
+    backdrop-filter: blur(10px);
+  }
+
+  .stats-likes,
+  .stats-price {
+    font-size: 1.4rem;
+    color: var(--color-black);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .stats-likes-count,
+  .stats-price {
+    line-height: 1.8rem;
+    min-width: fit-content;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stats-price {
+    min-width: 120px;
+    white-space: nowrap;
+    text-align: right;
+  }
+}
+
+/* Extra small screens (320px and below) */
+@media (width <= 425px) {
+  .photographer-stats {
+    right: var(--space-sm);
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-sm);
+  }
+
+  .stats-likes,
+  .stats-price,
+  .stats-likes-count {
+    font-size: 0.9rem;
   }
 }

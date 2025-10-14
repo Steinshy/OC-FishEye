@@ -5,6 +5,8 @@ export const getPageElements = () => {
   };
 };
 
+export const getLoadingScreen = () => document.getElementById('loading-screen');
+
 export const getModalRefs = () => {
   return {
     contactButton: document.getElementById('contact-button'),
@@ -32,7 +34,9 @@ export const getFormElements = () => {
   };
 };
 
-export const getFieldNames = () => ['firstname', 'lastname', 'email', 'message'];
+export const formFieldNames = ['firstname', 'lastname', 'email', 'message'];
+
+export const getErrorElement = fieldName => document.getElementById(`${fieldName.toLowerCase()}-error`);
 
 export const getStatsElements = () => {
   return {
@@ -49,6 +53,8 @@ export const getSortButtonElements = () => {
     sortOptions: document.querySelectorAll('[role="option"]'),
   };
 };
+
+export const getScrollToTopButton = () => document.getElementById('scroll-to-top');
 
 export const lightboxElements = {
   mainModal: document.getElementById('lightbox-modal'),

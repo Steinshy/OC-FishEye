@@ -6,37 +6,35 @@ import { sortMedias } from '../../utils/helpers/sorterMedias.js';
 
 const { button, sortOptions, optionsContainer } = getSortButtonElements();
 
-export const sortButton = {
-  medias: null,
-  dropdown: null,
+let medias = null;
+let dropdown = null;
 
-  init(medias) {
-    if (!medias?.length) return [];
-    if (!button || !optionsContainer || !sortOptions.length) return sortMedias(medias, 'Popularité');
+export const initSortButton = photographerMedias => {
+  if (!photographerMedias?.length) return [];
+  if (!button || !optionsContainer || !sortOptions.length) return sortMedias(photographerMedias, 'Popularité');
 
-    this.medias = medias;
+  medias = photographerMedias;
 
-    // Enable the sort button
-    aria.setDisabled(button, false);
-    aria.setTabindex(button, 0);
+  // Enable the sort button
+  aria.setDisabled(button, false);
+  aria.setTabindex(button, 0);
 
-    this.dropdown = createSorterButton({
-      button,
-      optionsContainer,
-      options: Array.from(sortOptions),
-      onSelect: option => {
-        button.textContent = option.textContent.trim();
-        const sortedMedias = sortMedias(this.medias, option.textContent.trim());
-        updateMediasOrder(sortedMedias);
-      },
-    });
+  dropdown = createSorterButton({
+    button,
+    optionsContainer,
+    options: Array.from(sortOptions),
+    onSelect: option => {
+      button.textContent = option.textContent.trim();
+      const sortedMedias = sortMedias(medias, option.textContent.trim());
+      updateMediasOrder(sortedMedias);
+    },
+  });
 
-    const currentSelection = button.textContent.trim() || 'Popularité';
-    return sortMedias(medias, currentSelection);
-  },
+  const currentSelection = button.textContent.trim() || 'Popularité';
+  return sortMedias(photographerMedias, currentSelection);
+};
 
-  destroy() {
-    this.dropdown?.destroy();
-    this.dropdown = null;
-  },
+export const destroySortButton = () => {
+  dropdown?.destroy();
+  dropdown = null;
 };

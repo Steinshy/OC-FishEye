@@ -269,7 +269,7 @@ textarea:disabled {
 }
 
 /* =========================
-  Responsive Design - Mobile First
+  Responsive Design
 ========================= */
 
 /* Tablet: 768px - 1023px */
@@ -484,5 +484,16 @@ textarea:disabled {
     position: fixed;
     bottom: 0;
     margin-bottom: 0;
+  }
+
+  .error-form {
+    font-size: var(--font-size-mobile-sm);
+    padding: 8px;
+    margin-top: 6px;
+  }
+
+  .character-count,
+  .min.max {
+    font-size: var(--font-size-mobile-xs);
   }
 }

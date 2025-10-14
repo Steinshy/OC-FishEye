@@ -1,8 +1,8 @@
-import { getFieldNames, getFormElements } from '../../../constants.js';
+import { formFieldNames, getFormElements } from '../../../constants.js';
 import { errorDisplay } from '../../errorHandler.js';
 import { sanitizeAndValidate, validateEmail, validate, getFormValues, forEachFormField } from '../helper.js';
 
-import { submitButtonState } from './submissionManager.js';
+import { submitButtonState } from './submitButtonState.js';
 
 const validationRules = {
   firstname: value => sanitizeAndValidate(value, v => v.length >= 2),
@@ -11,8 +11,6 @@ const validationRules = {
   message: value => sanitizeAndValidate(value, v => v.length > 0 && v.length <= 500),
 };
 
-const fieldNames = getFieldNames();
-
 export const validateFields = (fieldName, value) => validate(validationRules, fieldName, value);
 
 export const submitValidation = () => {
@@ -20,7 +18,7 @@ export const submitValidation = () => {
   if (validate(validationRules, getFormValues(formElements))) return true;
 
   let hasErrors = false;
-  forEachFormField(formElements, fieldNames, (element, fieldName) => {
+  forEachFormField(formElements, formFieldNames, (element, fieldName) => {
     if (!validateFields(fieldName, element.value)) {
       errorDisplay.toggleError(fieldName, true);
       hasErrors = true;
@@ -45,7 +43,7 @@ const updateFieldState = (element, hasValue, isValid) => {
 const updateSubmitButton = () => {
   if (!submitButtonState) return;
 
-  const isAllValid = fieldNames.every(fieldName => {
+  const isAllValid = formFieldNames.every(fieldName => {
     const element = getFormElements()[fieldName];
     return element && validateFields(fieldName, element.value.trim());
   });

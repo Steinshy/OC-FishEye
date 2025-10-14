@@ -1,35 +1,12 @@
-import { getFormElements, getModalRefs, submissionButtonText } from '../../../constants.js';
-import { aria } from '../../accessibility/aria.js';
+import { getFormElements, getModalRefs } from '../../../constants.js';
 import { errorDisplay } from '../../errorHandler.js';
 import { sleep, toggleElementsDisabled, getFormInputsArray, getFormValues } from '../helper.js';
 import { logData } from '../logData.js';
 
+import { submitButtonState } from './submitButtonState.js';
 import { submitValidation } from './validationManager.js';
 
 const { closeButton } = getModalRefs();
-const { defaultText, loadingText, successText } = submissionButtonText;
-
-const updateButton = (text, disabled, classes = []) => {
-  const button = getModalRefs().submitButton;
-  if (!button) return;
-
-  button.textContent = text || defaultText;
-  aria.setDisabled(button, disabled);
-  button.classList.remove('success', 'disabled');
-  if (classes.length) button.classList.add(...classes);
-};
-
-const setButtonDisabled = () => updateButton(defaultText, true, ['disabled']);
-const setButtonEnabled = () => updateButton(defaultText, false);
-
-export const submitButtonState = {
-  init: setButtonEnabled,
-  show: setButtonEnabled,
-  hide: setButtonDisabled,
-  setLoading: () => updateButton(loadingText, true, ['disabled']),
-  setSuccess: () => updateButton(successText, false, ['success']),
-  reset: setButtonEnabled,
-};
 
 export const submitForm = async (e, onComplete) => {
   e.preventDefault();

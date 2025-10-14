@@ -1,8 +1,10 @@
+import { getLoadingScreen } from '../../../constants.js';
+import { aria } from '../../accessibility/aria.js';
+
+const loadingScreen = getLoadingScreen();
 let loadingHidden = false;
-let loadingScreen = null;
 
 export const initLoadingManager = (maxTimeout = 3000) => {
-  loadingScreen = document.getElementById('loading-screen');
   if (!loadingScreen) return;
 
   setTimeout(() => hideLoadingScreen(), maxTimeout);
@@ -13,21 +15,16 @@ export const hideLoadingScreen = () => {
   loadingHidden = true;
 
   loadingScreen.classList.add('loaded');
+  aria.setHidden(loadingScreen, true);
 
-  setTimeout(() => {
-    loadingScreen?.remove();
-    loadingScreen = null;
-  }, 300);
+  setTimeout(() => loadingScreen?.remove(), 300);
 };
 
 export const showLoadingScreen = () => {
-  if (!loadingScreen) {
-    loadingScreen = document.getElementById('loading-screen');
-  }
+  if (!loadingScreen) return;
 
-  if (loadingScreen) {
-    loadingHidden = false;
-    loadingScreen.classList.remove('loaded');
-    loadingScreen.style.display = 'flex';
-  }
+  loadingHidden = false;
+  loadingScreen.classList.remove('loaded');
+  loadingScreen.style.display = 'flex';
+  aria.setHidden(loadingScreen, false);
 };

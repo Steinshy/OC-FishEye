@@ -5,14 +5,14 @@ import { getPhotographer, getPhotographerMedias } from '../../utils/helpers/mana
 import { hideLoadingScreen } from '../../utils/helpers/managers/loadingManager.js';
 import { generateMediasCards } from '../../utils/helpers/managers/mediasManager.js';
 import { initializeStats } from '../../utils/helpers/managers/statsManager.js';
-import { scrollToTop } from '../../utils/scrollToTop.js';
+import { initScrollToTop } from '../../utils/scrollToTop.js';
 
 import { generatePhotographerHeader } from './generate/generatePhotographerHeader.js';
 import { initializeLightbox } from './lightbox.js';
-import { sortButton } from './sortButton.js';
+import { initSortButton } from './sortButton.js';
 
 export const photographerPage = async () => {
-  const { main, mainMedias } = getPageElements();
+  const { main } = getPageElements();
   const urlId = getUrlParam('id', true);
   const [photographer, photographerMedias] = await Promise.all([getPhotographer(urlId), getPhotographerMedias(urlId)]);
   if (!photographer || !Array.isArray(photographerMedias)) return;
@@ -22,10 +22,10 @@ export const photographerPage = async () => {
 
   initializeStats(photographerMedias, photographer.price || 0);
 
-  const sortedMedias = sortButton.init(photographerMedias);
-  generateMediasCards(mainMedias, sortedMedias);
+  const sortedMedias = initSortButton(photographerMedias);
+  generateMediasCards(sortedMedias);
 
-  scrollToTop.init();
+  initScrollToTop();
   initializeLightbox();
   setupModalEventListeners(photographer.name);
   hideLoadingScreen();

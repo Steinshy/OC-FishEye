@@ -2,13 +2,14 @@ import { lightboxElements, lightboxClasses } from '../../constants.js';
 import { aria } from '../../utils/accessibility/aria.js';
 import { setupFocusTrap, cleanupFocusTrap, toggleBackgroundContent, handleFocusEscape, blurActive } from '../../utils/accessibility/focus.js';
 import { handlers, media, events } from '../../utils/accessibility/keyboard.js';
+import { mediaCache } from '../../utils/helpers/cache.js';
 import { toggleScroll } from '../../utils/helpers/helper.js';
 import { getSafeDuration } from '../../utils/helpers/managers/animationManager.js';
-import { mediaCache } from '../../utils/helpers/managers/cacheManager.js';
 import { generateMedias } from '../../utils/helpers/managers/generateMediasManager.js';
 import { createSwipeHandlers } from '../../utils/helpers/managers/gestureManager.js';
 
-const generateMediaForLightbox = media => generateMedias(media, false, true);
+// Generate high-quality media for lightbox display
+const generateMediaForLightbox = media => generateMedias(media, true);
 const getCachedElement = media => mediaCache.getOrCreate('mediaElements', media.id, () => generateMediaForLightbox(media));
 
 export const lightboxState = () => lightboxElements.mainModal?.classList.contains('show');

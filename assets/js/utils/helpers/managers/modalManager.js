@@ -1,4 +1,4 @@
-import { getModalRefs, getFormElements, getFieldNames } from '../../../constants.js';
+import { getModalRefs, getFormElements, formFieldNames } from '../../../constants.js';
 import { aria } from '../../accessibility/aria.js';
 import { setupFocusTrap, cleanupFocusTrap, toggleBackgroundContent, blurActive } from '../../accessibility/focus.js';
 import { mobileKeyboard } from '../../accessibility/mobile.js';
@@ -7,12 +7,12 @@ import { toggleScroll, forEachFormField } from '../helper.js';
 
 import { getSafeDuration } from './animationManager.js';
 import { resetCharacterCount, addCharacterCountListeners, removeCharacterCountListeners } from './characterCountManager.js';
-import { submitButtonState } from './submissionManager.js';
+import { submitButtonState } from './submitButtonState.js';
 
 const { mainModal, form, submitButton } = getModalRefs();
 
 const resetInputStates = () => {
-  forEachFormField(getFormElements(), getFieldNames(), element => {
+  forEachFormField(getFormElements(), formFieldNames, element => {
     element.value = '';
     element.classList.remove('success', 'warning', 'danger');
     element.disabled = false;

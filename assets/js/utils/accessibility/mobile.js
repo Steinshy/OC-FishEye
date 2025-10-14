@@ -1,4 +1,8 @@
-const isModalOpen = () => Boolean(document.getElementById('modal-signup')?.classList?.contains('show'));
+import { getModalRefs } from '../../constants.js';
+
+const { mainModal, content } = getModalRefs();
+
+const isModalOpen = () => Boolean(mainModal?.classList?.contains('show'));
 
 export const mobileKeyboard = {
   isMobile: /Mobile/i.test(navigator.userAgent) || window.innerWidth <= 768,
@@ -21,10 +25,9 @@ export const mobileKeyboard = {
     const heightDiff = this.initialHeight - window.innerHeight;
     const isKeyboardOpen = heightDiff > 150;
 
-    const modalContent = document.querySelector('.modal.show .modal-content');
-    if (!modalContent) return;
+    if (!content) return;
 
-    modalContent.classList.toggle('keyboard-open', isKeyboardOpen);
+    content.classList.toggle('keyboard-open', isKeyboardOpen);
 
     if (isKeyboardOpen && this.activeInput) {
       this.scrollToInput();
@@ -47,21 +50,20 @@ export const mobileKeyboard = {
   },
 
   scrollToInput() {
-    if (!this.activeInput) return;
+    if (!this.activeInput || !content) return;
 
-    const modal = this.activeInput.closest('.modal-content');
     const inputRect = this.activeInput.getBoundingClientRect();
     const keyboardHeight = this.initialHeight - window.innerHeight;
     const visibleHeight = window.innerHeight - keyboardHeight;
 
     if (inputRect.bottom > visibleHeight) {
-      modal.scrollTop += inputRect.bottom - visibleHeight + 20;
+      content.scrollTop += inputRect.bottom - visibleHeight + 20;
     }
   },
 
   resetModalPosition() {
     if (isModalOpen()) {
-      document.querySelector('.modal.show .modal-content')?.classList.remove('keyboard-open');
+      content?.classList.remove('keyboard-open');
     }
   },
 };

@@ -23,3 +23,9 @@ export const getResponsiveImageUrls = (webpUrl, jpgUrl, useMobile = null) => {
 export const getResponsivePosterUrl = (posterUrl, isMobile = false) => {
   return isMobile ? getMobileUrl(posterUrl) : posterUrl;
 };
+
+export const getMediaResponsiveUrls = (mediaElement, useHighQuality = false) => {
+  const { webpUrl, jpgUrl } = mediaElement.medias;
+  const useMobile = useHighQuality ? false : null;
+  return getResponsiveImageUrls(webpUrl, jpgUrl, useMobile);
+};

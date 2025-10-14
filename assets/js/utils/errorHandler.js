@@ -1,4 +1,6 @@
-import { getFieldNames } from '../constants.js';
+import { getFormElements, formFieldNames, getErrorElement } from '../constants.js';
+
+import { aria } from './accessibility/aria.js';
 
 export const safeAsync = async (asyncFn, fallback = null, context = '') => {
   try {
@@ -9,28 +11,30 @@ export const safeAsync = async (asyncFn, fallback = null, context = '') => {
   }
 };
 
-const getErrorElement = fieldName => document.getElementById(`${fieldName.toLowerCase()}-error`);
-
 export const errorDisplay = {
   resetErrorVisibility() {
-    getFieldNames().forEach(fieldName => {
-      const field = document.getElementById(fieldName);
-      if (field && fieldName !== 'message') {
-        field.setAttribute('data-error-visible', 'false');
-        field.setAttribute('data-valid', 'false');
-      }
-    });
+    const formElements = getFormElements();
+    formFieldNames.forEach(fieldName => {
+      const field = formElements[fieldName];
+      const errorElement = getErrorElement(fieldName);
 
-    getFieldNames().forEach(errorElementName => {
-      const errorElement = getErrorElement(errorElementName);
-      errorElement?.setAttribute('data-error-visible', 'false');
+      if (field) {
+        aria.updateAttributes(field, {
+          'data-error-visible': 'false',
+          'data-valid': 'false',
+        });
+      }
+
+      if (errorElement) {
+        aria.updateAttributes(errorElement, { 'data-error-visible': 'false' });
+      }
     });
   },
 
   toggleError(targetKey, shouldShow, message) {
     const errorElement = getErrorElement(targetKey);
     if (errorElement) {
-      errorElement.setAttribute('data-error-visible', shouldShow ? 'true' : 'false');
+      aria.updateAttributes(errorElement, { 'data-error-visible': shouldShow ? 'true' : 'false' });
       if (message) {
         errorElement.textContent = message;
       }

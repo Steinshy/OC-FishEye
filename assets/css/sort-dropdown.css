@@ -11,6 +11,8 @@
   min-height: 48px;
   height: 48px;
   contain: layout;
+  position: relative;
+  z-index: var(--z-dropdown);
 }
 
 .section-sort h2 {
@@ -78,7 +80,7 @@
   box-shadow: var(--shadow-md);
   list-style: none;
   margin: 0;
-  z-index: var(--z-dropdown);
+  z-index: 999;
   transform: translateY(-10px);
   transition:
     opacity 0.2s ease,
@@ -131,7 +133,7 @@
 }
 
 /* =========================
-  Responsive Design - Mobile First
+  Responsive Design
 ========================= */
 
 /* Mobile: 0 - 767px */

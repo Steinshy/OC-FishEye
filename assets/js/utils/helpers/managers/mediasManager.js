@@ -1,3 +1,4 @@
+import { getPageElements } from '../../../constants.js';
 import { generateCard } from '../../../pages/photographer/generate/generateCard.js';
 import { openLightbox } from '../../../pages/photographer/lightbox.js';
 import { setupCardAccessibility } from '../../accessibility/card.js';
@@ -43,10 +44,10 @@ const handleImageLoading = card => {
 };
 
 export const updateMediasOrder = async sortedMedias => {
-  const mainMedia = document.getElementById('main-medias');
-  if (!mainMedia || !Array.isArray(sortedMedias)) return;
+  const { mainMedias } = getPageElements();
+  if (!mainMedias || !Array.isArray(sortedMedias)) return;
 
-  const existingCards = mainMedia.querySelectorAll('.media-card');
+  const existingCards = mainMedias.querySelectorAll('.media-card');
   if (!existingCards.length) return;
 
   existingCards.forEach(card => card.classList.add('sorting'));
@@ -62,21 +63,23 @@ export const updateMediasOrder = async sortedMedias => {
     const card = cardsMap.get(String(media.id));
     if (card) {
       card.classList.remove('sorting');
-      mainMedia.appendChild(card);
+      mainMedias.appendChild(card);
     }
   });
 };
 
-export const generateMediasCards = (mainMedia, sortedMedias) => {
-  mainMedia.innerHTML = '';
-  sortedMedias.forEach((media, index) => {
-    const isLCP = index < 3;
-    const mediaElement = generateMedias(media, isLCP);
+export const generateMediasCards = sortedMedias => {
+  const { mainMedias } = getPageElements();
+  if (!mainMedias || !Array.isArray(sortedMedias)) return;
+
+  mainMedias.innerHTML = '';
+  sortedMedias.forEach(media => {
+    const mediaElement = generateMedias(media);
     if (mediaElement) {
       const card = generateCard(media, mediaElement);
       handleImageLoading(card);
       setupCardAccessibility(card, media, clickedMedia => openLightbox(clickedMedia.id, sortedMedias), incrementLike);
-      mainMedia.appendChild(card);
+      mainMedias.appendChild(card);
     }
   });
 };
