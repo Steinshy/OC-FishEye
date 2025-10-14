@@ -208,13 +208,9 @@
   font-size: 1.125rem;
 }
 
-/* Heart icon size */
+/* Heart icon size and transition */
 .media-info .likes i {
   font-size: 1.25rem;
-}
-
-/* Heart icon transition */
-.media-info .likes i {
   display: inline-block;
   transition:
     color 0.2s ease,

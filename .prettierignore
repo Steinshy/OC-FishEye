@@ -24,5 +24,7 @@ scripts/
 *.webp
 *.mp4
 
+*.html
+
 lighthouse*.html
 .lighthouseci/

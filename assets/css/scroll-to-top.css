@@ -72,7 +72,7 @@
   .scroll-to-top {
     width: 44px;
     height: 44px;
-    bottom: calc(48px + env(safe-area-inset-bottom, 0) + 10px);
+    bottom: 58px;
     right: var(--space-sm);
     font-size: 1.3rem;
   }

@@ -13,7 +13,9 @@
       "files": ["*.html"],
       "options": {
         "parser": "html",
-        "bracketSameLine": true
+        "bracketSameLine": true,
+        "htmlWhitespaceSensitivity": "css",
+        "singleAttributePerLine": false
       }
     },
     {

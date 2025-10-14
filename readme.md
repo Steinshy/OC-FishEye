@@ -1,5 +1,13 @@
 # FishEye
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=flat&logo=pwa&logoColor=white)
+![Lighthouse](https://img.shields.io/badge/Lighthouse-F44B21?style=flat&logo=lighthouse&logoColor=white)
+![Accessibility](https://img.shields.io/badge/AChecker-00A699?style=flat&logo=accessibilityicon&logoColor=white)
+![W3C](https://img.shields.io/badge/W3C-005A9C?style=flat&logo=w3c&logoColor=white)
+
 **FishEye** est une plateforme web permettant de découvrir des
 photographes indépendants et de parcourir leurs portfolios.
 L'application offre un système de galerie interactif avec lightbox,
@@ -30,36 +38,88 @@ filtres de tri, et formulaire de contact accessible.
 ```text
 FishEye/
 ├── assets/
-│   ├── css/                    # Styles (incl. mobile responsive)
+│   ├── css/                           # Styles CSS
+│   │   ├── style.css                  # Styles principaux
+│   │   ├── animations.css             # Animations
+│   │   ├── lightbox.css               # Lightbox
+│   │   ├── loading.css                # Écran de chargement
+│   │   ├── medias.css                 # Galerie médias
+│   │   ├── modal.css                  # Modales
+│   │   ├── photographer.css           # Page photographe
+│   │   ├── photographer-stats.css     # Statistiques
+│   │   ├── scroll-to-top.css          # Bouton scroll
+│   │   └── sort-dropdown.css          # Menu de tri
 │   ├── js/
-│   │   ├── main.js             # Point d'entrée
-│   │   ├── constants.js        # Constantes et sélecteurs
-│   │   ├── pages/photographer/ # Page photographe
+│   │   ├── main.js                    # Point d'entrée
+│   │   ├── config.js                  # Configuration
+│   │   ├── helpers/                   # Utilitaires
+│   │   │   ├── cache.js               # Cache
+│   │   │   ├── dataBuilders.js        # Construction données
+│   │   │   ├── helper.js              # Fonctions utilitaires
+│   │   │   ├── logData.js             # Logs
+│   │   │   ├── responsiveImages.js    # Images responsives
+│   │   │   └── sorterMedias.js        # Tri médias
+│   │   ├── photographer/              # Page photographe
+│   │   │   ├── page.js                # Contrôleur page
+│   │   │   ├── scrollToTop.js         # Bouton scroll
+│   │   │   ├── sortButton.js          # Menu tri
+│   │   │   └── generate/              # Générateurs DOM
+│   │   │       ├── generateCard.js            # Cartes médias
+│   │   │       ├── generateMedia.js           # Médias lightbox
+│   │   │       └── generatePhotographerHeader.js  # Header photographe
 │   │   └── utils/
-│   │       ├── accessibility.js      # Accessibilité
-│   │       ├── errorHandler.js       # Gestion erreurs
-│   │       ├── scrollToTop.js        # Scroll to top
-│   │       └── helpers/
-│   │           ├── helper.js         # Utilitaires (sanitize, validate)
-│   │           ├── events/           # Event listeners
-│   │           └── managers/         # Data, modal, stats, etc.
-│   ├── api/                    # Données et médias
-│   │   ├── data.json           # Base de données
-│   │   └── [Photographes]/media/    # Photos, vidéos, thumbnails
+│   │       ├── errorHandler.js        # Gestion erreurs
+│   │       ├── accessibility/         # Accessibilité
+│   │       │   ├── aria.js            # Attributs ARIA
+│   │       │   ├── focus.js           # Gestion focus
+│   │       │   ├── gesture.js         # Gestes tactiles
+│   │       │   ├── inert.js           # Désactivation éléments
+│   │       │   ├── keyboard.js        # Navigation clavier
+│   │       │   ├── lightbox.js        # Accessibilité lightbox
+│   │       │   ├── mediaCard.js       # Accessibilité cartes
+│   │       │   ├── mobile.js          # Accessibilité mobile
+│   │       │   └── modal.js           # Accessibilité modales
+│   │       └── managers/              # Gestionnaires
+│   │           ├── animation.js       # Animations
+│   │           ├── characterCount.js  # Compteur caractères
+│   │           ├── data.js            # Données
+│   │           ├── lightbox.js        # Lightbox
+│   │           ├── loading.js         # Chargement
+│   │           ├── mediaCards.js      # Cartes médias
+│   │           ├── modal.js           # Modales
+│   │           ├── sorterButton.js    # Bouton tri
+│   │           ├── stats.js           # Statistiques
+│   │           ├── submission.js      # Soumission formulaire
+│   │           ├── submitButtonState.js  # État bouton
+│   │           └── validation.js      # Validation
+│   ├── api/                           # Données
+│   │   ├── data.json                  # Base de données
+│   │   └── [Photographes]/            # Dossiers photographes
+│   │       ├── [nom].jpg              # Portrait desktop
+│   │       ├── [nom].webp             # Portrait desktop WebP
+│   │       ├── [nom].mobile.jpg       # Portrait mobile
+│   │       ├── [nom].mobile.webp      # Portrait mobile WebP
+│   │       └── media/                 # Médias photographe
 │   └── favicons/
-│       ├── standard/           # Favicons 16-512px
-│       ├── apple/              # Apple Touch Icons
-│       ├── microsoft/          # MS Tiles
-│       └── browserconfig.xml   # Configuration MS
+│       ├── standard/                  # Favicons 16-512px
+│       ├── apple/                     # Apple Touch Icons
+│       ├── microsoft/                 # MS Tiles
+│       ├── browserconfig.xml          # Configuration MS
+│       ├── favicon.png                # Favicon principal
+│       ├── logo.png                   # Logo
+│       └── close.svg                  # Icône fermeture
 ├── scripts/
-│   ├── minify.cjs                  # Minification JS/HTML
-│   ├── generateFavicons.cjs        # Génération favicons
-│   └── generateVideoThumbnails.sh  # Thumbnails vidéos
-├── index.html                  # Page d'accueil
-├── photographer.html           # Template photographe
-├── sitemap.xml                 # Sitemap SEO
-├── robots.txt                  # Directives crawlers
-└── manifest.json               # Configuration PWA
+│   ├── minify.cjs                     # Minification CSS/JS/HTML
+│   ├── optimizeImages.cjs             # Optimisation images
+│   ├── generateFavicons.cjs           # Génération favicons
+│   └── generateVideoThumbnails.sh     # Thumbnails vidéos
+├── index.html                         # Page d'accueil
+├── photographer.html                  # Template photographe
+├── sitemap.xml                        # Sitemap SEO
+├── robots.txt                         # Directives crawlers
+├── manifest.json                      # Configuration PWA
+├── package.json                       # Dépendances npm
+└── eslint.config.js                   # Configuration ESLint
 ```
 
 ---
@@ -121,6 +181,7 @@ FishEye/
 - Messages d'erreur accessibles
 - Focus automatique
 - Compteur de caractères
+- Gestion des erreurs
 
 ---
 
@@ -150,6 +211,7 @@ FishEye/
 - Minification CSS/JS/HTML (Lightning CSS)
 - Lighthouse CI automatisé
 - Favicons organisés (standard/apple/microsoft)
+- Validation HTML5 W3C compatible
 
 ---
 
@@ -169,11 +231,13 @@ npm install
 npm run dev  # Démarre serveur local sur port 8080
 ```
 
-### Utilitaires
+### Scripts utilitaires
 
 ```bash
-npm run favicons      # Génère tous les favicons
-npm run video-thumbs  # Génère thumbnails vidéos (ImageMagick requis)
+node scripts/generateFavicons.cjs      # Génère favicons (Sharp)
+bash scripts/generateVideoThumbnails.sh  # Génère thumbnails vidéos (ImageMagick requis)
+node scripts/optimizeImages.cjs desktop  # Optimise images desktop
+node scripts/optimizeImages.cjs mobile   # Optimise images mobile
 ```
 
 ## Pattern de conception
@@ -187,29 +251,37 @@ type de média (photo ou vidéo).
 
 Séparation claire des responsabilités :
 
-- `dataManager` - Gestion des données (fetch, cache)
-- `mediasManager` - Gestion de la galerie
-- `modalManager` - Gestion des modales
-- `statsManager` - Gestion des statistiques
-- `sorterManager` - Algorithmes de tri
-- `validationManager` - Validation formulaire
+- `data.js` - Gestion données (fetch, cache)
+- `mediaCards.js` - Gestion galerie
+- `modal.js` - Gestion modales
+- `stats.js` - Gestion statistiques
+- `sorterButton.js` - Tri médias
+- `validation.js` - Validation formulaire
+- `lightbox.js` - Gestion lightbox
+- `loading.js` - Écran chargement
+- `animation.js` - Animations
+- `characterCount.js` - Compteur caractères
+- `submission.js` - Soumission formulaire
+- `submitButtonState.js` - État bouton
 
 ---
 
 ## Scripts disponibles
 
-| Commande               | Description                     |
-| ---------------------- | ------------------------------- |
-| `npm run dev`          | Serveur local (port 8080)       |
-| `npm run lint`         | Lint JS, CSS, HTML              |
-| `npm run lint:js`      | Lint JavaScript                 |
-| `npm run lint:css`     | Lint CSS                        |
-| `npm run lint:html`    | Lint HTML                       |
-| `npm run lint:md`      | Lint Markdown                   |
-| `npm run format`       | Vérifie formatage               |
-| `npm run minify`       | Minifie CSS, JS, HTML           |
-| `npm run favicons`     | Génère favicons (Sharp)         |
-| `npm run video-thumbs` | Génère thumbnails (ImageMagick) |
+| Commande                  | Description               |
+| ------------------------- | ------------------------- |
+| `npm run dev`             | Serveur local (port 8080) |
+| `npm run lint`            | Lint JS, CSS, HTML, MD    |
+| `npm run lint:js`         | Lint JavaScript           |
+| `npm run lint:css`        | Lint CSS                  |
+| `npm run lint:html`       | Lint HTML                 |
+| `npm run lint:md`         | Lint Markdown             |
+| `npm run format`          | Vérifie formatage         |
+| `npm run minify`          | Minifie CSS, JS, HTML     |
+| `npm run minify:css`      | Minifie CSS uniquement    |
+| `npm run minify:js`       | Minifie JS uniquement     |
+| `npm run minify:html`     | Minifie HTML uniquement   |
+| `npm run optimize:images` | Optimise images (Sharp)   |
 
 ---
 
@@ -220,8 +292,9 @@ Séparation claire des responsabilités :
 - ESLint 9.x (JavaScript)
 - Stylelint (CSS)
 - html-validate (HTML)
-- Markdownlint (Markdown)
+- markdownlint (Markdown)
 - Prettier (formatage)
+- Commitlint (messages de commit)
 
 ### Minification
 
@@ -264,7 +337,7 @@ Séparation claire des responsabilités :
 
 ### Pour génération assets
 
-- **Sharp** (favicons) - Installé via npm
+- **Sharp** (optimisation images et favicons) - Installé via npm
 - **ImageMagick** (thumbnails vidéos) - `brew install imagemagick`
 
 ---

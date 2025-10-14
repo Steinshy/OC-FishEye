@@ -1,6 +1,7 @@
 // Setup accessibility for media cards
 
 import { interactive, media } from '../../config.js';
+
 import { aria } from './aria.js';
 import { events } from './keyboard.js';
 

@@ -42,6 +42,7 @@ export default [
         clearInterval: 'readonly',
         requestAnimationFrame: 'readonly',
         cancelAnimationFrame: 'readonly',
+        URLSearchParams: 'readonly',
         module: 'readonly',
         require: 'readonly',
         process: 'readonly',

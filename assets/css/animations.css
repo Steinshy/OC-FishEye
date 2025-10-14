@@ -319,14 +319,16 @@
 ========================= */
 
 /* Rotating ring animation */
-@keyframes focusRing {
+@keyframes focus-ring {
   0% {
     transform: rotate(0deg);
     opacity: 1;
   }
+
   50% {
     opacity: 0.4;
   }
+
   100% {
     transform: rotate(360deg);
     opacity: 1;
@@ -339,12 +341,15 @@
   20% {
     content: "";
   }
+
   40% {
     content: ".";
   }
+
   60% {
     content: "..";
   }
+
   80%,
   100% {
     content: "...";
@@ -362,11 +367,13 @@
       0 0 0 0 rgb(39 158 122 / 70%),
       0 4px 6px -1px rgb(0 0 0 / 10%);
   }
+
   50% {
     box-shadow:
       0 0 0 8px rgb(39 158 122 / 0%),
       0 4px 6px -1px rgb(0 0 0 / 10%);
   }
+
   100% {
     box-shadow:
       0 0 0 0 rgb(39 158 122 / 0%),

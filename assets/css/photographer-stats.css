@@ -99,9 +99,6 @@
 .stats-likes-count,
 .stats-likes .fa-heart {
   display: inline-block;
-}
-
-.stats-likes .fa-heart {
   transition: transform 0.2s ease;
 }
 

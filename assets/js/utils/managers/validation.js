@@ -54,8 +54,9 @@ const validateField = (element, name) => {
   const value = element.value.trim();
   const hasValue = !!value;
   const isValid = validateFields(name, value);
+  const shouldShowError = !isValid;
   updateState(element, hasValue, isValid);
-  errorDisplay?.toggleError(name, hasValue && !isValid);
+  errorDisplay?.toggleError(name, shouldShowError);
   updateButton();
 };
 

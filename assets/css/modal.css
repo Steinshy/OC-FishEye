@@ -75,9 +75,14 @@
 
 /* Header title styling */
 .modal-header h2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-md);
   font-size: 1.5rem;
   font-weight: var(--font-weight-semibold);
   margin: 0;
+  color: var(--color-white);
 }
 
 /* Photographer name display */
@@ -353,7 +358,6 @@ textarea:disabled {
     overflow: hidden auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    margin-bottom: env(keyboard-inset-height, 0);
   }
 
   .modal-header {
