@@ -28,7 +28,7 @@ export const focusPrevious = (elements, current, wrap = true) => {
   return element;
 };
 
-export const trapFocus = (container, selector = selectorTypes.focusable) => {
+export const createFocusCycle = (container, selector = selectorTypes.focusable) => {
   if (!container) return () => {};
 
   const handleTab = e => {
@@ -58,33 +58,33 @@ export const trapFocus = (container, selector = selectorTypes.focusable) => {
 };
 
 // Focus state manager
-let focusTrapCleanup = null;
+let focusCycleCleanup = null;
 let previousFocus = null;
 
 export const toggleBackgroundContent = hide => {
   inert.toggleBackgroundContent(hide, [selectorTypes.main, selectorTypes.header]);
 };
 
-export const setupFocusTrap = (modal, focusTarget, delay = 0) => {
+export const setupFocusCycle = (modal, focusTarget, delay = 0) => {
   if (!modal) return;
 
   previousFocus = document.activeElement;
   aria.setTabindex(modal, -1);
-  focusTrapCleanup = trapFocus(modal, selectorTypes.focusable);
+  focusCycleCleanup = createFocusCycle(modal, selectorTypes.focusable);
 
   if (focusTarget) {
     setTimeout(() => focusTarget.focus(), delay);
   }
 };
 
-export const cleanupFocusTrap = modal => {
+export const cleanupFocusCycle = modal => {
   if (modal) {
     aria.setTabindex(modal, null);
   }
 
-  if (focusTrapCleanup) {
-    focusTrapCleanup();
-    focusTrapCleanup = null;
+  if (focusCycleCleanup) {
+    focusCycleCleanup();
+    focusCycleCleanup = null;
   }
 
   if (previousFocus) {
@@ -102,6 +102,6 @@ export const handleFocusEscape = (modal, event) => {
 };
 
 export const resetFocusState = () => {
-  focusTrapCleanup = null;
+  focusCycleCleanup = null;
   previousFocus = null;
 };

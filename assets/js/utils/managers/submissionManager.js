@@ -1,7 +1,7 @@
-import { getFormElements, getModalRefs } from '../../../constants.js';
-import { errorDisplay } from '../../errorHandler.js';
-import { sleep, toggleElementsDisabled, getFormInputsArray, getFormValues } from '../helper.js';
-import { logData } from '../logData.js';
+import { getFormElements, getModalRefs } from '../../constants.js';
+import { sleep, toggleElementsDisabled, getFormInputsArray, getFormValues } from '../../helpers/helper.js';
+import { logData } from '../../helpers/logData.js';
+import { errorDisplay } from '../errorHandler.js';
 
 import { submitButtonState } from './submitButtonState.js';
 import { submitValidation } from './validationManager.js';

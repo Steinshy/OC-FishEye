@@ -1,6 +1,6 @@
-import { photographerPage } from './pages/photographer/page.js';
+import { photographerPage } from './photographer/page.js';
 import { safeAsync } from './utils/errorHandler.js';
-import { initLoadingManager, hideLoadingScreen } from './utils/helpers/managers/loadingManager.js';
+import { initLoadingManager, hideLoadingScreen } from './utils/managers/loadingManager.js';
 
 const initializeApp = () => {
   initLoadingManager(3000);

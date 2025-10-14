@@ -1,5 +1,5 @@
-import { getLoadingScreen } from '../../../constants.js';
-import { aria } from '../../accessibility/aria.js';
+import { getLoadingScreen } from '../../constants.js';
+import { aria } from '../accessibility/aria.js';
 
 const loadingScreen = getLoadingScreen();
 let loadingHidden = false;

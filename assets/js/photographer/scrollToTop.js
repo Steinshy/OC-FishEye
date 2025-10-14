@@ -1,7 +1,6 @@
 import { getScrollToTopButton } from '../constants.js';
-import { lightboxState } from '../pages/photographer/lightbox.js';
-
-import { isModalOpen } from './helpers/managers/modalManager.js';
+import { lightboxState } from '../utils/managers/lightboxManager.js';
+import { isModalOpen } from '../utils/managers/modalManager.js';
 
 const button = getScrollToTopButton();
 

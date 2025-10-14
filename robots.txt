@@ -14,7 +14,7 @@ Disallow: /scripts/
 Allow: /assets/css/
 
 # Allow crawling of images for Google Images
-Allow: /assets/photographers/
+Allow: /assets/api/
 Allow: /assets/favicons/
 
 # Sitemap location

@@ -43,7 +43,7 @@ FishEye/
 │   │           ├── helper.js         # Utilitaires (sanitize, validate)
 │   │           ├── events/           # Event listeners
 │   │           └── managers/         # Data, modal, stats, etc.
-│   ├── photographers/          # Données et médias
+│   ├── api/                    # Données et médias
 │   │   ├── data.json           # Base de données
 │   │   └── [Photographes]/media/    # Photos, vidéos, thumbnails
 │   └── favicons/

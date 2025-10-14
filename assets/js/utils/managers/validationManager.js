@@ -1,6 +1,6 @@
-import { formFieldNames, getFormElements } from '../../../constants.js';
-import { errorDisplay } from '../../errorHandler.js';
-import { sanitizeAndValidate, validateEmail, validate, getFormValues, forEachFormField } from '../helper.js';
+import { formFieldNames, getFormElements } from '../../constants.js';
+import { sanitizeAndValidate, validateEmail, validate, getFormValues, forEachFormField } from '../../helpers/helper.js';
+import { errorDisplay } from '../errorHandler.js';
 
 import { submitButtonState } from './submitButtonState.js';
 

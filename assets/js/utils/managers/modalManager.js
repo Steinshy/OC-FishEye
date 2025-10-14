@@ -1,13 +1,16 @@
-import { getModalRefs, getFormElements, formFieldNames } from '../../../constants.js';
-import { aria } from '../../accessibility/aria.js';
-import { setupFocusTrap, cleanupFocusTrap, toggleBackgroundContent, blurActive } from '../../accessibility/focus.js';
-import { mobileKeyboard } from '../../accessibility/mobile.js';
-import { errorDisplay } from '../../errorHandler.js';
-import { toggleScroll, forEachFormField } from '../helper.js';
+import { getModalRefs, getFormElements, formFieldNames } from '../../constants.js';
+import { forEachFormField, toggleScroll } from '../../helpers/helper.js';
+import { aria } from '../accessibility/aria.js';
+import { setupFocusCycle, cleanupFocusCycle, toggleBackgroundContent, blurActive } from '../accessibility/focus.js';
+import { mobileKeyboard } from '../accessibility/mobile.js';
+import { initializeModalAccessibility } from '../accessibility/modal.js';
+import { errorDisplay } from '../errorHandler.js';
 
 import { getSafeDuration } from './animationManager.js';
 import { resetCharacterCount, addCharacterCountListeners, removeCharacterCountListeners } from './characterCountManager.js';
+import { submitForm } from './submissionManager.js';
 import { submitButtonState } from './submitButtonState.js';
+import { setupFieldValidation } from './validationManager.js';
 
 const { mainModal, form, submitButton } = getModalRefs();
 
@@ -32,21 +35,30 @@ const resetFormAndModal = () => {
   });
 };
 
-const toggleModalDisplay = show => {
-  const action = show ? 'add' : 'remove';
-  if (mainModal) mainModal.classList[action]('show');
-  if (form) form.classList[action]('show');
-};
+const toggleModal = show => {
+  const display = {
+    action: show ? 'add' : 'remove',
+    apply: () => {
+      if (mainModal) mainModal.classList[display.action]('show');
+      if (form) form.classList[display.action]('show');
+    },
+  };
 
-const toggleModalAria = hidden => {
-  if (mainModal) aria.setHidden(mainModal, hidden);
-  if (form) aria.setHidden(form, hidden);
-  if (submitButton) aria.setHidden(submitButton, hidden);
+  const ariaState = {
+    hidden: !show,
+    apply: () => {
+      if (mainModal) aria.setHidden(mainModal, ariaState.hidden);
+      if (form) aria.setHidden(form, ariaState.hidden);
+      if (submitButton) aria.setHidden(submitButton, ariaState.hidden);
+    },
+  };
+
+  display.apply();
+  ariaState.apply();
 };
 
 export const openModal = () => {
-  toggleModalAria(false);
-  toggleModalDisplay(true);
+  toggleModal(true);
   toggleScroll(true);
   toggleBackgroundContent(true);
   mobileKeyboard.resetModalPosition();
@@ -59,7 +71,7 @@ export const openModal = () => {
   const openingDuration = getSafeDuration(250);
   setTimeout(() => {
     const { firstname } = getFormElements();
-    setupFocusTrap(mainModal, firstname);
+    setupFocusCycle(mainModal, firstname);
   }, openingDuration);
 };
 
@@ -71,12 +83,11 @@ export const closeModal = async () => {
   const closingDuration = getSafeDuration(200);
   await new Promise(resolve => setTimeout(resolve, closingDuration));
 
-  cleanupFocusTrap(mainModal);
+  cleanupFocusCycle(mainModal);
   toggleScroll(false);
   toggleBackgroundContent(false);
   mobileKeyboard.resetModalPosition();
-  toggleModalDisplay(false);
-  toggleModalAria(true);
+  toggleModal(false);
 
   mainModal.classList.remove('closing');
 
@@ -86,3 +97,13 @@ export const closeModal = async () => {
 };
 
 export const isModalOpen = () => Boolean(mainModal?.classList?.contains('show'));
+
+export const setupModalEventListeners = (photographerName = '') => {
+  initializeModalAccessibility({
+    photographerName,
+    onOpen: openModal,
+    onClose: closeModal,
+    onSubmit: submitForm,
+    onValidation: setupFieldValidation,
+  });
+};

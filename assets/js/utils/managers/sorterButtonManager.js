@@ -1,7 +1,7 @@
-import { selectorTypes } from '../../../constants.js';
-import { aria } from '../../accessibility/aria.js';
-import { focusFirst, trapFocus } from '../../accessibility/focus.js';
-import { handlers, events } from '../../accessibility/keyboard.js';
+import { selectorTypes } from '../../constants.js';
+import { aria } from '../accessibility/aria.js';
+import { focusFirst, createFocusCycle } from '../accessibility/focus.js';
+import { handlers, events } from '../accessibility/keyboard.js';
 
 const findTargetOption = (options, container) => {
   return (
@@ -11,7 +11,7 @@ const findTargetOption = (options, container) => {
 
 export const createSorterButton = ({ button, optionsContainer, options, onSelect, onClose, orientation = 'vertical' }) => {
   let isOpen = false;
-  let focusTrapCleanup = null;
+  let focusCycleCleanup = null;
 
   const dropdown = {
     currentIndex: 0,
@@ -23,7 +23,7 @@ export const createSorterButton = ({ button, optionsContainer, options, onSelect
 
       const targetOption = findTargetOption(options, optionsContainer);
       targetOption?.focus();
-      focusTrapCleanup = trapFocus(optionsContainer, selectorTypes.sortOptions);
+      focusCycleCleanup = createFocusCycle(optionsContainer, selectorTypes.sortOptions);
     },
 
     close() {
@@ -31,8 +31,8 @@ export const createSorterButton = ({ button, optionsContainer, options, onSelect
       aria.setExpanded(button, false);
       aria.toggleVisibility(optionsContainer, false);
 
-      focusTrapCleanup?.();
-      focusTrapCleanup = null;
+      focusCycleCleanup?.();
+      focusCycleCleanup = null;
       button?.focus();
       onClose?.();
     },
@@ -49,8 +49,8 @@ export const createSorterButton = ({ button, optionsContainer, options, onSelect
     },
 
     destroy() {
-      focusTrapCleanup?.();
-      focusTrapCleanup = null;
+      focusCycleCleanup?.();
+      focusCycleCleanup = null;
       optionsContainer.removeEventListener('keydown', arrowHandler);
       document.removeEventListener('keydown', escapeHandler);
     },

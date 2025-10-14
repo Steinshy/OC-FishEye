@@ -237,7 +237,7 @@ export default [
       '*.woff',
       '*.woff2',
       '*.eot',
-      'assets/photographers/',
+      'assets/api/',
       '.github/',
       '.husky/',
       'husky/',

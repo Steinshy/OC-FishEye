@@ -1,6 +1,6 @@
-import { getFormElements } from '../../../constants.js';
-import { aria } from '../../accessibility/aria.js';
-import { events } from '../../accessibility/keyboard.js';
+import { getFormElements } from '../../constants.js';
+import { aria } from '../accessibility/aria.js';
+import { events } from '../accessibility/keyboard.js';
 
 const { characterCount, message } = getFormElements();
 

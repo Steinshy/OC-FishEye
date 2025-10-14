@@ -1,5 +1,5 @@
-import { getModalRefs, submissionButtonText } from '../../../constants.js';
-import { aria } from '../../accessibility/aria.js';
+import { getModalRefs, submissionButtonText } from '../../constants.js';
+import { aria } from '../accessibility/aria.js';
 
 const { defaultText, loadingText, successText } = submissionButtonText;
 

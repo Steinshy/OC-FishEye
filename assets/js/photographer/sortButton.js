@@ -1,8 +1,8 @@
-import { getSortButtonElements } from '../../constants.js';
-import { aria } from '../../utils/accessibility/aria.js';
-import { updateMediasOrder } from '../../utils/helpers/managers/mediasManager.js';
-import { createSorterButton } from '../../utils/helpers/managers/sorterButtonManager.js';
-import { sortMedias } from '../../utils/helpers/sorterMedias.js';
+import { getSortButtonElements } from '../constants.js';
+import { sortMedias } from '../helpers/sorterMedias.js';
+import { aria } from '../utils/accessibility/aria.js';
+import { updateMediasOrder } from '../utils/managers/mediaCardsManager.js';
+import { createSorterButton } from '../utils/managers/sorterButtonManager.js';
 
 const { button, sortOptions, optionsContainer } = getSortButtonElements();
 

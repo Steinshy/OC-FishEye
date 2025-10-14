@@ -1,14 +1,14 @@
-import { getPageElements } from '../../constants.js';
-import { setupModalEventListeners } from '../../utils/helpers/events/modalEventListeners.js';
-import { getUrlParam } from '../../utils/helpers/helper.js';
-import { getPhotographer, getPhotographerMedias } from '../../utils/helpers/managers/dataManager.js';
-import { hideLoadingScreen } from '../../utils/helpers/managers/loadingManager.js';
-import { generateMediasCards } from '../../utils/helpers/managers/mediasManager.js';
-import { initializeStats } from '../../utils/helpers/managers/statsManager.js';
-import { initScrollToTop } from '../../utils/scrollToTop.js';
+import { getPageElements } from '../constants.js';
+import { getUrlParam } from '../helpers/helper.js';
+import { getPhotographer, getPhotographerMedias } from '../utils/managers/dataManager.js';
+import { initializeLightbox } from '../utils/managers/lightboxManager.js';
+import { hideLoadingScreen } from '../utils/managers/loadingManager.js';
+import { renderMediasCards } from '../utils/managers/mediaCardsManager.js';
+import { setupModalEventListeners } from '../utils/managers/modalManager.js';
+import { initializeStats } from '../utils/managers/statsManager.js';
 
 import { generatePhotographerHeader } from './generate/generatePhotographerHeader.js';
-import { initializeLightbox } from './lightbox.js';
+import { initScrollToTop } from './scrollToTop.js';
 import { initSortButton } from './sortButton.js';
 
 export const photographerPage = async () => {
@@ -23,7 +23,7 @@ export const photographerPage = async () => {
   initializeStats(photographerMedias, photographer.price || 0);
 
   const sortedMedias = initSortButton(photographerMedias);
-  generateMediasCards(sortedMedias);
+  renderMediasCards(sortedMedias);
 
   initScrollToTop();
   initializeLightbox();

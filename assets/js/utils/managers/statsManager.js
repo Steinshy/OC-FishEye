@@ -1,6 +1,7 @@
-import { getStatsElements } from '../../../constants.js';
-import { aria } from '../../accessibility/aria.js';
-import { addPulseAnimation } from '../helper.js';
+import { getStatsElements } from '../../constants.js';
+import { addPulseAnimation } from '../../helpers/helper.js';
+import { interactive } from '../../selectors.js';
+import { aria } from '../accessibility/aria.js';
 
 let totalLikes = 0;
 
@@ -26,8 +27,8 @@ export const addLikeToTotal = () => {
 };
 
 export const incrementLike = (media, likesButton) => {
-  const likesCount = likesButton.querySelector('span');
-  const heartIcon = likesButton.querySelector('.fa-heart');
+  const likesCount = likesButton.querySelector(interactive.likesCount);
+  const heartIcon = likesButton.querySelector(interactive.heartIcon);
 
   if (!likesCount) return;
 
