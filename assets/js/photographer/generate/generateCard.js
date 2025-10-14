@@ -1,26 +1,30 @@
-import { media } from '../../selectors.js';
+// Generate media card HTML elements
+
+import { media } from '../../config.js';
 import { aria } from '../../utils/accessibility/aria.js';
 
+// Handle media loading states
 const handleImageLoading = card => {
-  const mediaContent = card.querySelector(media.content);
-  const mediaElement = mediaContent?.querySelector(media.mediaElement);
-  if (!mediaElement) return;
+  const content = card.querySelector(media.content);
+  const element = content?.querySelector(media.mediaElement);
+  if (!element) return;
 
-  const updateLoadingState = () => mediaContent.classList.replace('loading', 'loaded');
+  const updateState = () => content.classList.replace('loading', 'loaded');
 
-  const isVideo = mediaElement.tagName === 'VIDEO';
-  const loadEvent = isVideo ? 'loadeddata' : 'load';
-  const isAlreadyLoaded = isVideo ? mediaElement.readyState >= 2 : mediaElement.complete;
+  const isVideo = element.tagName === 'VIDEO';
+  const event = isVideo ? 'loadeddata' : 'load';
+  const loaded = isVideo ? element.readyState >= 2 : element.complete;
 
-  mediaElement.addEventListener(loadEvent, updateLoadingState, { once: true });
-  mediaElement.addEventListener('error', updateLoadingState, { once: true });
+  element.addEventListener(event, updateState, { once: true });
+  element.addEventListener('error', updateState, { once: true });
 
-  if (isAlreadyLoaded) updateLoadingState();
+  if (loaded) updateState();
 };
 
+// Generate media info section with title and likes
 const generateMediaInfo = media => {
-  const mediaInfo = document.createElement('div');
-  mediaInfo.innerHTML = `
+  const info = document.createElement('div');
+  info.innerHTML = `
     <div class="media-info" id="media-info-${media.id}">
       <h3>${media.title}</h3>
       <button
@@ -35,11 +39,12 @@ const generateMediaInfo = media => {
     </div>
   `;
 
-  return mediaInfo;
+  return info;
 };
 
-export const generateCard = (media, mediaElement) => {
-  if (!media || !mediaElement) return null;
+// Generate complete media card element
+export const generateCard = (media, element) => {
+  if (!media || !element) return null;
 
   const article = document.createElement('article');
   article.className = 'media-card';
@@ -48,12 +53,12 @@ export const generateCard = (media, mediaElement) => {
   aria.setLabel(article, `Média: ${media.mediaType} - ${media.title || ''} - ${media.likes || 0} likes`);
   aria.setDescribedBy(article, `media-info-${media.id}`);
 
-  const mediaContent = document.createElement('div');
-  mediaContent.className = 'media-content loading';
-  aria.setDescribedBy(mediaContent, `media-info-${media.id}`);
+  const content = document.createElement('div');
+  content.className = 'media-content loading';
+  aria.setDescribedBy(content, `media-info-${media.id}`);
 
-  mediaContent.appendChild(mediaElement);
-  article.appendChild(mediaContent);
+  content.appendChild(element);
+  article.appendChild(content);
   article.appendChild(generateMediaInfo(media));
 
   handleImageLoading(article);

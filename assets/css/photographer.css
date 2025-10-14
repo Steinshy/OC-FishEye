@@ -1,12 +1,15 @@
 /* ===================================
   FishEyes - Photographer Page Styles
 =================================== */
+
+/* Main photographer section layout */
 .photographer-section {
   display: flex;
   flex-direction: column;
   padding: var(--space-md);
 }
 
+/* Section content layout */
 .section-container {
   display: flex;
   flex-direction: row;
@@ -17,12 +20,15 @@
 /* =========================
   Photographer Information
 ========================= */
+
+/* Info text container */
 .section-info {
   display: grid;
   justify-content: start;
   gap: var(--space-xs);
 }
 
+/* Photographer name styling */
 .section-info h1 {
   color: var(--txt-color-primary);
   font-size: 1.5rem;
@@ -30,6 +36,7 @@
   font-weight: var(--font-weight-semibold);
 }
 
+/* Info text styling */
 .section-info p {
   color: var(--txt-color-secondary);
 }
@@ -37,6 +44,8 @@
 /* =========================
   Profile Picture
 ========================= */
+
+/* Profile picture container */
 .container-picture {
   position: relative;
   width: 150px;
@@ -46,6 +55,7 @@
   border-radius: 50%;
 }
 
+/* Loading shimmer overlay */
 .container-picture::before {
   content: "";
   position: absolute;
@@ -59,10 +69,12 @@
   border-radius: 50%;
 }
 
+/* Hide shimmer when loaded */
 .container-picture.loaded::before {
   opacity: 0;
 }
 
+/* Profile picture image styling */
 .profile-picture {
   position: relative;
   width: 100%;
@@ -75,6 +87,8 @@
 /* =========================
   Contact Button
 ========================= */
+
+/* Contact button container */
 .contact-container {
   position: relative;
   min-height: 3rem;
@@ -82,6 +96,7 @@
   align-items: center;
 }
 
+/* Contact button styling */
 .contact-container button {
   width: 10rem;
   height: 3rem;
@@ -93,10 +108,12 @@
   cursor: pointer;
 }
 
+/* Button active state */
 .contact-container button:active {
   transform: translateY(0);
 }
 
+/* Button disabled state */
 .contact-container button:disabled,
 .contact-container [aria-disabled="true"] {
   cursor: not-allowed;
@@ -106,6 +123,7 @@
   opacity: 0.8;
 }
 
+/* Media section padding */
 .media-section {
   padding: var(--space-md);
 }
@@ -113,13 +131,7 @@
 /* =========================
   Responsive Design
 ========================= */
-
-/* Tablet: 768px - 1023px */
 @media (width >= 768px) and (width <= 1023px) {
-  .photographer-header {
-    padding: var(--tablet-padding);
-  }
-
   .section-info h1 {
     font-size: 1.8rem;
   }
@@ -134,12 +146,7 @@
   }
 }
 
-/* Desktop: 1024px+ */
 @media (width >= 1024px) {
-  .photographer-header {
-    padding: var(--tablet-padding);
-  }
-
   .section-info h1 {
     font-size: 2rem;
   }
@@ -154,16 +161,15 @@
   }
 }
 
-/* Mobile: 0 - 767px */
 @media (width <= 767px) {
   .photographer-section,
   .media-section {
-    padding: var(--space-sm);
+    padding: 0.5rem;
   }
 
   .section-container {
     flex-direction: column;
-    gap: var(--space-md);
+    gap: 0.75rem;
     text-align: center;
   }
 
@@ -173,11 +179,11 @@
   }
 
   .section-info h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .section-info p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .container-picture {
@@ -195,31 +201,8 @@
   .contact-container button {
     width: 100%;
     max-width: 300px;
-    transition: var(--transition-fast);
-  }
-}
-
-/* Extra small screens (320px and below) */
-@media (width <= 425px) {
-  .photographer-section,
-  .media-section {
-    padding: 0.5rem;
-  }
-
-  .section-container {
-    gap: 0.75rem;
-  }
-
-  .section-info h1 {
-    font-size: 1.3rem;
-  }
-
-  .section-info p {
-    font-size: 0.85rem;
-  }
-
-  .contact-container button {
     font-size: 0.9rem;
     padding: 12px 20px;
+    transition: var(--transition-fast);
   }
 }

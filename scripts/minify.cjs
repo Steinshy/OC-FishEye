@@ -1,39 +1,83 @@
 #!/usr/bin/env node
+
+// Minify JS CSS or HTML files
+
 const fs = require('fs');
 const path = require('path');
 const { minify } = require('minify');
 const glob = require('glob');
 
-const [, , target] = process.argv;
-const patterns = {
+// File patterns for each type
+const PATTERNS = {
   js: 'assets/js/**/*.js',
   css: 'assets/css/**/*.css',
   html: '*.html'
 };
-const outputDirs = {
+
+// Output directories for minified files
+const OUTPUT_DIRS = {
   js: 'assets/minified/js/',
   css: 'assets/minified/css/',
   html: 'assets/minified/html/'
 };
 
-if (!patterns[target]) {
-  console.error('Usage: node scripts/minify.cjs <js|css|html>');
-  process.exit(1);
-}
+// Valid file types
+const VALID_TYPES = Object.keys(PATTERNS);
 
-(async () => {
+// Get minified filename
+const getMinifiedPath = (filePath, outputDir) => {
+  const extension = path.extname(filePath);
+  const basename = path.basename(filePath, extension);
+  return path.join(outputDir, `${basename}.min${extension}`);
+};
+
+// Check if file should be excluded
+const shouldExclude = (filePath) => {
+  return filePath.includes('.min.') || filePath.includes('minified/');
+};
+
+// Minify single file
+const minifyFile = async (filePath, outputPath) => {
+  const outputDir = path.dirname(outputPath);
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+  const minified = await minify(filePath);
+  fs.writeFileSync(outputPath, minified);
+};
+
+// Main execution function
+const main = async () => {
+  const target = process.argv[2];
+
+  // Validate target argument
+  if (!VALID_TYPES.includes(target)) {
+    console.error(`Usage: node scripts/minify.cjs <${VALID_TYPES.join('|')}>`);
+    process.exit(1);
+  }
+
   try {
-    const files = glob.sync(patterns[target]).filter(f => !f.includes('.min.') && !f.includes('minified/'));
-    if (!files.length) return console.log(`No ${target} files found`);
+    // Find all files matching pattern
+    const files = glob
+      .sync(PATTERNS[target])
+      .filter(file => !shouldExclude(file));
 
-    for (const file of files) {
-      const output = path.join(outputDirs[target], path.basename(file, path.extname(file)) + '.min' + path.extname(file));
-      fs.mkdirSync(path.dirname(output), { recursive: true });
-      fs.writeFileSync(output, await minify(file));
+    if (!files.length) {
+      console.log(`No ${target} files found`);
+      return;
     }
+
+    // Minify each file
+    for (const file of files) {
+      const outputPath = getMinifiedPath(file, OUTPUT_DIRS[target]);
+      await minifyFile(file, outputPath);
+    }
+
     console.log(`✅ Minified ${files.length} ${target} file(s)`);
   } catch (error) {
     console.error('❌ Error:', error.message);
     process.exit(1);
   }
-})();
+};
+
+main();

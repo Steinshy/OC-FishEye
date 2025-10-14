@@ -1,21 +1,23 @@
-import { getSortButtonElements } from '../constants.js';
+// Media sort button initialization and control
+
+import { getSortButtonElements } from '../config.js';
 import { sortMedias } from '../helpers/sorterMedias.js';
 import { aria } from '../utils/accessibility/aria.js';
-import { updateMediasOrder } from '../utils/managers/mediaCardsManager.js';
-import { createSorterButton } from '../utils/managers/sorterButtonManager.js';
+import { updateMediasOrder } from '../utils/managers/mediaCards.js';
+import { createSorterButton } from '../utils/managers/sorterButton.js';
 
-const { button, sortOptions, optionsContainer } = getSortButtonElements();
-
+// Store medias and dropdown instance
 let medias = null;
 let dropdown = null;
 
+// Initialize media sort dropdown button
 export const initSortButton = photographerMedias => {
   if (!photographerMedias?.length) return [];
+
+  const { button, sortOptions, optionsContainer } = getSortButtonElements();
   if (!button || !optionsContainer || !sortOptions.length) return sortMedias(photographerMedias, 'Popularité');
 
   medias = photographerMedias;
-
-  // Enable the sort button
   aria.setDisabled(button, false);
   aria.setTabindex(button, 0);
 
@@ -25,15 +27,14 @@ export const initSortButton = photographerMedias => {
     options: Array.from(sortOptions),
     onSelect: option => {
       button.textContent = option.textContent.trim();
-      const sortedMedias = sortMedias(medias, option.textContent.trim());
-      updateMediasOrder(sortedMedias);
+      updateMediasOrder(sortMedias(medias, option.textContent.trim()));
     },
   });
 
-  const currentSelection = button.textContent.trim() || 'Popularité';
-  return sortMedias(photographerMedias, currentSelection);
+  return sortMedias(photographerMedias, button.textContent.trim() || 'Popularité');
 };
 
+// Clean up sort button event listeners
 export const destroySortButton = () => {
   dropdown?.destroy();
   dropdown = null;

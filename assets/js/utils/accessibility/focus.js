@@ -1,33 +1,34 @@
-import { selectorTypes } from '../../constants.js';
+// Focus management and keyboard navigation utilities
+
+import { selectorTypes } from '../../config.js';
 
 import { aria } from './aria.js';
 import { inert } from './inert.js';
 
-// Core focus utilities
+// Remove focus from active element
 export const blurActive = () => document.activeElement?.blur();
 
+// Focus first focusable element in container
 export const focusFirst = (container, selector = selectorTypes.focusable) => {
-  const element = container?.querySelector(selector);
-  element?.focus();
-  return element;
+  container?.querySelector(selector)?.focus();
+  return container?.querySelector(selector);
 };
 
+// Focus next element in array
 export const focusNext = (elements, current, wrap = true) => {
-  const currentIndex = elements.findIndex(element => element === current);
-  const nextIndex = wrap ? (currentIndex + 1) % elements.length : Math.min(currentIndex + 1, elements.length - 1);
-  const element = elements[nextIndex];
-  element?.focus();
-  return element;
+  const index = elements.findIndex(element => element === current);
+  elements[wrap ? (index + 1) % elements.length : Math.min(index + 1, elements.length - 1)]?.focus();
+  return elements[wrap ? (index + 1) % elements.length : Math.min(index + 1, elements.length - 1)];
 };
 
+// Focus previous element in array
 export const focusPrevious = (elements, current, wrap = true) => {
-  const currentIndex = elements.findIndex(element => element === current);
-  const previousIndex = wrap ? (currentIndex <= 0 ? elements.length - 1 : currentIndex - 1) : Math.max(currentIndex - 1, 0);
-  const element = elements[previousIndex];
-  element?.focus();
-  return element;
+  const index = elements.findIndex(element => element === current);
+  elements[wrap ? (index <= 0 ? elements.length - 1 : index - 1) : Math.max(index - 1, 0)]?.focus();
+  return elements[wrap ? (index <= 0 ? elements.length - 1 : index - 1) : Math.max(index - 1, 0)];
 };
 
+// Create focus trap for modal dialogs
 export const createFocusCycle = (container, selector = selectorTypes.focusable) => {
   if (!container) return () => {};
 
@@ -41,30 +42,24 @@ export const createFocusCycle = (container, selector = selectorTypes.focusable) 
 
     if (!elements.length) return;
 
-    const { activeElement } = document;
-    const currentIndex = elements.findIndex(el => el === activeElement);
-
-    if (e.shiftKey) {
-      const prevIndex = currentIndex <= 0 ? elements.length - 1 : currentIndex - 1;
-      elements[prevIndex]?.focus();
-    } else {
-      const nextIndex = currentIndex === -1 || currentIndex >= elements.length - 1 ? 0 : currentIndex + 1;
-      elements[nextIndex]?.focus();
-    }
+    const index = elements.findIndex(element => element === document.activeElement);
+    elements[e.shiftKey ? (index <= 0 ? elements.length - 1 : index - 1) : index === -1 || index >= elements.length - 1 ? 0 : index + 1]?.focus();
   };
 
   document.addEventListener('keydown', handleTab);
   return () => document.removeEventListener('keydown', handleTab);
 };
 
-// Focus state manager
+// Store focus state
 let focusCycleCleanup = null;
 let previousFocus = null;
 
+// Toggle background content accessibility
 export const toggleBackgroundContent = hide => {
   inert.toggleBackgroundContent(hide, [selectorTypes.main, selectorTypes.header]);
 };
 
+// Setup focus trap for modal
 export const setupFocusCycle = (modal, focusTarget, delay = 0) => {
   if (!modal) return;
 
@@ -77,6 +72,7 @@ export const setupFocusCycle = (modal, focusTarget, delay = 0) => {
   }
 };
 
+// Remove focus trap and restore focus
 export const cleanupFocusCycle = modal => {
   if (modal) {
     aria.setTabindex(modal, null);
@@ -95,12 +91,14 @@ export const cleanupFocusCycle = modal => {
   }
 };
 
+// Prevent focus from leaving modal
 export const handleFocusEscape = (modal, event) => {
   if (modal && !modal.contains(event.target)) {
     focusFirst(modal);
   }
 };
 
+// Reset focus state variables
 export const resetFocusState = () => {
   focusCycleCleanup = null;
   previousFocus = null;

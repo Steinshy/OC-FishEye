@@ -1,6 +1,8 @@
 /* =========================
   Modal System
 ========================= */
+
+/* Modal overlay backdrop */
 .modal {
   display: none;
   visibility: hidden;
@@ -16,6 +18,7 @@
   opacity: 0;
 }
 
+/* Visible modal state */
 .modal.show {
   display: block;
   visibility: visible;
@@ -23,6 +26,7 @@
   opacity: 1;
 }
 
+/* Modal content container */
 .modal-content {
   display: flex;
   flex-direction: column;
@@ -40,6 +44,7 @@
   color: var(--color-white);
 }
 
+/* Modal header section */
 .modal-header {
   position: relative;
   display: flex;
@@ -50,6 +55,7 @@
   justify-content: center;
 }
 
+/* Header content layout */
 .header-content {
   display: flex;
   flex-direction: row;
@@ -61,17 +67,20 @@
   padding-right: 52px;
 }
 
+/* Header icon size */
 .modal-header i {
   font-size: 2rem;
   font-weight: 600;
 }
 
+/* Header title styling */
 .modal-header h2 {
   font-size: 1.5rem;
   font-weight: var(--font-weight-semibold);
   margin: 0;
 }
 
+/* Photographer name display */
 .modal-photographer-name {
   font-size: 1.5rem;
   font-weight: var(--font-weight-semibold);
@@ -80,6 +89,7 @@
   text-align: center;
 }
 
+/* Close button styling */
 .modal-close {
   position: absolute;
   top: var(--space-md);
@@ -97,28 +107,32 @@
   transition: var(--transition-normal);
 }
 
+/* Close button hover state */
 .modal-close:hover {
   background: rgb(0 0 0 / 25%);
   transform: scale(1.05);
 }
 
+/* Close button active state */
 .modal-close:active {
   transform: scale(0.95);
 }
 
+/* Close icon styling */
 .modal-close i {
   font-size: 2rem;
   font-weight: var(--font-weight-semibold);
   color: var(--color-white);
 }
 
-/* Navigation & Focus states */
+/* Form container hidden state */
 .main-form {
   display: none;
   visibility: hidden;
   overflow-y: auto;
 }
 
+/* Form container visible state */
 .main-form.show {
   display: flex;
   flex-direction: column;
@@ -127,17 +141,19 @@
   gap: var(--space-lg);
 }
 
+/* Form field group layout */
 .form-group {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
 }
 
-/* FormGroup Success */
+/* Valid field border */
 .form-group .success {
   border: 2px solid var(--color-success);
 }
 
+/* Form label styling */
 .form-group label {
   font-size: 1.1rem;
   font-weight: var(--font-weight-semibold);
@@ -145,6 +161,7 @@
   margin-bottom: var(--space-xs);
 }
 
+/* Form input and textarea styling */
 .form-group input,
 .form-group textarea {
   font-size: 1rem;
@@ -157,6 +174,7 @@
   transition: var(--transition-normal);
 }
 
+/* Placeholder text styling */
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   font-size: 1rem;
@@ -164,6 +182,7 @@
   color: var(--txt-color-secondary);
 }
 
+/* Message field container layout */
 .message-container {
   display: flex;
   flex-direction: row;
@@ -171,7 +190,7 @@
   align-items: center;
 }
 
-/* TextArea */
+/* Character count display */
 .min,
 .max {
   font-size: 1rem;
@@ -179,20 +198,21 @@
   transition: var(--transition-normal);
 }
 
-/* TextArea Warning */
+/* Character count warning state */
 .min.warning,
 .max.warning {
   color: var(--color-warning);
   font-weight: var(--font-weight-semibold);
 }
 
-/* TextArea Danger */
+/* Character count danger state */
 .min.danger,
 .max.danger {
   color: var(--color-error);
   font-weight: var(--font-weight-semibold);
 }
 
+/* Disabled input styling */
 input:disabled,
 textarea:disabled {
   opacity: 0.7;
@@ -200,6 +220,7 @@ textarea:disabled {
   background-color: var(--bg-color-light);
 }
 
+/* Error message hidden state */
 .error-form {
   display: none;
   visibility: hidden;
@@ -208,11 +229,13 @@ textarea:disabled {
   margin-top: var(--space-xs);
 }
 
+/* Error message visible state */
 .error-form[data-error-visible="true"] {
   display: block;
   visibility: visible;
 }
 
+/* Modal footer layout */
 .modal-footer {
   display: grid;
   justify-content: center;
@@ -223,6 +246,7 @@ textarea:disabled {
   color: var(--txt-color-primary);
 }
 
+/* Submit button styling */
 .modal-footer button {
   width: auto;
   min-width: 120px;
@@ -239,20 +263,24 @@ textarea:disabled {
   transition: var(--transition-normal);
 }
 
+/* Button hover and active background */
 .modal-footer button:not(:disabled):hover,
 .modal-footer button:not(:disabled):active {
   background: var(--bg-color-secondary);
   border-color: var(--bg-color-secondary);
 }
 
+/* Button hover shadow */
 .modal-footer button:not(:disabled):hover {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%);
 }
 
+/* Button active press effect */
 .modal-footer button:not(:disabled):active {
   transform: translateY(1px);
 }
 
+/* Button disabled state */
 .modal-footer button:disabled,
 .modal-footer .disabled {
   cursor: not-allowed;
@@ -262,17 +290,28 @@ textarea:disabled {
   opacity: 1;
 }
 
+/* Button success state */
 .modal-footer .success {
   background: var(--color-success);
-  border-color: var(--color-success);
+  border-color: #1e7a5f;
   color: var(--color-white);
+  box-shadow:
+    0 0 0 0 rgb(39 158 122 / 70%),
+    0 4px 6px -1px rgb(0 0 0 / 10%);
+  animation: success-pulse 0.6s ease-out;
+  cursor: default;
+}
+
+/* Success hover state */
+.modal-footer .success:hover {
+  background: var(--color-success);
+  border-color: #1e7a5f;
+  transform: none;
 }
 
 /* =========================
   Responsive Design
 ========================= */
-
-/* Tablet: 768px - 1023px */
 @media (width >= 768px) and (width <= 1023px) {
   .modal-content {
     max-width: 600px;
@@ -280,7 +319,6 @@ textarea:disabled {
   }
 }
 
-/* Desktop: 1024px+ */
 @media (width >= 1024px) {
   .modal-content {
     max-width: 700px;
@@ -288,9 +326,7 @@ textarea:disabled {
   }
 }
 
-/* Mobile: 0 - 767px */
 @media (width <= 767px) {
-  /* Modal */
   .modal {
     position: fixed;
     top: 0;
@@ -312,7 +348,7 @@ textarea:disabled {
     max-height: 100vh;
     transform: none;
     margin: 0;
-    padding: 20px;
+    padding: var(--mobile-padding);
     border-radius: 0;
     overflow: hidden auto;
     -webkit-overflow-scrolling: touch;

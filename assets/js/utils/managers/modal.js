@@ -1,4 +1,6 @@
-import { getModalRefs, getFormElements, formFieldNames } from '../../constants.js';
+// Contact modal open and close operations
+
+import { getModalRefs, getFormElements, formFieldNames } from '../../config.js';
 import { forEachFormField, toggleScroll } from '../../helpers/helper.js';
 import { aria } from '../accessibility/aria.js';
 import { setupFocusCycle, cleanupFocusCycle, toggleBackgroundContent, blurActive } from '../accessibility/focus.js';
@@ -6,14 +8,13 @@ import { mobileKeyboard } from '../accessibility/mobile.js';
 import { initializeModalAccessibility } from '../accessibility/modal.js';
 import { errorDisplay } from '../errorHandler.js';
 
-import { getSafeDuration } from './animationManager.js';
-import { resetCharacterCount, addCharacterCountListeners, removeCharacterCountListeners } from './characterCountManager.js';
-import { submitForm } from './submissionManager.js';
+import { getSafeDuration } from './animation.js';
+import { resetCharacterCount, addCharacterCountListeners, removeCharacterCountListeners } from './characterCount.js';
+import { submitForm } from './submission.js';
 import { submitButtonState } from './submitButtonState.js';
-import { setupFieldValidation } from './validationManager.js';
+import { setupFieldValidation } from './validation.js';
 
-const { mainModal, form, submitButton } = getModalRefs();
-
+// Reset all form input states
 const resetInputStates = () => {
   forEachFormField(getFormElements(), formFieldNames, element => {
     element.value = '';
@@ -24,6 +25,7 @@ const resetInputStates = () => {
   });
 };
 
+// Reset form and modal to initial state
 const resetFormAndModal = () => {
   requestAnimationFrame(() => {
     const { contactForm, contactModal } = getFormElements();
@@ -35,29 +37,22 @@ const resetFormAndModal = () => {
   });
 };
 
+// Toggle modal visibility
 const toggleModal = show => {
-  const display = {
-    action: show ? 'add' : 'remove',
-    apply: () => {
-      if (mainModal) mainModal.classList[display.action]('show');
-      if (form) form.classList[display.action]('show');
-    },
-  };
+  const { mainModal, form, submitButton } = getModalRefs();
+  const action = show ? 'add' : 'remove';
 
-  const ariaState = {
-    hidden: !show,
-    apply: () => {
-      if (mainModal) aria.setHidden(mainModal, ariaState.hidden);
-      if (form) aria.setHidden(form, ariaState.hidden);
-      if (submitButton) aria.setHidden(submitButton, ariaState.hidden);
-    },
-  };
+  mainModal?.classList[action]('show');
+  form?.classList[action]('show');
 
-  display.apply();
-  ariaState.apply();
+  aria.setHidden(mainModal, !show);
+  aria.setHidden(form, !show);
+  aria.setHidden(submitButton, !show);
 };
 
+// Open contact modal
 export const openModal = () => {
+  const { mainModal } = getModalRefs();
   toggleModal(true);
   toggleScroll(true);
   toggleBackgroundContent(true);
@@ -68,27 +63,24 @@ export const openModal = () => {
   resetCharacterCount();
   addCharacterCountListeners();
 
-  const openingDuration = getSafeDuration(250);
   setTimeout(() => {
-    const { firstname } = getFormElements();
-    setupFocusCycle(mainModal, firstname);
-  }, openingDuration);
+    setupFocusCycle(mainModal, getFormElements().firstname);
+  }, getSafeDuration(250));
 };
 
+// Close contact modal
 export const closeModal = async () => {
+  const { mainModal } = getModalRefs();
   if (!mainModal) return;
 
   mainModal.classList.add('closing');
-
-  const closingDuration = getSafeDuration(200);
-  await new Promise(resolve => setTimeout(resolve, closingDuration));
+  await new Promise(resolve => setTimeout(resolve, getSafeDuration(200)));
 
   cleanupFocusCycle(mainModal);
   toggleScroll(false);
   toggleBackgroundContent(false);
   mobileKeyboard.resetModalPosition();
   toggleModal(false);
-
   mainModal.classList.remove('closing');
 
   resetFormAndModal();
@@ -96,8 +88,10 @@ export const closeModal = async () => {
   removeCharacterCountListeners();
 };
 
-export const isModalOpen = () => Boolean(mainModal?.classList?.contains('show'));
+// Check if modal is open
+export const isModalOpen = () => Boolean(getModalRefs().mainModal?.classList?.contains('show'));
 
+// Setup modal event listeners and handlers
 export const setupModalEventListeners = (photographerName = '') => {
   initializeModalAccessibility({
     photographerName,

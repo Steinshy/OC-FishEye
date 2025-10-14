@@ -1,6 +1,8 @@
 /* =========================
   Media Sort Button & Dropdown
 ========================= */
+
+/* Sort section container */
 .section-sort {
   display: flex;
   flex-direction: row;
@@ -15,6 +17,7 @@
   z-index: var(--z-dropdown);
 }
 
+/* Sort label styling */
 .section-sort h2 {
   color: var(--txt-color-primary);
   margin: 0;
@@ -22,12 +25,14 @@
   font-size: 1rem;
 }
 
+/* Sort button wrapper */
 .sort-button {
   position: relative;
   display: inline-block;
   margin-left: var(--space-sm);
 }
 
+/* Sort button styling */
 .sort-button button {
   background: var(--bg-color-primary);
   color: var(--color-white);
@@ -43,12 +48,14 @@
   min-width: 150px;
 }
 
+/* Dropdown arrow indicator */
 .sort-button button::after {
   content: "▼";
   margin-left: 10px;
   font-size: 12px;
 }
 
+/* Button disabled state */
 .sort-button button:disabled,
 .sort-button [aria-disabled="true"] {
   cursor: not-allowed;
@@ -58,14 +65,17 @@
   opacity: 0.8;
 }
 
+/* Button hover state */
 .sort-button button:hover {
   background: var(--bg-color-secondary);
 }
 
+/* Rotate arrow when open */
 .sort-button [aria-expanded="true"]::after {
   transform: rotate(180deg);
 }
 
+/* Dropdown options container */
 .sort-options {
   visibility: hidden;
   display: none;
@@ -88,6 +98,7 @@
     visibility 0s linear 0.2s;
 }
 
+/* Visible dropdown state */
 .sort-options.show {
   visibility: visible;
   display: block;
@@ -100,22 +111,27 @@
   animation: slide-down 0.2s ease forwards;
 }
 
+/* Stagger animation for options */
 .sort-options.show li {
   animation: slide-in-stagger 0.2s ease both;
 }
 
+/* First option delay */
 .sort-options.show li:nth-child(1) {
   animation-delay: 0.03s;
 }
 
+/* Second option delay */
 .sort-options.show li:nth-child(2) {
   animation-delay: 0.06s;
 }
 
+/* Third option delay */
 .sort-options.show li:nth-child(3) {
   animation-delay: 0.09s;
 }
 
+/* Option item styling */
 .sort-options li {
   padding: var(--space-sm) var(--space-lg);
   cursor: pointer;
@@ -123,10 +139,12 @@
   transition: all 0.15s ease;
 }
 
+/* Close animation */
 .sort-options:not(.show) {
   animation: slide-up 0.2s ease forwards;
 }
 
+/* Selected option styling */
 .sort-options [aria-selected="true"] {
   background: var(--bg-color-primary);
   color: var(--color-white);
@@ -135,8 +153,6 @@
 /* =========================
   Responsive Design
 ========================= */
-
-/* Mobile: 0 - 767px */
 @media (width <= 767px) {
   .section-sort {
     flex-direction: column;
@@ -164,8 +180,8 @@
   #media-button {
     width: 100%;
     min-height: var(--touch-target-comfortable);
-    font-size: var(--font-size-mobile-md);
-    padding: var(--space-sm) var(--space-md);
+    font-size: 0.9rem;
+    padding: 10px 14px;
     transition: all 0.2s ease;
   }
 
@@ -181,14 +197,5 @@
     min-height: var(--touch-target-comfortable);
     padding: var(--space-sm) var(--space-md);
     font-size: var(--font-size-mobile-md);
-  }
-}
-
-/* Extra small screens (320px and below) */
-@media (width <= 425px) {
-  .sort-button button,
-  #media-button {
-    font-size: 0.9rem;
-    padding: 10px 14px;
   }
 }

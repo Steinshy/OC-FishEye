@@ -1,31 +1,33 @@
-import { getPageElements } from '../../constants.js';
+// Render and update media card grid
+
+import { getPageElements, media } from '../../config.js';
 import { generateCard } from '../../photographer/generate/generateCard.js';
 import { generateMedia } from '../../photographer/generate/generateMedia.js';
-import { media } from '../../selectors.js';
 import { setupCardAccessibility } from '../accessibility/mediaCard.js';
 
-import { getSafeDuration } from './animationManager.js';
-import { openLightbox } from './lightboxManager.js';
-import { incrementLike } from './statsManager.js';
+import { getSafeDuration } from './animation.js';
+import { openLightbox } from './lightbox.js';
+import { incrementLike } from './stats.js';
 
+// Reorder media cards with animation
 export const updateMediasOrder = async sortedMedias => {
   const { mainMedias } = getPageElements();
   if (!mainMedias || !Array.isArray(sortedMedias)) return;
 
-  const existingCards = mainMedias.querySelectorAll(media.card);
-  if (!existingCards.length) return;
+  const cards = mainMedias.querySelectorAll(media.card);
+  if (!cards.length) return;
 
-  existingCards.forEach(card => card.classList.add('sorting'));
+  cards.forEach(card => card.classList.add('sorting'));
   await new Promise(resolve => setTimeout(resolve, getSafeDuration(200)));
 
-  const cardsMap = new Map();
-  existingCards.forEach(card => {
-    const mediaId = card.getAttribute('data-media-id');
-    if (mediaId) cardsMap.set(mediaId, card);
+  const map = new Map();
+  cards.forEach(card => {
+    const id = card.getAttribute('data-media-id');
+    if (id) map.set(id, card);
   });
 
   sortedMedias.forEach(media => {
-    const card = cardsMap.get(String(media.id));
+    const card = map.get(String(media.id));
     if (card) {
       card.classList.remove('sorting');
       mainMedias.appendChild(card);
@@ -33,16 +35,17 @@ export const updateMediasOrder = async sortedMedias => {
   });
 };
 
+// Render all media cards to page
 export const renderMediasCards = sortedMedias => {
   const { mainMedias } = getPageElements();
   if (!mainMedias || !Array.isArray(sortedMedias)) return;
 
   mainMedias.innerHTML = '';
   sortedMedias.forEach(media => {
-    const mediaElement = generateMedia(media);
-    if (mediaElement) {
-      const card = generateCard(media, mediaElement);
-      setupCardAccessibility(card, media, clickedMedia => openLightbox(clickedMedia.id, sortedMedias), incrementLike);
+    const element = generateMedia(media);
+    if (element) {
+      const card = generateCard(media, element);
+      setupCardAccessibility(card, media, clicked => openLightbox(clicked.id, sortedMedias), incrementLike);
       mainMedias.appendChild(card);
     }
   });

@@ -1,30 +1,28 @@
-import { getPageElements } from '../constants.js';
+// Photographer page initialization and setup
+
+import { getPageElements } from '../config.js';
 import { getUrlParam } from '../helpers/helper.js';
-import { getPhotographer, getPhotographerMedias } from '../utils/managers/dataManager.js';
-import { initializeLightbox } from '../utils/managers/lightboxManager.js';
-import { hideLoadingScreen } from '../utils/managers/loadingManager.js';
-import { renderMediasCards } from '../utils/managers/mediaCardsManager.js';
-import { setupModalEventListeners } from '../utils/managers/modalManager.js';
-import { initializeStats } from '../utils/managers/statsManager.js';
+import { getPhotographer, getPhotographerMedias } from '../utils/managers/data.js';
+import { initializeLightbox } from '../utils/managers/lightbox.js';
+import { hideLoadingScreen } from '../utils/managers/loading.js';
+import { renderMediasCards } from '../utils/managers/mediaCards.js';
+import { setupModalEventListeners } from '../utils/managers/modal.js';
+import { initializeStats } from '../utils/managers/stats.js';
 
 import { generatePhotographerHeader } from './generate/generatePhotographerHeader.js';
 import { initScrollToTop } from './scrollToTop.js';
 import { initSortButton } from './sortButton.js';
 
+// Initialize photographer page with data and features
 export const photographerPage = async () => {
-  const { main } = getPageElements();
-  const urlId = getUrlParam('id', true);
-  const [photographer, photographerMedias] = await Promise.all([getPhotographer(urlId), getPhotographerMedias(urlId)]);
+  const [photographer, photographerMedias] = await Promise.all([getPhotographer(getUrlParam('id', true)), getPhotographerMedias(getUrlParam('id', true))]);
   if (!photographer || !Array.isArray(photographerMedias)) return;
 
   const header = generatePhotographerHeader(photographer);
-  if (header) main.prepend(header);
+  if (header) getPageElements().main.prepend(header);
 
   initializeStats(photographerMedias, photographer.price || 0);
-
-  const sortedMedias = initSortButton(photographerMedias);
-  renderMediasCards(sortedMedias);
-
+  renderMediasCards(initSortButton(photographerMedias));
   initScrollToTop();
   initializeLightbox();
   setupModalEventListeners(photographer.name);

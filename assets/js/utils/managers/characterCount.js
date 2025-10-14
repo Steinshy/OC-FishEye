@@ -1,55 +1,56 @@
-import { getFormElements } from '../../constants.js';
+// Character counter for message textarea
+
+import { getFormElements } from '../../config.js';
 import { aria } from '../accessibility/aria.js';
 import { events } from '../accessibility/keyboard.js';
 
-const { characterCount, message } = getFormElements();
-
+// Maximum message length
 const maxLength = 500;
-const eventTypes = ['input', 'keyup', 'paste'];
 let eventManager = null;
 
+// Update counter visual state
 const updateCounterClasses = (element, status) => {
   element.classList.remove('warning', 'danger');
   if (status) element.classList.add(status);
 };
 
+// Reset character count to zero
 export const resetCharacterCount = () => {
+  const { characterCount } = getFormElements();
   if (!characterCount) return;
-
   characterCount.textContent = '0/500';
   updateCounterClasses(characterCount, '');
   aria.setLive(characterCount, 'polite');
 };
 
-const getCounterStatus = (length, max) => {
-  if (length >= max) return 'danger';
-  if (length >= max * 0.9) return 'warning';
-  return '';
-};
-
+// Update character count display
 const updateCharacterCount = () => {
+  const { message, characterCount } = getFormElements();
   if (!message || !characterCount) return;
 
   const { length } = message.value;
-  const status = getCounterStatus(length, maxLength);
+  const status = length >= maxLength ? 'danger' : length >= maxLength * 0.9 ? 'warning' : '';
 
   characterCount.textContent = `${length}/${maxLength}`;
   updateCounterClasses(characterCount, status);
 };
 
+// Attach character count event listeners
 export const addCharacterCountListeners = () => {
+  const { message } = getFormElements();
   if (!message) return;
 
-  const listeners = eventTypes.map(event => ({
-    element: message,
-    event,
-    handler: updateCharacterCount,
-  }));
-
-  eventManager = events.createEventManager(listeners);
+  eventManager = events.createEventManager(
+    ['input', 'keyup', 'paste'].map(event => ({
+      element: message,
+      event,
+      handler: updateCharacterCount,
+    }))
+  );
   eventManager.attach();
 };
 
+// Remove character count event listeners
 export const removeCharacterCountListeners = () => {
   eventManager?.detach();
   eventManager = null;

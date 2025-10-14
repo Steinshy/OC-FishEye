@@ -1,31 +1,28 @@
+// Generate responsive image URLs for different formats
+
 import { getMobileUrl, isMobileOrTablet } from './helper.js';
 
+// Get desktop and mobile URLs for webp and jpg
 export const getResponsiveImageUrls = (webpUrl, jpgUrl, useMobile = null) => {
-  const shouldUseMobile = useMobile !== null ? useMobile : isMobileOrTablet();
-  const webpMobile = getMobileUrl(webpUrl);
-  const jpgMobile = getMobileUrl(jpgUrl);
-
+  const isMobile = useMobile !== null ? useMobile : isMobileOrTablet();
   return {
     webp: {
       desktop: webpUrl,
-      mobile: webpMobile,
-      url: shouldUseMobile ? webpMobile : webpUrl,
+      mobile: getMobileUrl(webpUrl),
+      url: isMobile ? getMobileUrl(webpUrl) : webpUrl,
     },
     jpg: {
       desktop: jpgUrl,
-      mobile: jpgMobile,
-      url: shouldUseMobile ? jpgMobile : jpgUrl,
+      mobile: getMobileUrl(jpgUrl),
+      url: isMobile ? getMobileUrl(jpgUrl) : jpgUrl,
     },
-    useMobile: shouldUseMobile,
+    useMobile: isMobile,
   };
 };
 
-export const getResponsivePosterUrl = (posterUrl, isMobile = false) => {
-  return isMobile ? getMobileUrl(posterUrl) : posterUrl;
-};
+// Get poster URL for video based on device
+export const getResponsivePosterUrl = (posterUrl, isMobile = false) => (isMobile ? getMobileUrl(posterUrl) : posterUrl);
 
-export const getMediaResponsiveUrls = (mediaElement, useHighQuality = false) => {
-  const { webpUrl, jpgUrl } = mediaElement.medias;
-  const useMobile = useHighQuality ? false : null;
-  return getResponsiveImageUrls(webpUrl, jpgUrl, useMobile);
-};
+// Get responsive URLs for media element
+export const getMediaResponsiveUrls = (mediaElement, useHighQuality = false) =>
+  getResponsiveImageUrls(mediaElement.medias.webpUrl, mediaElement.medias.jpgUrl, useHighQuality ? false : null);

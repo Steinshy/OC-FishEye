@@ -1,46 +1,21 @@
-# Dependencies
 node_modules/
 package-lock.json
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Build outputs
 dist/
 build/
 *.min.js
 *.min.css
-
-# Configuration files
-eslint.config.js
-.prettierrc
-.prettierrc*
-.stylelintrc.json
-.htmlhintrc.json
-.lintstagedrc.js
-.eslintrc*
-.babelrc*
-*.config.js
-*.config.json
-*.config.yaml
-*.config.yml
-jest.config.*
-vite.config.*
-webpack.config.*
-rollup.config.*
-
-# Scripts
-scripts/
-
-# Generated files
-.DS_Store
 *.log
 
-# Git
-.git/
-.gitignore
+*.config.js
+*.config.json
+.prettierrc*
+.stylelintrc*
+.htmlhintrc*
+.htmlvalidate*
+.lintstagedrc*
 
-# Media files
+scripts/
+
 *.jpg
 *.jpeg
 *.png
@@ -48,23 +23,6 @@ scripts/
 *.svg
 *.webp
 *.mp4
-*.avi
-*.mov
 
-# Fonts
-*.ttf
-*.woff
-*.woff2
-*.eot
-
-# Documentation
-*.md
-*.pdf
-
-# Lighthouse
 lighthouse*.html
-lighthouse-report*.html
 .lighthouseci/
-lhci-reports/
-lighthouse-ci/
-*.lighthouse.json

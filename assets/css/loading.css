@@ -1,6 +1,8 @@
 /* =========================
   Loading Screen
 ========================= */
+
+/* General loading state display */
 .loading-state {
   display: flex;
   justify-content: center;
@@ -9,6 +11,7 @@
   padding: var(--space-2xl);
 }
 
+/* Loading state text */
 .loading-state p {
   font-size: 1.1rem;
   color: #901c1c;
@@ -18,6 +21,8 @@
 /* =========================
   Loading Screen Animation
 ========================= */
+
+/* Fullscreen loading overlay */
 .loading-screen {
   position: fixed;
   inset: 0;
@@ -35,6 +40,7 @@
     visibility 0.3s ease;
 }
 
+/* Loading content container */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -42,6 +48,7 @@
   gap: 40px;
 }
 
+/* Camera shutter animation container */
 .camera-shutter {
   position: relative;
   width: 120px;
@@ -51,6 +58,7 @@
   justify-content: center;
 }
 
+/* Animated shutter blade element */
 .shutter-blade {
   position: absolute;
   width: 100%;
@@ -62,24 +70,28 @@
   animation: focusRing 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
+/* First blade timing */
 .shutter-blade:nth-child(1) {
   width: 100%;
   height: 100%;
   animation-delay: 0s;
 }
 
+/* Second blade timing */
 .shutter-blade:nth-child(2) {
   width: 80%;
   height: 80%;
   animation-delay: 0.15s;
 }
 
+/* Third blade timing */
 .shutter-blade:nth-child(3) {
   width: 60%;
   height: 60%;
   animation-delay: 0.3s;
 }
 
+/* Fourth blade timing and color */
 .shutter-blade:nth-child(4) {
   width: 40%;
   height: 40%;
@@ -89,11 +101,7 @@
   animation-delay: 0.45s;
 }
 
-.shutter-blade:nth-child(5),
-.shutter-blade:nth-child(6) {
-  display: none;
-}
-
+/* Loading text styling */
 .loading-text {
   color: #333;
   font-size: 1.2rem;
@@ -104,47 +112,19 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Animated dots after text */
 .loading-text::after {
   content: "";
   animation: dots 1.5s steps(4, end) infinite;
 }
 
-@keyframes focusRing {
-  0% {
-    transform: rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-  100% {
-    transform: rotate(360deg);
-    opacity: 1;
-  }
-}
-
-@keyframes dots {
-  0%,
-  20% {
-    content: "";
-  }
-  40% {
-    content: ".";
-  }
-  60% {
-    content: "..";
-  }
-  80%,
-  100% {
-    content: "...";
-  }
-}
-
+/* Hidden state when loaded */
 .loading-screen.loaded {
   opacity: 0;
   visibility: hidden;
 }
 
+/* Stop animations when loaded */
 .loading-screen.loaded .shutter-blade,
 .loading-screen.loaded .loading-text::after {
   animation: none;
@@ -153,9 +133,7 @@
 /* =========================
   Responsive Design
 ========================= */
-
-/* Extra small screens (320px and below) */
-@media (width <= 425px) {
+@media (width <= 767px) {
   .camera-shutter {
     width: 90px;
     height: 90px;

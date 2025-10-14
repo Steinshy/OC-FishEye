@@ -1,24 +1,29 @@
+// Console logging utilities for debugging
+
 export const logData = {
-  formSubmission(formData) {
+  // Log form submission data
+  formSubmission(data) {
     console.info('Form submission data:', {
-      firstname: formData.firstname || '',
-      lastname: formData.lastname || '',
-      email: formData.email || '',
-      message: formData.message || '',
+      firstname: data.firstname || '',
+      lastname: data.lastname || '',
+      email: data.email || '',
+      message: data.message || '',
     });
   },
 
-  photographer(photographer) {
+  // Log photographer information
+  photographer(info) {
     console.info('Photographer loaded:', {
-      id: photographer.id,
-      name: photographer.name,
-      city: photographer.city,
-      country: photographer.country,
-      tagline: photographer.tagline,
-      price: photographer.price,
+      id: info.id,
+      name: info.name,
+      city: info.city,
+      country: info.country,
+      tagline: info.tagline,
+      price: info.price,
     });
   },
 
+  // Log single media item
   photographerMedia(media) {
     console.info('Photographer media:', {
       id: media.id,
@@ -32,10 +37,12 @@ export const logData = {
     });
   },
 
-  photographerMedias(medias, photographerId, photographerName) {
-    console.info(`The photographer with id ${photographerId} has been loaded. \n ${photographerName} has ${medias.length} medias in total:`, medias);
+  // Log all photographer medias
+  photographerMedias(medias, id, name) {
+    console.info(`The photographer with id ${id} has been loaded. \n ${name} has ${medias.length} medias in total:`, medias);
   },
 
+  // Log custom data with label
   custom(label, data) {
     console.info(`${label}:`, data);
   },

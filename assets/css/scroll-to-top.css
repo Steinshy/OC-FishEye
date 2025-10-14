@@ -1,6 +1,8 @@
 /* =========================
   Scroll to Top Button
 ========================= */
+
+/* Fixed scroll button styling */
 .scroll-to-top {
   position: fixed;
   bottom: 90px;
@@ -24,24 +26,27 @@
   transition: all 0.3s ease;
 }
 
+/* Visible button state */
 .scroll-to-top.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
+/* Button hover effect */
 .scroll-to-top:hover {
   background: var(--bg-color-secondary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
 
+/* Button active press */
 .scroll-to-top:active {
   transform: translateY(0);
   transition-duration: 0.1s;
 }
 
-/* Hide when modal or lightbox is shown */
+/* Hide button when modal is open */
 :is(.modal.show, .lightbox-modal.show) ~ .scroll-to-top {
   opacity: 0;
   visibility: hidden;
@@ -51,8 +56,33 @@
 }
 
 /* =========================
+  Responsive Design
+========================= */
+@media (width >= 768px) and (width <= 1023px) {
+  .scroll-to-top {
+    bottom: 68px;
+    right: var(--space-md);
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (width <= 767px) {
+  .scroll-to-top {
+    width: 44px;
+    height: 44px;
+    bottom: calc(48px + env(safe-area-inset-bottom, 0) + 10px);
+    right: var(--space-sm);
+    font-size: 1.3rem;
+  }
+}
+
+/* =========================
   Touch Devices
 ========================= */
+
+/* Disable hover effect on touch */
 @media (hover: none) and (pointer: coarse) {
   .scroll-to-top:hover {
     background: var(--bg-color-primary);
@@ -60,33 +90,8 @@
     box-shadow: var(--shadow-md);
   }
 
+  /* Remove focus outline on touch */
   .scroll-to-top:focus {
     outline: none;
-  }
-}
-
-/* =========================
-  Responsive Design
-========================= */
-
-/* Tablet: 768px - 1023px */
-@media (width >= 768px) and (width <= 1023px) {
-  .scroll-to-top {
-    bottom: 75px;
-    right: var(--space-xs);
-    width: 44px;
-    height: 44px;
-    font-size: 1.3rem;
-  }
-}
-
-/* Mobile: 0 - 767px */
-@media (width <= 767px) {
-  .scroll-to-top {
-    width: 48px;
-    height: 48px;
-    bottom: 80px;
-    right: 16px;
-    font-size: 1.5rem;
   }
 }

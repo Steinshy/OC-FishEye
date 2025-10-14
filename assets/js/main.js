@@ -1,7 +1,10 @@
+// Main application entry point
+
 import { photographerPage } from './photographer/page.js';
 import { safeAsync } from './utils/errorHandler.js';
-import { initLoadingManager, hideLoadingScreen } from './utils/managers/loadingManager.js';
+import { initLoadingManager, hideLoadingScreen } from './utils/managers/loading.js';
 
+// Initialize application on page load
 const initializeApp = () => {
   initLoadingManager(3000);
 

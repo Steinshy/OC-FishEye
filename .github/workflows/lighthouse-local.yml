@@ -11,7 +11,7 @@ on:
 
 env:
   NODE_VERSION: 24
-  PHOTOGRAPHER_IDS: "243 930 82 527 925 195"
+  PHOTOGRAPHER_IDS: 243 930 82 527 925 195
 
 permissions:
   contents: read
@@ -23,8 +23,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lighthouse-local:
-    name: Lighthouse - Local Build
+  lighthouse:
+    name: Lighthouse Local
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,27 +32,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: npm
 
-      - name: Install
-        run: npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
 
-      - name: Start server
+      - name: Start development server
         run: |
           npm run dev &
-          echo "Waiting for server to be ready..."
           for i in {1..30}; do
             if curl -s http://localhost:8080/ > /dev/null; then
-              echo "Server is ready!"
+              echo "Server ready"
               break
             fi
-            echo "Attempt $i: Server not ready yet, waiting..."
             sleep 2
           done
-          curl -I http://localhost:8080/
 
-      - name: Generate URLs
-        id: urls_local
+      - name: Generate test URLs
+        id: urls
         run: |
           URLS="http://localhost:8080/"
           for id in ${{ env.PHOTOGRAPHER_IDS }}; do
@@ -63,16 +60,16 @@ jobs:
           echo "$URLS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Run Lighthouse (Local)
+      - name: Run Lighthouse
         uses: treosh/lighthouse-ci-action@v11
         with:
-          urls: ${{ steps.urls_local.outputs.urls }}
+          urls: ${{ steps.urls.outputs.urls }}
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
 
       - name: Upload reports
-        if: always() && hashFiles('.lighthouseci/**/*') != ''
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-local

@@ -1,7 +1,10 @@
-import { getFormElements, formFieldNames, getErrorElement } from '../constants.js';
+// Error handling and form error display utilities
+
+import { getFormElements, formFieldNames, getErrorElement } from '../config.js';
 
 import { aria } from './accessibility/aria.js';
 
+// Wrap async function with error handling
 export const safeAsync = async (asyncFn, fallback = null, context = '') => {
   try {
     return await asyncFn();
@@ -11,12 +14,14 @@ export const safeAsync = async (asyncFn, fallback = null, context = '') => {
   }
 };
 
+// Form error display manager
 export const errorDisplay = {
+  // Reset all form field error states
   resetErrorVisibility() {
-    const formElements = getFormElements();
-    formFieldNames.forEach(fieldName => {
-      const field = formElements[fieldName];
-      const errorElement = getErrorElement(fieldName);
+    const form = getFormElements();
+    formFieldNames.forEach(name => {
+      const field = form[name];
+      const error = getErrorElement(name);
 
       if (field) {
         aria.updateAttributes(field, {
@@ -25,19 +30,18 @@ export const errorDisplay = {
         });
       }
 
-      if (errorElement) {
-        aria.updateAttributes(errorElement, { 'data-error-visible': 'false' });
+      if (error) {
+        aria.updateAttributes(error, { 'data-error-visible': 'false' });
       }
     });
   },
 
-  toggleError(targetKey, shouldShow, message) {
-    const errorElement = getErrorElement(targetKey);
-    if (errorElement) {
-      aria.updateAttributes(errorElement, { 'data-error-visible': shouldShow ? 'true' : 'false' });
-      if (message) {
-        errorElement.textContent = message;
-      }
+  // Show or hide error message for field
+  toggleError(key, show, message) {
+    const error = getErrorElement(key);
+    if (error) {
+      aria.updateAttributes(error, { 'data-error-visible': show ? 'true' : 'false' });
+      if (message) error.textContent = message;
     }
   },
 };

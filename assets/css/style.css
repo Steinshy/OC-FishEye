@@ -6,7 +6,7 @@
   Design System & Variables
 ========================= */
 
-/* Fallback font with size-adjust to match DM Sans metrics */
+/* System font fallback definition */
 @font-face {
   font-family: "DM Sans Fallback";
   font-display: swap;
@@ -29,7 +29,6 @@
   --txt-color-muted: #9ca3af;
   --color-white: #fff;
   --color-black: #000;
-  --color-dark: #000;
   --color-error: #ff4906;
   --color-success: #279e7a;
   --color-warning: #ff9800;
@@ -91,16 +90,13 @@
   --touch-target-comfortable: 48px;
   --touch-padding: 12px;
   --mobile-padding: 16px;
-  --tablet-padding: 24px;
-  --font-size-mobile-xs: 0.875rem;
-  --font-size-mobile-sm: 1rem;
-  --font-size-mobile-md: 1.125rem;
-  --font-size-mobile-lg: 1.25rem;
 }
 
 /* =========================
   CSS Reset & Base Styles
 ========================= */
+
+/* Universal box sizing reset */
 *,
 *::before,
 *::after {
@@ -109,6 +105,7 @@
   padding: 0;
 }
 
+/* Focus outline styling */
 *:focus-visible,
 .media-card:focus-within {
   outline: 3px solid rgb(144 28 28 / 30%);
@@ -116,21 +113,25 @@
   box-shadow: 0 0 0 3px rgb(144 28 28 / 8%);
 }
 
+/* Hide aria-hidden elements */
 [aria-hidden="true"] {
   display: none;
 }
 
+/* Remove list styling */
 ul,
 ol {
   list-style: none;
 }
 
+/* Inherit font for interactive elements */
 button,
 a {
   font: inherit;
   color: inherit;
 }
 
+/* Reset button styling */
 button {
   background: none;
   border: none;
@@ -315,61 +316,6 @@ footer p {
   min-height: 1.96rem;
 }
 
-.btn-base,
-.btn-primary,
-.btn-secondary,
-.card-base {
-  transition: var(--transition-normal);
-}
-
-.btn-base {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font: inherit;
-  color: inherit;
-}
-
-.btn-primary,
-.btn-secondary {
-  color: var(--color-white);
-}
-
-.btn-primary {
-  background: linear-gradient(0deg, var(--bg-color-primary) 0%, var(--bg-color-secondary) 100%);
-  font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-lg);
-  padding: var(--space-md) var(--space-lg);
-}
-
-.btn-primary:hover,
-.card-base:hover {
-  transform: translateY(-2px);
-}
-
-.btn-secondary {
-  background: var(--bg-color-primary);
-  border-radius: var(--radius-sm);
-  padding: var(--space-sm) var(--space-lg);
-  font-weight: var(--font-weight-medium);
-}
-
-.btn-secondary:hover {
-  background: var(--bg-color-secondary);
-}
-
-.card-base {
-  background: var(--color-white);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid #f0f0f0;
-  overflow: hidden;
-}
-
-.card-base:hover {
-  box-shadow: var(--shadow-md);
-}
-
 .profile-picture {
   width: 100%;
   height: 100%;
@@ -389,8 +335,6 @@ footer p {
 /* =========================
   Responsive Design
 ========================= */
-
-/* Tablet: 768px - 1023px */
 @media (width >= 768px) and (width <= 1023px) {
   .nav-logo {
     height: 2.2rem;
@@ -403,7 +347,7 @@ footer p {
   .photographers {
     padding: var(--tablet-padding);
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    gap: var(--space-xl);
     min-height: 450px;
   }
 
@@ -425,7 +369,6 @@ footer p {
   }
 }
 
-/* Desktop: 1024px+ */
 @media (width >= 1024px) {
   .nav-logo {
     height: 2.5rem;
@@ -456,7 +399,6 @@ footer p {
   }
 }
 
-/* Mobile: 0 - 767px */
 @media (width <= 767px) {
   .nav-logo {
     height: 32px;
@@ -619,12 +561,6 @@ footer p {
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
     transition-duration: 0.01ms;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: light;
   }
 }
 

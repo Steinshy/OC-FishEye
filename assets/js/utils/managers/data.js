@@ -1,10 +1,14 @@
+// Fetch and cache photographer data from API
+
 import { mediaCache } from '../../helpers/cache.js';
 import { buildPhotographer, buildPhotographerMedia } from '../../helpers/dataBuilders.js';
 import { logData } from '../../helpers/logData.js';
 import { safeAsync } from '../errorHandler.js';
 
+// API data file path
 const dataUrl = 'assets/api/data.json';
 
+// Fetch all photographers and media data
 const getPhotographers = async () => {
   return mediaCache.getOrCreate('photographersData', 'all', async () => {
     const response = await fetch(dataUrl, {
@@ -25,41 +29,40 @@ const getPhotographers = async () => {
   });
 };
 
+// Get single photographer by ID
 export const getPhotographer = async photographerId => {
   return await safeAsync(async () => {
-    const { photographers } = await getPhotographers();
-    const photographer = photographers.find(p => p.id === photographerId);
+    const photographer = (await getPhotographers()).photographers.find(p => p.id === photographerId);
     if (!photographer) {
       throw new Error(`Photographer not found: ${photographerId}`);
     }
-    const builtPhotographer = buildPhotographer(photographer);
-    logData.photographer(builtPhotographer);
-    return builtPhotographer;
+    const built = buildPhotographer(photographer);
+    logData.photographer(built);
+    return built;
   });
 };
 
+// Get all media for photographer
 export const getPhotographerMedias = async photographerId => {
   return await safeAsync(async () => {
-    const cacheKey = `media_${photographerId}`;
-
-    return mediaCache.getOrCreate('photographerMedias', cacheKey, async () => {
+    return mediaCache.getOrCreate('photographerMedias', `media_${photographerId}`, async () => {
       const { photographers, media } = await getPhotographers();
       const photographer = photographers.find(p => p.id === photographerId);
       if (!photographer) {
         throw new Error(`Photographer not found: ${photographerId}`);
       }
 
-      const photographerMedias = media
+      const medias = media
         .filter(item => item.photographerId === photographerId)
         .map(item => buildPhotographerMedia(item, photographer))
         .filter(Boolean);
 
-      if (!photographerMedias.length) {
+      if (!medias.length) {
         throw new Error(`No media found for photographer: ${photographerId}`);
       }
 
-      logData.photographerMedias(photographerMedias, photographerId, photographer.name);
-      return photographerMedias;
+      logData.photographerMedias(medias, photographerId, photographer.name);
+      return medias;
     });
   }, []);
 };

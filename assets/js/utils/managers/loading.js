@@ -1,16 +1,20 @@
-import { getLoadingScreen } from '../../constants.js';
+// Loading screen display manager
+
+import { getLoadingScreen } from '../../config.js';
 import { aria } from '../accessibility/aria.js';
 
-const loadingScreen = getLoadingScreen();
+// Track loading screen state
 let loadingHidden = false;
 
+// Initialize loading screen with timeout
 export const initLoadingManager = (maxTimeout = 3000) => {
-  if (!loadingScreen) return;
-
-  setTimeout(() => hideLoadingScreen(), maxTimeout);
+  const loadingScreen = getLoadingScreen();
+  if (loadingScreen) setTimeout(() => hideLoadingScreen(), maxTimeout);
 };
 
+// Hide loading screen with animation
 export const hideLoadingScreen = () => {
+  const loadingScreen = getLoadingScreen();
   if (loadingHidden || !loadingScreen) return;
   loadingHidden = true;
 
@@ -20,7 +24,9 @@ export const hideLoadingScreen = () => {
   setTimeout(() => loadingScreen?.remove(), 300);
 };
 
+// Show loading screen
 export const showLoadingScreen = () => {
+  const loadingScreen = getLoadingScreen();
   if (!loadingScreen) return;
 
   loadingHidden = false;

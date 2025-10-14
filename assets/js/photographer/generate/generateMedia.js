@@ -1,49 +1,53 @@
+// Generate media HTML elements for images and videos
+
 import { isMobileOrTablet } from '../../helpers/helper.js';
 import { getMediaResponsiveUrls, getResponsivePosterUrl } from '../../helpers/responsiveImages.js';
 
-const generatePicture = (mediaElement, useHighQuality = false) => {
-  const pictureMedia = document.createElement('div');
-  pictureMedia.className = 'media-picture';
-  pictureMedia.setAttribute('data-media-type', 'image');
-  pictureMedia.setAttribute('data-media-id', mediaElement.id);
+// Generate picture element with responsive sources
+const generatePicture = (media, useHighQuality = false) => {
+  const picture = document.createElement('div');
+  picture.className = 'media-picture';
+  picture.setAttribute('data-media-type', 'image');
+  picture.setAttribute('data-media-id', media.id);
 
-  const { webp, jpg } = getMediaResponsiveUrls(mediaElement, useHighQuality);
+  const { webp, jpg } = getMediaResponsiveUrls(media, useHighQuality);
 
-  pictureMedia.innerHTML = `
+  picture.innerHTML = `
     <picture>
       <source srcset="${webp.url}" type="image/webp" />
       <source srcset="${jpg.url}" type="image/jpeg" />
       <img
         class="media-image"
         src="${jpg.url}"
-        alt="${mediaElement.title || 'Média'}"
+        alt="${media.title || 'Média'}"
         loading="lazy"
         fetchpriority="low"
         decoding="async"
-        data-media-id="${mediaElement.id}"
-        aria-describedby="media-info-${mediaElement.id}"
+        data-media-id="${media.id}"
+        aria-describedby="media-info-${media.id}"
       />
     </picture>
   `;
 
-  return pictureMedia;
+  return picture;
 };
 
+// Generate video element with controls
 const generateVideo = (media, useHighQuality = false) => {
-  const videoMedia = document.createElement('div');
-  videoMedia.className = 'media-video';
-  videoMedia.setAttribute('data-media-type', 'video');
-  videoMedia.setAttribute('data-media-id', media.id);
+  const video = document.createElement('div');
+  video.className = 'media-video';
+  video.setAttribute('data-media-type', 'video');
+  video.setAttribute('data-media-id', media.id);
 
   const isMobile = useHighQuality ? false : isMobileOrTablet();
-  const posterUrl = getResponsivePosterUrl(media.medias.posterUrl, isMobile);
-  const captionPath = media.medias.mp4Url.replace('.mp4', '.vtt');
+  const poster = getResponsivePosterUrl(media.medias.posterUrl, isMobile);
+  const caption = media.medias.mp4Url.replace('.mp4', '.vtt');
 
-  videoMedia.innerHTML = `
+  video.innerHTML = `
     <video
       data-media-type="video"
       data-media-id="${media.id}"
-      poster="${posterUrl}"
+      poster="${poster}"
       preload="none"
       fetchpriority="auto"
       controls
@@ -57,7 +61,7 @@ const generateVideo = (media, useHighQuality = false) => {
       <source src="${media.medias.mp4Url}" type="video/mp4">
       <track
         kind="captions"
-        src="${captionPath}"
+        src="${caption}"
         srclang="fr"
         label="Français"
       >
@@ -65,17 +69,18 @@ const generateVideo = (media, useHighQuality = false) => {
     </video>
   `;
 
-  return videoMedia;
+  return video;
 };
 
-export const generateMedia = (photographerMedia, useHighQuality = false) => {
-  if (!photographerMedia) return null;
+// Generate media element based on type
+export const generateMedia = (media, useHighQuality = false) => {
+  if (!media) return null;
 
-  switch (photographerMedia.mediaType) {
+  switch (media.mediaType) {
     case 'image':
-      return generatePicture(photographerMedia, useHighQuality);
+      return generatePicture(media, useHighQuality);
     case 'video':
-      return generateVideo(photographerMedia, useHighQuality);
+      return generateVideo(media, useHighQuality);
     default:
       return null;
   }

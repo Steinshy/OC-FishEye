@@ -1,21 +1,7 @@
-# Dependencies
 node_modules/
 dist/
 build/
-coverage/
-.nyc_output/
 *.min.html
-*.min.js
-.DS_Store
 *.log
-.github/
-.husky/
-husky/
-*.config.js
-
-# Lighthouse
 lighthouse*.html
-lighthouse-report*.html
 .lighthouseci/
-lhci-reports/
-lighthouse-ci/

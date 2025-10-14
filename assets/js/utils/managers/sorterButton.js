@@ -1,14 +1,15 @@
-import { selectorTypes } from '../../constants.js';
+// Custom dropdown button for sorting medias
+
+import { selectorTypes } from '../../config.js';
 import { aria } from '../accessibility/aria.js';
 import { focusFirst, createFocusCycle } from '../accessibility/focus.js';
 import { handlers, events } from '../accessibility/keyboard.js';
 
-const findTargetOption = (options, container) => {
-  return (
-    options.find(option => aria.isSelected(option)) || options.find(option => !aria.isDisabled(option)) || focusFirst(container, selectorTypes.sortOptions)
-  );
-};
+// Find target option to focus
+const findTarget = (options, container) =>
+  options.find(option => aria.isSelected(option)) || options.find(option => !aria.isDisabled(option)) || focusFirst(container, selectorTypes.sortOptions);
 
+// Create accessible dropdown sorter button
 export const createSorterButton = ({ button, optionsContainer, options, onSelect, onClose, orientation = 'vertical' }) => {
   let isOpen = false;
   let focusCycleCleanup = null;
@@ -21,8 +22,7 @@ export const createSorterButton = ({ button, optionsContainer, options, onSelect
       aria.setExpanded(button, true);
       aria.toggleVisibility(optionsContainer, true);
 
-      const targetOption = findTargetOption(options, optionsContainer);
-      targetOption?.focus();
+      findTarget(options, optionsContainer)?.focus();
       focusCycleCleanup = createFocusCycle(optionsContainer, selectorTypes.sortOptions);
     },
 
@@ -51,34 +51,32 @@ export const createSorterButton = ({ button, optionsContainer, options, onSelect
     destroy() {
       focusCycleCleanup?.();
       focusCycleCleanup = null;
-      optionsContainer.removeEventListener('keydown', arrowHandler);
-      document.removeEventListener('keydown', escapeHandler);
+      optionsContainer.removeEventListener('keydown', arrowNav);
+      document.removeEventListener('keydown', escapeNav);
     },
   };
 
-  // Event handlers
-  const arrowHandler = handlers.createArrowNavigation({
+  const arrowNav = handlers.createArrowNavigation({
     elements: options,
     orientation,
-    onNavigate: nextElement => (dropdown.currentIndex = options.findIndex(option => option === nextElement)),
+    onNavigate: next => (dropdown.currentIndex = options.findIndex(opt => opt === next)),
     onActivate: element => dropdown.select(element),
   });
-  const escapeHandler = handlers.createEscapeHandler(() => dropdown.close());
+  const escapeNav = handlers.createEscapeHandler(() => dropdown.close());
 
-  // Attach event listeners
   button.addEventListener(
     'click',
     events.createClickHandler(() => dropdown.toggle())
   );
-  optionsContainer.addEventListener('keydown', arrowHandler);
-  document.addEventListener('keydown', escapeHandler);
+  optionsContainer.addEventListener('keydown', arrowNav);
+  document.addEventListener('keydown', escapeNav);
 
-  options.forEach(option => {
-    option.addEventListener(
+  options.forEach(opt =>
+    opt.addEventListener(
       'click',
-      events.createClickHandler(() => dropdown.select(option))
-    );
-  });
+      events.createClickHandler(() => dropdown.select(opt))
+    )
+  );
 
   return dropdown;
 };

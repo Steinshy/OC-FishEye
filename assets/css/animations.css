@@ -1,12 +1,15 @@
 /* ===================================
   FishEye - Animations & Transitions
 =================================== */
+
+/* Rotate element 360 degrees */
 @keyframes rotate {
   to {
     transform: rotate(360deg);
   }
 }
 
+/* Fade out and hide element */
 @keyframes hide-loading {
   to {
     opacity: 0;
@@ -15,6 +18,7 @@
   }
 }
 
+/* Pulse animation for likes */
 @keyframes pulse {
   0%,
   100% {
@@ -28,12 +32,14 @@
   }
 }
 
+/* Fade in from transparent */
 @keyframes fade-in {
   from {
     opacity: 0;
   }
 }
 
+/* Fade out to transparent */
 @keyframes fade-out {
   to {
     opacity: 0;
@@ -41,12 +47,14 @@
   }
 }
 
+/* Loading shimmer effect */
 @keyframes shimmer {
   to {
     background-position: -200% 0;
   }
 }
 
+/* Scale up from smaller size */
 @keyframes scale-in {
   from {
     opacity: 0;
@@ -57,6 +65,8 @@
 /* =========================
   Modal Animations
 ========================= */
+
+/* Modal transition timing */
 .modal,
 .lightbox-modal {
   transition:
@@ -64,26 +74,31 @@
     visibility 0.2s ease;
 }
 
+/* Modal fade in animation */
 .modal.show,
 .lightbox-modal.show {
   animation: modal-fade-in 0.2s ease forwards;
 }
 
+/* Modal content slide up */
 .modal.show .modal-content {
   animation: modal-slide-up 0.25s ease-out forwards;
   will-change: transform;
 }
 
+/* Modal fade out animation */
 .modal.closing,
 .lightbox-modal.closing {
   animation: modal-fade-out 0.25s ease forwards;
 }
 
+/* Modal content slide down */
 .modal.closing .modal-content {
   animation: modal-slide-down 0.2s ease-in forwards;
   will-change: transform;
 }
 
+/* Fade in with backdrop blur */
 @keyframes modal-fade-in {
   from {
     opacity: 0;
@@ -91,6 +106,7 @@
   }
 }
 
+/* Slide up from below screen */
 @keyframes modal-slide-up {
   from {
     transform: translate(-50%, -150%);
@@ -103,6 +119,7 @@
   }
 }
 
+/* Fade out with backdrop blur */
 @keyframes modal-fade-out {
   to {
     opacity: 0;
@@ -110,6 +127,7 @@
   }
 }
 
+/* Slide down below screen */
 @keyframes modal-slide-down {
   from {
     transform: translate(-50%, -50%);
@@ -124,16 +142,19 @@
 
 /* Mobile Modal Animations */
 @media (width <= 767px) {
+  /* Mobile modal slide up */
   .modal.show .modal-content {
     animation: modal-slide-up-mobile 0.25s ease-out forwards;
     will-change: transform;
   }
 
+  /* Mobile modal slide down */
   .modal.closing .modal-content {
     animation: modal-slide-down-mobile 0.2s ease-in forwards;
     will-change: transform;
   }
 
+  /* Mobile slide animation from bottom */
   @keyframes modal-slide-up-mobile {
     from {
       transform: translateY(-100%);
@@ -146,6 +167,7 @@
     }
   }
 
+  /* Mobile slide animation to bottom */
   @keyframes modal-slide-down-mobile {
     from {
       transform: translateY(0);
@@ -162,45 +184,55 @@
 /* =========================
   Lightbox Animations
 ========================= */
+
+/* Lightbox controls transition */
 .lightbox-close,
 .lightbox-nav {
   transition: all 0.2s ease;
 }
 
+/* Media element transition timing */
 .lightbox-transition {
   transition:
     opacity 0.1s ease,
     transform 0.1s ease;
 }
 
+/* Hidden state for media transition */
 .lightbox-hidden {
   opacity: 0;
   transform: scale(0.85);
 }
 
+/* Visible state for media transition */
 .lightbox-visible {
   opacity: 1;
   transform: scale(1);
 }
 
+/* Lightbox media zoom in */
 .lightbox-modal.show .lightbox-media-container {
   animation: lightbox-zoom-in 0.15s ease forwards;
 }
 
+/* Lightbox controls fade in */
 .lightbox-modal.show .lightbox-close,
 .lightbox-modal.show .lightbox-nav {
   animation: fade-in-up 0.15s ease 0.05s both;
 }
 
+/* Lightbox media zoom out */
 .lightbox-modal.closing .lightbox-media-container {
   animation: lightbox-zoom-out 0.1s ease forwards;
 }
 
+/* Lightbox controls fade out */
 .lightbox-modal.closing .lightbox-close,
 .lightbox-modal.closing .lightbox-nav {
   animation: fade-out-down 0.1s ease both;
 }
 
+/* Zoom in from smaller scale */
 @keyframes lightbox-zoom-in {
   from {
     transform: scale(0.8);
@@ -208,6 +240,7 @@
   }
 }
 
+/* Zoom out to smaller scale */
 @keyframes lightbox-zoom-out {
   to {
     transform: scale(0.8);
@@ -215,6 +248,7 @@
   }
 }
 
+/* Fade in while moving up */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -222,6 +256,7 @@
   }
 }
 
+/* Fade out while moving down */
 @keyframes fade-out-down {
   to {
     opacity: 0;
@@ -232,27 +267,34 @@
 /* =========================
   Like Button Animations
 ========================= */
+
+/* Like button transition */
 .media-info .likes {
   transition: all 0.2s ease;
 }
 
+/* Like button active state */
 .media-info .likes:active {
   animation: heart-pulse 0.4s ease;
 }
 
+/* Heart icon transition */
 .media-info .likes i {
   transition: transform 0.2s ease;
 }
 
+/* Heart pulse animation on click */
 .media-info .likes:active i,
 .media-info .likes .pulse {
   animation: heart-pulse 0.5s ease;
 }
 
+/* Pulse color change */
 .media-info .likes .pulse {
   color: #e74c3c;
 }
 
+/* Heart beat effect animation */
 @keyframes heart-pulse {
   0%,
   100% {
@@ -273,8 +315,70 @@
 }
 
 /* =========================
+  Loading Screen Animations
+========================= */
+
+/* Rotating ring animation */
+@keyframes focusRing {
+  0% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+/* Loading dots animation sequence */
+@keyframes dots {
+  0%,
+  20% {
+    content: "";
+  }
+  40% {
+    content: ".";
+  }
+  60% {
+    content: "..";
+  }
+  80%,
+  100% {
+    content: "...";
+  }
+}
+
+/* =========================
+  Modal Animations
+========================= */
+
+/* Success pulse animation */
+@keyframes success-pulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgb(39 158 122 / 70%),
+      0 4px 6px -1px rgb(0 0 0 / 10%);
+  }
+  50% {
+    box-shadow:
+      0 0 0 8px rgb(39 158 122 / 0%),
+      0 4px 6px -1px rgb(0 0 0 / 10%);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 rgb(39 158 122 / 0%),
+      0 4px 6px -1px rgb(0 0 0 / 10%);
+  }
+}
+
+/* =========================
   Sort Button Animations
 ========================= */
+
+/* Slide down from above */
 @keyframes slide-down {
   from {
     opacity: 0;
@@ -282,6 +386,7 @@
   }
 }
 
+/* Slide up above */
 @keyframes slide-up {
   to {
     opacity: 0;
@@ -289,6 +394,7 @@
   }
 }
 
+/* Slide in from left with delay */
 @keyframes slide-in-stagger {
   from {
     opacity: 0;
@@ -296,6 +402,7 @@
   }
 }
 
+/* Card sorting animation */
 @keyframes card-sorting {
   0%,
   100% {
@@ -310,23 +417,10 @@
 }
 
 /* =========================
-  Utility Classes
-========================= */
-.fade-in {
-  animation: fade-in 0.2s ease forwards;
-}
-
-.fade-out {
-  animation: fade-out 0.2s ease forwards;
-}
-
-.scale-in {
-  animation: scale-in 0.2s ease forwards;
-}
-
-/* =========================
   Performance Optimization
 ========================= */
+
+/* GPU acceleration for animations */
 .modal,
 .lightbox-modal,
 .sort-options,

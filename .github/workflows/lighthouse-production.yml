@@ -3,61 +3,57 @@ name: Lighthouse Production
 on:
   workflow_run:
     workflows:
-      - "Build and Deploy"
+      - Build and Deploy
     types:
       - completed
   workflow_dispatch:
 
 env:
-  PHOTOGRAPHER_IDS: "243 930 82 527 925 195"
+  BASE_URL: https://steinshy.github.io/FishEye
+  PHOTOGRAPHER_IDS: 243 930 82 527 925 195
 
 permissions:
   contents: read
   checks: write
 
 jobs:
-  lighthouse-production:
-    name: Lighthouse - Production
+  lighthouse:
+    name: Lighthouse Production
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.event.workflow_run.conclusion == 'success'
     steps:
-      - name: Wait for Pages deployment
+      - name: Wait for deployment
         run: |
-          BASE_URL="https://steinshy.github.io/FishEye"
-          echo "Waiting for GitHub Pages to be ready..."
           for i in {1..30}; do
-            if curl -s -o /dev/null -w "%{http_code}" "$BASE_URL/" | grep -q "200"; then
-              echo "GitHub Pages is ready!"
-              curl -I "$BASE_URL/"
+            if curl -s -o /dev/null -w "%{http_code}" "${{ env.BASE_URL }}/" | grep -q "200"; then
+              echo "Production ready"
               break
             fi
-            echo "Attempt $i: Pages not ready yet, waiting..."
             sleep 10
           done
 
-      - name: Generate URLs
-        id: urls_prod
+      - name: Generate test URLs
+        id: urls
         run: |
-          BASE="https://steinshy.github.io/FishEye"
-          URLS="$BASE/"
+          URLS="${{ env.BASE_URL }}/"
           for id in ${{ env.PHOTOGRAPHER_IDS }}; do
             URLS="$URLS
-          $BASE/photographer.html?id=$id"
+          ${{ env.BASE_URL }}/photographer.html?id=$id"
           done
           echo "urls<<EOF" >> $GITHUB_OUTPUT
           echo "$URLS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Run Lighthouse (Production)
+      - name: Run Lighthouse
         uses: treosh/lighthouse-ci-action@v11
         with:
-          urls: ${{ steps.urls_prod.outputs.urls }}
+          urls: ${{ steps.urls.outputs.urls }}
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
 
       - name: Upload reports
-        if: always() && hashFiles('.lighthouseci/**/*') != ''
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-production

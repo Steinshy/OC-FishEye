@@ -31,48 +31,48 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: npm
 
-      - name: Install
-        run: npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
 
-      - name: Format
+      - name: Format code
         continue-on-error: true
         run: npm run format
 
-      - name: Lint
+      - name: Lint code
         continue-on-error: true
         run: npm run lint
 
-      - name: Security
+      - name: Security scan
         continue-on-error: true
         run: npm audit --audit-level=moderate
 
   cleanup:
-    name: Cleanup Old Runs
+    name: Cleanup
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     steps:
-      - name: Delete old runs
+      - name: Delete old workflow runs
         uses: actions/github-script@v7
         with:
           script: |
-            const days = 30;
-            const keepMinimum = 6;
-            const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+            const RETENTION_DAYS = 30;
+            const MIN_KEEP = 6;
+            const cutoff = new Date(Date.now() - RETENTION_DAYS * 24 * 60 * 60 * 1000);
 
-            const workflows = await github.rest.actions.listWorkflowRunsForRepo({
+            const { data } = await github.rest.actions.listWorkflowRunsForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               per_page: 100
             });
 
-            const runs = workflows.data.workflow_runs
-              .filter(run => new Date(run.created_at) < cutoffDate)
+            const toDelete = data.workflow_runs
+              .filter(run => new Date(run.created_at) < cutoff)
               .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-              .slice(keepMinimum);
+              .slice(MIN_KEEP);
 
-            for (const run of runs) {
+            for (const run of toDelete) {
               console.log(`Deleting run ${run.id} from ${run.created_at}`);
               await github.rest.actions.deleteWorkflowRun({
                 owner: context.repo.owner,
