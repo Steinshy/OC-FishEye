@@ -33,8 +33,3 @@ lighthouse-report*.html
 lhci-reports/
 lighthouse-ci/
 *.lighthouse.json
-
-# Generated mobile images
-*.mobile.jpg
-*.mobile.jpeg
-*.mobile.webp

@@ -8,7 +8,7 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
-    "dev": "http-server . -p 8080 -g -c10 --brotli --gzip",
+    "dev": "lsof -ti:8080 | xargs kill -9 2>/dev/null || true && http-server . -p 8080 -g -c10 --brotli --gzip",
     "lint": "eslint . --ext .js && stylelint '**/*.css' --ignore-pattern '**/*.min.css' && html-validate '**/*.html'",
     "lint:js": "eslint . --ext .js",
     "lint:css": "stylelint '**/*.css' --ignore-pattern '**/*.min.css'",

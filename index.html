@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous" />
 
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/loading.css" />
     <link rel="preload" href="./assets/css/animations.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="./assets/css/animations.css" /></noscript>
 
@@ -90,9 +91,16 @@
 
   <body>
     <div class="loading-screen" id="loading-screen" role="status" aria-label="Chargement en cours">
-      <div class="loading-spinner">
-        <div class="aperture"></div>
-        <img src="./assets/favicons/logo.png" alt="" class="loading-logo" aria-hidden="true" />
+      <div class="loading-container">
+        <div class="camera-shutter">
+          <div class="shutter-blade"></div>
+          <div class="shutter-blade"></div>
+          <div class="shutter-blade"></div>
+          <div class="shutter-blade"></div>
+          <div class="shutter-blade"></div>
+          <div class="shutter-blade"></div>
+        </div>
+        <p class="loading-text">Loading</p>
       </div>
     </div>
 
@@ -118,8 +126,10 @@
           <a href="./photographer.html?id=243" aria-label="Voir le profil de Mimi Keel"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/MimiKeel/MimiKeel.webp" type="image/webp" />
-              <source srcset="./assets/photographers/MimiKeel/MimiKeel.jpg" type="image/jpeg" />
+              <source media="(max-width: 768px)" type="image/webp" srcset="./assets/photographers/MimiKeel/MimiKeel.mobile.webp" />
+              <source media="(max-width: 768px)" type="image/jpeg" srcset="./assets/photographers/MimiKeel/MimiKeel.mobile.jpg" />
+              <source type="image/webp" srcset="./assets/photographers/MimiKeel/MimiKeel.webp" />
+              <source type="image/jpeg" srcset="./assets/photographers/MimiKeel/MimiKeel.jpg" />
               <img
                 class="profile-picture"
                 src="./assets/photographers/MimiKeel/MimiKeel.jpg"
@@ -141,8 +151,10 @@
           <a href="./photographer.html?id=930" aria-label="Voir le profil d'Ellie-Rose Wilkens"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.webp" type="image/webp" />
-              <source srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.jpg" type="image/jpeg" />
+              <source media="(max-width: 768px)" type="image/webp" srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.mobile.webp" />
+              <source media="(max-width: 768px)" type="image/jpeg" srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.mobile.jpg" />
+              <source type="image/webp" srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.webp" />
+              <source type="image/jpeg" srcset="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.jpg" />
               <img
                 class="profile-picture"
                 src="./assets/photographers/EllieRoseWilkens/EllieRoseWilkens.jpg"
@@ -164,8 +176,10 @@
           <a href="./photographer.html?id=82" aria-label="Voir le profil de Tracy Galindo"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/TracyGalindo/TracyGalindo.webp" type="image/webp" />
-              <source srcset="./assets/photographers/TracyGalindo/TracyGalindo.jpg" type="image/jpeg" />
+              <source media="(max-width: 768px)" type="image/webp" srcset="./assets/photographers/TracyGalindo/TracyGalindo.mobile.webp" />
+              <source media="(max-width: 768px)" type="image/jpeg" srcset="./assets/photographers/TracyGalindo/TracyGalindo.mobile.jpg" />
+              <source type="image/webp" srcset="./assets/photographers/TracyGalindo/TracyGalindo.webp" />
+              <source type="image/jpeg" srcset="./assets/photographers/TracyGalindo/TracyGalindo.jpg" />
               <img
                 class="profile-picture"
                 src="./assets/photographers/TracyGalindo/TracyGalindo.jpg"
@@ -187,8 +201,10 @@
           <a href="./photographer.html?id=527" aria-label="Voir le profil de Nabeel Bradford"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/NabeelBradford/NabeelBradford.webp" type="image/webp" />
-              <source srcset="./assets/photographers/NabeelBradford/NabeelBradford.jpg" type="image/jpeg" />
+              <source media="(max-width: 768px)" type="image/webp" srcset="./assets/photographers/NabeelBradford/NabeelBradford.mobile.webp" />
+              <source media="(max-width: 768px)" type="image/jpeg" srcset="./assets/photographers/NabeelBradford/NabeelBradford.mobile.jpg" />
+              <source type="image/webp" srcset="./assets/photographers/NabeelBradford/NabeelBradford.webp" />
+              <source type="image/jpeg" srcset="./assets/photographers/NabeelBradford/NabeelBradford.jpg" />
               <img
                 class="profile-picture"
                 src="./assets/photographers/NabeelBradford/NabeelBradford.jpg"
@@ -209,8 +225,10 @@
           <a href="./photographer.html?id=925" aria-label="Voir le profil de Rhode Dubois"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/RhodeDubois/RhodeDubois.webp" type="image/webp" />
-              <source srcset="./assets/photographers/RhodeDubois/RhodeDubois.jpg" type="image/jpeg" />
+              <source media="(max-width: 768px)" type="image/webp" srcset="./assets/photographers/RhodeDubois/RhodeDubois.mobile.webp" />
+              <source media="(max-width: 768px)" type="image/jpeg" srcset="./assets/photographers/RhodeDubois/RhodeDubois.mobile.jpg" />
+              <source type="image/webp" srcset="./assets/photographers/RhodeDubois/RhodeDubois.webp" />
+              <source type="image/jpeg" srcset="./assets/photographers/RhodeDubois/RhodeDubois.jpg" />
               <img
                 class="profile-picture"
                 src="./assets/photographers/RhodeDubois/RhodeDubois.jpg"
@@ -231,8 +249,10 @@
           <a href="./photographer.html?id=195" aria-label="Voir le profil de Marcel Nikolic"></a>
           <div class="container-picture">
             <picture>
-              <source srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.webp" type="image/webp" />
-              <source srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.jpg" type="image/jpeg" />
+              <source media="(max-width: 768px)" type="image/webp" srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.mobile.webp" />
+              <source media="(max-width: 768px)" type="image/jpeg" srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.mobile.jpg" />
+              <source type="image/webp" srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.webp" />
+              <source type="image/jpeg" srcset="./assets/photographers/MarcelNikolic/MarcelNikolic.jpg" />
               <img
                 class="profile-picture"
                 src="./assets/photographers/MarcelNikolic/MarcelNikolic.jpg"

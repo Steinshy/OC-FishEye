@@ -58,11 +58,11 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding-right: 60px;
+  padding-right: 52px;
 }
 
 .modal-header i {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 
@@ -82,20 +82,32 @@
 
 .modal-close {
   position: absolute;
-  top: var(--space-lg);
-  right: var(--space-lg);
+  top: var(--space-md);
+  right: var(--space-md);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: transparent;
+  background: rgb(0 0 0 / 15%);
   border: none;
-  padding: var(--space-xs);
+  padding: var(--space-sm);
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-sm);
   transition: var(--transition-normal);
 }
 
+.modal-close:hover {
+  background: rgb(0 0 0 / 25%);
+  transform: scale(1.05);
+}
+
+.modal-close:active {
+  transform: scale(0.95);
+}
+
 .modal-close i {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: var(--font-weight-semibold);
   color: var(--color-white);
 }
@@ -318,7 +330,7 @@ textarea:disabled {
     border-radius: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
     min-height: 60px;
   }
@@ -327,7 +339,7 @@ textarea:disabled {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--space-sm);
     flex: 1;
     padding: 0;
@@ -342,21 +354,15 @@ textarea:disabled {
   }
 
   .modal-header i {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: var(--color-white);
   }
 
   .modal-close {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    padding: 8px;
+    top: 16px;
+    right: 16px;
     min-width: 44px;
     min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .main-form.show {

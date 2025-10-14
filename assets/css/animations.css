@@ -70,7 +70,8 @@
 }
 
 .modal.show .modal-content {
-  animation: modal-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modal-slide-up 0.25s ease-out forwards;
+  will-change: transform;
 }
 
 .modal.closing,
@@ -79,7 +80,8 @@
 }
 
 .modal.closing .modal-content {
-  animation: modal-slide-down 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  animation: modal-slide-down 0.2s ease-in forwards;
+  will-change: transform;
 }
 
 @keyframes modal-fade-in {
@@ -91,9 +93,10 @@
 
 @keyframes modal-slide-up {
   from {
-    transform: translate(-50%, 100%);
+    transform: translate(-50%, -150%);
     opacity: 0;
   }
+
   to {
     transform: translate(-50%, -50%);
     opacity: 1;
@@ -112,8 +115,9 @@
     transform: translate(-50%, -50%);
     opacity: 1;
   }
+
   to {
-    transform: translate(-50%, 100%);
+    transform: translate(-50%, -150%);
     opacity: 0;
   }
 }
@@ -121,18 +125,21 @@
 /* Mobile Modal Animations */
 @media (width <= 767px) {
   .modal.show .modal-content {
-    animation: modal-slide-up-mobile 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: modal-slide-up-mobile 0.25s ease-out forwards;
+    will-change: transform;
   }
 
   .modal.closing .modal-content {
-    animation: modal-slide-down-mobile 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    animation: modal-slide-down-mobile 0.2s ease-in forwards;
+    will-change: transform;
   }
 
   @keyframes modal-slide-up-mobile {
     from {
-      transform: translateY(100%);
+      transform: translateY(-100%);
       opacity: 0;
     }
+
     to {
       transform: translateY(0);
       opacity: 1;
@@ -144,8 +151,9 @@
       transform: translateY(0);
       opacity: 1;
     }
+
     to {
-      transform: translateY(100%);
+      transform: translateY(-100%);
       opacity: 0;
     }
   }
@@ -229,7 +237,7 @@
 }
 
 .media-info .likes:active {
-  animation: like-pulse 0.4s ease;
+  animation: heart-pulse 0.4s ease;
 }
 
 .media-info .likes i {
@@ -243,25 +251,6 @@
 
 .media-info .likes .pulse {
   color: #e74c3c;
-}
-
-@keyframes like-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.1);
-  }
-
-  50% {
-    transform: scale(0.95);
-  }
-
-  75% {
-    transform: scale(1.05);
-  }
 }
 
 @keyframes heart-pulse {
@@ -364,10 +353,7 @@
 ========================= */
 .modal,
 .lightbox-modal,
-.sort-options {
-  will-change: opacity, transform;
-}
-
+.sort-options,
 .loading-screen {
-  will-change: opacity, visibility;
+  will-change: opacity, transform;
 }
