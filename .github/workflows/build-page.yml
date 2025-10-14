@@ -37,9 +37,6 @@ jobs:
         continue-on-error: true
         run: npm audit --audit-level=moderate
 
-      - name: Minify
-        run: npm run minify
-
       - name: Prepare
         run: |
           mkdir -p deploy
