@@ -81,7 +81,7 @@ export const getPhotographerMedias = async photographerId => {
         throw new Error(`No media found for photographer: ${photographerId}`);
       }
 
-      logData.photographerMedias(photographerMedias, photographerId);
+      logData.photographerMedias(photographerMedias, photographerId, photographer.name);
       return photographerMedias;
     });
   }, []);

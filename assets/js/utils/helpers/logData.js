@@ -32,8 +32,8 @@ export const logData = {
     });
   },
 
-  photographerMedias(medias, photographerId) {
-    console.info(`Photographer ${photographerId} has loaded medias (${medias.length} items):`, medias);
+  photographerMedias(medias, photographerId, photographerName) {
+    console.info(`The photographer with id ${photographerId} has been loaded. \n ${photographerName} has ${medias.length} medias in total:`, medias);
   },
 
   custom(label, data) {

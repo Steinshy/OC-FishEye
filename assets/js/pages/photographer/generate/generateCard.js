@@ -13,11 +13,10 @@ export const generateCard = (media, mediaElement) => {
   aria.setDescribedBy(article, `media-info-${media.id}`);
 
   const mediaContent = document.createElement('div');
-  mediaContent.className = 'media-content';
+  mediaContent.className = 'media-content loading';
   aria.setDescribedBy(mediaContent, `media-info-${media.id}`);
 
   mediaContent.appendChild(mediaElement);
-
   article.appendChild(mediaContent);
   article.appendChild(generateMediaInfo(media));
 

@@ -1,6 +1,7 @@
-import { getMobileUrl } from './helper.js';
+import { getMobileUrl, isMobileOrTablet } from './helper.js';
 
-export const getResponsiveImageUrls = (webpUrl, jpgUrl) => {
+export const getResponsiveImageUrls = (webpUrl, jpgUrl, useMobile = null) => {
+  const shouldUseMobile = useMobile !== null ? useMobile : isMobileOrTablet();
   const webpMobile = getMobileUrl(webpUrl);
   const jpgMobile = getMobileUrl(jpgUrl);
 
@@ -8,14 +9,14 @@ export const getResponsiveImageUrls = (webpUrl, jpgUrl) => {
     webp: {
       desktop: webpUrl,
       mobile: webpMobile,
-      srcset: `${webpMobile} 768w, ${webpUrl} 1920w`,
+      url: shouldUseMobile ? webpMobile : webpUrl,
     },
     jpg: {
       desktop: jpgUrl,
       mobile: jpgMobile,
-      srcset: `${jpgMobile} 768w, ${jpgUrl} 1920w`,
+      url: shouldUseMobile ? jpgMobile : jpgUrl,
     },
-    sizes: '(max-width: 1024px) 768px, 1920px',
+    useMobile: shouldUseMobile,
   };
 };
 

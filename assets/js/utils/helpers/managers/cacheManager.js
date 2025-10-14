@@ -28,16 +28,15 @@ const getWrappedIndex = (index, length) => {
 };
 
 export const mediaCache = {
-  getOrCreate(storeName, key, createFn) {
+  getOrCreate(storeName, key, createFn, shouldClone = false) {
     if (store.has(storeName, key)) {
       const cached = store.get(storeName, key);
-      return cached?.cloneNode ? cached.cloneNode(true) : cached;
+      return shouldClone && cached?.cloneNode ? cached.cloneNode(true) : cached;
     }
 
     const data = createFn();
     if (data) {
-      const toStore = data.cloneNode ? data.cloneNode(true) : data;
-      store.set(storeName, key, toStore);
+      store.set(storeName, key, data);
     }
     return data;
   },

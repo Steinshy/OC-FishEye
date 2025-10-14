@@ -1,13 +1,13 @@
 import { isMobileOrTablet } from '../../../utils/helpers/helper.js';
 import { getResponsivePosterUrl } from '../../../utils/helpers/responsiveImages.js';
 
-export const generateVideo = (media, isLCP = false) => {
+export const generateVideo = (media, isLCP = false, forceDesktop = false) => {
   const videoMedia = document.createElement('div');
   videoMedia.className = 'media-video';
   videoMedia.setAttribute('data-media-type', 'video');
   videoMedia.setAttribute('data-media-id', media.id);
 
-  const posterUrl = getResponsivePosterUrl(media.medias.posterUrl, isMobileOrTablet());
+  const posterUrl = getResponsivePosterUrl(media.medias.posterUrl, forceDesktop ? false : isMobileOrTablet());
 
   const preload = isLCP ? 'metadata' : 'none';
   const fetchpriority = isLCP ? 'high' : 'auto';

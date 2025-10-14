@@ -3,17 +3,33 @@ import { aria } from '../../utils/accessibility/aria.js';
 import { setupFocusTrap, cleanupFocusTrap, toggleBackgroundContent, handleFocusEscape, blurActive } from '../../utils/accessibility/focus.js';
 import { handlers, media, events } from '../../utils/accessibility/keyboard.js';
 import { toggleScroll } from '../../utils/helpers/helper.js';
+import { getSafeDuration } from '../../utils/helpers/managers/animationManager.js';
 import { mediaCache } from '../../utils/helpers/managers/cacheManager.js';
 import { generateMedias } from '../../utils/helpers/managers/generateMediasManager.js';
 import { createSwipeHandlers } from '../../utils/helpers/managers/gestureManager.js';
 
-const getCachedElement = media => mediaCache.getOrCreate('mediaElements', media.id, () => generateMedias(media));
+const generateMediaForLightbox = media => generateMedias(media, false, true);
+const getCachedElement = media => mediaCache.getOrCreate('mediaElements', media.id, () => generateMediaForLightbox(media));
 
 export const lightboxState = () => lightboxElements.mainModal?.classList.contains('show');
 
 const setupMediaElement = (element, container) => {
-  element.addEventListener('click', e => e.stopPropagation());
-  container.firstChild ? container.replaceChild(element, container.firstChild) : container.appendChild(element);
+  // Add click handler only once
+  if (!element.dataset.hasClickHandler) {
+    element.addEventListener('click', e => e.stopPropagation());
+    element.dataset.hasClickHandler = 'true';
+  }
+
+  // Clear container and add element
+  const currentChild = container.firstChild;
+  if (currentChild && currentChild !== element) {
+    // Reset state of element being removed
+    currentChild.style.opacity = '';
+    container.removeChild(currentChild);
+  }
+  if (element.parentNode !== container) {
+    container.appendChild(element);
+  }
 };
 
 const updateUI = media => {
@@ -32,12 +48,14 @@ const updateContent = (animate = false) => {
   const element = getCachedElement(media);
   const currentChild = container.firstChild;
 
-  mediaCache.preloadAdjacent('mediaElements', medias, lightboxElements.currentIndex, generateMedias);
+  mediaCache.preloadAdjacent('mediaElements', medias, lightboxElements.currentIndex, generateMediaForLightbox);
   updateUI(media);
 
   if (currentChild === element) return;
 
+  // Reset element state
   element.classList.remove(lightboxClasses.visible, lightboxClasses.showing, lightboxClasses.hidden, lightboxClasses.transition);
+  element.style.opacity = '';
 
   if (!animate) {
     setupMediaElement(element, container);
@@ -49,13 +67,14 @@ const updateContent = (animate = false) => {
 
   element.classList.add(lightboxClasses.hidden, lightboxClasses.transition);
 
+  const transitionDelay = getSafeDuration(100);
   setTimeout(() => {
     setupMediaElement(element, container);
     requestAnimationFrame(() => {
       element.classList.remove(lightboxClasses.hidden);
       element.classList.add(lightboxClasses.showing);
     });
-  }, 100);
+  }, transitionDelay);
 };
 
 const pauseActiveVideo = () => {
@@ -79,13 +98,19 @@ const navigate = (index, animate = true) => {
   );
 };
 
+const markAsInteracted = () => {
+  lightboxElements.mainModal?.classList.add('interacted');
+};
+
 const nextSlide = () => {
+  markAsInteracted();
   const { currentIndex, medias } = lightboxElements;
   const nextIndex = currentIndex + 1 >= medias.length ? 0 : currentIndex + 1;
   navigate(nextIndex);
 };
 
 const previousSlide = () => {
+  markAsInteracted();
   const { currentIndex, medias } = lightboxElements;
   const prevIndex = currentIndex <= 0 ? medias.length - 1 : currentIndex - 1;
   navigate(prevIndex);
@@ -113,7 +138,8 @@ export const openLightbox = (mediaId, medias) => {
   updateContent(false);
 
   const { mainModal, close } = lightboxElements;
-  setupFocusTrap(mainModal, close, 200);
+  const setupDelay = getSafeDuration(200);
+  setupFocusTrap(mainModal, close, setupDelay);
 };
 
 export const closeLightbox = () => {
@@ -123,12 +149,13 @@ export const closeLightbox = () => {
   lightboxElements.mainModal?.classList.add(lightboxClasses.closing);
   blurActive();
 
+  const closingDuration = getSafeDuration(100);
   setTimeout(() => {
     const { mainModal } = lightboxElements;
     toggleLightboxUI(false);
-    mainModal?.classList.remove(lightboxClasses.closing);
+    mainModal?.classList.remove(lightboxClasses.closing, 'interacted');
     cleanupFocusTrap(mainModal);
-  }, 100);
+  }, closingDuration);
 };
 
 const handleKeyboardNavigation = handlers.createKeyMapHandler({

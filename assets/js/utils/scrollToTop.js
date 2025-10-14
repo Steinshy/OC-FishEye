@@ -25,5 +25,6 @@ export const scrollToTop = {
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.button.blur();
   },
 };

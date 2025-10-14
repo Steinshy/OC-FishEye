@@ -5,6 +5,7 @@ import { mobileKeyboard } from '../../accessibility/mobile.js';
 import { errorDisplay } from '../../errorHandler.js';
 import { toggleScroll, forEachFormField } from '../helper.js';
 
+import { getSafeDuration } from './animationManager.js';
 import { resetCharacterCount, addCharacterCountListeners, removeCharacterCountListeners } from './characterCountManager.js';
 import { submitButtonState } from './submissionManager.js';
 
@@ -43,46 +44,45 @@ const toggleModalAria = hidden => {
   if (submitButton) aria.setHidden(submitButton, hidden);
 };
 
-// Modal lifecycle management
 export const openModal = () => {
   toggleModalAria(false);
   toggleModalDisplay(true);
   toggleScroll(true);
   toggleBackgroundContent(true);
   mobileKeyboard.resetModalPosition();
-  submitButtonState.hide(); // Ensure submit button is initially disabled
+  submitButtonState.hide();
 
   resetInputStates();
   resetCharacterCount();
   addCharacterCountListeners();
 
+  const openingDuration = getSafeDuration(250);
   setTimeout(() => {
     const { firstname } = getFormElements();
     setupFocusTrap(mainModal, firstname);
-  }, 250);
+  }, openingDuration);
 };
 
-export const closeModal = () => {
-  if (mainModal) {
-    mainModal.classList.add('closing');
-  }
+export const closeModal = async () => {
+  if (!mainModal) return;
 
-  setTimeout(() => {
-    cleanupFocusTrap(mainModal);
-    toggleScroll(false);
-    toggleBackgroundContent(false);
-    mobileKeyboard.resetModalPosition();
-    toggleModalDisplay(false);
-    toggleModalAria(true);
+  mainModal.classList.add('closing');
 
-    if (mainModal) {
-      mainModal.classList.remove('closing');
-    }
+  const closingDuration = getSafeDuration(200);
+  await new Promise(resolve => setTimeout(resolve, closingDuration));
 
-    resetFormAndModal();
-    blurActive();
-    removeCharacterCountListeners();
-  }, 200);
+  cleanupFocusTrap(mainModal);
+  toggleScroll(false);
+  toggleBackgroundContent(false);
+  mobileKeyboard.resetModalPosition();
+  toggleModalDisplay(false);
+  toggleModalAria(true);
+
+  mainModal.classList.remove('closing');
+
+  resetFormAndModal();
+  blurActive();
+  removeCharacterCountListeners();
 };
 
 export const isModalOpen = () => Boolean(mainModal?.classList?.contains('show'));
