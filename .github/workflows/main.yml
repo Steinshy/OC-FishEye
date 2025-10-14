@@ -5,7 +5,7 @@ on:
     branches:
       - dev
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
   workflow_dispatch:
 
 env:
@@ -47,36 +47,3 @@ jobs:
       - name: Security scan
         continue-on-error: true
         run: npm audit --audit-level=moderate
-
-  cleanup:
-    name: Cleanup
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    steps:
-      - name: Delete old workflow runs
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const RETENTION_DAYS = 30;
-            const MIN_KEEP = 6;
-            const cutoff = new Date(Date.now() - RETENTION_DAYS * 24 * 60 * 60 * 1000);
-
-            const { data } = await github.rest.actions.listWorkflowRunsForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              per_page: 100
-            });
-
-            const toDelete = data.workflow_runs
-              .filter(run => new Date(run.created_at) < cutoff)
-              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-              .slice(MIN_KEEP);
-
-            for (const run of toDelete) {
-              console.log(`Deleting run ${run.id} from ${run.created_at}`);
-              await github.rest.actions.deleteWorkflowRun({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                run_id: run.id
-              });
-            }
