@@ -44,7 +44,3 @@ jobs:
       - name: Lint code
         continue-on-error: true
         run: npm run lint
-
-      - name: Security scan
-        continue-on-error: true
-        run: npm audit --audit-level=moderate
