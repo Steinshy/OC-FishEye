@@ -14,26 +14,20 @@ const PATTERNS = {
   html: '*.html'
 };
 
-// Output directories for minified files
-const OUTPUT_DIRS = {
-  js: 'assets/minified/js/',
-  css: 'assets/minified/css/',
-  html: 'assets/minified/html/'
-};
-
 // Valid file types
 const VALID_TYPES = Object.keys(PATTERNS);
 
-// Get minified filename
-const getMinifiedPath = (filePath, outputDir) => {
+// Get minified filename (place next to source file)
+const getMinifiedPath = (filePath) => {
   const extension = path.extname(filePath);
   const basename = path.basename(filePath, extension);
-  return path.join(outputDir, `${basename}.min${extension}`);
+  const dirname = path.dirname(filePath);
+  return path.join(dirname, `${basename}.min${extension}`);
 };
 
 // Check if file should be excluded
 const shouldExclude = (filePath) => {
-  return filePath.includes('.min.') || filePath.includes('minified/');
+  return filePath.includes('.min.');
 };
 
 // Minify single file
@@ -69,7 +63,7 @@ const main = async () => {
 
     // Minify each file
     for (const file of files) {
-      const outputPath = getMinifiedPath(file, OUTPUT_DIRS[target]);
+      const outputPath = getMinifiedPath(file);
       await minifyFile(file, outputPath);
     }
 
