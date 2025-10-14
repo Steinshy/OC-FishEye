@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /assets/js/
+Disallow: /node_modules/
+Disallow: /scripts/
+
+Allow: /assets/css/
+Allow: /assets/api/
+Allow: /assets/favicons/
+
+Sitemap: https://steinshy.github.io/FishEye/sitemap.xml

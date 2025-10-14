@@ -1,0 +1,61 @@
+name: Lighthouse Production
+
+on:
+  workflow_run:
+    workflows:
+      - Build and Deploy
+    types:
+      - completed
+  workflow_dispatch:
+
+env:
+  BASE_URL: https://steinshy.github.io/FishEye
+  PHOTOGRAPHER_IDS: 243 930 82 527 925 195
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  lighthouse:
+    name: Lighthouse Production
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Wait for deployment
+        run: |
+          for i in {1..30}; do
+            if curl -s -o /dev/null -w "%{http_code}" "${{ env.BASE_URL }}/" | grep -q "200"; then
+              echo "Production ready"
+              break
+            fi
+            sleep 10
+          done
+
+      - name: Generate test URLs
+        id: urls
+        run: |
+          URLS="${{ env.BASE_URL }}/"
+          for id in ${{ env.PHOTOGRAPHER_IDS }}; do
+            URLS="$URLS
+          ${{ env.BASE_URL }}/photographer.html?id=$id"
+          done
+          echo "urls<<EOF" >> $GITHUB_OUTPUT
+          echo "$URLS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: ${{ steps.urls.outputs.urls }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 3
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-production
+          path: .lighthouseci
+          retention-days: 30

@@ -1,0 +1,14 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "doctype-style": "off",
+    "void-style": ["error", { "style": "omit" }],
+    "no-redundant-role": "off",
+    "prefer-native-element": "off",
+    "aria-label-misuse": "off",
+    "no-unused-disable": "off",
+    "class-pattern": "off",
+    "no-missing-references": "off",
+    "require-sri": "off"
+  }
+}

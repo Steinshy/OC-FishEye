@@ -1,0 +1,154 @@
+/* =========================
+  Loading Screen
+========================= */
+
+/* General loading state display */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: var(--space-2xl);
+}
+
+/* Loading state text */
+.loading-state p {
+  font-size: 1.1rem;
+  color: #901c1c;
+  font-weight: 500;
+}
+
+/* =========================
+  Loading Screen Animation
+========================= */
+
+/* Fullscreen loading overlay */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  pointer-events: none;
+  contain: layout style paint;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+/* Loading content container */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Camera shutter animation container */
+.camera-shutter {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animated shutter blade element */
+.shutter-blade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  border-top-color: #901c1c;
+  border-right-color: #901c1c;
+  animation: focus-ring 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* First blade timing */
+.shutter-blade:nth-child(1) {
+  width: 100%;
+  height: 100%;
+  animation-delay: 0s;
+}
+
+/* Second blade timing */
+.shutter-blade:nth-child(2) {
+  width: 80%;
+  height: 80%;
+  animation-delay: 0.15s;
+}
+
+/* Third blade timing */
+.shutter-blade:nth-child(3) {
+  width: 60%;
+  height: 60%;
+  animation-delay: 0.3s;
+}
+
+/* Fourth blade timing and color */
+.shutter-blade:nth-child(4) {
+  width: 40%;
+  height: 40%;
+  border-color: #d3573c;
+  border-top-color: #d3573c;
+  border-right-color: #d3573c;
+  animation-delay: 0.45s;
+}
+
+/* Loading text styling */
+.loading-text {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Animated dots after text */
+.loading-text::after {
+  content: "";
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+/* Hidden state when loaded */
+.loading-screen.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Stop animations when loaded */
+.loading-screen.loaded .shutter-blade,
+.loading-screen.loaded .loading-text::after {
+  animation: none;
+}
+
+/* =========================
+  Responsive Design
+========================= */
+@media (width <= 767px) {
+  .camera-shutter {
+    width: 90px;
+    height: 90px;
+  }
+
+  .shutter-blade {
+    border-width: 2px;
+  }
+
+  .loading-text {
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+  }
+
+  .loading-container {
+    gap: 30px;
+  }
+}

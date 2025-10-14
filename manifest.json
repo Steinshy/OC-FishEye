@@ -1,0 +1,33 @@
+{
+  "name": "FishEye - Photography Portfolio",
+  "short_name": "FishEye",
+  "description": "Professional photography portfolio showcasing stunning images from talented photographers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#901c1c",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["photography", "art", "portfolio"],
+  "icons": [
+    {
+      "src": "assets/favicons/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicons/standard/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicons/standard/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
