@@ -10,7 +10,7 @@ import { handlers, events } from './keyboard.js';
 export const initializeModalAccessibility = ({ photographerName, onOpen, onClose, onSubmit, onValidation }) => {
   const { photographerName: name, contactButton: contact, submitButton: submit, closeButton: close, form } = getModalRefs();
 
-  if (name && photographerName) name.textContent = `Contactez ${photographerName}`;
+  if (name && photographerName) name.textContent = photographerName;
 
   forEachFormField(getFormElements(), formFieldNames, (element, fieldName) => onValidation?.({ element, name: fieldName }));
 

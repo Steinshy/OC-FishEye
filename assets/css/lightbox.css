@@ -282,7 +282,7 @@
   font-weight: 500;
   opacity: 0.8;
   pointer-events: none;
-  animation: fade-out 3s forwards;
+  animation: fade-out 6s forwards;
   white-space: nowrap;
   text-shadow: 0 2px 4px rgb(0 0 0 / 50%);
 }
