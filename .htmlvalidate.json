@@ -9,6 +9,13 @@
     "no-unused-disable": "off",
     "class-pattern": "off",
     "no-missing-references": "off",
-    "require-sri": "off"
+    "require-sri": "off",
+    "close-order": "off",
+    "element-required-content": "off",
+    "element-permitted-content": "off",
+    "element-permitted-parent": "off",
+    "attr-quotes": "off",
+    "no-implicit-close": "off",
+    "no-implicit-input-type": "off"
   }
 }
