@@ -8,4 +8,4 @@ Allow: /assets/css/
 Allow: /assets/api/
 Allow: /assets/favicons/
 
-Sitemap: https://steinshy.github.io/FishEye/sitemap.xml
+Sitemap: https://steinshy.github.io/OC-FishEye/sitemap.xml

@@ -88,6 +88,7 @@ export const lightboxClasses = {
   transition: 'lightbox-transition',
   hidden: 'lightbox-hidden',
   showing: 'lightbox-visible',
+  closing: 'closing',
 };
 
 // Form submission button text states
