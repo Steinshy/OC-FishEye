@@ -1,12 +1,18 @@
 # FishEye
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
-![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=flat&logo=pwa&logoColor=white)
-![Lighthouse](https://img.shields.io/badge/Lighthouse-F44B21?style=flat&logo=lighthouse&logoColor=white)
-![Accessibility](https://img.shields.io/badge/AChecker-00A699?style=flat&logo=accessibilityicon&logoColor=white)
-![W3C](https://img.shields.io/badge/W3C-005A9C?style=flat&logo=w3c&logoColor=white)
+<p align="center">
+  <img src="assets/readme/mockup.webp" alt="Aperçu de FishEye sur desktop et mobile" width="850">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/PWA-5A0FC8?style=flat&logo=pwa&logoColor=white" alt="PWA">
+  <img src="https://img.shields.io/badge/Lighthouse-F44B21?style=flat&logo=lighthouse&logoColor=white" alt="Lighthouse">
+  <img src="https://img.shields.io/badge/AChecker-00A699?style=flat&logo=accessibilityicon&logoColor=white" alt="Accessibility">
+  <img src="https://img.shields.io/badge/W3C-005A9C?style=flat&logo=w3c&logoColor=white" alt="W3C">
+</p>
 
 **FishEye** est une plateforme web permettant de découvrir des
 photographes indépendants et de parcourir leurs portfolios.
