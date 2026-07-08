@@ -28,8 +28,8 @@ filtres de tri, et formulaire de contact accessible.
 
 ## Dépôt GitHub
 
-- [Branche principale](https://github.com/Steinshy/FishEye/tree/main)
-- [GitHub Pages](https://steinshy.github.io/FishEye/)
+- [Branche principale](https://github.com/Steinshy/OC-FishEye/tree/main)
+- [GitHub Pages](https://steinshy.github.io/OC-FishEye/)
 
 ---
 
@@ -109,7 +109,6 @@ FishEye/
 │       ├── logo.png                   # Logo
 │       └── close.svg                  # Icône fermeture
 ├── scripts/
-│   ├── minify.cjs                     # Minification CSS/JS/HTML
 │   ├── optimizeImages.cjs             # Optimisation images
 │   ├── generateFavicons.cjs           # Génération favicons
 │   └── generateVideoThumbnails.sh     # Thumbnails vidéos
@@ -118,7 +117,7 @@ FishEye/
 ├── sitemap.xml                        # Sitemap SEO
 ├── robots.txt                         # Directives crawlers
 ├── manifest.json                      # Configuration PWA
-├── package.json                       # Dépendances npm
+├── package.json                       # Dépendances (pnpm)
 └── eslint.config.js                   # Configuration ESLint
 ```
 
@@ -208,8 +207,7 @@ FishEye/
 - Favicons multi-plateformes (30+ variants)
 - Lazy loading des images
 - Préchargement ressources critiques
-- Minification CSS/JS/HTML (Lightning CSS)
-- Lighthouse CI automatisé
+- Minification CSS (Lightning CSS)
 - Favicons organisés (standard/apple/microsoft)
 - Validation HTML5 W3C compatible
 
@@ -220,15 +218,15 @@ FishEye/
 ### Installation
 
 ```bash
-git clone https://github.com/Steinshy/FishEye.git
-cd FishEye
-npm install
+git clone https://github.com/Steinshy/OC-FishEye.git
+cd OC-FishEye
+pnpm install
 ```
 
 ### Développement
 
 ```bash
-npm run dev  # Démarre serveur local sur port 8080
+pnpm run dev  # Démarre serveur local sur port 8080
 ```
 
 ### Scripts utilitaires
@@ -268,20 +266,17 @@ Séparation claire des responsabilités :
 
 ## Scripts disponibles
 
-| Commande                  | Description               |
-| ------------------------- | ------------------------- |
-| `npm run dev`             | Serveur local (port 8080) |
-| `npm run lint`            | Lint JS, CSS, HTML, MD    |
-| `npm run lint:js`         | Lint JavaScript           |
-| `npm run lint:css`        | Lint CSS                  |
-| `npm run lint:html`       | Lint HTML                 |
-| `npm run lint:md`         | Lint Markdown             |
-| `npm run format`          | Vérifie formatage         |
-| `npm run minify`          | Minifie CSS, JS, HTML     |
-| `npm run minify:css`      | Minifie CSS uniquement    |
-| `npm run minify:js`       | Minifie JS uniquement     |
-| `npm run minify:html`     | Minifie HTML uniquement   |
-| `npm run optimize:images` | Optimise images (Sharp)   |
+| Commande                   | Description                 |
+| -------------------------- | --------------------------- |
+| `pnpm run dev`             | Serveur local (port 8080)   |
+| `pnpm run lint`            | Lint JS, CSS, HTML, MD      |
+| `pnpm run lint:js`         | Lint JavaScript             |
+| `pnpm run lint:css`        | Lint CSS                    |
+| `pnpm run lint:html`       | Lint HTML                   |
+| `pnpm run lint:md`         | Lint Markdown               |
+| `pnpm run format`          | Vérifie formatage           |
+| `pnpm run minify`          | Minifie CSS (Lightning CSS) |
+| `pnpm run optimize:images` | Optimise images (Sharp)     |
 
 ---
 
@@ -298,17 +293,14 @@ Séparation claire des responsabilités :
 
 ### Minification
 
-- Lightning CSS (CSS - 100x plus rapide)
-- Minify package (JS/HTML)
-- Automatisé via scripts
+- Lightning CSS (CSS uniquement)
+- Le JavaScript est servi en modules ES natifs (non minifié)
 
 ### CI/CD
 
 - Lint et format (GitHub Actions)
-- Lighthouse audits local + production
 - Déploiement automatique GitHub Pages
-- Cleanup automatique des anciennes runs
-- 4 workflows (main+cleanup, deploy, lighthouse, release)
+- 2 workflows (lint/format, deploy)
 
 ---
 
@@ -324,7 +316,7 @@ Séparation claire des responsabilités :
 ### Node.js
 
 - Version >= 22.0.0
-- npm >= 10.0.0
+- pnpm >= 10.0.0
 
 ---
 
@@ -333,11 +325,11 @@ Séparation claire des responsabilités :
 ### Pour développement
 
 - Node.js >= 22.0.0
-- npm >= 10.0.0
+- pnpm >= 10.0.0
 
 ### Pour génération assets
 
-- **Sharp** (optimisation images et favicons) - Installé via npm
+- **Sharp** (optimisation images et favicons) - Installé via pnpm
 - **ImageMagick** (thumbnails vidéos) - `brew install imagemagick`
 
 ---

@@ -34,7 +34,7 @@ const generateMediaInfo = media => {
           aria-label="Aimer cette ${media.mediaType}"
           tabindex="0">
           <i class="fas fa-heart" aria-hidden="true"></i>
-          <span id="likes-count" aria-live="polite">${media.likes}</span>
+          <span id="likes-count-${media.id}" aria-live="polite">${media.likes}</span>
         </button>
     </div>
   `;

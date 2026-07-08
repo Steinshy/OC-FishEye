@@ -21,13 +21,7 @@ export const createLightboxKeyboardHandler = ({ lightboxState, onClose, onPrevio
   });
 
 // Create swipe handlers for lightbox
-export const createLightboxSwipeHandlers = ({ onNext, onPrevious, minDistance }) => {
-  const handlers = createSwipeHandlers({ left: onNext, right: onPrevious }, minDistance);
-  return {
-    handleStart: e => handlers.handleStart(e),
-    handleEnd: e => handlers.handleEnd(e),
-  };
-};
+export const createLightboxSwipeHandlers = ({ onNext, onPrevious, minDistance }) => createSwipeHandlers({ left: onNext, right: onPrevious }, minDistance);
 
 // Create mouse wheel handler for lightbox
 export const createLightboxWheelHandler =

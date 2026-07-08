@@ -1,1 +1,1 @@
-{"upgrade":true,"target":"minor","doctorTest":"npm run lint"}
+{ "upgrade": true, "target": "minor", "packageManager": "pnpm", "doctorTest": "pnpm run lint" }

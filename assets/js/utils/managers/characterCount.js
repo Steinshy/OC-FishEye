@@ -18,7 +18,7 @@ const updateCounterClasses = (element, status) => {
 export const resetCharacterCount = () => {
   const { characterCount } = getFormElements();
   if (!characterCount) return;
-  characterCount.textContent = '0/500';
+  characterCount.textContent = `0/${maxLength}`;
   updateCounterClasses(characterCount, '');
   aria.setLive(characterCount, 'polite');
 };

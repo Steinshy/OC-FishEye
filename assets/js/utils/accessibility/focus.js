@@ -17,15 +17,17 @@ export const focusFirst = (container, selector = selectorTypes.focusable) => {
 // Focus next element in array
 export const focusNext = (elements, current, wrap = true) => {
   const index = elements.findIndex(element => element === current);
-  elements[wrap ? (index + 1) % elements.length : Math.min(index + 1, elements.length - 1)]?.focus();
-  return elements[wrap ? (index + 1) % elements.length : Math.min(index + 1, elements.length - 1)];
+  const target = elements[wrap ? (index + 1) % elements.length : Math.min(index + 1, elements.length - 1)];
+  target?.focus();
+  return target;
 };
 
 // Focus previous element in array
 export const focusPrevious = (elements, current, wrap = true) => {
   const index = elements.findIndex(element => element === current);
-  elements[wrap ? (index <= 0 ? elements.length - 1 : index - 1) : Math.max(index - 1, 0)]?.focus();
-  return elements[wrap ? (index <= 0 ? elements.length - 1 : index - 1) : Math.max(index - 1, 0)];
+  const target = elements[wrap ? (index <= 0 ? elements.length - 1 : index - 1) : Math.max(index - 1, 0)];
+  target?.focus();
+  return target;
 };
 
 // Create focus trap for modal dialogs

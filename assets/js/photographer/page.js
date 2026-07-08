@@ -15,7 +15,8 @@ import { initSortButton } from './sortButton.js';
 
 // Initialize photographer page with data and features
 export const photographerPage = async () => {
-  const [photographer, photographerMedias] = await Promise.all([getPhotographer(getUrlParam('id', true)), getPhotographerMedias(getUrlParam('id', true))]);
+  const photographerId = getUrlParam('id', true);
+  const [photographer, photographerMedias] = await Promise.all([getPhotographer(photographerId), getPhotographerMedias(photographerId)]);
   if (!photographer || !Array.isArray(photographerMedias)) return;
 
   const header = generatePhotographerHeader(photographer);
