@@ -181,6 +181,7 @@
 }
 
 /* Loading placeholder with shimmer */
+/* stylelint-disable selector-no-qualifying-type -- type selector needed to distinguish img/video before src/poster loads */
 .lightbox-media-container img:not([src]),
 .lightbox-media-container video:not([poster]) {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -189,8 +190,10 @@
   min-height: 400px;
   aspect-ratio: 3 / 2;
 }
+/* stylelint-enable selector-no-qualifying-type */
 
 /* Video loading aspect ratio */
+/* stylelint-disable-next-line selector-no-qualifying-type -- type selector needed to distinguish img/video before src/poster loads */
 .lightbox-media-container video:not([poster]) {
   aspect-ratio: 16 / 9;
 }
