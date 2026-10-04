@@ -1,0 +1,16 @@
+node_modules
+.git
+.github
+*.md
+.lintstagedrc.js
+.markdownlint.json
+.ncurc.json
+.npmrc
+.prettierignore
+.prettierrc
+.stylelintrc.json
+.htmlhintrc.json
+.htmlvalidate.json
+.htmlvalidateignore
+eslint.config.js
+CLAUDE.md
